@@ -793,7 +793,6 @@
     "C:\\xampp\\htdocs\\scm\\contracts\\Roles\\Customer.sol": {
       "lastModificationDate": 1656663440946,
       "contentHash": "74e7b1384efa45090efc7598fc3a24fb",
-      "sourceName": "contracts/Roles/Customer.sol",
       "solcConfig": {
         "version": "0.8.8",
         "settings": {
