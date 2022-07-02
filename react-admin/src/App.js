@@ -15,6 +15,9 @@ import New from "./pages/new/New";
 //Front 
 import Userlogin from "./Front/login/Login";
 import Profile from "./Front/user/Profile";
+import Materialsupplier from "./Front/supplier/Dashboard";
+import Addbatch from "./Front/supplier/AddMaterialForm";
+
 //End Front
 import {BrowserRouter, Routes, Route, useNavigate, Link } from "react-router-dom";
 import { productInputs, userInputs, warehouseInputs, factoryInputs, productApproverInputs, distributerInputs, retailerInputs} from "./formSource";
@@ -153,6 +156,8 @@ function App() {
             <Route index path="/" element={<LandingPage />} />
             <Route index path="/userlogin" element={<Userlogin />} />
             <Route index path="/profile" element={<Profile />} />
+            <Route index path="/material-supplier" element={<Materialsupplier />} />
+            <Route index path="/addbatch" element={<Addbatch />} />
           </Route>
         </Routes>
       </BrowserRouter>

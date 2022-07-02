@@ -25,7 +25,8 @@ const Login = () => {
     console.log("login form values",values)
     dispatch(fetch());
     dispatch(success(values))
-    navigate("/profile")
+    sessionStorage.setItem('user',JSON.stringify(values));
+    navigate("/material-supplier")
   }
  
   const renderErrorMessage = (name) =>
