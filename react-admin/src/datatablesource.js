@@ -36,7 +36,7 @@ export const userColumns = [
   // },
 ];
 export const userRows = async () => {
-  return await fetch("http://127.0.0.1:5150/users")
+  return await fetch("http://162.215.222.118:5150/users")
        .then(result=>result.json())
        .then((resp)=> resp)
        .catch((e)=>{
@@ -83,7 +83,7 @@ export const warehouseColumns = [
 //temporary data
 
 export const warehouseRows = async () => {
-  return await fetch("http://127.0.0.1:5150/warehouse")
+  return await fetch("http://162.215.222.118:5150/warehouse")
        .then(result=>result.json())
        .then((resp)=> resp)
        .catch((e)=>{
@@ -131,7 +131,7 @@ export const factoryColumns = [
 
 //temporary data
 export const factoryRows = async () => {
-  return await fetch("http://127.0.0.1:5150/factory")
+  return await fetch("http://162.215.222.118:5150/factory")
        .then(result=>result.json())
        .then((resp)=> resp)
        .catch((e)=>{
@@ -181,7 +181,7 @@ export const rawMaterialColumns = [
 //temporary data
 
 export const rawMaterialRows = async () => {
-  return await fetch("http://127.0.0.1:5150/rawmaterialsupplier")
+  return await fetch("http://162.215.222.118:5150/rawmaterialsupplier")
        .then(result=>result.json())
        .then((resp)=> resp)
        .catch((e)=>{
@@ -231,7 +231,7 @@ export const productApproverColumns = [
 //temporary data
 
 export const productApproverRows = async () => {
-  return await fetch("http://127.0.0.1:5150/productApprover")
+  return await fetch("http://162.215.222.118:5150/productApprover")
        .then(result=>result.json())
        .then((resp)=> resp)
        .catch((e)=>{
@@ -280,7 +280,7 @@ export const distributerColumns = [
 //temporary data
 
 export const distributerRows = async () => {
-  return await fetch("http://127.0.0.1:5150/distributer")
+  return await fetch("http://162.215.222.118:5150/distributer")
        .then(result=>result.json())
        .then((resp)=> resp)
        .catch((e)=>{
@@ -328,7 +328,7 @@ export const retailerColumns = [
 
 //temporary data
 export const retailerRows = async () => {
-  return await fetch("http://127.0.0.1:5150/retailer")
+  return await fetch("http://162.215.222.118:5150/retailer")
        .then(result=>result.json())
        .then((resp)=> resp)
        .catch((e)=>{

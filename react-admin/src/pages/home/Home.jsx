@@ -21,9 +21,7 @@ const Home = () => {
           <Widget type="distributer" />
           <Widget type="retailer" />
           <Widget type="customer" />
-        </div>
-        
-        
+        </div>         
       </div>
     </div>
   );

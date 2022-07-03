@@ -29,7 +29,7 @@ const Factoryform = ({ inputs, title, value }) => {
         "role":'Factory'
         })
   };
-  fetch('http://127.0.0.1:5150/register', requestOptions)
+  fetch('http://162.215.222.118:5150/register', requestOptions)
       .then(response => response.json());
 
   }
