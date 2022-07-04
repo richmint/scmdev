@@ -34,7 +34,7 @@ const Login = () => {
     );
   // JSX code for login form
   const renderForm = (
-    <div className="form">
+    <div className="form admin-login">
      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="input-container">
           <label>Username </label>
@@ -56,7 +56,7 @@ const Login = () => {
   return (
     <div className="app">
       <div className="login-form">
-        <div className="title">Sign In</div>
+        <div className="title">Admin Login</div>
         {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
       </div>
     </div>

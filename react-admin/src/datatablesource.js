@@ -36,7 +36,8 @@ export const userColumns = [
   // },
 ];
 export const userRows = async () => {
-  return await fetch("http://162.215.222.118:5150/users")
+  // return await fetch("http://162.215.222.118:5150/users")
+  return await fetch("  http://127.0.0.1:5150/users")
        .then(result=>result.json())
        .then((resp)=> resp)
        .catch((e)=>{
@@ -83,7 +84,8 @@ export const warehouseColumns = [
 //temporary data
 
 export const warehouseRows = async () => {
-  return await fetch("http://162.215.222.118:5150/warehouse")
+  // return await fetch("http://162.215.222.118:5150/warehouse")
+  return await fetch("  http://127.0.0.1:5150/warehouse")
        .then(result=>result.json())
        .then((resp)=> resp)
        .catch((e)=>{
@@ -102,7 +104,7 @@ export const factoryColumns = [
   },
   { 
     field: "name",
-    headerName: "Warehouse Name",
+    headerName: "Factory Name",
     width: 180,
   },
   { 
@@ -131,7 +133,9 @@ export const factoryColumns = [
 
 //temporary data
 export const factoryRows = async () => {
-  return await fetch("http://162.215.222.118:5150/factory")
+  // return await fetch("http://162.215.222.118:5150/factory")
+  return await fetch("http://127.0.0.1:5150/factory")
+  
        .then(result=>result.json())
        .then((resp)=> resp)
        .catch((e)=>{
@@ -181,7 +185,8 @@ export const rawMaterialColumns = [
 //temporary data
 
 export const rawMaterialRows = async () => {
-  return await fetch("http://162.215.222.118:5150/rawmaterialsupplier")
+  // return await fetch("http://162.215.222.118:5150/rawmaterialsupplier")
+  return await fetch("  http://127.0.0.1:5150/rawmaterialsupplier")
        .then(result=>result.json())
        .then((resp)=> resp)
        .catch((e)=>{

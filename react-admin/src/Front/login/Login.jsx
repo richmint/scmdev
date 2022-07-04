@@ -62,7 +62,7 @@ const Login = () => {
     );
   // JSX code for login form
   const renderForm = (
-    <div className="form">
+    <div className="form frontlogin">
      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="input-container">
           <label>Username </label>

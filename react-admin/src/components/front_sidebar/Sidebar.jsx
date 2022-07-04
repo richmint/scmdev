@@ -38,13 +38,13 @@ const Sidebar = () => {
               <span>Add a Batch</span>
             </li>
           </Link>
-          <Link to="/admin/factory" style={{ textDecoration: "none" }}>
+          <Link to="/factory" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
               <span>View Supply Tokens</span>
             </li>
           </Link>
-          <Link to="/admin/rawmaterialsupplier" style={{ textDecoration: "none" }}>
+          <Link to="/rawmaterialsupplier" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
               <span>Approve Supply Tokens</span>
@@ -68,12 +68,7 @@ const Sidebar = () => {
               <span>Retailer</span>
             </li>
           </Link> */}
-          <Link to="/admin/users" style={{ textDecoration: "none" }}>
-            <li>
-              <PersonOutlineIcon className="icon" />
-              <span>Users</span>
-            </li>
-          </Link>
+          
           
           
           <li onClick={logout}>

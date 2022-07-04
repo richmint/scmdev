@@ -29,14 +29,14 @@ const Factorytable = () => {
         return (
           <div className="cellAction">
             <Link to="/users/test" style={{ textDecoration: "none" }}>
-              <div className="viewButton">View</div>
+              <div className="deleteButton">Delete</div>
             </Link>
-            <div
+            {/* <div
               className="deleteButton"
               onClick={() => handleDelete(params.row.id)}
             >
               Delete
-            </div>
+            </div> */}
           </div>
         );
       },
@@ -46,7 +46,7 @@ const Factorytable = () => {
     <div className="datatable">
       <div className="datatableTitle">
         Factory
-        <Link to="/factory/new" className="link">
+        <Link to="/admin/factory/new" className="link">
           Add New
         </Link>
       </div>
