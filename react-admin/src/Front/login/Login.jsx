@@ -4,6 +4,8 @@ import {useForm} from 'react-hook-form';
 //import { fetch, success } from './LoginSlice'
 import "./login.scss"
 import { useNavigate } from "react-router-dom";
+
+import { row } from 'bootstrap-4-react';
 const Login = () => { 
   const navigate = useNavigate();
   const {register, handleSubmit, formState: { errors }} = useForm({
@@ -60,7 +62,7 @@ const Login = () => {
     );
   // JSX code for login form
   const renderForm = (
-    <div className="form">
+    <div className="form frontlogin">
      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="input-container">
           <label>Username </label>

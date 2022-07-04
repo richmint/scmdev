@@ -28,14 +28,14 @@ const RawMaterialSupplier = () => {
         return (
           <div className="cellAction">
             <Link to="/users/test" style={{ textDecoration: "none" }}>
-              <div className="viewButton">View</div>
+              <div className="deleteButton">Delete</div>
             </Link>
-            <div
+            {/* <div
               className="deleteButton"
               onClick={() => handleDelete(params.row.id)}
             >
               Delete
-            </div>
+            </div> */}
           </div>
         );
       },
@@ -45,7 +45,7 @@ const RawMaterialSupplier = () => {
     <div className="datatable">
       <div className="datatableTitle">
         Users
-        <Link to="/rawmaterialsupplier/new" className="link">
+        <Link to="/admin/rawmaterialsupplier/new" className="link">
           Add New
         </Link>
       </div>
