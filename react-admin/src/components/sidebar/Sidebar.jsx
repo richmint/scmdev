@@ -4,12 +4,22 @@ import "./sidebar.scss";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import StoreIcon from "@mui/icons-material/Store";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
+import { makeLogout } from '../../pages/login/LoginSlice';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   const { dispatch } = useContext(DarkModeContext);
+  const dispatchStore = useDispatch() 
+  const onLogOut = ()=>{
+    localStorage.removeItem("auth_token");
+    dispatchStore(makeLogout());
+    navigate("/admin/login");
+  }
   return (
     <div className="sidebar">
       <div className="top">
@@ -65,7 +75,7 @@ const Sidebar = () => {
           </Link>
           
           
-          <li>
+          <li onClick={()=>onLogOut()}>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>
           </li>
@@ -76,10 +86,10 @@ const Sidebar = () => {
           className="colorOption"
           onClick={() => dispatch({ type: "LIGHT" })}
         ></div>
-        <div
-          className="colorOption"
-          onClick={() => dispatch({ type: "DARK" })}
-        ></div>
+          <div
+            className="colorOption"
+            onClick={() => dispatch({ type: "DARK" })}
+          ></div>
       </div>
     </div>
   );

@@ -1,54 +1,53 @@
-import React,{useEffect, useState} from 'react';
-import { useSelector, useDispatch } from 'react-redux'
+import React from 'react';
+import { useDispatch } from 'react-redux'
 import {useForm} from 'react-hook-form';
-import { fetch, success } from './LoginSlice'
+import { setToken } from './LoginSlice'
 import "./login.scss"
 import { useNavigate } from "react-router-dom";
+import { useSignInMutation } from '../../API/adminAuth';
+import { useCallback } from 'react';
+import { useEffect } from 'react';
 const Login = () => {
+  const [signIn,{data,isError,error,isSuccess,isLoading}] = useSignInMutation();
   const navigate = useNavigate();
   const {register, handleSubmit, formState: { errors }} = useForm({
     defaultValues: {
-      username: '',
+      email: '',
       password: ''
     }
-  })
-  const state = useSelector((state) => state);
+  });
+
   const dispatch = useDispatch();
+  useEffect(()=> {
+    if(isSuccess && data){
+        localStorage.setItem("auth_token",data.token)
+        dispatch(setToken(data));
+        navigate("/admin/home");
+    }
+  },[isSuccess]) 
 
-
-
-  const [errorMessages, setErrorMessages] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
- 
- 
   const onSubmit = (values) => {
-    console.log("login form values",values)
-    dispatch(fetch());
-    dispatch(success(values))
-    navigate("/admin/home")
+    signIn({...values, "role":"Supplier"});
   }
  
-  const renderErrorMessage = (name) =>
-    name === errorMessages.name && (
-      <div className="error">{errorMessages.message}</div>
-    );
-  // JSX code for login form
-  const renderForm = (
+  const renderForm = () => (
     <div className="form admin-login">
      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="input-container">
           <label>Username </label>
-          <input type="text"  {...register("username", { required: true })} />
-          {errors.username && <span>This field is required</span>}
+          <input type="text"  {...register("email", { required: true })} />
+          {errors.email && <span>This field is required</span>}
         </div>
         <div className="input-container">
           <label>Password </label>
           <input type="password" {...register("password", { required: true })} />
           {errors.password && <span>This field is required</span>}
         </div>
-        <div className="button-container">
-          <input type="submit" />
-        </div>
+        {!isLoading &&
+          <div className="button-container">
+            <input type="submit" />
+          </div>
+        }
       </form>
     </div>
   );
@@ -57,7 +56,7 @@ const Login = () => {
     <div className="app">
       <div className="login-form">
         <div className="title">Admin Login</div>
-        {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+        {renderForm()}
       </div>
     </div>
   );

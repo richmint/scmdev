@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
@@ -19,7 +19,7 @@ import Materialsupplier from "./Front/supplier/Dashboard";
 import Addbatch from "./Front/supplier/AddMaterialForm";
 
 //End Front
-import {BrowserRouter, Routes, Route, useNavigate, Link } from "react-router-dom";
+import {BrowserRouter, Routes, Route, useNavigate, Link, Navigate } from "react-router-dom";
 import { productInputs, userInputs, warehouseInputs, factoryInputs, productApproverInputs, distributerInputs, retailerInputs} from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
@@ -30,8 +30,8 @@ import Factoryform from "./pages/new/Factoryform";
 import Rawmaterialsupplierform from "./pages/new/Rawmaterialsupplierform";
 
 const authorizeRoutes = () => (
-  <>
-  <Route path="home" element={<Home />} />
+  <Routes>
+    <Route path="/admin/home" element={<Home />} />
     <Route path="users">
       <Route index element={<List />} />
       <Route path=":userId" element={<Single />} />
@@ -96,43 +96,14 @@ const authorizeRoutes = () => (
         element={<New inputs={retailerInputs} title="Add New Retailer" />}
       />
     </Route>
-    </>
+    </Routes>
 )
 
-const authRoute = () => (
-  <Route path="login" element={<Login />} />
-)
-
-const AuthHandler = () => {
-  const navigate = useNavigate();
-  const loginState = useSelector((state)=>state.login);
-  const {auth} = loginState;
-
-  useEffect(()=>{
-    console.log("Login State",auth);
-   if(auth){
-    console.log("send to login page",auth);
-    navigate("home");
-   }else{
-    navigate("login");
-   }
-  },[auth]);
-
-  return (
-    <div>
-      <h1>Welcome to the app!</h1>
-      <nav>
-        {!auth && <Link to="login">Login</Link>}
-        {auth && <Link to="home">Home</Link>}
-      </nav>
-    </div>
-  )
-}
 
 const LandingPage = () => (
     <div> 
       <h1>Welcome to the Supply Chain Management</h1>
-      <Link to="/userlogin" style={{ textDecoration: "none" }}>
+        <Link to="/userlogin" style={{ textDecoration: "none" }}>
           <button>Login</button>
         </Link>
     </div>
@@ -140,25 +111,32 @@ const LandingPage = () => (
 
 function App() {  
   const { darkMode } = useContext(DarkModeContext);
-  const loginState = useSelector((state)=>state.login);
-  const {auth} = loginState;
+  const AdminAuth = useSelector(state=>state.adminAuth);
+  const [token,setToken] = useState(undefined);
+  
+  useEffect(()=>{
+    if(AdminAuth){
+      setToken(AdminAuth.token || undefined);
+    }
+  },[AdminAuth]);
 
   return (
     <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
+           <Routes>
+              <Route index path="/admin" element={token ? <Navigate to={"/admin/home"} /> : <Navigate to={"/admin/login"} />} />
+              <Route path="/admin/login" element={token ? <Navigate to={"/admin/home"} />  : <Login />} /> 
+              <Route path="/admin/home" element={token ? <Home /> : <Navigate to={"/admin/login"} />} />
+              <Route path="/admin/warehouse" element={token ? <WarehouseList />: <Navigate to={"/admin/login"} />} />
+              <Route path="/admin/warehouse/:warehouseId" element={token ? <Single />: <Navigate to={"/admin/login"} />} />
+              <Route path="/admin/warehouse/new" element={token ? <Warehouseform inputs={warehouseInputs} title="Add New Warehouse" /> : <Navigate to={"/admin/login"} />} />
+            </Routes>
         <Routes>
-          <Route path="/admin">
-            <Route index path="/admin" element={<AuthHandler />} />
-            {auth && authorizeRoutes()}
-            {!auth && authRoute() }
-          </Route>
-          <Route path="/">
             <Route index path="/" element={<LandingPage />} />
             <Route index path="/userlogin" element={<Userlogin />} />
             <Route index path="/profile" element={<Profile />} />
             <Route index path="/material-supplier" element={<Materialsupplier />} />
             <Route index path="/addbatch" element={<Addbatch />} />
-          </Route>
         </Routes>
       </BrowserRouter>
     </div>

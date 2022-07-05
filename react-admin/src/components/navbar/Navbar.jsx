@@ -14,11 +14,11 @@ const Navbar = (props) =>{
 	let rmsContractAddress = '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0';
  
     const { dispatch,metaMask,warehouseContract,factoryContract,rowmaterialContract } = useContext(DarkModeContext);
-	const [errorMessage, setErrorMessage] = useState(null);
+	// const [errorMessage, setErrorMessage] = useState(null);
 	const [defaultAccount, setDefaultAccount] = useState(null);
-	const [connButtonText, setConnButtonText] = useState('Connect Wallet');
-	const [currentContractVal, setCurrentContractVal] = useState(null);
-	const [provider, setProvider] = useState(null);
+	// const [connButtonText, setConnButtonText] = useState('Connect Wallet');
+	// const [currentContractVal, setCurrentContractVal] = useState(null);
+	// const [provider, setProvider] = useState(null);
 	const [signer, setSigner] = useState(null);
 	const [whContract, setwhContract] = useState(warehouseContract);
 	const [fContract, setfContract] = useState(factoryContract);
@@ -34,16 +34,16 @@ const Navbar = (props) =>{
 			window.ethereum.request({ method: 'eth_requestAccounts'})
 			.then(result => {
 				accountChangedHandler(result[0]);
-				setConnButtonText('Wallet Connected');
+				// setConnButtonText('Wallet Connected');
 			})
 			.catch(error => {
-				setErrorMessage(error.message);
+				// setErrorMessage(error.message);
 			
 			});
 
 		} else {
 			console.log('Need to install MetaMask');
-			setErrorMessage('Please install MetaMask browser extension to interact');
+			// setErrorMessage('Please install MetaMask browser extension to interact');
 		}
 	}
 
@@ -69,7 +69,7 @@ const Navbar = (props) =>{
 
 	const updateEthers = () => {
 		let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
-		setProvider(tempProvider);
+		// setProvider(tempProvider);
 
 		let tempSigner = tempProvider.getSigner();
 		setSigner(tempSigner);
