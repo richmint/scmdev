@@ -8,9 +8,9 @@ import store from "./store";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <DarkModeContextProvider>
-        <App />
-      </DarkModeContextProvider>
+        <DarkModeContextProvider>
+          <App />
+        </DarkModeContextProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
