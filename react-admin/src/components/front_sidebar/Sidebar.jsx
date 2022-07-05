@@ -38,13 +38,13 @@ const Sidebar = () => {
               <span>Add a Batch</span>
             </li>
           </Link>
-          <Link to="/factory" style={{ textDecoration: "none" }}>
+          <Link to="/supplyToken" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
               <span>View Supply Tokens</span>
             </li>
           </Link>
-          <Link to="/rawmaterialsupplier" style={{ textDecoration: "none" }}>
+          <Link to="/approveSupplier" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
               <span>Approve Supply Tokens</span>

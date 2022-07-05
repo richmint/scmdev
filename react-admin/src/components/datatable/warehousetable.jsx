@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 const Warehousetable = () => {
   const [data, setData] = useState([]);
-
+ 
   useEffect(()=>{
     warehouseRows().then(result=>{
       //console.log("Data Table Reuslt = ", result);
