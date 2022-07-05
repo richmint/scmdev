@@ -24,7 +24,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   },
   rinkeby: {
     url: "https://speedy-nodes-nyc.moralis.io/3b50a8f528f7397fd9f310cf/eth/rinkeby", //Infura url with projectId
-    accounts: ["88cecca152589d771d750515b4bc98051b34348fd8d81c56c2e56f1d7795c4d7"] // add the account that will deploy the contract (private key)
+    accounts: ["28c80c76dc8dbfb442d93503d7583f645d96881346129be7ef74c01a8ad13378"] // add the account that will deploy the contract (private key)
    }
   },
   paths:{
@@ -32,3 +32,4 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   }
 
 };
+
