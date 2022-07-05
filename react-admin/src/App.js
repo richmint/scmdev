@@ -17,6 +17,9 @@ import Userlogin from "./Front/login/Login";
 import Profile from "./Front/user/Profile";
 import Materialsupplier from "./Front/supplier/Dashboard";
 import Addbatch from "./Front/supplier/AddMaterialForm";
+import Approvesupplier from "./Front/supplier/ApproveSupply";
+import ViewSupplyToken from "./Front/supplier/viewSupplyToken";
+
 
 //End Front
 import {BrowserRouter, Routes, Route, useNavigate, Link } from "react-router-dom";
@@ -158,6 +161,8 @@ function App() {
             <Route index path="/profile" element={<Profile />} />
             <Route index path="/material-supplier" element={<Materialsupplier />} />
             <Route index path="/addbatch" element={<Addbatch />} />
+            <Route index path="/supplyToken" element={<ViewSupplyToken />} />
+            <Route index path="/approveSupplier" element={<Approvesupplier />} />
           </Route>
         </Routes>
       </BrowserRouter>
