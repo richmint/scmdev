@@ -8,7 +8,9 @@ const INITIAL_STATE = {
   warehouseContract:null,
   factoryContract:null,
   rowmaterialContract:null,
-  darkMode: false,
+  supplyChainContract:null,
+  supplyChainTokenContract:null,
+  darkMode: false, 
 };
 
 export const DarkModeContext = createContext(INITIAL_STATE);
@@ -17,7 +19,7 @@ export const DarkModeContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(DarkModeReducer, INITIAL_STATE);
 
   return (
-    <DarkModeContext.Provider value={{ darkMode: state.darkMode,warehouseContract:state.warehouseContract,factoryContract:state.factoryContract, rowmaterialContract:state.rowmaterialContract, metaMask: state.metaMask, dispatch }}>
+    <DarkModeContext.Provider value={{ darkMode: state.darkMode,warehouseContract:state.warehouseContract,factoryContract:state.factoryContract, rowmaterialContract:state.rowmaterialContract, supplyChainContract:state.supplyChainContract, supplyChainTokenContract:state.supplyChainTokenContract,  metaMask: state.metaMask, dispatch }}>
       {children}
     </DarkModeContext.Provider>
   );

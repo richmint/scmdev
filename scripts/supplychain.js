@@ -13,10 +13,10 @@ async function main() {
         retailerSigner2, 
         customerSigner
         ] = await ethers.getSigners();
-  const RawMaterialSupplier = await ethers.getContractFactory("RawMaterialSupplier");
-  const rawMaterialSupplier = await RawMaterialSupplier.deploy();
-  await rawMaterialSupplier.deployed();
-  console.log("RawMaterialSupplier deployed to:", rawMaterialSupplier.address);
+  // const RawMaterialSupplier = await ethers.getContractFactory("RawMaterialSupplier");
+  // const rawMaterialSupplier = await RawMaterialSupplier.deploy();
+  // await rawMaterialSupplier.deployed();
+  // console.log("RawMaterialSupplier deployed to:", rawMaterialSupplier.address);
 
   const SupplyChainToken = await ethers.getContractFactory("SupplyChainToken");
   const supplyChainToken = await SupplyChainToken.deploy();

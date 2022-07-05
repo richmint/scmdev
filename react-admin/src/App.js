@@ -133,16 +133,25 @@ function App() {
               <Route path="/admin/warehouse" element={token ? <WarehouseList />: <Navigate to={"/admin/login"} />} />
               <Route path="/admin/warehouse/:warehouseId" element={token ? <Single />: <Navigate to={"/admin/login"} />} />
               <Route path="/admin/warehouse/new" element={token ? <Warehouseform inputs={warehouseInputs} title="Add New Warehouse" /> : <Navigate to={"/admin/login"} />} />
+              <Route path="/admin/factory" element={token ? <FactoryList />: <Navigate to={"/admin/login"} />} />
+              <Route path="/admin/factory/:factoryId" element={token ? <Single />: <Navigate to={"/admin/login"} />} />
+              <Route path="/admin/factory/new" element={token ? <Factoryform inputs={factoryInputs} title="Add New Factory" /> : <Navigate to={"/admin/login"} />} />
+              <Route path="/admin/rawmaterialsupplier" element={token ? <RawMaterialSupplierList />: <Navigate to={"/admin/login"} />} />
+              <Route path="/admin/rawmaterialsupplier/:rawmaterialsupplierId" element={token ? <Single />: <Navigate to={"/admin/login"} />} />
+              <Route path="/admin/rawmaterialsupplier/new" element={token ? <Rawmaterialsupplierform inputs={warehouseInputs} title="Add New Factory" /> : <Navigate to={"/admin/login"} />} />
+              <Route path="/admin/users" element={token ? <List />: <Navigate to={"/admin/login"} />} />
+              <Route path="/admin/users/:userId" element={token ? <Single />: <Navigate to={"/admin/login"} />} />
+              <Route path="/admin/users/new" element={token ? <New inputs={userInputs} title="Add New User" /> : <Navigate to={"/admin/login"} />} />
             </Routes>
-        <Routes>
-            <Route index path="/" element={<LandingPage />} />
-            <Route index path="/userlogin" element={<Userlogin />} />
-            <Route index path="/profile" element={<Profile />} />
-            <Route index path="/material-supplier" element={<Materialsupplier />} />
-            <Route index path="/addbatch" element={<Addbatch />} />
-            <Route index path="/supplyToken" element={<ViewSupplyToken />} />
-            <Route index path="/approveSupplier" element={<Approvesupplier />} />
-        </Routes>
+            <Routes>
+              <Route index path="/" element={<LandingPage />} />
+              <Route index path="/userlogin" element={<Userlogin />} />
+              <Route index path="/profile" element={<Profile />} />
+              <Route index path="/material-supplier" element={<Materialsupplier />} />
+              <Route index path="/addbatch" element={<Addbatch />} />
+              <Route index path="/supplyToken" element={<ViewSupplyToken />} />
+              <Route index path="/approveSupplier" element={<Approvesupplier />} />
+            </Routes>
       </BrowserRouter>
     </div>
   );

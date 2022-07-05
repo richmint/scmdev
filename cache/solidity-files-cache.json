@@ -147,8 +147,8 @@
       ]
     },
     "C:\\xampp\\htdocs\\scm\\contracts\\Supplychain.sol": {
-      "lastModificationDate": 1656663440955,
-      "contentHash": "65fac7ac370b91ceb6117bb8e8271136",
+      "lastModificationDate": 1657006781773,
+      "contentHash": "abf81dbe27c21ae18ff8ef5dc1e91936",
       "sourceName": "contracts/Supplychain.sol",
       "solcConfig": {
         "version": "0.8.8",
@@ -183,7 +183,8 @@
         "./Roles/Customer.sol",
         "@openzeppelin/contracts/utils/Counters.sol",
         "@openzeppelin/contracts/token/ERC1155/IERC1155.sol",
-        "./SupplyChainERC1155.sol"
+        "./SupplyChainERC1155.sol",
+        "hardhat/console.sol"
       ],
       "versionPragmas": [
         "^0.8.4"
@@ -493,8 +494,8 @@
       ]
     },
     "C:\\xampp\\htdocs\\scm\\contracts\\SupplyChainERC1155.sol": {
-      "lastModificationDate": 1656663440953,
-      "contentHash": "753f3a278a1ad215e330f3134f86291d",
+      "lastModificationDate": 1657006781773,
+      "contentHash": "b0e1ea903533a1c1ae7c5da1495dbf8c",
       "sourceName": "contracts/SupplyChainERC1155.sol",
       "solcConfig": {
         "version": "0.8.8",
@@ -520,14 +521,15 @@
         }
       },
       "imports": [
-        "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         "@openzeppelin/contracts/access/Ownable.sol",
-        "@openzeppelin/contracts/utils/Counters.sol"
+        "@openzeppelin/contracts/utils/Counters.sol",
+        "@openzeppelin/contracts/utils/Address.sol"
       ],
       "versionPragmas": [
         "^0.8.4"
       ],
       "artifacts": [
+        "ERC1155",
         "ERC1155Supply",
         "SupplyChainToken"
       ]
@@ -755,10 +757,10 @@
         "ERC165"
       ]
     },
-    "C:\\xampp\\htdocs\\scm\\contracts\\SimpleStorage.sol": {
-      "lastModificationDate": 1656663440953,
-      "contentHash": "23d92845be00f269933f24dad48238e8",
-      "sourceName": "contracts/SimpleStorage.sol",
+    "C:\\xampp\\htdocs\\scm\\node_modules\\hardhat\\console.sol": {
+      "lastModificationDate": 1656402279805,
+      "contentHash": "cc4777addd464ea56fa35b1c45df0591",
+      "sourceName": "hardhat/console.sol",
       "solcConfig": {
         "version": "0.8.8",
         "settings": {
@@ -784,10 +786,10 @@
       },
       "imports": [],
       "versionPragmas": [
-        "0.8.8"
+        ">=0.4.22 <0.9.0"
       ],
       "artifacts": [
-        "SimpleStorage"
+        "console"
       ]
     }
   }
