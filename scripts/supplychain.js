@@ -19,32 +19,32 @@ async function main() {
   // await rawMaterialSupplier.deployed();
   // console.log("RawMaterialSupplier deployed to:", rawMaterialSupplier.address);
 
-  // const SupplyChainToken = await ethers.getContractFactory("SupplyChainToken");
-  // const supplyChainToken = await SupplyChainToken.deploy();
-  // await supplyChainToken.deployed();
-  // console.log("SupplyChainToken deployed to:", supplyChainToken.address);
+  const SupplyChainToken = await ethers.getContractFactory("SupplyChainToken");
+  const supplyChainToken = await SupplyChainToken.deploy();
+  await supplyChainToken.deployed();
+  console.log("SupplyChainToken deployed to:", supplyChainToken.address);
 
-  // const Supplychain = await ethers.getContractFactory("Supplychain");
-  // const supplychain = await Supplychain.deploy(supplyChainToken.address);
-  // await supplychain.deployed();
-  // console.log("Supplychain deployed to:", supplychain.address);
+  const Supplychain = await ethers.getContractFactory("Supplychain");
+  const supplychain = await Supplychain.deploy(supplyChainToken.address);
+  await supplychain.deployed();
+  console.log("Supplychain deployed to:", supplychain.address);
 
-  const supplyChainToken = await ethers.getContractAt("SupplyChainToken","0x93871CCdF4e3f3b4c6EF761c44E5C1Ad6192D93c")
-  const supplychain =await ethers.getContractAt("Supplychain","0x735916bB171DBB995937Bddc16f7142daB0c84D1")
+  // const supplyChainToken = await ethers.getContractAt("SupplyChainToken","0x93871CCdF4e3f3b4c6EF761c44E5C1Ad6192D93c")
+  // const supplychain =await ethers.getContractAt("Supplychain","0x735916bB171DBB995937Bddc16f7142daB0c84D1")
 
   // console.log(await provider.getBalance(adminSigner.address))
   // console.log(await provider.getBalance(rawMaterialSupplierSigner1.address))
 
   // console.log("SupplychainToken owner: ",await supplyChainToken.owner());  
-  // console.log("Transfering ownership to supplychain contract...");
-  // await supplyChainToken.transferOwnership(supplychain.address);
+  console.log("Transfering ownership to supplychain contract...");
+  await supplyChainToken.transferOwnership(supplychain.address);
   // console.log("SupplychainToken owner: ",await supplyChainToken.owner());  
 
-  console.log("Adding a RawMaterialSupplier...");
-  console.log(await supplychain.isRawMaterialSupplier(rawMaterialSupplierSigner1.address))
-  // await supplychain.addRawMaterialSupplier(rawMaterialSupplierSigner1.address);
-  // await supplychain.addRawMaterialSupplier(rawMaterialSupplierSigner2.address);
+  // console.log("Adding a RawMaterialSupplier...");
   // console.log(await supplychain.isRawMaterialSupplier(rawMaterialSupplierSigner1.address))
+  await supplychain.addRawMaterialSupplier(rawMaterialSupplierSigner1.address);
+  // await supplychain.addRawMaterialSupplier(rawMaterialSupplierSigner2.address);
+  console.log(await supplychain.isRawMaterialSupplier(rawMaterialSupplierSigner1.address))
 
   // console.log("Adding a Warehouse Admin ...");
   // await supplychain.addWarehouse(warehouseSigner.address);

@@ -9,8 +9,8 @@ import { useContext } from "react";
 import { ethers } from 'ethers';
 import "./navbar.scss";
 const Navbar = (props) => {
-	let supplyChainTokenAddress = '0x93871CCdF4e3f3b4c6EF761c44E5C1Ad6192D93c';
-	let supplyChainAddress = '0x735916bB171DBB995937Bddc16f7142daB0c84D1';
+	let supplyChainTokenAddress = '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707';
+	let supplyChainAddress = '0x0165878A594ca255338adfa4d48449f69242Eb8F';
 
 
 	const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract } = useContext(DarkModeContext);
