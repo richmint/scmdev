@@ -11,7 +11,6 @@ import "@openzeppelin/contracts/utils/Address.sol";
 // import "@openzeppelin/contracts/token/ERC1155/../../utils/introspection/IERC165.sol";
 
 
-
 contract ERC1155 is Context {
     using Address for address;
     mapping(uint256 => mapping(address => uint256)) private _balances;

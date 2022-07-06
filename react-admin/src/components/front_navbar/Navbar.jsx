@@ -9,8 +9,8 @@ import { useContext } from "react";
 import { ethers } from 'ethers';
 import "./navbar.scss";
 const Navbar = (props) => {
-	let supplyChainTokenAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
-	let supplyChainAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
+	let supplyChainTokenAddress = '0x93871CCdF4e3f3b4c6EF761c44E5C1Ad6192D93c';
+	let supplyChainAddress = '0x735916bB171DBB995937Bddc16f7142daB0c84D1';
 
 
 	const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract } = useContext(DarkModeContext);
@@ -66,7 +66,7 @@ const Navbar = (props) => {
 	window.ethereum.on('accountsChanged', accountChangedHandler);
 	window.ethereum.on('chainChanged', chainChangedHandler);
 
-	const updateEthers = () => {
+	const updateEthers = async () => {
 		let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
 		setProvider(tempProvider);
 
@@ -75,15 +75,15 @@ const Navbar = (props) => {
 
 		let supplychaintempContract = new ethers.Contract(supplyChainAddress, Supplychain_abi.abi, tempSigner);
 		setSChainContract(supplychaintempContract);
-		//console.log("asdasd",supplychaintempContract);
+		// console.log("supplychaintempContract",supplychaintempContract);
 		dispatch({ type: "updateSupplychain", supplyChainContract: supplychaintempContract })
-
+		// console.log(await supplychaintempContract.totalBatchs());
+  
 		let supplychaintokentempContract = new ethers.Contract(supplyChainTokenAddress, SupplychainToken_abi.abi, tempSigner);
 		setSChainTokenContract(supplychaintokentempContract);
 		dispatch({ type: "updateSupplychainToken", supplyChainTokenContract: supplychaintokentempContract })
-
-
-
+		// console.log("supplychaintokentempContract",supplychaintokentempContract);
+		// console.log(await supplyChainContract.totalBatchs())
 	}
 
 
