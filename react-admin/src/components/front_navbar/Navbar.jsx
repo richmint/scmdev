@@ -9,11 +9,11 @@ import { useContext } from "react";
 import { ethers } from 'ethers';
 import "./navbar.scss";
 const Navbar = (props) => {
-	let supplyChainTokenAddress = '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707';
-	let supplyChainAddress = '0x0165878A594ca255338adfa4d48449f69242Eb8F';
+	let supplyChainTokenAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
+	let supplyChainAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
 
-	const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract } = useContext(DarkModeContext);
+	const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownerSupplyChainAddress } = useContext(DarkModeContext);
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [defaultAccount, setDefaultAccount] = useState(null);
 	const [connButtonText, setConnButtonText] = useState('Connect Wallet');
@@ -22,11 +22,11 @@ const Navbar = (props) => {
 	const [signer, setSigner] = useState(null);
 	const [SChainContract, setSChainContract] = useState(supplyChainContract);
 	const [SChainTokenContract, setSChainTokenContract] = useState(supplyChainTokenContract);
+	const [OwnSupplyChainAddress, setOwnSupplyChainAddress] = useState(ownerSupplyChainAddress);
 
 	useEffect(() => {
 		connectWalletHandler();
 	}, []);
-
 	const connectWalletHandler = () => {
 		if (window.ethereum && window.ethereum.isMetaMask) {
 
@@ -51,6 +51,9 @@ const Navbar = (props) => {
 	const accountChangedHandler = (newAccount) => {
 		setDefaultAccount(newAccount);
 		dispatch({ type: "setMetask", data: newAccount })
+
+		setOwnSupplyChainAddress(newAccount);
+		dispatch({ type: "updatOwnSupplyChainAddress", ownSupplyChainAddress: newAccount })
 
 		console.log('accountChangedHandler called ', newAccount);
 		updateEthers();
@@ -84,10 +87,10 @@ const Navbar = (props) => {
 		dispatch({ type: "updateSupplychainToken", supplyChainTokenContract: supplychaintokentempContract })
 		// console.log("supplychaintokentempContract",supplychaintokentempContract);
 		// console.log(await supplyChainContract.totalBatchs())
+		
 	}
 
-
-	const name = signer
+//console.log("Navbar",SChainContract.items(0));
 
 	return (
 		<div className="navbar">
@@ -109,7 +112,6 @@ const Navbar = (props) => {
 							onClick={() => dispatch({ type: "TOGGLE" })}
 						/>
 					</div>
-
 					<div className="item">
 
 						<img

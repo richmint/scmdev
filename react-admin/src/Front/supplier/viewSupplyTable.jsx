@@ -1,141 +1,84 @@
-// import React from "react";
-// import './viewSupplyTable.scss';
-// import { DataGrid } from "@mui/x-data-grid";
-// import { warehouseColumns,warehouseRows } from "../../datatablesource";
-// import { Link } from "react-router-dom";
-// import { useEffect,useState } from "react";
 
-// const ViewSupplyTable = () =>{
-
-//     const [data , setData] = useState([]);
-
-//     useEffect(()=>{
-//         warehouseRows().then(result=>{
-//           //console.log("Data Table Reuslt = ", result);
-//           setData(result); 
-//         })
-//       },[]);
-//     // data.map((item,id)=>console.log(item,id));
-    
-
-//     // const handleDelete = (id) => {
-//     //     setData(data.filter((item) => item.id !== id ));
-//     // };
-
-//     const actionColumn = [
-//         // console.log("Action column")
-//         {
-//             field:"action",
-//             headerName: "Action",
-//             width: 200,
-//             renderCell : () =>{
-//                 return(
-//                     <div className="cellAction">
-//                         <Link style={{textDecoration: "none"}} >
-//                             <div className="viewButton">View</div>
-//                         </Link>
-//                         <div className="deleteButton"
-//                             >Delete
-//                         </div>
-//                     </div>
-//                 )
-//             }
-//         }
-//     ]
-
-
-
-//     return( 
-//         <div className="datatable">
-//             <div className="datatableTitle">
-//                 {/* <Link className="link">Add New</Link> */}
-//             </div>
-//             {
-//                 data.length > 0 &&
-//                 <DataGrid
-//                     className="datagrid"
-//                     rows={data}
-//                     columns={warehouseColumns.concat(actionColumn)}
-//                     pageSize={9}
-//                     getRowId={(row) => row._id}
-//                     rowsPerPageOptions={[9]}
-//                     checkboxSelection
-//                 />
-//             }
-//         </div>
-//     )
-// }
-
-// export default ViewSupplyTable
-
-
-
-import React from 'react';
-
+import React, { useEffect, useState, useContext } from 'react';
 import "./viewSupplyTable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { rowMaterialSupplyColumns, rawMaterialSupplierRows } from "../../datatablesource";
+import { warehouseColumns, warehouseRows } from "../../datatablesource";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { DarkModeContext } from "../../context/darkModeContext";
+
+
 const ViewSupplyTable = () => {
+
   const [data, setData] = useState([]);
- 
+  const [materiallist, setMateriallist] =  useState(null);
+  
+  const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress } = useContext(DarkModeContext);
+
+  const allsupplymateriallist = [];
+  const getSupplyChainHandler = async (event) => {
+
+    console.log("Supplier Owner Address ", ownSupplyChainAddress)
+    const totalbatchids = await supplyChainTokenContract.getMySupplyTokens(ownSupplyChainAddress);
+    //console.log(totalbatchids);
+
+    for (let i = 0; i < totalbatchids.length; i++) {
+      let object = await supplyChainContract.items(totalbatchids[i].toNumber());
+      //console.log(totalbatchids[i].toNumber());
+      //console.log("myrecord", object.PolyesterAmount.toNumber());
+      if (object.itemState === 0) {
+        // console.log("inner loop", object.PolyesterAmount.toNumber());
+        // console.log("cotton loop", object.CottonAmount.toNumber());
+        allsupplymateriallist.push(
+          <><tr>
+            <td>{object.PolyesterAmount.toNumber()}</td>
+            <td>{object.CottonAmount.toNumber()}</td>
+            <td>{object.WoolAmount.toNumber()}</td>
+          </tr></>
+        )
+       
+      } else {
+        allsupplymateriallist.push(
+          <><tr>
+            <td colSpan="2">No Record Found</td>
+          </tr></>
+        )
+      }
+     
+    }
+    setMateriallist(allsupplymateriallist);
+  }
+
   useEffect(()=>{
-    rawMaterialSupplierRows().then(result=>{
-      //console.log("Data Table Reuslt = ", result);
-      setData(result); 
-    })
+    getSupplyChainHandler();
   },[]);
-
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-  };
-
-  const actionColumn = [
-    {
-      field: "action",
-      headerName: "Action",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="cellAction">
-            <Link to="/admin/users/test" style={{ textDecoration: "none" }}>
-              <div className="deleteButton">Delete</div>
-            </Link>
-            {/* <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Delete
-            </div> */}
-          </div>
-        );
-      },
-    },
-  ];
+ 
   return (
-    <div className="datatable">
-      <div className="datatableTitle">
-        Supply Token List
-        {/* <Link to="/admin/warehouse/new" className="link">
-          Add New
-        </Link> */}
+    <>
+      <div className="new">
+        <div className="newContainer">
+          <div className="top">
+          </div>
+          <div className="bottom">
+            <div className="right">
+              
+              <table>
+                <tr>
+                  <th>Polyster Amount</th>
+                  <th>Cotton Amount</th>
+                  <th>Wool Amount</th>
+                </tr>
+                {materiallist}
+              </table>
+
+            </div>
+          </div>
+        </div>
       </div>
-      {
-        data.length > 0 && 
-          <DataGrid
-            className="datagrid"
-            rows={data}
-            columns={rowMaterialSupplyColumns.concat(actionColumn)}
-            pageSize={9}
-            getRowId={(row) => row._id}
-            rowsPerPageOptions={[9]}
-            checkboxSelection
-          />
-        }
-    </div>
+    </>
   );
+
 };
 
 export default ViewSupplyTable;
+
 

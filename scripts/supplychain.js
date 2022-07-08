@@ -103,7 +103,7 @@ async function main() {
   // console.log(await supplyChainToken.balanceOf(adminSigner.address,0));
   // console.log(await supplyChainToken.totalSupply(0));
   // console.log(await supplyChainToken.balanceOf(rawMaterialSupplierSigner1.address,0));
-
+ 
   // console.log(await supplyChainToken.isApprovedForAll(rawMaterialSupplierSigner1.address,supplychain.address))
   // await supplyChainToken.connect(rawMaterialSupplierSigner1).setApprovalForAll(supplychain.address,true);
   // await supplyChainToken.connect(rawMaterialSupplierSigner2).setApprovalForAll(supplychain.address,true);

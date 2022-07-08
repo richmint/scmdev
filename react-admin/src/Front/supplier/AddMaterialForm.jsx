@@ -20,40 +20,23 @@ const Materialsupplier = ({ inputs, title, value }) => {
       pollyster: '',
       cotton: '',
       wool: ''
-    }
+    } 
   })
 
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [allWarehouse, setAllWarehouse] = useState(null);
-  const [defaultAccount, setdefaultAccount] = useState(null);
   const [SChainContract, setContract] = useState(supplyChainContract);
-  const [SChainTokenContract, setSChainTokenContract] = useState(supplyChainTokenContract);
   const [user,setUser] = useState(JSON.parse(sessionStorage.getItem('user'))); 
   
   
 
-  //console.log("whContract",whContract);
+  //console.log("SChainContract",SChainContract);
   const addSupplyChainHandler = async (event) => {
     event.preventDefault();
-    // console.log("The coming dats is ",event); 
     // console.log(await supplyChainContract.totalBatchs())
     const tx = await supplyChainContract.rawMaterialSupplierSuppliesRM(event.target.polysteramount.value, event.target.cottonamount.value, event.target.woolamount.value);
-    console.log((await tx.wait()));
-    //   const requestOptions = {
-    //       method: 'POST',
-    //       headers: { 'Content-Type': 'application/json' },
-    //       body: JSON.stringify({
-    //         "hashAddress":event.target.hashAddress.value,
-    //         "name":event.target.name.value,
-    //         "email":event.target.email.value,
-    //         "address":event.target.location.value,
-    //         "password":event.target.hashAddress.value,
-    //         "role":'Warehouse'
-    //         })
-    //   };
-    //   fetch('http://162.215.222.118:5150/register', requestOptions)
-    //       .then(response => response.json());
-     
+    //console.log((await tx.wait()));
+    if(tx){
+       navigate("/supplyToken")
+    }
   }
 
  

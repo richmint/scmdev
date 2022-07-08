@@ -50,6 +50,28 @@ const Sidebar = () => {
               <span>Approve Supply Tokens</span>
             </li>
           </Link>
+
+
+          <Link to="/availableRawMaterialToBuy" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>Available Raw Material to Buy</span>
+            </li>
+          </Link>
+          <Link to="/approveFactorySupplier" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>Approve Supply Token</span>
+            </li>
+          </Link>
+          <Link to="/sellItemToDistributer" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>Sell Item to Distributer</span>
+            </li>
+          </Link>
+
+
           {/* <Link to="/product-approver" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />

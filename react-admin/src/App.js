@@ -19,6 +19,13 @@ import Materialsupplier from "./Front/supplier/Dashboard";
 import Addbatch from "./Front/supplier/AddMaterialForm";
 import Approvesupplier from "./Front/supplier/ApproveSupply";
 import ViewSupplyToken from "./Front/supplier/viewSupplyToken";
+import AvailableRawMaterialToBuy from "./Front/factory/availableRawMaterialToBuy";
+import ApproveFactorySupplier from "./Front/factory/approveSupplyToken";
+import SellItemToDistributer from "./Front/factory/sellItemDistributer";
+import SellItemFormData from './Front/factory/selItemFormData';
+import BuyRawMaterial from './Front/factory/buyRawMaterial';
+
+
 
 
 //End Front
@@ -151,6 +158,11 @@ function App() {
               <Route index path="/addbatch" element={<Addbatch />} />
               <Route index path="/supplyToken" element={<ViewSupplyToken />} />
               <Route index path="/approveSupplier" element={<Approvesupplier />} />
+              <Route index path="/availableRawMaterialToBuy" element={<AvailableRawMaterialToBuy />} />
+              <Route index path="/approveFactorySupplier" element={<ApproveFactorySupplier />} />
+              <Route index path="/sellItemToDistributer" element={<SellItemToDistributer />} /> 
+              <Route index path="/sellItemFormData" element={<SellItemFormData />} />
+              <Route index path="/buyRawMaterial" element={<BuyRawMaterial />} />
             </Routes>
       </BrowserRouter>
     </div>
