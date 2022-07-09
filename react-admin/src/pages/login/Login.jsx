@@ -16,7 +16,7 @@ const Login = () => {
       password: ''
     }
   });
- 
+
   const dispatch = useDispatch();
   useEffect(()=> {
     if(isSuccess && data){
@@ -31,21 +31,21 @@ const Login = () => {
   }
  
   const renderForm = () => (
-    <div className="form admin-login">
+    <div className="form">
      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="input-container">
+        <div className="box">
           <label>Username </label>
-          <input type="text"  {...register("email", { required: true })} />
-          {errors.email && <span>This field is required</span>}
+          <input type="text" style={{width:300,height:20}}  {...register("email", { required: true })} />
+          {errors.email && <span className='error'> *This field is required</span>}
         </div>
-        <div className="input-container">
+        <div className="box">
           <label>Password </label>
-          <input type="password" {...register("password", { required: true })} />
-          {errors.password && <span>This field is required</span>}
+          <input type="password" style={{width:300,height:20}} {...register("password", { required: true })} />
+          {errors.password && <span className='error'> *This field is required</span>}
         </div>
         {!isLoading &&
-          <div className="button-container">
-            <input type="submit" />
+          <div className='btnDiv' style={{marginTop:10}}>
+            <input style={{width:80, height:30 ,color:"gray"}} type="submit" />
           </div>
         }
       </form>
@@ -53,12 +53,13 @@ const Login = () => {
   );
 
   return (
-    <div className="app">
+    <div className='mainDiv'>
       <div className="login-form">
         <div className="title">Admin Login</div>
         {renderForm()}
       </div>
     </div>
+      
   );
 }
 

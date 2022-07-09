@@ -13,7 +13,7 @@ import Sidebar from "../../components/front_sidebar/Sidebar";
 import { DarkModeContext } from "../../context/darkModeContext";
 
 const ApproceMaterialsupplier = ({ inputs, title, value }) => {
-  const { dispatch, metaMask, supplyChainContract ,supplyChainTokenContract } = useContext(DarkModeContext);
+  const { dispatch, metaMask, supplyChainContract ,supplyChainTokenContract,ownSupplyChainAddress } = useContext(DarkModeContext);
   const navigate = useNavigate();  
   const {register, handleSubmit, formState: { errors }} = useForm({
     defaultValues: {
@@ -29,13 +29,19 @@ const ApproceMaterialsupplier = ({ inputs, title, value }) => {
   const approveSupplyChainHandler = async (event) => {
     //event.preventDefault();
     // console.log(await supplyChainContract.totalBatchs())
-    const tx = await supplyChainContract.setApprovalForAll('0x70997970c51812dc3a010c7d01b50e0d17dc79c8', true);
-    //console.log((await tx.wait()));
+    //console.log(supplyChainContract.address);
+    const tx = await supplyChainTokenContract.setApprovalForAll(supplyChainContract.address, true);
+    console.log((await tx.wait()));
     if(tx){
        navigate("/approveSupplier")
     }
   }
   
+  const checkApproveSupplyChainHandler = async (event) => {
+  
+    console.log(await supplyChainTokenContract.isApprovedForAll('0x70997970c51812dc3a010c7d01b50e0d17dc79c8',supplyChainContract.address));
+    
+  }
 
  
   return (
@@ -58,6 +64,7 @@ const ApproceMaterialsupplier = ({ inputs, title, value }) => {
             </form>
           </div>
         </div>
+        <button onClick={checkApproveSupplyChainHandler} type={"button"}> Check Approve </button>
       </div>
     </div>
   );

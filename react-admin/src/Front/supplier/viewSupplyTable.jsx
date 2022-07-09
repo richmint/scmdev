@@ -2,7 +2,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import "./viewSupplyTable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { warehouseColumns, warehouseRows } from "../../datatablesource";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 
