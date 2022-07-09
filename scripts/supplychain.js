@@ -42,9 +42,9 @@ async function main() {
 
   // console.log("Adding a RawMaterialSupplier...");
   // console.log(await supplychain.isRawMaterialSupplier(rawMaterialSupplierSigner1.address))
-  await supplychain.addRawMaterialSupplier(rawMaterialSupplierSigner1.address);
+  await supplychain.addRawMaterialSupplier("0x7Aa3CC2a2dA7eFF96cFF120410Ada47DB93c7e62");
   // await supplychain.addRawMaterialSupplier(rawMaterialSupplierSigner2.address);
-  console.log(await supplychain.isRawMaterialSupplier(rawMaterialSupplierSigner1.address))
+  console.log(await supplychain.isRawMaterialSupplier("0x7Aa3CC2a2dA7eFF96cFF120410Ada47DB93c7e62"))
 
   // console.log("Adding a Warehouse Admin ...");
   // await supplychain.addWarehouse(warehouseSigner.address);
