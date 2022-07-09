@@ -29,7 +29,7 @@ import BuyRawMaterial from './Front/factory/buyRawMaterial';
 
 
 //End Front
-import {BrowserRouter, Routes, Route, useNavigate, Link, Navigate } from "react-router-dom";
+import {BrowserRouter, Routes, Route, useNavigate, Link, Navigate, Switch, Router } from "react-router-dom";
 import { productInputs, userInputs, warehouseInputs, factoryInputs, productApproverInputs, distributerInputs, retailerInputs} from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
@@ -122,19 +122,28 @@ const LandingPage = () => (
 function App() {  
   const { darkMode } = useContext(DarkModeContext);
   const AdminAuth = useSelector(state=>state.adminAuth);
+  const FrontAuth = useSelector(state=>state.auth);
   const [token,setToken] = useState(undefined);
+  const [frontToken,setFrontToken] = useState(undefined);
   
   useEffect(()=>{
     if(AdminAuth){
       setToken(AdminAuth.token || undefined);
     }
-  },[AdminAuth]);
+  },[AdminAuth]); 
 
+  useEffect(()=>{
+    if(FrontAuth){
+      setFrontToken(FrontAuth.token || undefined);
+    }
+  },[FrontAuth]); 
+
+  console.log("Admin Token",token,token ? "Token Present" : "token not present");
   return (
     <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
            <Routes>
-              <Route index path="/admin" element={token ? <Navigate to={"/admin/home"} /> : <Navigate to={"/admin/login"} />} />
+              <Route path="/admin" element={token ? <Navigate to={"/admin/home"} /> : <Navigate to={"/admin/login"} />} />
               <Route path="/admin/login" element={token ? <Navigate to={"/admin/home"} />  : <Login />} /> 
               <Route path="/admin/home" element={token ? <Home /> : <Navigate to={"/admin/login"} />} />
               <Route path="/admin/warehouse" element={token ? <WarehouseList />: <Navigate to={"/admin/login"} />} />
@@ -149,20 +158,19 @@ function App() {
               <Route path="/admin/users" element={token ? <List />: <Navigate to={"/admin/login"} />} />
               <Route path="/admin/users/:userId" element={token ? <Single />: <Navigate to={"/admin/login"} />} />
               <Route path="/admin/users/new" element={token ? <New inputs={userInputs} title="Add New User" /> : <Navigate to={"/admin/login"} />} />
-            </Routes>
-            <Routes>
+           
               <Route index path="/" element={<LandingPage />} />
-              <Route index path="/userlogin" element={<Userlogin />} />
-              <Route index path="/profile" element={<Profile />} />
-              <Route index path="/material-supplier" element={<Materialsupplier />} />
-              <Route index path="/addbatch" element={<Addbatch />} />
-              <Route index path="/supplyToken" element={<ViewSupplyToken />} />
-              <Route index path="/approveSupplier" element={<Approvesupplier />} />
-              <Route index path="/availableRawMaterialToBuy" element={<AvailableRawMaterialToBuy />} />
-              <Route index path="/approveFactorySupplier" element={<ApproveFactorySupplier />} />
-              <Route index path="/sellItemToDistributer" element={<SellItemToDistributer />} /> 
-              <Route index path="/sellItemFormData" element={<SellItemFormData />} />
-              <Route index path="/buyRawMaterial" element={<BuyRawMaterial />} />
+              <Route path="/userlogin" element={frontToken ? <Navigate to={"/material-supplier"} /> : <Userlogin />} />
+              <Route path="/profile" element={frontToken ? <Profile /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/material-supplier" element={ frontToken ? <Materialsupplier />  : <Navigate to={"/userlogin"} />} />
+              <Route path="/addbatch" element={frontToken ? <Addbatch /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/supplyToken" element={frontToken ? <ViewSupplyToken /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/approveSupplier" element={frontToken ? <Approvesupplier /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/availableRawMaterialToBuy" element={frontToken ? <AvailableRawMaterialToBuy /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/approveFactorySupplier" element={frontToken ? <ApproveFactorySupplier /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/sellItemToDistributer" element={frontToken ? <SellItemToDistributer /> : <Navigate to={"/userlogin"} />} /> 
+              <Route path="/sellItemFormData" element={frontToken ? <SellItemFormData /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/buyRawMaterial" element={frontToken ? <BuyRawMaterial /> : <Navigate to={"/userlogin"} />} />
             </Routes>
       </BrowserRouter>
     </div>

@@ -5,17 +5,28 @@ import { setToken } from './LoginSlice'
 import "./login.scss"
 import { useNavigate } from "react-router-dom";
 import { useSignInMutation } from '../../API/adminAuth';
-import { useCallback } from 'react';
 import { useEffect } from 'react';
+import { yupResolver } from "@hookform/resolvers/yup"; 
+import { LoginSchema } from '../../Validations/Schema';
+import LoadingButton from '@mui/lab/LoadingButton';
 const Login = () => {
   const [signIn,{data,isError,error,isSuccess,isLoading}] = useSignInMutation();
   const navigate = useNavigate();
-  const {register, handleSubmit, formState: { errors }} = useForm({
+  const {register, handleSubmit, setError, formState: { errors, }} = useForm({
     defaultValues: {
       email: '',
       password: ''
-    }
+    },
+    resolver: yupResolver(LoginSchema),
   });
+
+
+  useEffect(()=> {
+    if(isError && error){
+        let errorMsg = error?.data?.error;
+        setError("password",{ message: errorMsg });
+    }
+  },[isError]) 
 
   const dispatch = useDispatch();
   useEffect(()=> {
@@ -27,7 +38,7 @@ const Login = () => {
   },[isSuccess]) 
 
   const onSubmit = (values) => {
-    signIn({...values, "role":"Supplier"});
+    signIn({...values, "role":"admin"});
   }
  
   const renderForm = () => (
@@ -35,19 +46,19 @@ const Login = () => {
      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="box">
           <label>Username </label>
-          <input type="text" style={{width:300,height:20}}  {...register("email", { required: true })} />
-          {errors.email && <span className='error'> *This field is required</span>}
+          <input type="text" style={{width:300,height:20}}  {...register("email")} />
+          {errors.email && <span className='error'> {errors?.email?.message}</span>}
         </div>
         <div className="box">
           <label>Password </label>
-          <input type="password" style={{width:300,height:20}} {...register("password", { required: true })} />
-          {errors.password && <span className='error'> *This field is required</span>}
+          <input type="password" style={{width:300,height:20}} {...register("password")} />
+          {errors.password && <span className='error'> {errors?.password?.message}</span>}
         </div>
-        {!isLoading &&
-          <div className='btnDiv' style={{marginTop:10}}>
-            <input style={{width:80, height:30 ,color:"gray"}} type="submit" />
-          </div>
-        }
+        <div className='btnDiv' style={{marginTop:10}}>
+          <LoadingButton onClick={handleSubmit(onSubmit)} loading={isLoading} variant="contained">
+            Submit
+          </LoadingButton>
+        </div>
       </form>
     </div>
   );

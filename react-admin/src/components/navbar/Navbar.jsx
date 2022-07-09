@@ -9,16 +9,16 @@ import { useContext } from "react";
 import { ethers } from 'ethers';
 import "./navbar.scss";
 const Navbar = (props) =>{
-	let whContractAddress = '0x18926be76922dd5c9175288B79213655eD321337';
-	let fContractAddress = '0x981CE5226b2FF8E71d54658Ab1Ad37D3Ef3CE468';
-	let rmsContractAddress = '0x2bea95d430Ea1a6e8156E37b26f20F67F81f50C9';
+	let whContractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
+	let fContractAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
+	let rmsContractAddress = '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0';
  
     const { dispatch,metaMask,warehouseContract,factoryContract,rowmaterialContract } = useContext(DarkModeContext);
-	// const [errorMessage, setErrorMessage] = useState(null);
+	const [errorMessage, setErrorMessage] = useState(null);
 	const [defaultAccount, setDefaultAccount] = useState(null);
-	// const [connButtonText, setConnButtonText] = useState('Connect Wallet');
+	const [connButtonText, setConnButtonText] = useState('Connect Wallet');
 	// const [currentContractVal, setCurrentContractVal] = useState(null);
-	// const [provider, setProvider] = useState(null);
+	const [provider, setProvider] = useState(null);
 	const [signer, setSigner] = useState(null);
 	const [whContract, setwhContract] = useState(warehouseContract);
 	const [fContract, setfContract] = useState(factoryContract);
@@ -34,16 +34,16 @@ const Navbar = (props) =>{
 			window.ethereum.request({ method: 'eth_requestAccounts'})
 			.then(result => {
 				accountChangedHandler(result[0]);
-				// setConnButtonText('Wallet Connected');
+				setConnButtonText('Wallet Connected');
 			})
 			.catch(error => {
-				// setErrorMessage(error.message);
+				setErrorMessage(error.message);
 			
 			});
 
 		} else {
 			console.log('Need to install MetaMask');
-			// setErrorMessage('Please install MetaMask browser extension to interact');
+			setErrorMessage('Please install MetaMask browser extension to interact');
 		}
 	}
 
@@ -69,7 +69,7 @@ const Navbar = (props) =>{
 
 	const updateEthers = () => {
 		let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
-		// setProvider(tempProvider);
+		setProvider(tempProvider);
 
 		let tempSigner = tempProvider.getSigner();
 		setSigner(tempSigner);

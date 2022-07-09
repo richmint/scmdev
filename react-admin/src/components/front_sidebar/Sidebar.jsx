@@ -1,24 +1,22 @@
-import React,{useEffect, useState,useContext} from 'react';
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import React,{useState,useContext} from 'react';
 import StoreIcon from "@mui/icons-material/Store";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useNavigate } from "react-router-dom";
 import "./sidebar.scss";
-//import "./login.scss"
+import { logout } from '../../Front/login/LoginSlice';
+import { useDispatch } from 'react-redux';
 
 
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
   const navigate = useNavigate();
-  const [user,setUser] = useState(JSON.parse(sessionStorage.getItem('user')));
-  if(!user){
-    navigate("/userlogin");
-  }       
+  const dispatchStore = useDispatch() 
 
-  const logout = (event) => {
-    sessionStorage.clear();
+  const signOut = (event) => {
+    localStorage.removeItem("token");
+    dispatchStore(logout());
     navigate("/userlogin");
   }
   return (
@@ -93,7 +91,7 @@ const Sidebar = () => {
           
           
           
-          <li onClick={logout}>
+          <li onClick={signOut}>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>
           </li>

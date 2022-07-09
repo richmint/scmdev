@@ -1,27 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
-
 export const LoginSlice = createSlice({
-  name: 'login',
+  name: 'auth',
   initialState: {
-    loader:false,
-    auth:undefined,
+    token: localStorage.getItem("token") || undefined,
   },
   reducers: {
-    fetch: (state) => ({
-        loader:true,
-        auth:undefined,
-    }),
-    success:(state,action)=>({
-        loader:true,
-        auth:action.payload,
-    }),
-    failure:(state)=>({
-        loader:true,
-        auth:undefined,
-    })
+    setToken: (state,action) => {
+      state.token=action.payload.token;
+    },
+    logout : (state) => {
+      state.token = undefined;
+    }
   },
 })
 
-export const { fetch,success,failure } = LoginSlice.actions
+export const { setToken, logout } = LoginSlice.actions
 
 export default LoginSlice.reducer
