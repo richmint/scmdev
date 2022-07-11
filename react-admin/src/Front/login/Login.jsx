@@ -30,7 +30,11 @@ const Login = () => {
 
   useEffect(()=> {
     if(isSuccess && data){
+      
         localStorage.setItem("token",data.token)
+        localStorage.setItem("userId",data.userId)
+        localStorage.setItem("userEmail",data.userEmail)
+        localStorage.setItem("userRole",data.userRole)
         dispatch(setToken(data));
         navigate("/material-supplier");
     }
@@ -42,38 +46,7 @@ const Login = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
  
   const onSubmit = (values) => {
-<<<<<<< HEAD
-    console.log("login form values",values.username)
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({       
-        "email":values.username,       
-        "password":values.password
-        })
-    };
-
-    fetch("http://162.215.222.118:5150/login",requestOptions)    
-    .then(res => res.json())
-    .then(data => {
-      if(data && data.token){
-        console.log('Success2:', data.token);
-        sessionStorage.setItem('user',JSON.stringify(values));
-        navigate("/material-supplier")
-      }else{
-        navigate("/userlogin")
-      }
-     
-    })
-    .catch((error) => {
-      console.error('Error11:', error);
-    });
-    //dispatch();
-    //dispatch(success(data))
-    
-=======
-    signIn({...values, "role":"Supplier"});
->>>>>>> fd75f8a927f8e9f92ea4165b9add1d80c5468020
+    signIn({...values});
   }
 
   // const onSubmit = (values) => {

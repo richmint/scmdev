@@ -11,7 +11,7 @@ const Profile = () =>{
 
 
     const [user,setUser] = useState(JSON.parse(sessionStorage.getItem('user'))); 
-    console.log("The getting value from token ",user.username);
+    console.log("The getting value from token ",user);
 
     const navigate = useNavigate();
 
@@ -40,6 +40,7 @@ const Profile = () =>{
 
     return(
         <div className="home">
+            jfkggnl
             <Sidebar />
             <div className="homeContainer">
                 <Navbar/>
