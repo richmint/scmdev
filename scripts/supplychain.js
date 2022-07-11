@@ -4,10 +4,10 @@ async function main() {
   const provider =waffle.provider;
   const [
         adminSigner,
-        rawMaterialSupplierSigner1
+        rawMaterialSupplierSigner1,
         // rawMaterialSupplierSigner2,  
-        // warehouseSigner, 
-        // factorySigner, 
+         warehouseSigner, 
+         factorySigner, 
         // distributorSigner1, 
         // distributorSigner2, 
         // retailerSigner1, 
@@ -39,19 +39,19 @@ async function main() {
   console.log("Transfering ownership to supplychain contract...");
   await supplyChainToken.transferOwnership(supplychain.address);
   // console.log("SupplychainToken owner: ",await supplyChainToken.owner());  
-
+ 
   // console.log("Adding a RawMaterialSupplier...");
   // console.log(await supplychain.isRawMaterialSupplier(rawMaterialSupplierSigner1.address))
-  await supplychain.addRawMaterialSupplier("0x7Aa3CC2a2dA7eFF96cFF120410Ada47DB93c7e62");
+  await supplychain.addRawMaterialSupplier("0x70997970c51812dc3a010c7d01b50e0d17dc79c8");
   // await supplychain.addRawMaterialSupplier(rawMaterialSupplierSigner2.address);
-  console.log(await supplychain.isRawMaterialSupplier("0x7Aa3CC2a2dA7eFF96cFF120410Ada47DB93c7e62"))
+  console.log(await supplychain.isRawMaterialSupplier("0x70997970c51812dc3a010c7d01b50e0d17dc79c8"))
 
   // console.log("Adding a Warehouse Admin ...");
-  // await supplychain.addWarehouse(warehouseSigner.address);
+   await supplychain.addWarehouse(warehouseSigner.address);
 
   // console.log("Adding a FactoryAdmin...");
   // console.log(await supplychain.isFactory(factorySigner.address))
-  // await supplychain.addFactory(factorySigner.address);
+   await supplychain.addFactory(factorySigner.address);
 
   // console.log(await supplychain.isFactory(factorySigner.address))
   // console.log("Adding a Distributor Admins...");
@@ -88,7 +88,7 @@ async function main() {
   //   }
   // }
 
-  // FOR FACTORY DASHBOARD
+  // FOR FACTORY DASHBOARD 
 
   // for (let i=0; i<4 ; i++){
   //   let object = await supplychain.items(i);

@@ -28,7 +28,8 @@ const ViewSupplyTable = () => {
         // console.log("inner loop", object.PolyesterAmount.toNumber());
         // console.log("cotton loop", object.CottonAmount.toNumber());
         allsupplymateriallist.push(
-          <><tr>
+          <><tr> 
+            <td>{totalbatchids[i].toNumber()}</td>
             <td>{object.PolyesterAmount.toNumber()}</td>
             <td>{object.CottonAmount.toNumber()}</td>
             <td>{object.WoolAmount.toNumber()}</td>
@@ -62,6 +63,7 @@ const ViewSupplyTable = () => {
               
               <table>
                 <tr>
+                <th>Batch ID</th>
                   <th>Polyster Amount</th>
                   <th>Cotton Amount</th>
                   <th>Wool Amount</th>

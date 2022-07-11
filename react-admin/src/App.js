@@ -11,7 +11,7 @@ import DistributerList from "./pages/list/DistributerList";
 import RetailerList from "./pages/list/RetailerList";   
 import Single from "./pages/single/Single";
 import New from "./pages/new/New";
-
+import ProfileAdmin from './pages/login/profile';
 //Front 
 import Userlogin from "./Front/login/Login";
 import Profile from "./Front/user/Profile";
@@ -136,6 +136,7 @@ function App() {
            <Routes>
               <Route index path="/admin" element={token ? <Navigate to={"/admin/home"} /> : <Navigate to={"/admin/login"} />} />
               <Route path="/admin/login" element={token ? <Navigate to={"/admin/home"} />  : <Login />} /> 
+              <Route path="/admin/profile" element={token ? <ProfileAdmin />: <Navigate to={"/admin/login"} />} />
               <Route path="/admin/home" element={token ? <Home /> : <Navigate to={"/admin/login"} />} />
               <Route path="/admin/warehouse" element={token ? <WarehouseList />: <Navigate to={"/admin/login"} />} />
               <Route path="/admin/warehouse/:warehouseId" element={token ? <Single />: <Navigate to={"/admin/login"} />} />

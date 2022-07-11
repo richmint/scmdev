@@ -7,10 +7,11 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
 import { ethers } from 'ethers';
+import { Link, useNavigate } from "react-router-dom";
 import "./navbar.scss";
 const Navbar = (props) => {
-	let supplyChainTokenAddress = '0xFcaB02a96370993888aCc5D57A89E9d3DEc1BC2A';
-	let supplyChainAddress = '0x59E950390DAaee5d505565CdA7073e008Fcd4703';
+	let supplyChainTokenAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
+	let supplyChainAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
 
 	const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownerSupplyChainAddress } = useContext(DarkModeContext);
@@ -114,11 +115,13 @@ const Navbar = (props) => {
 					</div>
 					<div className="item">
 
-						<img
-							src="https://images.pexels.com/photos/941693/pexels-photo-941693.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-							alt=""
-							className="avatar"
-						/>
+					<Link to="/profile"  >
+				<img
+             	 src="https://images.pexels.com/photos/941693/pexels-photo-941693.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+              	alt=""
+              	className="avatar"
+            	/>
+			</Link>
 					</div>
 				</div>
 			</div>

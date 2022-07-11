@@ -7,23 +7,19 @@ import { useLocation } from "react-router-dom";
 
 const BuyRawMaterial = () =>{
     let data = useLocation();
-    data = data.state.data;
+    data = data.state.i;
     console.log("Comming data is",data)
     
-
-
-
-
     const ConfirmShow = (props) =>{
-      const data = props.data
-
+      //const data = props.data
+      //const data = props.i
         return(
             <div className="bottom">
             <div className="right">
               <form >
                 <div className="formInput">
                   <label>Warehouse Address</label>
-                  <textarea id="polysteramount" value={data._id}   type="text" />
+                  <textarea id="polysteramount" value={data}   type="text" />
                 </div>
                 <div className='formInput'>
                 <button type={"submit"}> Submit </button>
