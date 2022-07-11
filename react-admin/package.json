@@ -5,7 +5,9 @@
   "dependencies": {
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
+    "@hookform/resolvers": "^2.9.5",
     "@mui/icons-material": "^5.4.4",
+    "@mui/lab": "^5.0.0-alpha.89",
     "@mui/material": "^5.4.4",
     "@mui/x-data-grid": "^5.5.1",
     "@reduxjs/toolkit": "^1.8.2",
@@ -25,7 +27,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
     "sass": "^1.49.9",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "set PORT=8000 && react-scripts start",

@@ -1,31 +1,48 @@
 import React,{useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import {useForm} from 'react-hook-form';
-//import { fetch, success } from './LoginSlice'
 import "./login.scss"
 import { useNavigate } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup"; 
+import { LoginSchema } from '../../Validations/Schema';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { useSignInMutation } from '../../API/auth';
+import { setToken } from './LoginSlice'
 
-// import { row } from 'bootstrap-4-react';
 const Login = () => { 
-  
+  const [signIn,{data,isError,error,isSuccess,isLoading}] = useSignInMutation();
   const navigate = useNavigate();
-  const {register, handleSubmit, formState: { errors }} = useForm({
-    defaultValues: {
-      username: '',
-      password: ''
-    }
-  })
-  const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const {register, handleSubmit, setError, formState: { errors }} = useForm({
+    defaultValues: {
+      email: '',
+      password: ''
+    },
+    resolver: yupResolver(LoginSchema),
+  })
 
+  useEffect(()=> {
+    if(isError && error){
+        let errorMsg = error?.data?.error;
+        setError("password",{ message: errorMsg });
+    }
+  },[isError]) 
+
+  useEffect(()=> {
+    if(isSuccess && data){
+        localStorage.setItem("token",data.token)
+        dispatch(setToken(data));
+        navigate("/material-supplier");
+    }
+  },[isSuccess]) 
+
+  const state = useSelector((state) => state);
+ 
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
  
-
-
-  
- 
   const onSubmit = (values) => {
+<<<<<<< HEAD
     console.log("login form values",values.username)
     const requestOptions = {
       method: 'POST',
@@ -54,28 +71,62 @@ const Login = () => {
     //dispatch();
     //dispatch(success(data))
     
+=======
+    signIn({...values, "role":"Supplier"});
+>>>>>>> fd75f8a927f8e9f92ea4165b9add1d80c5468020
   }
- 
-  const renderErrorMessage = (name) =>
-    name === errorMessages.name && (
-      <div className="error">{errorMessages.message}</div>
-    );
+
+  // const onSubmit = (values) => {
+  //   console.log("login form values",values.username)
+  //   const requestOptions = {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({       
+  //       "email":values.username,       
+  //       "password":values.password,
+  //       "role":'Supplier'
+  //       })
+  //   };
+
+  //   fetch("http://162.215.222.118:5150/login",requestOptions)    
+  //   .then(res => res.json())
+  //   .then(data => {
+  //     if(data && data.token){
+  //       console.log('Success2:', data.token);
+  //       sessionStorage.setItem('user',JSON.stringify(values));
+  //       navigate("/material-supplier")
+  //     }else{
+  //       navigate("/userlogin")
+  //     }
+     
+  //   })
+  //   .catch((error) => {
+  //     console.error('Error11:', error);
+  //   });
+  //   //dispatch();
+  //   //dispatch(success(data))
+    
+  // }
+
   // JSX code for login form
-  const renderForm = (
+  
+  const renderForm = () => (
     <div className='form' >
      <form onSubmit={handleSubmit(onSubmit)}>
         <div className='box' >
           <label>Username </label>
-          <input style={{width:300,height:20}} type="text"  {...register("username", { required: true })} />
-          {errors.username && <span className='error'> *UserName is required</span>}
+          <input style={{width:300,height:20}} type="text"  {...register("email", { required: true })} />
+          {errors.email && <span className='error'> {console.log(errors)} {errors?.email?.message}</span>}
         </div>
         <div className='box' >
           <label>Password </label>
           <input type="password" style={{width:300,height:20}}  {...register("password", { required: true })} />
-          {errors.password && <span className='error'> *password is required</span>}
+          {errors.password && <span className='error'> {errors?.password?.message}</span>}
         </div>
-        <div className='btnDiv' style={{marginTop:10}} >
-          <input style={{width:80, height:30 ,color:"gray"}}  type="submit" />
+        <div className='btnDiv' style={{marginTop:10}}>
+          <LoadingButton onClick={handleSubmit(onSubmit)} loading={isLoading} variant="contained">
+            Submit
+          </LoadingButton>
         </div>
       </form>
     </div>
@@ -85,7 +136,7 @@ const Login = () => {
     <div className='mainDiv'>
       <div className="login-form">
         <div className="title">Sign In</div>
-        {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+        {renderForm()}
       </div>
     </div>
       
