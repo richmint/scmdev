@@ -3,14 +3,14 @@ import { API_URL } from '../constant/appConstant'
 
 
 // Define a service using a base URL and expected endpoints
-export const adminAuthApi = createApi({
-  reducerPath: 'adminAuthApi',
+export const authApi = createApi({
+  reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
   endpoints: (builder) => ({
     signIn:builder.mutation({
         query:(payload)=>{
           return {
-            url : "/adminLogin",
+            url : "/login",
             method : "post",
             body:payload,
         }
@@ -19,4 +19,4 @@ export const adminAuthApi = createApi({
   }),
 })
 
-export const { useSignInMutation } = adminAuthApi
+export const { useSignInMutation } = authApi;
