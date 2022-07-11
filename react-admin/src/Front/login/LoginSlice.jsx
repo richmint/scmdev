@@ -26,7 +26,8 @@ export const LoginSlice = createSlice({
     token: localStorage.getItem("token") || undefined,
     userId: localStorage.getItem("userId") || undefined,
     userEmail: localStorage.getItem("userEmail") || undefined,
-    userRole : localStorage.getItem("userRole") || undefined
+    userRole : localStorage.getItem("userRole") || undefined,
+    userName : localStorage.getItem("userName") || undefined,
   },
   reducers: {
     setToken: (state,action) => {
@@ -34,12 +35,14 @@ export const LoginSlice = createSlice({
       state.userRole=action.payload.userRole;
       state.userId=action.payload.userId;
       state.userEmail=action.payload.userEmail;
+      state.userName=action.payload.userName;
     },
     logout : (state) => {
       state.token = undefined;
       state.userRole=null;
       state.userId=null;
       state.userEmail=null;
+      state.userName=null;
     }
   },
 })

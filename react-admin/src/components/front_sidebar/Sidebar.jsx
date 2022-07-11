@@ -18,6 +18,7 @@ const Sidebar = () => {
     localStorage.removeItem("userId");
     localStorage.removeItem("userEmail");
     localStorage.removeItem("userRole");
+    localStorage.removeItem("userName");
     dispatchStore(logout());
     navigate("/userlogin");
   }
