@@ -98,7 +98,7 @@ async function main() {
   // console.log(await supplyChainToken.balanceOf(rawMaterialSupplierSigner1.address,0));
  
   // console.log(await supplyChainToken.isApprovedForAll(rawMaterialSupplierSigner1.address,supplychain.address))
-  await supplyChainToken.connect(rawMaterialSupplierSigner1).setApprovalForAll(supplychain.address,true);
+  //await supplyChainToken.connect(rawMaterialSupplierSigner1).setApprovalForAll(supplychain.address,true);
   // await supplyChainToken.connect(rawMaterialSupplierSigner2).setApprovalForAll(supplychain.address,true);
   // console.log(await supplyChainToken.isApprovedForAll(rawMaterialSupplierSigner1.address,supplychain.address))
 
@@ -111,7 +111,7 @@ async function main() {
   //   }
   // }
 
-  await supplychain.connect(factorySigner).factoryBuyRawMaterial(0,warehouseSigner.address);
+  //await supplychain.connect(factorySigner).factoryBuyRawMaterial(0,warehouseSigner.address);
   // await supplychain.connect(factorySigner).factoryBuyRawMaterial(1,warehouseSigner.address);
 
   // FOR RAW MATERIAL SUPPLIER DASHBOARD (UPDATED AFTER FACTORY BOUGHT A BATCH)
@@ -169,7 +169,7 @@ async function main() {
   // console.log(await supplyChainToken.balanceOf(distributorSigner1.address,0));
   // console.log(await supplyChainToken.balanceOf(distributorSigner2.address,0));
   // console.log(await supplyChainToken.totalSupply(0));
-  const tx3 = await supplychain.connect(factorySigner).factorySellItemToDistributors(2,10,[distributorSigner1.address,distributorSigner2.address],[5,5]);
+  ///////////const tx3 = await supplychain.connect(factorySigner).factorySellItemToDistributors(2,10,[distributorSigner1.address,distributorSigner2.address],[5,5]);
   // await tx3.wait();
   // console.log(await supplychain.getWarehouseItems(warehouseSigner.address))
 
