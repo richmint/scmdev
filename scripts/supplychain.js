@@ -6,10 +6,10 @@ async function main() {
         adminSigner,
         rawMaterialSupplierSigner1,
         // rawMaterialSupplierSigner2,  
-         warehouseSigner, 
-         factorySigner, 
-        // distributorSigner1, 
-        // distributorSigner2, 
+        warehouseSigner, 
+        factorySigner, 
+        distributorSigner1, 
+        distributorSigner2, 
         // retailerSigner1, 
         // retailerSigner2, 
         // customerSigner
@@ -55,15 +55,15 @@ async function main() {
 
   // console.log(await supplychain.isFactory(factorySigner.address))
   // console.log("Adding a Distributor Admins...");
-  // await supplychain.addDistributor(distributorSigner1.address);
-  // await supplychain.addDistributor(distributorSigner2.address);
+  await supplychain.addDistributor(distributorSigner1.address);
+  await supplychain.addDistributor(distributorSigner2.address);
 
   // console.log("Adding a Retailer Admins...");
   // await supplychain.addRetailer(retailerSigner1.address);
   // await supplychain.addRetailer(retailerSigner2.address);
 
-  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(1,1,1);
-  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(2,2,2);
+  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(100,110,100);
+  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(220,210,200);
   // await supplychain.connect(rawMaterialSupplierSigner2).rawMaterialSupplierSuppliesRM(3,3,3);
   // await supplychain.connect(rawMaterialSupplierSigner2).rawMaterialSupplierSuppliesRM(4,4,4); 
 
@@ -124,17 +124,20 @@ async function main() {
   //   }
   // }
 
-  // FOR WARE HOUSE DASHBOARD
+  //  -/-/-/-/-/-/-/-/-/-/-/-/-/--FOR WAREHOUSE -/-/-/-/-/-/--/-/-/-/-/-/-/-/-/-/-/
 
-  // let count =await supplychain.totalBatchs();
-  // for (let i=0; i<count ; i++){
-  //   let object = await supplychain.items(i);
-  //   if (object.itemState ===1){
-  //       console.log(object)
+  // let object =await supplychain.getWarehouseItems(warehouseSigner.address)
+  // for(let i=0;i <object.length; i++){
+  //   if(object[i].itemState==1){
+  //     console.log(object[i]);
   //   }
   // }
-  
+  // Check the itemState in the returned array, if it is 1 then show this on wareshouseSigner frontend
+
+
+      
   // FOR FACTORY DASHBOARD (SELL TO TO DISTRIBUTOR) 
+  // let count =await supplychain.totalBatchs();
   // for (let i=0; i<count ; i++){
   //   let object = await supplychain.items(i);
   //     if (1 === object.itemState && object.factoryID ===factorySigner.address){
@@ -153,15 +156,7 @@ async function main() {
   // console.log(await supplyChainToken.entityMap(2,0,1));
 
 
-  // console.log(await supplychain.items(0));
-
-  //  -/-/-/-/-/-/-/-/-/-/-/-/-/--FOR WAREHOUSE -/-/-/-/-/-/--/-/-/-/-/-/-/-/-/-/-/
-
-  // console.log(await supplychain.getWarehouseItems(warehouseSigner.address))
-  // Check the itemState in the returned array, if it is one then show this on wareshouseSigner frontend
-
-
-  // await supplyChainToken.connect(factorySigner).setApprovalForAll(supplychain.address,true);
+  await supplyChainToken.connect(factorySigner).setApprovalForAll(supplychain.address,true);
   // console.log(await supplyChainToken.isApprovedForAll(factorySigner.address,supplychain.address))
   
   
@@ -169,33 +164,34 @@ async function main() {
   // console.log(await supplyChainToken.balanceOf(distributorSigner1.address,0));
   // console.log(await supplyChainToken.balanceOf(distributorSigner2.address,0));
   // console.log(await supplyChainToken.totalSupply(0));
-  // const tx3 = await supplychain.connect(factorySigner).factorySellItemToDistributors(2,10,[distributorSigner1.address,distributorSigner2.address],[5,5]);
-  // await tx3.wait();
+  const tx3 = await supplychain.connect(factorySigner).factorySellItemToDistributors(0,10,[distributorSigner1.address,distributorSigner2.address],[5,5]);
+  await tx3.wait();
   // console.log(await supplychain.getWarehouseItems(warehouseSigner.address))
 
-  // console.log(await supplychain.items(2))
-  // console.log((await supplychain.getDistributors(1)).length);
-  // console.log(await supplychain.getDistributorUnits(2));
-  // console.log(await supplychain.getDistributorCounters(2));
+  // console.log(await supplychain.items(0))
+  // console.log((await supplychain.getDistributors(0)).length);
+  // console.log((await supplychain.getDistributors(0)));
+  // console.log(await supplychain.getDistributorUnits(0));
+  // console.log(await supplychain.getDistributorCounters(0));
 
-  // ------------FOR DISTRIBUTOR VIEW
-  // const total =await supplychain.totalBatchs()
-
-  // for(let i =0; i<total; i++){
-  //   let array = await supplychain.getDistributors(i);
-  //   if(array.length>0){
-  //     for(let k=0; k<array.length; k++){
-  //       if(array[k]===distributorSigner1.address){
-  //         // HERE i IS SUPPLY TOKEN ID
-  //         console.log(await supplychain.items(i))
-  //         let dunits =await supplychain.getDistributorUnits(i)
-  //         console.log(dunits[k]);
-  //         let dcounter =await supplychain.getDistributorCounters(i)
-  //         console.log(dcounter[k]);
-  //       }
-  //     }
-  //   }
-  // }
+  // ------------FOR DISTRIBUTOR VIEW-------------------------
+  const total =await supplychain.totalBatchs()
+  // console.log(total)
+  for(let i =0; i<total; i++){
+    let array = await supplychain.getDistributors(i);
+    if(array.length>0){
+      for(let k=0; k<array.length; k++){
+        if(array[k]===distributorSigner1.address){
+          // HERE i IS SUPPLY TOKEN ID
+          console.log(await supplychain.items(i))
+          let dunits =await supplychain.getDistributorUnits(i)
+          console.log(dunits[k]);
+          let dcounter =await supplychain.getDistributorCounters(i)
+          console.log(dcounter[k]);
+        }   
+      }
+    }
+  }
   // console.log("TOKEN O")
   // console.log(await supplyChainToken.entityMap(2,0,0));
   // console.log(await supplyChainToken.entityMap(2,0,1));
