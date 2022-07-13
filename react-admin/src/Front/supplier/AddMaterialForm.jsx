@@ -46,7 +46,7 @@ const Materialsupplier = ({ inputs, title, value }) => {
       <div className="newContainer">
         <Navbar />
         <div className="top">          
-          <h1>Hi, {user && user.username}</h1>
+          <h1>Add Batch</h1>
         </div>
         <div className="bottom">
           <div className="right">

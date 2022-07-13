@@ -57,6 +57,7 @@ const ViewSupplyTable = () => {
       <div className="new">
         <div className="newContainer">
           <div className="top">
+              <h3>View Supply Token</h3>
           </div>
           <div className="bottom">
             <div className="right">

@@ -10,6 +10,13 @@ import { ethers } from 'ethers';
 import { Link, useNavigate } from "react-router-dom";
 import "./navbar.scss";
 const Navbar = (props) => {
+
+	const userName = localStorage.userName;
+	const userRole = localStorage.userRole;
+	// console.log("User name is ",userName)
+
+
+
 	let supplyChainTokenAddress = '0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0';
 	let supplyChainAddress = '0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82';
 
@@ -104,7 +111,7 @@ const Navbar = (props) => {
 					<div className="item">
 
 						{/* <button onClick={()=>props.alert(name)} >Click Me</button> */}
-						{<h3>Address: {defaultAccount}</h3>}
+						{<h3>{userName}({userRole})</h3>}
 						<button onClick={connectWalletHandler}>Connect Metamask</button>
 					</div>
 					<div className="item">

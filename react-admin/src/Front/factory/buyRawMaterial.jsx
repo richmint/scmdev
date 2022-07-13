@@ -42,7 +42,7 @@ const BuyRawMaterial = () =>{
             <div className="right">
               <form onSubmit={buyMaterialHandler}>
                 <div className="formInput">
-                <input id="batchId" type="text" type="hidden" value={data} />
+                <input id="batchId" type="text"  value={data} />
                   <label>Warehouse Address</label>                  
                   <textarea id="whHashAdr"  type="text" />
                 </div>
