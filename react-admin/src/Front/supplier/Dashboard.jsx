@@ -14,6 +14,10 @@ import Widget from "../../components/widget/Widget";
 
 
 const Materialsupplier = ({ inputs, title, value }) => {
+
+  console.log("Compile")
+
+
   const { dispatch, metaMask, warehouseContract } = useContext(DarkModeContext);
   const [errorMessage, setErrorMessage] = useState(null);
   const [allWarehouse, setAllWarehouse] = useState(null);

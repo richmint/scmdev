@@ -10,8 +10,15 @@ import { ethers } from 'ethers';
 import { Link, useNavigate } from "react-router-dom";
 import "./navbar.scss";
 const Navbar = (props) => {
-	let supplyChainTokenAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
-	let supplyChainAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
+
+	const userName = localStorage.userName;
+	const userRole = localStorage.userRole;
+	// console.log("User name is ",userName)
+
+
+
+	let supplyChainTokenAddress = '0x0165878A594ca255338adfa4d48449f69242Eb8F';
+	let supplyChainAddress = '0xa513E6E4b8f2a923D98304ec87F64353C4D5C853';
 
 
 	const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownerSupplyChainAddress } = useContext(DarkModeContext);
@@ -104,7 +111,7 @@ const Navbar = (props) => {
 					<div className="item">
 
 						{/* <button onClick={()=>props.alert(name)} >Click Me</button> */}
-						{<h3>Address: {defaultAccount}</h3>}
+						{<h3>{userName}({userRole})</h3>}
 						<button onClick={connectWalletHandler}>Connect Metamask</button>
 					</div>
 					<div className="item">

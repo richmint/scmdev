@@ -13,7 +13,11 @@ import { DarkModeContext } from "../../context/darkModeContext";
 
 
 const ApproveSupplyToken = () =>{
-    const [user,setUser] = useState(JSON.parse(sessionStorage.getItem('user')));
+    // const [user,setUser] = useState(JSON.parse(sessionStorage.getItem('user')));
+    // const name = localStorage.userName;
+    // const role = localStorage.userRole;
+  // console.log("NAme and role is ",name.role);
+
     const { dispatch, metaMask, warehouseContract } = useContext(DarkModeContext); 
 
     const addWarehouseHandler = (event) => {
@@ -62,7 +66,7 @@ const ApproveSupplyToken = () =>{
           <div className="newContainer">
             <Navbar />
             <div className="top">          
-              <h1>Hi, {user && user.username}</h1>
+              <h1>Hi, </h1>
             </div>
             <div className="bottom">
               <div className="right">

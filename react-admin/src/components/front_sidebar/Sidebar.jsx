@@ -13,9 +13,12 @@ const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
   const navigate = useNavigate();
   const dispatchStore = useDispatch() 
-
   const signOut = (event) => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("userName");
     dispatchStore(logout());
     navigate("/userlogin");
   }
@@ -30,6 +33,12 @@ const Sidebar = () => {
       <div className="center">
         <ul>
           
+          {/* {if (localStorage.userRole == 'Supplier') }  */}
+
+          
+      
+
+          {(localStorage.userRole == 'Supplier') ? <>
           <Link to="/addbatch" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
@@ -48,8 +57,9 @@ const Sidebar = () => {
               <span>Approve Supply Tokens</span>
             </li>
           </Link>
-
-
+       
+          </>:<>
+          
           <Link to="/availableRawMaterialToBuy" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
@@ -68,6 +78,14 @@ const Sidebar = () => {
               <span>Sell Item to Distributer</span>
             </li>
           </Link>
+          
+
+          </>}
+            
+          
+          
+
+          
 
 
           {/* <Link to="/product-approver" style={{ textDecoration: "none" }}>

@@ -11,10 +11,10 @@ const Factorytable = () => {
 
   useEffect(()=>{
     factoryRows().then(result=>{
-      //console.log("Data Table Reuslt = ", result);
+      console.log("Data Table Reuslt = ", result);
       setData(result); 
     })
-  },[]);
+  },[])
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
