@@ -9,6 +9,7 @@ import Multiselect from 'multiselect-react-dropdown';
 
 const SellItemFormData = () =>{
     const [id,setId] = useState('');
+    const optData = [{name:"Monkey",id:1},{name:"Donkey",id:2},{name:"Buffellow",id:3},{name:"Bee",id:4}];
 
     let data = useLocation();
     data = data.state.data;
@@ -40,11 +41,7 @@ const SellItemFormData = () =>{
               </div>
               <div className="formInput ">
                 <label>Array of Distributors units to Supply Respectively </label>
-                <Multiselect multiple={true} onChange={handleChange} >
-                  <option value={"React"} >React</option>
-                  <option value={"angular"} >Angular</option>
-                  <option value={"vue"} >Vue js</option>
-                  <option value={"node"} >Node JS</option>
+                <Multiselect options={optData} selectedValues={selectedValues}  multiple={true} onChange={handleChange} >
                 </Multiselect>
                 {/* <textarea id="woolamount" value={data.address} type="text" /> */}
               </div>  
