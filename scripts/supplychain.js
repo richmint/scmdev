@@ -164,13 +164,8 @@ async function main() {
   // console.log(await supplyChainToken.balanceOf(distributorSigner1.address,0));
   // console.log(await supplyChainToken.balanceOf(distributorSigner2.address,0));
   // console.log(await supplyChainToken.totalSupply(0));
-<<<<<<< HEAD
   const tx3 = await supplychain.connect(factorySigner).factorySellItemToDistributors(0,10,[distributorSigner1.address,distributorSigner2.address],[5,5]);
   await tx3.wait();
-=======
-  ///////////const tx3 = await supplychain.connect(factorySigner).factorySellItemToDistributors(2,10,[distributorSigner1.address,distributorSigner2.address],[5,5]);
-  // await tx3.wait();
->>>>>>> fc0514742512d13d76119b3638a522af53e52d35
   // console.log(await supplychain.getWarehouseItems(warehouseSigner.address))
 
   // console.log(await supplychain.items(0))
