@@ -93,6 +93,24 @@ const Sidebar = () => {
                 </>
               )
 
+            }else if (localStorage.userRole == 'Distributer') {
+              return(
+                <>
+                <Link to="/storedItemsInWarehouse" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>Availabel Item To Sell</span>
+            </li>
+          </Link>
+          <Link to="/storedItemsInWarehouse" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>Approve Supply Token</span>
+            </li>
+          </Link>
+                </>
+              )
+
             }
 
         })()}
@@ -102,7 +120,7 @@ const Sidebar = () => {
           </li>
         </ul>
       </div>
-      <div className="bottom">
+      {/* <div className="bottom">
         <div
           className="colorOption"
           onClick={() => dispatch({ type: "LIGHT" })}
@@ -111,7 +129,7 @@ const Sidebar = () => {
           className="colorOption"
           onClick={() => dispatch({ type: "DARK" })}
         ></div>
-      </div>
+      </div> */}
     </div>
   );
 };

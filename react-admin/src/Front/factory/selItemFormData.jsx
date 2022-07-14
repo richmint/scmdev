@@ -1,13 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Navbar from "../../components/front_navbar/Navbar";
 import Sidebar from "../../components/front_sidebar/Sidebar";
-import { rawMaterialSupplierRows } from "../../datatablesource";
 import '../../style/front/new.scss'
+
+import { DarkModeContext } from "../../context/darkModeContext";
+import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Multiselect from 'multiselect-react-dropdown';
 
 
 const SellItemFormData = () =>{
+
+  var listelemant;
+       const selectedItem1 = ((selectedList, selectedItem) => {
+          //console.log("list",selectedList)
+           listelemant = selectedList
+          //console.log("Item",selectedItem)
+       })
+
+  const navigate = useNavigate();
+  const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress } = useContext(DarkModeContext);
+
+  const sellItemToDistributerHandler = async (event) => {
+    event.preventDefault();
+    //console.log("batchid",event.target.whHashAdr.value);
+    
+
+    const tx = supplyChainContract.factorySellItemToDistributors(0, event.target.shirtproduced.value,event.target.unitSupply.value,listelemant);
+    //console.log((await tx.wait()));
+    if(tx){
+       navigate("/sellItemToDistributer")
+    }
+  }
+
+  const warehouseRecord = async () => {
+    return await fetch("http://162.215.222.118:5150/distributer")
+         .then(result=>result.json())
+         .then((resp)=> resp)
+         .catch((e)=>{
+             console.log("error");
+             return [];
+         });
+  }; 
+
+  const [allWarehouse, setallWarehouse] = useState([]);
+
+  useEffect(()=>{
+    warehouseRecord().then(result=>{
+      //console.log("All Ware Reuslt = ", result);
+      setallWarehouse(result); 
+    })
+  },[]);
+
+
     const [id,setId] = useState('');
     const [distributedAddList,setDistributedAddList] = useState();
 
@@ -27,72 +72,46 @@ const SellItemFormData = () =>{
   
     const DataTable = (props)=>{
         const data = props.data;
-      var listelemant;
-       const selectedItem1 = ((selectedList, selectedItem) => {
-          console.log("list",selectedList)
-           listelemant = selectedList
-          // setDistributedAddList(selectedList);
-          console.log("Item",selectedItem)
-       })
-
-       const btn = () =>{console.log("Final list",listelemant)}
-
-      const option=[
-        {
-          cat: 'Group 1',
-          key: 'Option 1'
-        },
-        {
-          cat: 'Group 1',
-          key: 'Option 2'
-        },
-        {
-          cat: 'Group 1',
-          key: 'Option 3'
-        }
-      ];
-
-
+      
         return(
             <div className="bottom">
           <div className="right">
-            <form >
+            <form onSubmit={sellItemToDistributerHandler}>
               <div className="formInput">
                 <label>Total Shirts produced</label>
-                <textarea id="polysteramount"   type="text" />
+                <textarea id="shirtproduced"   type="text" />
               </div>
               <div className="formInput">
                 <label>Array of distributed Address to Supply</label>
-                <textarea id="cottonamount"  type="text" />
+                <Multiselect
+                    displayValue="key"
+                    onKeyPressFn={function noRefCheck(){}}
+                    onRemove={function noRefCheck(){}}
+                    onSearch={function noRefCheck(){}}
+                    onSelect={selectedItem1}
+                    options={
+                        allWarehouse.map(
+                          (allWarehouseval) => ({
+                        value: allWarehouseval.hashAddress,
+                        key: allWarehouseval.name,
+                      })
+                      )
+                    }
+                  />
               </div>
               <div className="formInput ">
                 <label>Array of Distributors units to Supply Respectively </label>
-                <Multiselect
-  displayValue="key"
-  onKeyPressFn={function noRefCheck(){}}
-  onRemove={function noRefCheck(){}}
-  onSearch={function noRefCheck(){}}
-  onSelect={selectedItem1}
-  options={option}
-  
-/>
-
-                {/* <Multiselect options={optData} selectedValues={selectedValues}  multiple={true} onChange={handleChange} >
-                </Multiselect> */}
-                {/* <textarea id="woolamount" value={data.address} type="text" /> */}
+                <textarea id="unitSupply"  type="text" />
               </div>  
               <div className='formInput'>
-              <button onClick={btn} type={"submit"}> Submit </button>
-
+              <button type={"submit"}> Submit </button>
               </div>          
             </form>
+            
           </div>
         </div>
         )
     }
-
-
-
     return(
             <div className="new">
                 <Sidebar />

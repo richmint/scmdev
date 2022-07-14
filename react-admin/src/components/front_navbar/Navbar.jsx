@@ -109,7 +109,6 @@ const Navbar = (props) => {
 				<div className="items">
 					<div className="item">
 
-						{/* <button onClick={()=>props.alert(name)} >Click Me</button> */}
 						{<h3>{userName}({userRole})</h3>}
 						<button onClick={connectWalletHandler}>Connect Metamask</button>
 					</div>
