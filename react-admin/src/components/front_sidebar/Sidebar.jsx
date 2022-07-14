@@ -32,83 +32,70 @@ const Sidebar = () => {
       <hr />
       <div className="center">
         <ul>
-          
-          {/* {if (localStorage.userRole == 'Supplier') }  */}
 
-          
-      
+        {(() => {
+            if (localStorage.userRole == 'Supplier') {
+              return (
+                <>
+                <Link to="/addbatch" style={{ textDecoration: "none" }}>
+                  <li>
+                    <StoreIcon className="icon" />
+                    <span>Add a Batch</span>
+                  </li>
+                </Link>
+                <Link to="/supplyToken" style={{ textDecoration: "none" }}>
+                  <li>
+                    <StoreIcon className="icon" />
+                    <span>View Supply Tokens</span>
+                  </li>
+                </Link>
+                <Link to="/approveSupplier" style={{ textDecoration: "none" }}>
+                  <li>
+                    <StoreIcon className="icon" />
+                    <span>Approve Supply Tokens</span>
+                  </li>
+                </Link>
+          </>
+              )
+            } else if (localStorage.userRole == 'Factory') {
+              return (
+                <>
+                <Link to="/availableRawMaterialToBuy" style={{ textDecoration: "none" }}>
+                  <li>
+                    <StoreIcon className="icon" />
+                    <span>Available Raw Material to Buy</span>
+                  </li>
+                </Link>
+                <Link to="/approveFactorySupplier" style={{ textDecoration: "none" }}>
+                  <li>
+                    <StoreIcon className="icon" />
+                    <span>Approve Supply Token</span>
+                  </li>
+                </Link>
+                <Link to="/sellItemToDistributer" style={{ textDecoration: "none" }}>
+                  <li>
+                    <StoreIcon className="icon" />
+                    <span>Sell Item to Distributer</span>
+                  </li>
+                </Link>
+                
+                </>
+              )
+            } else if (localStorage.userRole == 'Warehouse') {
+              return(
+                <>
+                <Link to="/storedItemsInWarehouse" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>Stored Items Details</span>
+            </li>
+          </Link>
+                </>
+              )
 
-          {(localStorage.userRole == 'Supplier') ? <>
-          <Link to="/addbatch" style={{ textDecoration: "none" }}>
-            <li>
-              <StoreIcon className="icon" />
-              <span>Add a Batch</span>
-            </li>
-          </Link>
-          <Link to="/supplyToken" style={{ textDecoration: "none" }}>
-            <li>
-              <StoreIcon className="icon" />
-              <span>View Supply Tokens</span>
-            </li>
-          </Link>
-          <Link to="/approveSupplier" style={{ textDecoration: "none" }}>
-            <li>
-              <StoreIcon className="icon" />
-              <span>Approve Supply Tokens</span>
-            </li>
-          </Link>
-       
-          </>:<>
-          
-          <Link to="/availableRawMaterialToBuy" style={{ textDecoration: "none" }}>
-            <li>
-              <StoreIcon className="icon" />
-              <span>Available Raw Material to Buy</span>
-            </li>
-          </Link>
-          <Link to="/approveFactorySupplier" style={{ textDecoration: "none" }}>
-            <li>
-              <StoreIcon className="icon" />
-              <span>Approve Supply Token</span>
-            </li>
-          </Link>
-          <Link to="/sellItemToDistributer" style={{ textDecoration: "none" }}>
-            <li>
-              <StoreIcon className="icon" />
-              <span>Sell Item to Distributer</span>
-            </li>
-          </Link>
-          
+            }
 
-          </>}
-            
-          
-          
-
-          
-
-
-          {/* <Link to="/product-approver" style={{ textDecoration: "none" }}>
-            <li>
-              <StoreIcon className="icon" />
-              <span>Product Approver</span>
-            </li>
-          </Link>
-          <Link to="/distributer" style={{ textDecoration: "none" }}>
-            <li>
-              <StoreIcon className="icon" />
-              <span>Distributer</span>
-            </li>
-          </Link>
-          <Link to="/retailer" style={{ textDecoration: "none" }}>
-            <li>
-              <StoreIcon className="icon" />
-              <span>Retailer</span>
-            </li>
-          </Link> */}
-          
-          
-          
+        })()}
           <li onClick={signOut}>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>
