@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Multiselect from 'multiselect-react-dropdown';
 
-
+ 
 const SellItemFormData = () =>{
 
   var listelemant;
@@ -102,6 +102,8 @@ const SellItemFormData = () =>{
               <div className="formInput ">
                 <label>Array of Distributors units to Supply Respectively </label>
                 <textarea id="unitSupply"  type="text" />
+
+
               </div>  
               <div className='formInput'>
               <button type={"submit"}> Submit </button>
