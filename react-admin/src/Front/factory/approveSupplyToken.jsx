@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from 'react';
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/front_sidebar/Sidebar";
 import '../../style/front/list.scss'
 import '../../pages/new/new.scss'
 import { useForm } from "react-hook-form";
-import { useState,useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 // import RawMaterialTable from "./rawMaterialTable";
 //import { fetch, success } from './LoginSlice'
@@ -13,31 +13,40 @@ import { DarkModeContext } from "../../context/darkModeContext";
 
 
 const ApproveSupplyToken = () =>{
-    // const [user,setUser] = useState(JSON.parse(sessionStorage.getItem('user')));
-    // const name = localStorage.userName;
-    // const role = localStorage.userRole;
-  // console.log("NAme and role is ",name.role);
+  const navigate = useNavigate();
+  const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress } = useContext(DarkModeContext);
+  const [disable,setDisable] = useState();  
+  const addWarehouseHandler = async(event) => {
+        //console.log("The coming dats is ",event);
+        //event.preventDefault();
+        const tx = await supplyChainTokenContract.setApprovalForAll(supplyChainContract.address, true);
+        console.log(("status",await tx.wait()));
+      if(tx){
+        navigate("/approveFactorySupplier")
+      }
 
-    const { dispatch, metaMask, warehouseContract } = useContext(DarkModeContext); 
+        //await supplyChainToken.connect(factorySigner).setApprovalForAll(supplyChainContract.address,true);
+        // console.log(await supplyChainToken.isApprovedForAll(factorySigner.address,supplychain.address))
+  }
 
-    const addWarehouseHandler = (event) => {
-        console.log("The coming dats is ",event);
-        event.preventDefault();
-    }
+  useEffect(()=>{
+    (async () => {
+        const res = await supplyChainTokenContract.isApprovedForAll('0x90F79bf6EB2c4f870365E785982E1f101E93b906',supplyChainContract.address);
+        setDisable(res);
+        console.log("Coming res",res)
+    })();
+
+  },[supplyChainTokenContract])
 
     const {register, handleSubmit, formState: { errors }} = useForm({
-        defaultValues: {
-          pollyster: '',
-          cotton: '',
-          wool: ''
-        }
+     
       })
 
 
-      const [errorMessage, setErrorMessage] = useState(null);
-      const [allWarehouse, setAllWarehouse] = useState(null);
-      const [defaultAccount, setDefaultAccount] = useState(null);
-      const [whContract, setContract] = useState(warehouseContract);
+      // const [errorMessage, setErrorMessage] = useState(null);
+      // const [allWarehouse, setAllWarehouse] = useState(null);
+      // const [defaultAccount, setDefaultAccount] = useState(null);
+      // const [whContract, setContract] = useState(warehouseContract);
 
 
     //  console.log('sending ' + event.target.hashAddress.value + ' to the whContract');
@@ -76,7 +85,7 @@ const ApproveSupplyToken = () =>{
                     
                   </div>
                   <div className='formInput'>
-                  <button type={"submit"}> Approve </button>
+                  <button disabled={disable} style={disable?{backgroundColor:"gray",cursor:"none"}:{}}  type={"submit"}> Approve </button>
                   {/* <span className='left'><button  type='reset' >Reset</button></span> */}
                   </div>          
                 </form>

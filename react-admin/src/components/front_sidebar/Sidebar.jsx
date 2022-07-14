@@ -82,7 +82,12 @@ const Sidebar = () => {
 
           </>}
             
-          
+          <Link to="/storedItemsInWarehouse" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>Stored Items Details</span>
+            </li>
+          </Link>
           
 
           

@@ -33,16 +33,16 @@ const SellItemFormData = () =>{
             <form >
               <div className="formInput">
                 <label>Total Shirts produced</label>
-                <textarea id="polysteramount" value={data.name}  type="text" />
+                <textarea id="polysteramount"   type="text" />
               </div>
               <div className="formInput">
                 <label>Array of distributed Address to Supply</label>
-                <textarea id="cottonamount" value={data.email} type="text" />
+                <textarea id="cottonamount"  type="text" />
               </div>
               <div className="formInput ">
                 <label>Array of Distributors units to Supply Respectively </label>
-                <Multiselect options={optData} selectedValues={selectedValues}  multiple={true} onChange={handleChange} >
-                </Multiselect>
+                {/* <Multiselect options={optData} selectedValues={selectedValues}  multiple={true} onChange={handleChange} >
+                </Multiselect> */}
                 {/* <textarea id="woolamount" value={data.address} type="text" /> */}
               </div>  
               <div className='formInput'>

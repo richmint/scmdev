@@ -24,6 +24,8 @@ import ApproveFactorySupplier from "./Front/factory/approveSupplyToken";
 import SellItemToDistributer from "./Front/factory/sellItemDistributer";
 import SellItemFormData from './Front/factory/selItemFormData';
 import BuyRawMaterial from './Front/factory/buyRawMaterial';
+import StoredItemsInWarehouse from './Front/warehouse/viewWarehouseItems';
+
 
 
 
@@ -172,6 +174,7 @@ function App() {
               <Route path="/sellItemToDistributer" element={frontToken ? <SellItemToDistributer /> : <Navigate to={"/userlogin"} />} /> 
               <Route path="/sellItemFormData" element={frontToken ? <SellItemFormData /> : <Navigate to={"/userlogin"} />} />
               <Route path="/buyRawMaterial" element={frontToken ? <BuyRawMaterial /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/storedItemsInWarehouse" element={frontToken ? <StoredItemsInWarehouse /> : <Navigate to={"/userlogin"} />} />
             </Routes>
       </BrowserRouter>
     </div>
