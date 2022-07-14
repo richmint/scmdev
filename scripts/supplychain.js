@@ -128,7 +128,8 @@ async function main() {
 
   // let object =await supplychain.getWarehouseItems(warehouseSigner.address)
   // for(let i=0;i <object.length; i++){
-  //   if(object[i].itemState==1){
+  //   if(object[i].itemState==1){.
+  
   //     console.log(object[i]);
   //   }
   // }

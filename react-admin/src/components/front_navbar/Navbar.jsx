@@ -16,8 +16,8 @@ const Navbar = (props) => {
 	// console.log("User name is ",userName)
 
 
-	let supplyChainTokenAddress = '0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6';
-	let supplyChainAddress = '0x8A791620dd6260079BF849Dc5567aDC3F2FdC318';
+	let supplyChainTokenAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
+	let supplyChainAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
 
 	const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownerSupplyChainAddress } = useContext(DarkModeContext);

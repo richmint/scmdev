@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import Navbar from "../../components/navbar/Navbar";
+import Navbar from "../../components/front_navbar/Navbar";
 import Sidebar from "../../components/front_sidebar/Sidebar";
 import '../../style/front/list.scss'
 import '../../pages/new/new.scss'
@@ -75,7 +75,6 @@ const ApproveSupplyToken = () =>{
           <div className="newContainer">
             <Navbar />
             <div className="top">          
-              <h1>Hi, </h1>
             </div>
             <div className="bottom">
               <div className="right">

@@ -9,7 +9,8 @@ import Multiselect from 'multiselect-react-dropdown';
 
 const SellItemFormData = () =>{
     const [id,setId] = useState('');
-    const optData = [{name:"Monkey",id:1},{name:"Donkey",id:2},{name:"Buffellow",id:3},{name:"Bee",id:4}];
+    const [distributedAddList,setDistributedAddList] = useState();
+
 
     let data = useLocation();
     data = data.state.data;
@@ -26,6 +27,31 @@ const SellItemFormData = () =>{
   
     const DataTable = (props)=>{
         const data = props.data;
+      var listelemant;
+       const selectedItem1 = ((selectedList, selectedItem) => {
+          console.log("list",selectedList)
+           listelemant = selectedList
+          // setDistributedAddList(selectedList);
+          console.log("Item",selectedItem)
+       })
+
+       const btn = () =>{console.log("Final list",listelemant)}
+
+      const option=[
+        {
+          cat: 'Group 1',
+          key: 'Option 1'
+        },
+        {
+          cat: 'Group 1',
+          key: 'Option 2'
+        },
+        {
+          cat: 'Group 1',
+          key: 'Option 3'
+        }
+      ];
+
 
         return(
             <div className="bottom">
@@ -41,12 +67,23 @@ const SellItemFormData = () =>{
               </div>
               <div className="formInput ">
                 <label>Array of Distributors units to Supply Respectively </label>
+                <Multiselect
+  displayValue="key"
+  onKeyPressFn={function noRefCheck(){}}
+  onRemove={function noRefCheck(){}}
+  onSearch={function noRefCheck(){}}
+  onSelect={selectedItem1}
+  options={option}
+  
+/>
+
                 {/* <Multiselect options={optData} selectedValues={selectedValues}  multiple={true} onChange={handleChange} >
                 </Multiselect> */}
                 {/* <textarea id="woolamount" value={data.address} type="text" /> */}
               </div>  
               <div className='formInput'>
-              <button type={"submit"}> Submit </button>
+              <button onClick={btn} type={"submit"}> Submit </button>
+
               </div>          
             </form>
           </div>
