@@ -10,7 +10,7 @@ const RawMaterialSupplier = () => {
 
   useEffect(()=>{
     rawMaterialRows().then(result=>{
-      //console.log("Data Table Reuslt = ", result);
+      console.log("Data rawmaterial Table Reuslt = ", result);
       setData(result); 
     })
   },[]);
@@ -30,12 +30,6 @@ const RawMaterialSupplier = () => {
             <Link to="/users/test" style={{ textDecoration: "none" }}>
               <div className="deleteButton">Delete</div>
             </Link>
-            {/* <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Delete
-            </div> */}
           </div>
         );
       },
@@ -44,7 +38,7 @@ const RawMaterialSupplier = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Users
+        Raw Material Supplier
         <Link to="/admin/rawmaterialsupplier/new" className="link">
           Add New
         </Link>
@@ -65,6 +59,6 @@ const RawMaterialSupplier = () => {
   );
 };
 
-export default RawMaterialSupplier;
+export default RawMaterialSupplier; 
 
 

@@ -23,10 +23,11 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
     url: "http://127.0.0.1:8545"
   },
   rinkeby: {
-    url: "https://speedy-nodes-nyc.moralis.io/3b50a8f528f7397fd9f310cf/eth/rinkeby", //Infura url with projectId
-    accounts: ["28c80c76dc8dbfb442d93503d7583f645d96881346129be7ef74c01a8ad13378","dc32242523cf610bf7c16b778a5629337e4a213cec81b837e05a2a34bd73e5b9"] // add the account that will deploy the contract (private key)
-    // ["anon.test","alankrit.test"]
-    }
+    url: "https://rinkeby.infura.io/v3/08d0a9d1045146dc888e62677f83e772", //Infura url with projectId
+    accounts: ["bc53a0831c8357fbeb10384caa837e3166823028bac929b15228411ce84772c6","f8cacbe01f31767924507ee018cd506fcbe9a0b17f498645c53111aaa2be3196","b7793769a573e3c9d1163185237e60de34a811de4716deafdb7ce203f3ae587f","88cecca152589d771d750515b4bc98051b34348fd8d81c56c2e56f1d7795c4d7"] // add the account that will deploy the contract (private key)
+    // ["RAdmin","RRawMaterialSupplier","RWarehouse","RFactory"]
+    } 
+
   },
   paths:{
     artifacts: './react-admin/src/artifacts',

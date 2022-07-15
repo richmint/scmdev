@@ -1,0 +1,58 @@
+.mainDiv{
+    display: flex;
+    width:100%;
+    height: 400px;
+    justify-content: center;
+}
+
+.innerDiv{
+    width: 100%;
+    height: 200px;
+    background-color: rgb(240, 240, 215);
+    border-radius: 10px;
+}
+
+.innerHeadDiv{
+    display: flex;
+    height: 20px;
+    justify-content: center;
+}
+
+.twoInnerDiv{
+    width: 100%;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    height: 140px;
+    justify-content: space-around;
+}
+
+.innerDivBoth{
+    width: 30%;
+    height: 140px;
+}
+
+.insideInnerDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.btnDiv{
+    display: flex;
+    height: 20px;
+    justify-content: center;
+}
+.btnLeft{
+    width: 150px;
+    margin-right: 15px;
+    height: 25px;
+    background-color: cornsilk;
+}
+.btnRight{
+    width: 200px;
+    height: 25px;
+    background-color:cornsilk ;
+}
+
+
+

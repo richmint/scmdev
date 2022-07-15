@@ -27,6 +27,7 @@ const RawMaterialTable = () => {
         allsupplymateriallist.push(
           <><tr> 
             <td>{i}</td>
+            <td>{object.RawMaterialSupplierID}</td>
             <td>{object.PolyesterAmount.toNumber()}</td>
             <td>{object.CottonAmount.toNumber()}</td>
             <td>{object.WoolAmount.toNumber()}</td>
@@ -64,6 +65,7 @@ const RawMaterialTable = () => {
               <table>
                 <tr>
                 <th>Batch ID</th>
+                <th>Raw Material Supplier Address</th>
                   <th>Polyster Amount</th>
                   <th>Cotton Amount</th>
                   <th>Wool Amount</th>

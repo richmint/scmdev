@@ -40,7 +40,7 @@ const SellItemFormData = () =>{
     //console.log(supplyqty);
 
     // const tx = supplyChainContract.factorySellItemToDistributors(data, event.target.shirtproduced.value,newElmant,supplyqty);
-    const tx = supplyChainContract.factorySellItemToDistributors(0, 100,['0xa0Ee7A142d267C1f36714E4a8F75612F20a79720','0xBcd4042DE499D14e55001CcbB24a551F3b954096'],[5,5]);
+    const tx = supplyChainContract.factorySellItemToDistributors(0, 100,['0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65','0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc'],[5,5]);
     //console.log((await tx.wait()));
     if(tx){
        navigate("/sellItemToDistributer")

@@ -27,6 +27,7 @@ import BuyRawMaterial from './Front/factory/buyRawMaterial';
 import StoredItemsInWarehouse from './Front/warehouse/viewWarehouseItems';
 import AvailabelItemToSellRetailer from './Front/distributer/sellItemDistributer';
 import ApproveDistributerSupplier from './Front/distributer/approveSupplyToken';
+import FinalSellToDistributor from './Front/distributer/finalSellToDistributor';
 
 
 
@@ -178,6 +179,8 @@ function App() {
               <Route path="/storedItemsInWarehouse" element={frontToken ? <StoredItemsInWarehouse /> : <Navigate to={"/userlogin"} />} />
               <Route path="/availabelItemToSellRetailer" element={frontToken ? <AvailabelItemToSellRetailer /> : <Navigate to={"/userlogin"} />} />
               <Route path="/approveDistributerSupplier" element={frontToken ? <ApproveDistributerSupplier /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/finalSellToDistributor" element={frontToken ? <FinalSellToDistributor /> : <Navigate to={"/userlogin"} />} />
+
             </Routes>
       </BrowserRouter>
     </div>

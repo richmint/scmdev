@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 const Factorytable = () => {
   const [data, setData] = useState([]);
 
-  useEffect(()=>{
+  useEffect(()=>{ 
     factoryRows().then(result=>{
       console.log("Data Table Reuslt = ", result);
       setData(result); 

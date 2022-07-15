@@ -17,36 +17,58 @@ const ViewSupplyTable = () => {
   const getSupplyChainHandler = async (event) => {
 
     console.log("Supplier Owner Address ", ownSupplyChainAddress)
-    const totalbatchids = await supplyChainTokenContract.getWarehouseItems(ownSupplyChainAddress);
-    console.log("totalbatchids",totalbatchids.length);
-    if(totalbatchids.length>0){
-      for (let i = 0; i < totalbatchids.length; i++) {
-        let object = await supplyChainContract.items(totalbatchids[i].toNumber());
-        //console.log(totalbatchids[i].toNumber());
-        //console.log("myrecord", object.PolyesterAmount.toNumber());
-        if (object.itemState === 0) { 
-          // console.log("inner loop", object.PolyesterAmount.toNumber());
-          // console.log("cotton loop", object.CottonAmount.toNumber());
-          allsupplymateriallist.push(
-            <><tr> 
-              <td>{totalbatchids[i].toNumber()}</td>
-              <td>{object.RawMaterialSupplierID}</td>
-              <td>{object.factoryID}</td>
-              <td>{object.PolyesterAmount.toNumber()}</td>
-              <td>{object.CottonAmount.toNumber()}</td>
-              <td>{object.WoolAmount.toNumber()}</td>
-            </tr></>
-          )
-        
-        }      
-      }
-  }else if(totalbatchids.length<1){
-    allsupplymateriallist.push(
-      <><tr>
-        <td colSpan="4">No Record Found</td>
-      </tr></>
-    )
+    console.log("Supplier Chain Address ", supplyChainContract)
+    
+    //const totalbatchids = await supplyChainContract.getWarehouseItems(ownSupplyChainAddress);
+
+    let object =await supplyChainContract.getWarehouseItems(ownSupplyChainAddress)   
+  for(let i=0;i <object.length; i++){
+    if(object[i].itemState==1){
+  
+      console.log(object[i]);
+
+      allsupplymateriallist.push(
+                  <><tr> 
+                    <td>{object[i].supplyChainId.toNumber()}</td>
+                    <td>{object[i].RawMaterialSupplierID}</td>
+                    <td>{object[i].factoryID}</td>
+                    <td>{object[i].PolyesterAmount.toNumber()}</td>
+                    <td>{object[i].CottonAmount.toNumber()}</td>
+                    <td>{object[i].WoolAmount.toNumber()}</td>
+                  </tr></>
+                )
+    }
   }
+
+    //console.log("totalbatchids",totalbatchids.length);
+  //   if(totalbatchids.length>0){
+  //     for (let i = 0; i < totalbatchids.length; i++) {
+  //       let object = await supplyChainContract.items(totalbatchids[i].toNumber());
+  //       //console.log(totalbatchids[i].toNumber());
+  //       //console.log("myrecord", object.PolyesterAmount.toNumber());
+  //       if (object.itemState === 0) { 
+  //         // console.log("inner loop", object.PolyesterAmount.toNumber());
+  //         // console.log("cotton loop", object.CottonAmount.toNumber());
+  //         allsupplymateriallist.push(
+  //           <><tr> 
+  //             <td>{totalbatchids[i].toNumber()}</td>
+  //             <td>{object.RawMaterialSupplierID}</td>
+  //             <td>{object.factoryID}</td>
+  //             <td>{object.PolyesterAmount.toNumber()}</td>
+  //             <td>{object.CottonAmount.toNumber()}</td>
+  //             <td>{object.WoolAmount.toNumber()}</td>
+  //           </tr></>
+  //         )
+        
+  //       }      
+  //     }
+  // }else if(totalbatchids.length<1){
+  //   allsupplymateriallist.push(
+  //     <><tr>
+  //       <td colSpan="4">No Record Found</td>
+  //     </tr></>
+  //   )
+  // }
     setMateriallist(allsupplymateriallist);
   }
 

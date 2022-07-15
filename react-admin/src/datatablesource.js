@@ -134,7 +134,6 @@ export const factoryColumns = [
 //temporary data
 export const factoryRows = async () => {
   return await fetch("http://162.215.222.118:5150/factory")
-  //return await fetch("http://127.0.0.1:5150/factory")
   
        .then(result=>result.json())
        .then((resp)=> resp)

@@ -20,7 +20,7 @@ async function main() {
         // rawMaterialSupplierSigner2,  
         warehouseSigner, 
         factorySigner1, 
-        factorySigner2, 
+        // factorySigner2, 
         distributorSigner1, 
         distributorSigner2, 
         // retailerSigner1, 
@@ -42,40 +42,41 @@ async function main() {
   await supplychain.deployed();
   console.log("Supplychain deployed to:", supplychain.address);
 
-  // const supplyChainToken = await ethers.getContractAt("SupplyChainToken","0x93871CCdF4e3f3b4c6EF761c44E5C1Ad6192D93c")
-  // const supplychain =await ethers.getContractAt("Supplychain","0x735916bB171DBB995937Bddc16f7142daB0c84D1")
+  // const supplyChainToken = await ethers.getContractAt("SupplyChainToken","0xF840BAbbC301869B6e2D61F4B21d3b0D78560993")
+  // const supplychain =await ethers.getContractAt("Supplychain","0x8E7913417d1BB22dd8e41D3e786651D163DD5643")
 
+      
   // console.log(await provider.getBalance(adminSigner.address))
   // console.log(await provider.getBalance(rawMaterialSupplierSigner1.address))
 
   // console.log("SupplychainToken owner: ",await supplyChainToken.owner());  
-  // console.log("Transfering ownership to supplychain contract...");
+  console.log("Transfering ownership to supplychain contract...");
   await supplyChainToken.transferOwnership(supplychain.address);
   // console.log("SupplychainToken owner: ",await supplyChainToken.owner());  
  
   // console.log("Adding a RawMaterialSupplier...");
   // console.log(await supplychain.isRawMaterialSupplier(rawMaterialSupplierSigner1.address))
-  // await supplychain.addRawMaterialSupplier("0x70997970c51812dc3a010c7d01b50e0d17dc79c8");
+    await supplychain.addRawMaterialSupplier(rawMaterialSupplierSigner1.address);
   // await supplychain.addRawMaterialSupplier(rawMaterialSupplierSigner2.address);
   // console.log(await supplychain.isRawMaterialSupplier("0x70997970c51812dc3a010c7d01b50e0d17dc79c8"))
 
   // console.log("Adding a Warehouse Admin ...");
-  //  await supplychain.addWarehouse(warehouseSigner.address);
+   await supplychain.addWarehouse(warehouseSigner.address);
 
   // console.log("Adding a FactoryAdmin...");
   // console.log(await supplychain.isFactory(factorySigner.address))
-  //  await supplychain.addFactory(factorySigner1.address);
+   await supplychain.addFactory(factorySigner1.address);
   //  await supplychain.addFactory(factorySigner2.address);
 
   // console.log(await supplychain.isFactory(factorySigner.address))
   // console.log("Adding a Distributor Admins...");
-  // await supplychain.addDistributor(distributorSigner1.address);
-  // await supplychain.addDistributor(distributorSigner2.address);
+  await supplychain.addDistributor(distributorSigner1.address);
+  await supplychain.addDistributor(distributorSigner2.address);
 
   // console.log("Adding a Retailer Admins...");
   // await supplychain.addRetailer(retailerSigner1.address);
   // await supplychain.addRetailer(retailerSigner2.address);
-
+ 
   // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(100,110,100);
   // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(220,210,200);
   // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(300,320,310);
@@ -233,8 +234,8 @@ async function main() {
   // console.log(await supplyChainToken.entityMap(2,4,2));
   
   // console.log(await supplychain.getDistributors(2))
-  await supplyChainToken.connect(distributorSigner1).setApprovalForAll(supplychain.address,true);
-  await supplychain.connect(distributorSigner1).distributorSellToRetailer(0,[retailerSigner1.address,retailerSigner1.address],[2,3]);
+  // await supplyChainToken.connect(distributorSigner1).setApprovalForAll(supplychain.address,true);
+  // await supplychain.connect(distributorSigner1).distributorSellToRetailer(0,[retailerSigner1.address,retailerSigner1.address],[2,3]);
   // console.log((await tx4.wait()).events[0].args)
   // console.log(await supplychain.getDistributors(2))
   // retailerSigner1
