@@ -96,13 +96,13 @@ const Sidebar = () => {
             }else if (localStorage.userRole == 'Distributer') {
               return(
                 <>
-                <Link to="/storedItemsInWarehouse" style={{ textDecoration: "none" }}>
+                <Link to="/availabelItemToSellRetailer" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
               <span>Availabel Item To Sell</span>
             </li>
           </Link>
-          <Link to="/storedItemsInWarehouse" style={{ textDecoration: "none" }}>
+          <Link to="/approveDistributerSupplier" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
               <span>Approve Supply Token</span>
