@@ -18,8 +18,7 @@ const RawMaterialTable = () => {
     console.log("Factory Address ", ownSupplyChainAddress)
     const totalbatchids = (await supplyChainContract.totalBatchs()).toNumber();
     console.log(totalbatchids);
-
-    for (let i = 0; i < totalbatchids; i++) {
+    if(totalbatchids>0){  for (let i = 0; i < totalbatchids; i++) {
       let object = await supplyChainContract.items(i);
       console.log("myrecord", object);
       if (object.itemState === 0) {
@@ -35,15 +34,17 @@ const RawMaterialTable = () => {
           </tr></>
         )
        
-      } else {
-        allsupplymateriallist.push(
-          <><tr>
-            <td colSpan="2">No Record Found</td>
-          </tr></>
-        )
-      }
+      } 
      
     }
+  }else {
+      allsupplymateriallist.push(
+        <><tr>
+          <td colSpan="5">No Record Found</td>
+        </tr></>
+      )
+    }
+   
     setMateriallist(allsupplymateriallist);
   }
 

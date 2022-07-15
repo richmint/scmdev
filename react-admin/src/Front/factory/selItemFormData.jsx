@@ -11,11 +11,20 @@ import Multiselect from 'multiselect-react-dropdown';
  
 const SellItemFormData = () =>{
 
-  var listelemant;
+  let data = useLocation();
+  data = data.state.i;
+  //console.log("Coming data is ",data);
+
+ 
+  var listelemant = [];
+    var newElmant ;
        const selectedItem1 = ((selectedList, selectedItem) => {
-          //console.log("list",selectedList)
-           listelemant = selectedList
-          //console.log("Item",selectedItem)
+
+          selectedList.map((x)=>listelemant.push(x.value))
+          console.log("Final item ",listelemant)
+          newElmant= listelemant;
+          // console.log("After acces",newElmant)
+          listelemant = [];
        })
 
   const navigate = useNavigate();
@@ -25,8 +34,13 @@ const SellItemFormData = () =>{
     event.preventDefault();
     //console.log("batchid",event.target.whHashAdr.value);
     
+    var supplyqty = [];
+    supplyqty = event.target.unitSupply.value.split(' ');
+  
+    //console.log(supplyqty);
 
-    const tx = supplyChainContract.factorySellItemToDistributors(0, event.target.shirtproduced.value,event.target.unitSupply.value,listelemant);
+    // const tx = supplyChainContract.factorySellItemToDistributors(data, event.target.shirtproduced.value,newElmant,supplyqty);
+    const tx = supplyChainContract.factorySellItemToDistributors(0, 100,['0xa0Ee7A142d267C1f36714E4a8F75612F20a79720','0xBcd4042DE499D14e55001CcbB24a551F3b954096'],[5,5]);
     //console.log((await tx.wait()));
     if(tx){
        navigate("/sellItemToDistributer")
@@ -57,9 +71,7 @@ const SellItemFormData = () =>{
     const [distributedAddList,setDistributedAddList] = useState();
 
 
-    let data = useLocation();
-    data = data.state.data;
-    console.log("Coming data is ",data);
+   
 
     const handleChange = (event) => {
 
