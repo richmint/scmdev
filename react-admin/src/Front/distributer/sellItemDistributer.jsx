@@ -1,22 +1,21 @@
 import React from "react";
-import Navbar from "../../components/front_navbar/Navbar";
+// import Sidebar from "../../components/sidebar/Sidebar";
 import Sidebar from "../../components/front_sidebar/Sidebar";
+import Navbar from "../../components/front_navbar/Navbar";
 import '../../style/front/list.scss'
-import RawMaterialTable from "./rawMaterialTable";
+import SellItemTable from "./sellItemTable";
 
 
-
-
-const AvailableRawMaterialToBuy = () =>{
+const SellItemToDistributer = () =>{
     return(
         <div className="list">
             <Sidebar />
             <div className="listContainer">
                 <Navbar />
-                <RawMaterialTable />
+                <SellItemTable />
             </div>
         </div>
     )
 }
 
-export default AvailableRawMaterialToBuy
+export default SellItemToDistributer

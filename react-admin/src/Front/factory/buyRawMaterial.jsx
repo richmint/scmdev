@@ -1,9 +1,3 @@
-// import React, { useEffect, useState, useContext } from 'react';
-// import Navbar from "../../components/front_navbar/Navbar";
-// import Sidebar from "../../components/front_sidebar/Sidebar";
-// import { rawMaterialSupplierRows } from "../../datatablesource";
-// import '../../style/front/new.scss'
-
 
 import React, { useEffect, useState, useContext } from 'react';
 import Navbar from "../../components/front_navbar/Navbar";
