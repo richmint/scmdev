@@ -149,9 +149,9 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
             emit FactorySellItemToDistributors(_supplyChainId);
     }
     function distributorSellToRetailer(
-        uint _supplyChainId,
-        address[] memory retailers,
-        uint[] memory quantity 
+        uint _supplyChainId
+        // address[] memory retailers,
+        // uint[] memory quantity 
     ) public onlyDistributor(){
             uint units;
             uint counter;  
@@ -166,18 +166,18 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
                     break;  
                 }  
             } 
-            emit valueeeeeeee(units,counter);
+            // emit valueeeeeeee(units,counter);
             
-            require(units>0 ,"DISTRIBUTOR INTERNAL ERROR");
-            uint lastq=counter;
-            for(uint i=0; i<retailers.length; i++){
-                require(isRetailer(retailers[i]),"NOT A VALID RETAILER ADDRESS ! PLEASE CONTACT ADMIN");
-                retailerID[_supplyChainId].push(retailers[i]);
-                retailerUnits[_supplyChainId].push(quantity[i]); 
-                retailerCounters[_supplyChainId].push(lastq);
-                SupplyChainToken(supplyChainToken).safeTransferFrom(msg.sender,retailers[i],_supplyChainId,quantity[i],"0x00",lastq);
-                lastq +=quantity[i];
-            }
+            // require(units>0 ,"DISTRIBUTOR INTERNAL ERROR");
+            // uint lastq=counter;
+            // for(uint i=0; i<retailers.length; i++){
+            //     require(isRetailer(retailers[i]),"NOT A VALID RETAILER ADDRESS ! PLEASE CONTACT ADMIN");
+            //     retailerID[_supplyChainId].push(retailers[i]);
+            //     retailerUnits[_supplyChainId].push(quantity[i]); 
+            //     retailerCounters[_supplyChainId].push(lastq);
+            //     SupplyChainToken(supplyChainToken).safeTransferFrom(msg.sender,retailers[i],_supplyChainId,quantity[i],"0x00",lastq);
+            //     lastq +=quantity[i];
+            // }
             emit DistributorSellToRetailer(_supplyChainId);
     }
 
