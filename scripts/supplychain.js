@@ -2,6 +2,8 @@ const {ethers,waffle} = require("hardhat");
 
 async function main() {
   const provider =waffle.provider;
+
+  // Fiber(cotton, linen, jute, silk) --> yarn  
   // const [
   //       adminSigner,
   //       rawMaterialSupplierSigner1,

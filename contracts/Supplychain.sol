@@ -21,9 +21,14 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         supplyChainToken =_supplychainToken;
     }
 
-    enum State{
-        rawMaterialSupplierSuppliesRM,
-        factoryBuyRawMaterial,
+    enum State
+    {
+        rawMaterialSupplierSuppliesRM, //  1 July 
+        factoryBuyRawMaterial, //  4 july 
+              
+        factoryCompleteSpinningWaeving,
+        factoryCompleteGarmentManufacturing, 
+            
         factorySellItemToDistributors,
         DistributorSellToRetailer,
         RetailerSellToCustomer
@@ -32,28 +37,26 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
     State constant defaultState = State.rawMaterialSupplierSuppliesRM;
 
     struct Item{
+    
         uint supplyChainId;             // Counter for this batch items
         // address entityAddress;               // Metamask-Ethereum address of the current owner (Changes as the product moves through different stages)
         State itemState;                // Product State as represented in the enum above
 
-        uint PolyesterAmount;
-        uint CottonAmount;
-        uint WoolAmount;
-        
+        uint PolyesterAmount;   
+        uint CottonAmount;      
+        uint WoolAmount;         
+
+        uint YarnAmount;    
+        string YarnColor;   
+        string YarnType;
+
         uint totalUnits;
+        string Description;
         
         address RawMaterialSupplierID;  // Metamask-Ethereum address of the RawMaterialSupplier
         address warehouseID;            // Metamask-Ethereum address of the warehouse
         address factoryID;              // Metamask-Ethereum address of the factory
-        // address[] distributorID;          // Metamask-Ethereum address of the Distributor
-        // uint[] distributorUnits;
-        // address retailerID;             // Metamask-Ethereum address of the Retailer
-        // address consumerID;             // Metamask-Ethereum address of the Consumer 
     }
-    // struct distributorInfo{
-    //     address[] distributorID;
-    //     uint[] distributorUnits;
-    // }
 
     mapping (uint => Item) public items;
     mapping (address => Item[]) private wareHouseItems;
@@ -78,20 +81,20 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         onlyRawMaterialSupplier()
         {
         uint currentId =supplyChainId.current();
-        // address[] memory Darray =new address[](10);
-        // uint[] memory Uarray =new uint[](10);
         Item memory item =Item({  
                 supplyChainId:currentId,  
                 itemState: defaultState,   
                 PolyesterAmount: _polyesterAmount,
                 CottonAmount:_cottonAmount,
                 WoolAmount:_woolAmount,
+                YarnAmount:0,
+                YarnColor:"",
+                YarnType:"",
                 totalUnits:0,
+                Description:"",
                 RawMaterialSupplierID: msg.sender,
                 warehouseID:address(0),
                 factoryID:address(0)
-                // distributorID:Darray,
-                // distributorUnits:Uarray
             });
         items[currentId] =item;
         SupplyChainToken(supplyChainToken).mint(msg.sender,currentId,1);
@@ -115,16 +118,34 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         emit FactoryBuyRawMaterial(_supplyChainId);
     }
 
+    function factoryCompleteSpinningWaeving(uint _supplyChainId, uint _yarnAmount, string memory _yarnColor, string memory _yarnType) public onlyFactory() {
+        Item memory item =items[_supplyChainId];
+        item.YarnAmount =_yarnAmount;
+        item.YarnColor=_yarnColor;
+        item.YarnType=_yarnType;
+
+        item.itemState=  State.factoryCompleteSpinningWaeving;
+        items[_supplyChainId] =item;
+    }
+
+    function factoryCompleteGarmentManufacturing(uint _supplyChainId, uint _totalUnits, string memory _description) public onlyFactory() {
+        require(_totalUnits>=1,"Units should be greater that 1");
+        Item memory item =items[_supplyChainId];
+        item.totalUnits =_totalUnits;
+        item.Description=_description;
+
+        item.itemState=  State.factoryCompleteGarmentManufacturing;
+        items[_supplyChainId] =item;
+    }
+
     function factorySellItemToDistributors(
         uint _supplyChainId,
-        uint _units, 
         address[] memory distributors,
         uint[] memory quantity 
         ) public onlyFactory(){
-            require(_units>1);
             Item memory item =items[_supplyChainId];
             item.itemState =State.factorySellItemToDistributors;
-            item.totalUnits =_units;
+            uint _units =item.totalUnits;
 
             SupplyChainToken(supplyChainToken).mint(msg.sender,_supplyChainId,_units-1);
             uint lastq=0;
