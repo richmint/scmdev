@@ -5,18 +5,14 @@ import Navbar from "../../components/navbar/Navbar";
 import { useState } from "react"; 
 import { DarkModeContext } from "../../context/darkModeContext";
 const RawMaterialSupplier = ({ inputs, title, value }) => {
-  const { dispatch, metaMask, rowmaterialContract } = useContext(DarkModeContext);
+  const { dispatch, metaMask, supplyChainContract } = useContext(DarkModeContext);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [allWarehouse, setAllWarehouse] = useState(null);
-  const [defaultAccount, setDefaultAccount] = useState(null);
-  const [rmsContract, setContract] = useState(rowmaterialContract);
-  //console.log("rmsContract",rmsContract);
+  const [SCContract, setSCContract] = useState(supplyChainContract);
+  //console.log("SCContract",SCContract);
   const addrawmaterialsupplierHandler = (event) => {
     event.preventDefault();
-    console.log(rmsContract);
-    // console.log('sending ' + event.target.hashAddress.value + ' to the rmsContract');
-    rowmaterialContract.addRawMaterialSupplier(event.target.hashAddress.value);
-
+    console.log(SCContract);
+    SCContract.addRawMaterialSupplier(event.target.hashAddress.value);
 
     const requestOptions = {
       method: 'POST',
@@ -31,7 +27,6 @@ const RawMaterialSupplier = ({ inputs, title, value }) => {
   };
   fetch('http://127.0.0.1:5150/register', requestOptions)
       .then(response => response.json());
-
   }
   return (
     <div className="new">

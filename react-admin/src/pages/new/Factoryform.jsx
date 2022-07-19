@@ -5,17 +5,14 @@ import Navbar from "../../components/navbar/Navbar";
 import { useState } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
 const Factoryform = ({ inputs, title, value }) => {
-  const { dispatch, metaMask, factoryContract } = useContext(DarkModeContext);
+  const { dispatch, metaMask, supplyChainContract } = useContext(DarkModeContext);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [allWarehouse, setAllWarehouse] = useState(null);
-  const [defaultAccount, setDefaultAccount] = useState(null);
-  const [fContract, setContract] = useState(factoryContract);
-  //console.log("fContract",fContract);
+  const [SCContract, setSCContract] = useState(supplyChainContract);
+  //console.log("SCContract",SCContract);
   const addFactoryHandler = (event) => {
     event.preventDefault();
-    console.log(fContract);
-    // console.log('sending ' + event.target.hashaddress.value + ' to the fContract');
-    factoryContract.addFactory(event.target.hashaddress.value);
+    //console.log(SCContract);
+    SCContract.addFactory(event.target.hashaddress.value);
 
     const requestOptions = {
       method: 'POST',
