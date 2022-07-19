@@ -4,35 +4,36 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import { useState } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
+import { useNavigate } from "react-router-dom";
 const Warehouseform = ({ inputs, title, value }) => {
+  const navigate = useNavigate(); 
   const { dispatch, metaMask, supplyChainContract } = useContext(DarkModeContext);
   const [errorMessage, setErrorMessage] = useState(null);
   const [SCContract, setSCContract] = useState(supplyChainContract);
 
   //console.log("SCContract",whContract);
-  const addWarehouseHandler = (event) => {
+  const addWarehouseHandler = async (event) => {
     event.preventDefault();
-    console.log("SC COntract", SCContract);
-    SCContract.addWarehouse(event.target.hashAddress.value);
-
-      // const requestOptions = {
-      //     method: 'POST',
-      //     headers: { 'Content-Type': 'application/json' },
-      //     body: JSON.stringify({
-      //       "hashAddress":event.target.hashAddress.value,
-      //       "name":event.target.name.value,
-      //       "email":event.target.email.value,
-      //       "address":event.target.location.value,
-      //       "password":event.target.hashAddress.value,
-      //       "role":'Warehouse'
-      //       })
-      // };
-      // fetch('http://162.215.222.118:5150/register', requestOptions)
-      //     .then(response => response.json());
-     
+    console.log("SC Contract", SCContract);
+    const waretxn = await SCContract.addWarehouse(event.target.hashAddress.value);
+    if(waretxn){
+      navigate("/warehouse")
+    }
+      const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            "hashAddress":event.target.hashAddress.value,
+            "name":event.target.name.value,
+            "email":event.target.email.value,
+            "address":event.target.location.value,
+            "password":event.target.hashAddress.value,
+            "role":'Warehouse'
+            })
+      };
+      fetch('http://162.215.222.118:5150/register', requestOptions)
+          .then(response => response.json());
   }
-
-
   return (
     <div className="new">
       <Sidebar />

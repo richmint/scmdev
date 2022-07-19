@@ -9,13 +9,6 @@ import { Link, useNavigate } from "react-router-dom"
 import "./navbar.scss";
 const Navbar = (props) =>{
 
-
-	// USer name 
-	// const username = localStorage.userName;
-	// console.log("User name",username)
-
-
-
 	let SupplyChainContractAddress = '0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0';
  
     const { dispatch,metaMask,supplyChainContract} = useContext(DarkModeContext);
