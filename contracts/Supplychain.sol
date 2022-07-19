@@ -1,16 +1,16 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.4;
-import "./Roles/Warehouse.sol";
-import "./Roles/Factory.sol";
-import "./Roles/ISO.sol";
-import "./Roles/Distributor.sol";
-import "./Roles/RawMaterialSupplier.sol";
-import "./Roles/Retailer.sol";
-import "./Roles/Customer.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
-import "./SupplyChainERC1155.sol";
-import "hardhat/console.sol";
+// SPDX-License-Identifier: UNLICENSED      
+pragma solidity ^0.8.4;                     
+import "./Roles/Warehouse.sol";             
+import "./Roles/Factory.sol";               
+import "./Roles/ISO.sol";                   
+import "./Roles/Distributor.sol";           
+import "./Roles/RawMaterialSupplier.sol";   
+import "./Roles/Retailer.sol";               
+import "./Roles/Customer.sol";                  
+import "@openzeppelin/contracts/utils/Counters.sol";      
+import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";    
+import "./SupplyChainERC1155.sol";  
+import "hardhat/console.sol";   
 
 contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Retailer, Customer{
     using Counters for Counters.Counter;
@@ -26,6 +26,8 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         rawMaterialSupplierSuppliesRM, //  1 July 
         factoryBuyRawMaterial, //  4 july 
               
+        factoryCompleteSpinningWaeving,
+        factoryCompleteGarmentManufacturing,
         factorySellItemToDistributors,
         DistributorSellToRetailer,
         RetailerSellToCustomer
@@ -43,10 +45,6 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         uint CottonAmount;      
         uint WoolAmount;         
 
-        // uint YarnAmount;     
-        // string YarnColor;   
-        // string YarnType;
-
         uint totalUnits;
         string Description;
         
@@ -54,7 +52,14 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         address warehouseID;            // Metamask-Ethereum address of the warehouse
         address factoryID;              // Metamask-Ethereum address of the factory
     }
+    struct Yarn{
+        uint YarnAmount;     
+        string YarnColor;   
+        string YarnType;
+    }
 
+    mapping (uint =>Yarn) public YarnDetails;
+    mapping (uint =>uint[]) public timeStamps;
     mapping (uint => Item) public items;
     mapping (address => Item[]) private wareHouseItems;
 
@@ -84,9 +89,6 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
                 PolyesterAmount: _polyesterAmount,
                 CottonAmount:_cottonAmount,
                 WoolAmount:_woolAmount,
-                // YarnAmount:0,
-                // YarnColor:"",
-                // YarnType:"",
                 totalUnits:0,
                 Description:"",
                 RawMaterialSupplierID: msg.sender,
@@ -96,6 +98,7 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         items[currentId] =item;
         SupplyChainToken(supplyChainToken).mint(msg.sender,currentId,1);
         supplyChainId.increment();
+        timeStamps[currentId].push(block.timestamp);
         emit RawMaterialSupplierSuppliesRM(currentId);
     }
 
@@ -112,28 +115,31 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         
         wareHouseItems[_warehouse].push(item);
         SupplyChainToken(supplyChainToken).safeTransferFrom(rawMaterialSupplier,msg.sender,_supplyChainId,1,"0x00",0);
+        timeStamps[_supplyChainId].push(block.timestamp);
         emit FactoryBuyRawMaterial(_supplyChainId);
     }
 
-    // function factoryCompleteSpinningWaeving(uint _supplyChainId, uint _yarnAmount, string memory _yarnColor, string memory _yarnType) public onlyFactory() {
-    //     Item memory item =items[_supplyChainId];
-    //     item.YarnAmount =_yarnAmount;
-    //     item.YarnColor=_yarnColor;
-    //     item.YarnType=_yarnType;
+    function factoryCompleteSpinningWaeving(uint _supplyChainId, uint _yarnAmount, string memory _yarnColor, string memory _yarnType) public onlyFactory() {
+        Item memory item =items[_supplyChainId];        
+        YarnDetails[_supplyChainId].YarnAmount =_yarnAmount;
+        YarnDetails[_supplyChainId].YarnColor=_yarnColor;
+        YarnDetails[_supplyChainId].YarnType=_yarnType;
 
-    //     item.itemState=  State.factoryCompleteSpinningWaeving;
-    //     items[_supplyChainId] =item;
-    // }
+        item.itemState=  State.factoryCompleteSpinningWaeving;
+        items[_supplyChainId] =item;
+        timeStamps[_supplyChainId].push(block.timestamp);
+    }
 
-    // function factoryCompleteGarmentManufacturing(uint _supplyChainId, uint _totalUnits, string memory _description) public onlyFactory() {
-    //     require(_totalUnits>=1,"Units should be greater that 1");
-    //     Item memory item =items[_supplyChainId];
-    //     item.totalUnits =_totalUnits;
-    //     item.Description=_description;
+    function factoryCompleteGarmentManufacturing(uint _supplyChainId, uint _totalUnits, string memory _description) public onlyFactory() {
+        require(_totalUnits>=1,"Units should be greater that 1");
+        Item memory item =items[_supplyChainId];
+        item.totalUnits =_totalUnits;
+        item.Description=_description;
 
-    //     item.itemState=  State.factoryCompleteGarmentManufacturing;
-    //     items[_supplyChainId] =item;
-    // }
+        item.itemState=  State.factoryCompleteGarmentManufacturing;
+        items[_supplyChainId] =item;
+        timeStamps[_supplyChainId].push(block.timestamp);
+    }
 
     function factorySellItemToDistributors(
         uint _supplyChainId,
@@ -164,6 +170,7 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
                     }
                 }
             }   
+            timeStamps[_supplyChainId].push(block.timestamp);
             emit FactorySellItemToDistributors(_supplyChainId);
     }
     function distributorSellToRetailer(
