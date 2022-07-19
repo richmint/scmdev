@@ -26,9 +26,6 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         rawMaterialSupplierSuppliesRM, //  1 July 
         factoryBuyRawMaterial, //  4 july 
               
-        factoryCompleteSpinningWaeving,
-        factoryCompleteGarmentManufacturing, 
-            
         factorySellItemToDistributors,
         DistributorSellToRetailer,
         RetailerSellToCustomer
@@ -46,9 +43,9 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         uint CottonAmount;      
         uint WoolAmount;         
 
-        uint YarnAmount;    
-        string YarnColor;   
-        string YarnType;
+        // uint YarnAmount;     
+        // string YarnColor;   
+        // string YarnType;
 
         uint totalUnits;
         string Description;
@@ -87,9 +84,9 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
                 PolyesterAmount: _polyesterAmount,
                 CottonAmount:_cottonAmount,
                 WoolAmount:_woolAmount,
-                YarnAmount:0,
-                YarnColor:"",
-                YarnType:"",
+                // YarnAmount:0,
+                // YarnColor:"",
+                // YarnType:"",
                 totalUnits:0,
                 Description:"",
                 RawMaterialSupplierID: msg.sender,
@@ -118,25 +115,25 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         emit FactoryBuyRawMaterial(_supplyChainId);
     }
 
-    function factoryCompleteSpinningWaeving(uint _supplyChainId, uint _yarnAmount, string memory _yarnColor, string memory _yarnType) public onlyFactory() {
-        Item memory item =items[_supplyChainId];
-        item.YarnAmount =_yarnAmount;
-        item.YarnColor=_yarnColor;
-        item.YarnType=_yarnType;
+    // function factoryCompleteSpinningWaeving(uint _supplyChainId, uint _yarnAmount, string memory _yarnColor, string memory _yarnType) public onlyFactory() {
+    //     Item memory item =items[_supplyChainId];
+    //     item.YarnAmount =_yarnAmount;
+    //     item.YarnColor=_yarnColor;
+    //     item.YarnType=_yarnType;
 
-        item.itemState=  State.factoryCompleteSpinningWaeving;
-        items[_supplyChainId] =item;
-    }
+    //     item.itemState=  State.factoryCompleteSpinningWaeving;
+    //     items[_supplyChainId] =item;
+    // }
 
-    function factoryCompleteGarmentManufacturing(uint _supplyChainId, uint _totalUnits, string memory _description) public onlyFactory() {
-        require(_totalUnits>=1,"Units should be greater that 1");
-        Item memory item =items[_supplyChainId];
-        item.totalUnits =_totalUnits;
-        item.Description=_description;
+    // function factoryCompleteGarmentManufacturing(uint _supplyChainId, uint _totalUnits, string memory _description) public onlyFactory() {
+    //     require(_totalUnits>=1,"Units should be greater that 1");
+    //     Item memory item =items[_supplyChainId];
+    //     item.totalUnits =_totalUnits;
+    //     item.Description=_description;
 
-        item.itemState=  State.factoryCompleteGarmentManufacturing;
-        items[_supplyChainId] =item;
-    }
+    //     item.itemState=  State.factoryCompleteGarmentManufacturing;
+    //     items[_supplyChainId] =item;
+    // }
 
     function factorySellItemToDistributors(
         uint _supplyChainId,

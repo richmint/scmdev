@@ -5,32 +5,30 @@ import Navbar from "../../components/navbar/Navbar";
 import { useState } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
 const Warehouseform = ({ inputs, title, value }) => {
-  const { dispatch, metaMask, warehouseContract } = useContext(DarkModeContext);
+  const { dispatch, metaMask, supplyChainContract } = useContext(DarkModeContext);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [allWarehouse, setAllWarehouse] = useState(null);
-  const [defaultAccount, setDefaultAccount] = useState(null);
-  const [whContract, setContract] = useState(warehouseContract);
-  //console.log("whContract",whContract);
+  const [SCContract, setSCContract] = useState(supplyChainContract);
+
+  //console.log("SCContract",whContract);
   const addWarehouseHandler = (event) => {
     event.preventDefault();
-    // console.log(whContract);
-     console.log('sending ' + event.target.hashAddress.value + ' to the whContract');
-    warehouseContract.addWarehouse(event.target.hashAddress.value);
+    console.log("SC COntract", SCContract);
+    SCContract.addWarehouse(event.target.hashAddress.value);
 
-      const requestOptions = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            "hashAddress":event.target.hashAddress.value,
-            "name":event.target.name.value,
-            "email":event.target.email.value,
-            "address":event.target.location.value,
-            "password":event.target.hashAddress.value,
-            "role":'Warehouse'
-            })
-      };
-      fetch('http://162.215.222.118:5150/register', requestOptions)
-          .then(response => response.json());
+      // const requestOptions = {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify({
+      //       "hashAddress":event.target.hashAddress.value,
+      //       "name":event.target.name.value,
+      //       "email":event.target.email.value,
+      //       "address":event.target.location.value,
+      //       "password":event.target.hashAddress.value,
+      //       "role":'Warehouse'
+      //       })
+      // };
+      // fetch('http://162.215.222.118:5150/register', requestOptions)
+      //     .then(response => response.json());
      
   }
 
