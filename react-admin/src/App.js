@@ -28,6 +28,11 @@ import StoredItemsInWarehouse from './Front/warehouse/viewWarehouseItems';
 import AvailabelItemToSellRetailer from './Front/distributer/sellItemDistributer';
 import ApproveDistributerSupplier from './Front/distributer/approveSupplyToken';
 import FinalSellToDistributor from './Front/distributer/finalSellToDistributor';
+import SpinningWaevingMaterial from './Front/factory/spinningWeaving';
+import ManufactureGarmentMaterial from './Front/factory/manufactureGarment';
+import ViewBatchStatus from './Front/factory/viewBatchStatus';
+
+
 
 
 
@@ -171,11 +176,20 @@ function App() {
               <Route path="/addbatch" element={frontToken ? <Addbatch /> : <Navigate to={"/userlogin"} />} />
               <Route path="/supplyToken" element={frontToken ? <ViewSupplyToken /> : <Navigate to={"/userlogin"} />} />
               <Route path="/approveSupplier" element={frontToken ? <Approvesupplier /> : <Navigate to={"/userlogin"} />} />
+              
+              {/* Front Factory Routes */}
               <Route path="/availableRawMaterialToBuy" element={frontToken ? <AvailableRawMaterialToBuy /> : <Navigate to={"/userlogin"} />} />
               <Route path="/approveFactorySupplier" element={frontToken ? <ApproveFactorySupplier /> : <Navigate to={"/userlogin"} />} />
               <Route path="/sellItemToDistributer" element={frontToken ? <SellItemToDistributer /> : <Navigate to={"/userlogin"} />} /> 
               <Route path="/sellItemFormData" element={frontToken ? <SellItemFormData /> : <Navigate to={"/userlogin"} />} />
               <Route path="/buyRawMaterial" element={frontToken ? <BuyRawMaterial /> : <Navigate to={"/userlogin"} />} />
+              
+              <Route path="/spinningWaevingMaterial" element={frontToken ? <SpinningWaevingMaterial /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/manufactureGarmentMaterial" element={frontToken ? <ManufactureGarmentMaterial /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/viewBatchStatus" element={frontToken ? <ViewBatchStatus /> : <Navigate to={"/userlogin"} />} />
+
+              
+
               <Route path="/storedItemsInWarehouse" element={frontToken ? <StoredItemsInWarehouse /> : <Navigate to={"/userlogin"} />} />
               <Route path="/availabelItemToSellRetailer" element={frontToken ? <AvailabelItemToSellRetailer /> : <Navigate to={"/userlogin"} />} />
               <Route path="/approveDistributerSupplier" element={frontToken ? <ApproveDistributerSupplier /> : <Navigate to={"/userlogin"} />} />

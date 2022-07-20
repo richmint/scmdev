@@ -16,8 +16,8 @@ const Navbar = (props) => {
 	// console.log("User name is ",userName)
 
 
-	let supplyChainTokenAddress = '0x9A676e781A523b5d0C0e43731313A708CB607508';
-	let supplyChainAddress = '0x0B306BF915C4d645ff596e518fAf3F9669b97016';
+	let supplyChainTokenAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
+	let supplyChainAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
 
 	const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownerSupplyChainAddress } = useContext(DarkModeContext);
@@ -109,7 +109,7 @@ const Navbar = (props) => {
 				<div className="items">
 					<div className="item">
 
-						{<h3>{userName}({userRole})</h3>}
+						{<h3>{userName}({userRole}){defaultAccount}</h3>}
 						<button onClick={connectWalletHandler}>Connect Metamask</button>
 					</div>
 					<div className="item">

@@ -43,15 +43,12 @@ const Materialsupplier = ({ inputs, title, value }) => {
             })
       };
       fetch('http://162.215.222.118:5150/register', requestOptions)
-          .then(response => response.json());
-     
+          .then(response => response.json());  
   }
-
-
   return (
-    <div className="new">
+    <div className="home">
        <Sidebar />
-      <div className="newContainer">
+      <div className="homeContainer">
         <Navbar />
         <div className="top">
           <h1>{title}</h1>
