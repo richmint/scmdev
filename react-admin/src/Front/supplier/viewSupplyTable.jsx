@@ -22,9 +22,13 @@ const ViewSupplyTable = () => {
     if(totalbatchids.length>0){
       for (let i = 0; i < totalbatchids.length; i++) {
         let object = await supplyChainContract.items(totalbatchids[i].toNumber());
-        //console.log(totalbatchids[i].toNumber());
+        //console.log(object);
+        
         //console.log("myrecord", object.PolyesterAmount.toNumber());
         if (object.itemState === 0) {
+        //   const dateObject =await supplychain.timeStamps(i,0);
+        // console.log(await dateTime.getDay(dateObject.toNumber()),".",await dateTime.getMonth(dateObject.toNumber()),".",await dateTime.getYear(dateObject.toNumber()));
+      
           // console.log("inner loop", object.PolyesterAmount.toNumber());
           // console.log("cotton loop", object.CottonAmount.toNumber());
           allsupplymateriallist.push(

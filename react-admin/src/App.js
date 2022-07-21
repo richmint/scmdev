@@ -30,8 +30,8 @@ import ApproveDistributerSupplier from './Front/distributer/approveSupplyToken';
 import FinalSellToDistributor from './Front/distributer/finalSellToDistributor';
 import SpinningWaevingMaterial from './Front/factory/spinningWeaving';
 import ManufactureGarmentMaterial from './Front/factory/manufactureGarment';
+import ViewBatch from './Front/factory/viewBatch';
 import ViewBatchStatus from './Front/factory/viewBatchStatus';
-
 
 
 
@@ -186,6 +186,7 @@ function App() {
               
               <Route path="/spinningWaevingMaterial" element={frontToken ? <SpinningWaevingMaterial /> : <Navigate to={"/userlogin"} />} />
               <Route path="/manufactureGarmentMaterial" element={frontToken ? <ManufactureGarmentMaterial /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/viewBatch" element={frontToken ? <ViewBatch /> : <Navigate to={"/userlogin"} />} />
               <Route path="/viewBatchStatus" element={frontToken ? <ViewBatchStatus /> : <Navigate to={"/userlogin"} />} />
 
               

@@ -6,7 +6,7 @@ import { DarkModeContext } from "../../context/darkModeContext";
 import { useNavigate } from "react-router-dom";
 
 
-const ViewBatchStatusTable = () =>{
+const ViewBatchTable = () =>{
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [materiallist, setMateriallist] =  useState(null);
@@ -31,10 +31,10 @@ const ViewBatchStatusTable = () =>{
               <td>{i}</td>
               <td>{object.RawMaterialSupplierID}</td>
               <td>{object.warehouseID}</td>
-              <td><button className='Danger'>Complete</button></td>
-              <td><button className='Danger'>Incomplete</button></td>
-              <td><button className='Danger'>Incomplete</button></td>
-              <td><button className='Danger'>Incomplete</button></td>
+              <td>{object.PolyesterAmount.toNumber()}</td>
+              <td>{object.CottonAmount.toNumber()}</td>
+              <td>{object.WoolAmount.toNumber()}</td>
+              <td><button className='' onClick={() => navigate('/viewBatchStatus',{state:{i}})} >View Status</button></td>
             </tr></>
           )
          
@@ -69,10 +69,10 @@ const ViewBatchStatusTable = () =>{
                     <th>Batch ID</th>
                     <th>Raw Material Supplier</th>
                     <th>Warehouse Address</th>
-                      <th>Baught Raw Material</th>
-                      <th>Spinning & Weaving </th>
-                      <th>Garment Manufacturing</th>
-                      <th>Sell Item To Distributer</th>
+                      <th>Polyster Amount</th>
+                      <th>Cotton Amount</th>
+                      <th>Wool Amount</th>
+                      <th>Action</th>
                     </tr>
                     {materiallist}
                   </table>
@@ -87,4 +87,4 @@ const ViewBatchStatusTable = () =>{
     
 }
 
-export default ViewBatchStatusTable
+export default ViewBatchTable

@@ -31,6 +31,7 @@ async function main() {
   const DateTime = await ethers.getContractFactory("DateTime");
   const dateTime = await DateTime.deploy();
   await dateTime.deployed();
+  console.log("Date deployed at:", dateTime.address);
 
   // const supplyChainToken = await ethers.getContractAt("SupplyChainToken","0xb57AdBBe690bA8418e53Cc918500cb9233FD23c9")
   // const supplychain =await ethers.getContractAt("Supplychain","0x6C60E1BAc9c8Ef98953BaF5bceF2941FbF547E34")
@@ -108,22 +109,22 @@ async function main() {
 
   // -----------------------------FOR WAREHOUSE DASHBOARD-------------------------------------
 
-  // let object =await supplychain.getWarehouseItems(warehouseSigner.address)   
-  // for(let i=0;i <object.length; i++){
-  //   if(object[i].itemState==1){
-  //     console.log(object[i]);
-  //     // state ->factory bought raw materials
-  //   }else if(object[i].itemState==2){
-  //     console.log(object[i])
-  //     // state ->factory complete weaving and spinning
-  //     // console.log(await supplychain.YarnDetails(object[i].supplyChainId));
-  //   }else if(object[i].itemState==3){
-  //     console.log(object[i])
-  //     // state ->factory complete garment production
-  //   }
-  //   const data =await supplychain.timeStamps(object[i].supplyChainId,object[i].itemState);
-  //   console.log(await dateTime.getDay(data.toNumber()),".",await dateTime.getMonth(data.toNumber()),".",await dateTime.getYear(data.toNumber()));
-  // }
+  let object =await supplychain.getWarehouseItems(warehouseSigner.address)   
+  for(let i=0;i <object.length; i++){
+    if(object[i].itemState==1){
+      console.log(object[i]);
+      // state ->factory bought raw materials
+    }else if(object[i].itemState==2){
+      console.log(object[i])
+      // state ->factory complete weaving and spinning
+      // console.log(await supplychain.YarnDetails(object[i].supplyChainId));
+    }else if(object[i].itemState==3){
+      console.log(object[i])
+      // state ->factory complete garment production
+    }
+    const data =await supplychain.timeStamps(object[i].supplyChainId,object[i].itemState);
+    console.log(await dateTime.getDay(data.toNumber()),".",await dateTime.getMonth(data.toNumber()),".",await dateTime.getYear(data.toNumber()));
+  }
 
       
   // FOR FACTORY DASHBOARD (SELL TO TO DISTRIBUTOR) 
