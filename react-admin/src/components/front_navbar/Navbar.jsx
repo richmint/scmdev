@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Supplychain_abi from '../../artifacts/contracts/Supplychain.sol/Supplychain.json';
-//import Factory_abi from '../../artifacts/contracts/Roles/Factory.sol/Factory.json';
+import Date_abi from '../../artifacts/contracts/Helper.sol/DateTime.json';
 import SupplychainToken_abi from '../../artifacts/contracts/SupplyChainERC1155.sol/SupplyChainToken.json';
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
@@ -13,14 +13,12 @@ const Navbar = (props) => {
 
 	const userName = localStorage.userName;
 	const userRole = localStorage.userRole;
-	// console.log("User name is ",userName)
 
+	let supplyChainTokenAddress = '0xc6e7DF5E7b4f2A278906862b61205850344D4e7d';
+	let supplyChainAddress = '0x59b670e9fA9D0A427751Af201D676719a970857b';
+	let dateAddress = '0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1';
 
-	let supplyChainTokenAddress = '0x610178dA211FEF7D417bC0e6FeD39F05609AD788';
-	let supplyChainAddress = '0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e';
-
-
-	const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownerSupplyChainAddress } = useContext(DarkModeContext);
+	const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownerSupplyChainAddress,dateContract } = useContext(DarkModeContext);
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [defaultAccount, setDefaultAccount] = useState(null);
 	const [connButtonText, setConnButtonText] = useState('Connect Wallet');
@@ -28,6 +26,7 @@ const Navbar = (props) => {
 	const [provider, setProvider] = useState(null);
 	const [signer, setSigner] = useState(null);
 	const [SChainContract, setSChainContract] = useState(supplyChainContract);
+	const [CreatedDateContract, setCreatedDateContract] = useState(dateContract);
 	const [SChainTokenContract, setSChainTokenContract] = useState(supplyChainTokenContract);
 	const [OwnSupplyChainAddress, setOwnSupplyChainAddress] = useState(ownerSupplyChainAddress);
 
@@ -93,12 +92,14 @@ const Navbar = (props) => {
 		setSChainTokenContract(supplychaintokentempContract);
 		dispatch({ type: "updateSupplychainToken", supplyChainTokenContract: supplychaintokentempContract })
 		// console.log("supplychaintokentempContract",supplychaintokentempContract);
-		// console.log(await supplyChainContract.totalBatchs())
+
+		let datetempContract = new ethers.Contract(dateAddress, Date_abi.abi, tempSigner);
+		setCreatedDateContract(datetempContract);
+		// console.log("datetempContract",datetempContract); 
+		dispatch({ type: "updateDate", dateContract: datetempContract })
+		// console.log(await datetempContract.totalBatchs());
 		
 	}
-
-//console.log("Navbar",SChainContract.items(0));
-
 	return (
 		<div className="navbar">
 			<div className="wrapper">
@@ -109,7 +110,7 @@ const Navbar = (props) => {
 				<div className="items">
 					<div className="item">
 
-						{<h3>{userName}({userRole}){defaultAccount}</h3>}
+						{<h3>{userName}({userRole}){defaultAccount}	</h3>}
 						<button onClick={connectWalletHandler}>Connect Metamask</button>
 					</div>
 					<div className="item">

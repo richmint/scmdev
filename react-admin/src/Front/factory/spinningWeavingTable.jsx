@@ -23,7 +23,7 @@ const SpinningWeavingTable = () =>{
     if(totalbatchids>0){
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
-        console.log("myrecord", object);
+        //console.log("myrecord", object);
         if (object.itemState === 1) {
           // console.log("inner loop", object.PolyesterAmount.toNumber());
           // console.log("cotton loop", object.CottonAmount.toNumber());
@@ -70,10 +70,10 @@ const SpinningWeavingTable = () =>{
                     <th>Batch ID</th>
                     <th>Raw Material Supplier</th>
                     <th>Warehouse Address</th>
-                      <th>Polyster Amount</th>
-                      <th>Cotton Amount</th>
-                      <th>Wool Amount</th>
-                      <th>Action</th>
+                    <th>Polyster Amount</th>
+                    <th>Cotton Amount</th>
+                    <th>Wool Amount</th>
+                    <th>Action</th>
                     </tr>
                     {materiallist}
                   </table>

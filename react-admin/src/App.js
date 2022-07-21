@@ -33,10 +33,6 @@ import ManufactureGarmentMaterial from './Front/factory/manufactureGarment';
 import ViewBatch from './Front/factory/viewBatch';
 import ViewBatchStatus from './Front/factory/viewBatchStatus';
 
-
-
-
-
 //End Front
 import {BrowserRouter, Routes, Route, useNavigate, Link, Navigate, Switch, Router } from "react-router-dom";
 import { productInputs, userInputs, warehouseInputs, factoryInputs, productApproverInputs, distributerInputs, retailerInputs} from "./formSource";
