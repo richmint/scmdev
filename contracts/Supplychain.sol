@@ -102,7 +102,13 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         emit RawMaterialSupplierSuppliesRM(currentId);
     }
 
-    function factoryBuyRawMaterial(uint _supplyChainId, address _warehouse) public onlyFactory() 
+    function factoryBuyRawMaterial(
+        uint _supplyChainId, 
+        address _warehouse,
+        uint _polysteramount,
+        uint _cottonamount,
+        uint _woolamount
+    ) public onlyFactory() 
     {
         require(isWarehouse(_warehouse),"NOT A VALID WAREHOUSE ADDRESS ! PLEASE CONTACT ADMIN");
         Item memory item =items[_supplyChainId];
@@ -110,6 +116,9 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
 
         item.factoryID =msg.sender;
         item.warehouseID=_warehouse;
+        item.PolyesterAmount=_polysteramount;
+        item.CottonAmount=_cottonamount;
+        item.WoolAmount=_woolamount;
         item.itemState=  State.factoryBuyRawMaterial;
         items[_supplyChainId] =item;
         
@@ -127,6 +136,14 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
 
         item.itemState=  State.factoryCompleteSpinningWaeving;
         items[_supplyChainId] =item;
+        uint length =wareHouseItems[item.warehouseID].length;
+        if (length >0){
+            for(uint i=0; i<length; i++){
+                if(wareHouseItems[item.warehouseID][i].supplyChainId == _supplyChainId){
+                    wareHouseItems[item.warehouseID][i].itemState =State.factoryCompleteSpinningWaeving;
+                }
+            }
+        }   
         timeStamps[_supplyChainId].push(block.timestamp);
     }
 
@@ -138,6 +155,14 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
 
         item.itemState=  State.factoryCompleteGarmentManufacturing;
         items[_supplyChainId] =item;
+        uint length =wareHouseItems[item.warehouseID].length;
+        if (length >0){
+            for(uint i=0; i<length; i++){
+                if(wareHouseItems[item.warehouseID][i].supplyChainId == _supplyChainId){
+                    wareHouseItems[item.warehouseID][i].itemState =State.factoryCompleteGarmentManufacturing;
+                }
+            }
+        } 
         timeStamps[_supplyChainId].push(block.timestamp);
     }
 
@@ -150,7 +175,7 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
             item.itemState =State.factorySellItemToDistributors;
             uint _units =item.totalUnits;
 
-            SupplyChainToken(supplyChainToken).mint(msg.sender,_supplyChainId,_units-1);
+            SupplyChainToken(supplyChainToken).mint(msg.sender,_supplyChainId,(_units-1));
             uint lastq=0;
             for(uint i=0; i<distributors.length; i++){
                 require(isDistributor(distributors[i]),"NOT A VALID DISTRIBUTOR ADDRESS ! PLEASE CONTACT ADMIN");
@@ -162,7 +187,7 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
             }
             items[_supplyChainId] =item;
 
-            uint length =wareHouseItems[item.warehouseID].length ;
+            uint length =wareHouseItems[item.warehouseID].length;
             if (length >0){
                 for(uint i=0; i<length; i++){
                     if(wareHouseItems[item.warehouseID][i].supplyChainId == _supplyChainId){

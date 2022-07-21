@@ -60,30 +60,29 @@ async function main() {
   // await supplychain.addRetailer(retailerSigner2.address);
  
   await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(100,110,100);
-
-  // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(220,210,200);
-  // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(300,320,310);
-  // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(340,430,400); 
+  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(220,210,200);
+  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(300,320,310);
+  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(340,430,400); 
 
   // console.log(await supplychain.items(0));
   // const object =await supplychain.timeStamps(0,0);
-
   // console.log(await dateTime.getDay(object.toNumber()),".",await dateTime.getMonth(object.toNumber()),".",await dateTime.getYear(object.toNumber()));
 
 
 
   // console.log(await supplyChainToken.totalNFT());
   // console.log(await supplyChainToken.getMySupplyTokens(rawMaterialSupplierSigner1.address));
-  // console.log(await supplyChainToken.getMySupplyTokens(rawMaterialSupplierSigner2.address));
   // console.log(await supplychain.totalBatchs())
 
-  // FOR RAW MATERIAL SUPPLIER DASHBOARD
+  // -----------------------------------FOR RAW MATERIAL SUPPLIER DASHBOARD------------------------------------
 
   // let count =await supplyChainToken.getMySupplyTokens(rawMaterialSupplierSigner1.address);
   // for (let i=0; i<count.length ; i++){
   //   let object = await supplychain.items(i);
   //   if (rawMaterialSupplierSigner1.address === object.RawMaterialSupplierID && object.itemState ===0){
   //       console.log(object)
+  //       const object1 =await supplychain.timeStamps(object.supplyChainId,object.itemState);
+  //       console.log(await dateTime.getDay(object1.toNumber()),".",await dateTime.getMonth(object1.toNumber()),".",await dateTime.getYear(object1.toNumber()));
   //   }
   // }
 
@@ -95,39 +94,36 @@ async function main() {
   // console.log(await supplyChainToken.totalSupply(0));
   // console.log(await supplyChainToken.balanceOf(rawMaterialSupplierSigner1.address,0));
  
-  // console.log(await supplyChainToken.isApprovedForAll(rawMaterialSupplierSigner1.address,supplychain.address))
   await supplyChainToken.connect(rawMaterialSupplierSigner1).setApprovalForAll(supplychain.address,true);
-  // await supplyChainToken.connect(rawMaterialSupplierSigner2).setApprovalForAll(supplychain.address,true);
   // console.log(await supplyChainToken.isApprovedForAll(rawMaterialSupplierSigner1.address,supplychain.address))
-
-
-  await supplychain.connect(factorySigner1).factoryBuyRawMaterial(0,warehouseSigner.address);
-  // await supplychain.connect(factorySigner2).factoryBuyRawMaterial(1,warehouseSigner.address);
+ 
+  await supplychain.connect(factorySigner1).factoryBuyRawMaterial(0,warehouseSigner.address,10,10,10);
+  await supplychain.connect(factorySigner1).factoryBuyRawMaterial(1,warehouseSigner.address,20,20,20);
+  await supplychain.connect(factorySigner1).factoryBuyRawMaterial(2,warehouseSigner.address,30,30,30);
+  await supplychain.connect(factorySigner1).factoryBuyRawMaterial(3,warehouseSigner.address,40,40,40);
   
   // const object =await supplychain.timeStamps(0,1);
   // console.log(await dateTime.getDay(object.toNumber()),".",await dateTime.getMonth(object.toNumber()),".",await dateTime.getYear(object.toNumber()));
 
 
-  // FOR RAW MATERIAL SUPPLIER DASHBOARD (UPDATED AFTER FACTORY BOUGHT A BATCH)
-
-  // let count =await supplyChainToken.getMySupplyTokens(rawMaterialSupplierSigner1.address);
-  // for (let i=0; i<count.length ; i++){
-  //   let object = await supplychain.items(i);
-  //   if (rawMaterialSupplierSigner1.address === object.RawMaterialSupplierID && object.itemState ===0){
-  //       console.log(object)
-  //   }
-  // }
-
-  //  -/-/-/-/-/-/-/-/-/-/-/-/-/--FOR WAREHOUSE -/-/-/-/-/-/--/-/-/-/-/-/-/-/-/-/-/
+  // -----------------------------FOR WAREHOUSE DASHBOARD-------------------------------------
 
   // let object =await supplychain.getWarehouseItems(warehouseSigner.address)   
   // for(let i=0;i <object.length; i++){
   //   if(object[i].itemState==1){
   //     console.log(object[i]);
+  //     // state ->factory bought raw materials
+  //   }else if(object[i].itemState==2){
+  //     console.log(object[i])
+  //     // state ->factory complete weaving and spinning
+  //     // console.log(await supplychain.YarnDetails(object[i].supplyChainId));
+  //   }else if(object[i].itemState==3){
+  //     console.log(object[i])
+  //     // state ->factory complete garment production
   //   }
+  //   const data =await supplychain.timeStamps(object[i].supplyChainId,object[i].itemState);
+  //   console.log(await dateTime.getDay(data.toNumber()),".",await dateTime.getMonth(data.toNumber()),".",await dateTime.getYear(data.toNumber()));
   // }
-  // Check the itemState in the returned array, if it is 1 then show this on wareshouseSigner frontend
-
 
       
   // FOR FACTORY DASHBOARD (SELL TO TO DISTRIBUTOR) 
@@ -156,11 +152,24 @@ async function main() {
   
   await supplychain.connect(factorySigner1).factoryCompleteSpinningWaeving(0,100,"Blue","Plain");
   // console.log(await supplychain.YarnDetails(0));
-  
-  await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing(0,1000,"Plain Blue T-shirts");
-  // console.log(await supplychain.items(0));
 
-  await supplychain.connect(factorySigner1).factorySellItemToDistributors(0,10,[distributorSigner1.address,distributorSigner2.address],[5,5]);
+  await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing(0,10,"Plain Blue T-shirts");
+
+
+
+  await supplychain.connect(factorySigner1).factorySellItemToDistributors(0,[distributorSigner1.address,distributorSigner2.address],[5,5]);
+  
+  // let object =await supplychain.getWarehouseItems(warehouseSigner.address)   
+  // for(let i=0;i <object.length; i++){
+  //   // if(object[i].itemState==1){
+  //     console.log(object[i]);
+  //   // }
+  // }
+
+  // console.log(await supplychain.items(0));
+  // console.log(await supplychain.items(1));
+  // console.log(await supplychain.items(2));
+  // console.log(await supplychain.items(3));
   // await supplychain.connect(factorySigner2).factorySellItemToDistributors(1,100,[distributorSigner1.address,distributorSigner2.address],[60,40]);
 
   // console.log(await supplychain.getWarehouseItems(warehouseSigner.address))

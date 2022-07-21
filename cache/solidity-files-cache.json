@@ -147,8 +147,8 @@
       ]
     },
     "/home/alankrit/Desktop/scmdev/contracts/Supplychain.sol": {
-      "lastModificationDate": 1658234151600,
-      "contentHash": "d97878906862c71e48c5988759e0b7b6",
+      "lastModificationDate": 1658387130181,
+      "contentHash": "bbee2028751e95dc0c476a78d5f1d104",
       "sourceName": "contracts/Supplychain.sol",
       "solcConfig": {
         "version": "0.8.8",
