@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 import "../../pages/new/new.scss";
 import Navbar from "../../components/front_navbar/Navbar";
-import Sidebar from "../../components/front_sidebar/Sidebar";
+import Sidebar from "../../components/front_sidebar/Sidebar"; 
 
 import { DarkModeContext } from "../../context/darkModeContext";
 
@@ -23,16 +23,14 @@ const Materialsupplier = ({ inputs, title, value }) => {
     } 
   })
 
-  const [SChainContract, setContract] = useState(supplyChainContract);
+  const [SChainContract, setSChainContract] = useState(supplyChainContract);
   const [user,setUser] = useState(JSON.parse(sessionStorage.getItem('user'))); 
   
-  
-
-  //console.log("SChainContract",SChainContract);
   const addSupplyChainHandler = async (event) => {
     event.preventDefault();
-    // console.log(await supplyChainContract.totalBatchs())
-    const tx = await supplyChainContract.rawMaterialSupplierSuppliesRM(event.target.polysteramount.value, event.target.cottonamount.value, event.target.woolamount.value);
+   // console.log("SChainContract",SChainContract);
+    console.log(await SChainContract.totalBatchs())
+    const tx = await SChainContract.rawMaterialSupplierSuppliesRM(event.target.polysteramount.value, event.target.cottonamount.value, event.target.woolamount.value);
     //console.log((await tx.wait()));
     if(tx){
        navigate("/supplyToken")

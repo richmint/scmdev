@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom"
 import "./navbar.scss";
 const Navbar = (props) =>{
 
-	let SupplyChainContractAddress = '0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0';
+	let SupplyChainContractAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
  
     const { dispatch,metaMask,supplyChainContract} = useContext(DarkModeContext);
 	const [errorMessage, setErrorMessage] = useState(null);

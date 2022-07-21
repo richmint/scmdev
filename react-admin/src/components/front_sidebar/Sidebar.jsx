@@ -72,6 +72,25 @@ const Sidebar = () => {
                     <span>Approve Supply Token</span>
                   </li>
                 </Link>
+                <Link to="/viewBatchStatus" style={{ textDecoration: "none" }}>
+                  <li>
+                    <StoreIcon className="icon" />
+                    <span>View Batch Status</span>
+                  </li>
+                </Link>
+                <Link to="/spinningWaevingMaterial" style={{ textDecoration: "none" }}>
+                  <li>
+                    <StoreIcon className="icon" />
+                    <span>Spinning and Weaving</span>
+                  </li>
+                </Link>
+                <Link to="/manufactureGarmentMaterial" style={{ textDecoration: "none" }}>
+                  <li>
+                    <StoreIcon className="icon" />
+                    <span>Manufacturing Garment</span>
+                  </li>
+                </Link>
+                
                 <Link to="/sellItemToDistributer" style={{ textDecoration: "none" }}>
                   <li>
                     <StoreIcon className="icon" />

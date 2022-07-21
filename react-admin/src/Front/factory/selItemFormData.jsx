@@ -8,14 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Multiselect from 'multiselect-react-dropdown';
 
- 
 const SellItemFormData = () =>{
-
   let data = useLocation();
   data = data.state.i;
   //console.log("Coming data is ",data);
-
- 
   var listelemant = [];
     var newElmant ;
        const selectedItem1 = ((selectedList, selectedItem) => {
@@ -28,23 +24,21 @@ const SellItemFormData = () =>{
        })
 
   const navigate = useNavigate();
-  const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress } = useContext(DarkModeContext);
+  const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract } = useContext(DarkModeContext);
+  const [SChainContract, setSChainContract] = useState(supplyChainContract);
 
   const sellItemToDistributerHandler = async (event) => {
     event.preventDefault();
-    //console.log("batchid",event.target.whHashAdr.value);
+    console.log("batchid",SChainContract);
     
     var supplyqty = [];
     supplyqty = event.target.unitSupply.value.split(' ');
-  
-    //console.log(supplyqty);
-
-    // const tx = supplyChainContract.factorySellItemToDistributors(data, event.target.shirtproduced.value,newElmant,supplyqty);
-    const tx = supplyChainContract.factorySellItemToDistributors(0, 100,['0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65','0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc'],[5,5]);
+    //const tx = SChainContract.factorySellItemToDistributors(data, event.target.shirtproduced.value,newElmant,supplyqty);
+    const tx = SChainContract.factorySellItemToDistributors(0, 100,['0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65','0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc'],[5,5]);
     //console.log((await tx.wait()));
-    if(tx){
-       navigate("/sellItemToDistributer")
-    }
+    // if(tx){
+    //    navigate("/sellItemToDistributer")
+    // }
   }
 
   const warehouseRecord = async () => {
