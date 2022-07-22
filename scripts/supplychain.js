@@ -118,10 +118,10 @@ async function main() {
   //   } 
   // } 
 
-  // await supplychain.connect(factorySigner1).factoryBuyRawMaterial(0,warehouseSigner.address,10,10,10);
-  // await supplychain.connect(factorySigner1).factoryBuyRawMaterial(1,warehouseSigner.address,20,20,20);
-  // await supplychain.connect(factorySigner1).factoryBuyRawMaterial(2,warehouseSigner.address,30,30,30);
-  // await supplychain.connect(factorySigner1).factoryBuyRawMaterial(3,warehouseSigner.address,40,40,40);
+  await supplychain.connect(factorySigner1).factoryBuyRawMaterial(0,warehouseSigner.address,10,10,10);
+  await supplychain.connect(factorySigner1).factoryBuyRawMaterial(1,warehouseSigner.address,20,20,20);
+  await supplychain.connect(factorySigner1).factoryBuyRawMaterial(2,warehouseSigner.address,30,30,30);
+  await supplychain.connect(factorySigner1).factoryBuyRawMaterial(3,warehouseSigner.address,40,40,40);
   
 
   // ---------------------------- FACTORY APPROVE SUPPYTOKEN ------------------------
@@ -194,6 +194,7 @@ async function main() {
 
   // -----------------------------FOR WAREHOUSE DASHBOARD-------------------------------------
 
+
   // let object =await supplychain.getWarehouseItems(warehouseSigner.address)   
   // for(let i=0;i <object.length; i++){
   //   if(object[i].itemState==1){
@@ -215,25 +216,6 @@ async function main() {
       
   
 
-
-
-<<<<<<< HEAD
-
-=======
-  // await supplyChainToken.connect(factorySigner1).setApprovalForAll(supplychain.address,true);
-  // console.log(await supplyChainToken.isApprovedForAll(factorySigner.address,supplychain.address))
-  
-
-  // let count =await supplychain.totalBatchs();
-  // for (let i=0; i<count ; i++){
-  //   let object = await supplychain.items(i);
-  //     if (1 === object.itemState && object.factoryID ===factorySigner1.address){
-  //         console.log(object);
-  //         const data =await supplychain.timeStamps(object[i].supplyChainId,object[i].itemState);
-  //         console.log(await dateTime.getDay(data.toNumber()),".",await dateTime.getMonth(data.toNumber()),".",await dateTime.getYear(data.toNumber()));
-  //     }    
-  // }         
->>>>>>> 46e164cd4fe7e01d3a921e1665bfb9b05868057a
 
 
 
