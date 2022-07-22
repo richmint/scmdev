@@ -17,7 +17,7 @@ const BuyRawMaterial = () =>{
     //console.log("batchid",event.target.whHashAdr.value);
     
 
-    const tx = supplyChainContract.factoryBuyRawMaterial(event.target.batchId.value, event.target.whHashAdr.value);
+    const tx = supplyChainContract.factoryBuyRawMaterial(event.target.batchId.value, event.target.whHashAdr.value, event.target.buyPolysterAmount.value, event.target.buyCottonAmount.value, event.target.buyWoolAmount.value);
     //console.log((await tx.wait()));
     if(tx){
        navigate("/availableRawMaterialToBuy")
@@ -26,7 +26,7 @@ const BuyRawMaterial = () =>{
 
     let data = useLocation();
     data = data.state.i;
-    console.log("Comming data is",data)
+    //console.log("Comming data is",data)
     
     const ConfirmShow = (props) =>{
       //const data = props.data
@@ -36,9 +36,21 @@ const BuyRawMaterial = () =>{
             <div className="right">
               <form onSubmit={buyMaterialHandler}>
                 <div className="formInput">
-                <input id="batchId" type="text"  value={data} />
+                <input id="batchId" type="hidden"  value={data} />
                   <label>Warehouse Address</label>                  
-                  <textarea id="whHashAdr"  type="text" />
+                  <input id="whHashAdr"  type="text" />
+                </div>
+                <div className="formInput">
+                  <label>Buy Polyster Amount</label>                  
+                  <input id="buyPolysterAmount"  type="text" />
+                </div>
+                <div className="formInput">
+                  <label>Buy Cotton Amount</label>                  
+                  <input id="buyCottonAmount"  type="text" />
+                </div>
+                <div className="formInput">
+                  <label>Buy Wool Amount</label>                  
+                  <input id="buyWoolAmount"  type="text" />
                 </div>
                 <div className='formInput'>
                 <button type={"submit"}> Submit </button>

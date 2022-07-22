@@ -24,18 +24,17 @@ const ViewBatchStatusTable = () =>{
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
         console.log("myrecord", object);
-        if (object.itemState === 1) {
+        if (object.itemState === 1 || object.itemState === 2 || object.itemState === 3) {
           // console.log("inner loop", object.PolyesterAmount.toNumber());
-          // console.log("cotton loop", object.CottonAmount.toNumber());
           allsupplymateriallist.push(
             <><tr> 
               <td>{i}</td>
               <td>{object.RawMaterialSupplierID}</td>
               <td>{object.warehouseID}</td>
-              <td>{object.PolyesterAmount.toNumber()}</td>
-              <td>{object.CottonAmount.toNumber()}</td>
-              <td>{object.WoolAmount.toNumber()}</td>
-              <td><button className='' onClick={() => navigate('/SellItemFormData',{state:{i}})} >Sell</button></td>
+              <td><button className='Danger'>Complete</button></td>
+              <td><button className='Danger'>Incomplete</button></td>
+              <td><button className='Danger'>Incomplete</button></td>
+              <td><button className='Danger'>Incomplete</button></td>
             </tr></>
           )
          
@@ -70,10 +69,10 @@ const ViewBatchStatusTable = () =>{
                     <th>Batch ID</th>
                     <th>Raw Material Supplier</th>
                     <th>Warehouse Address</th>
-                      <th>Polyster Amount</th>
-                      <th>Cotton Amount</th>
-                      <th>Wool Amount</th>
-                      <th>Action</th>
+                      <th>Baught Raw Material</th>
+                      <th>Spinning & Weaving </th>
+                      <th>Garment Manufacturing</th>
+                      <th>Sell Item To Distributer</th>
                     </tr>
                     {materiallist}
                   </table>

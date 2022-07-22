@@ -72,7 +72,7 @@ const Sidebar = () => {
                     <span>Approve Supply Token</span>
                   </li>
                 </Link>
-                <Link to="/viewBatchStatus" style={{ textDecoration: "none" }}>
+                <Link to="/viewBatch" style={{ textDecoration: "none" }}>
                   <li>
                     <StoreIcon className="icon" />
                     <span>View Batch Status</span>

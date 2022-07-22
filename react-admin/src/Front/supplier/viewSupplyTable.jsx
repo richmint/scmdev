@@ -11,7 +11,7 @@ const ViewSupplyTable = () => {
   const [data, setData] = useState([]);
   const [materiallist, setMateriallist] =  useState(null);
   
-  const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress } = useContext(DarkModeContext);
+  const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress, dateContract } = useContext(DarkModeContext);
 
   const allsupplymateriallist = [];
   const getSupplyChainHandler = async (event) => {
@@ -22,9 +22,15 @@ const ViewSupplyTable = () => {
     if(totalbatchids.length>0){
       for (let i = 0; i < totalbatchids.length; i++) {
         let object = await supplyChainContract.items(totalbatchids[i].toNumber());
-        //console.log(totalbatchids[i].toNumber());
-        //console.log("myrecord", object.PolyesterAmount.toNumber());
+        //console.log(object);
+
+        console.log("date contract",dateContract);
         if (object.itemState === 0) {
+        const dateObject =await supplyChainContract.timeStamps(i,0);
+        const createdday = await dateContract.getDay(dateObject.toNumber())
+        const createmonth = await dateContract.getMonth(dateObject.toNumber())
+        const createdyear = await dateContract.getYear(dateObject.toNumber())
+      
           // console.log("inner loop", object.PolyesterAmount.toNumber());
           // console.log("cotton loop", object.CottonAmount.toNumber());
           allsupplymateriallist.push(
@@ -33,15 +39,16 @@ const ViewSupplyTable = () => {
               <td>{object.PolyesterAmount.toNumber()}</td>
               <td>{object.CottonAmount.toNumber()}</td>
               <td>{object.WoolAmount.toNumber()}</td>
+              <td>Jaipur</td>
+              <td>{createdday}:{createmonth}:{createdyear}</td>
             </tr></>
           )
-        
         }      
       }
   }else if(totalbatchids.length<1){
     allsupplymateriallist.push(
       <><tr>
-        <td colSpan="4">No Record Found</td>
+        <td colSpan="6">No Record Found</td>
       </tr></>
     )
   }
@@ -68,6 +75,8 @@ const ViewSupplyTable = () => {
                   <th>Polyster Amount</th>
                   <th>Cotton Amount</th>
                   <th>Wool Amount</th>
+                  <th>Location</th>
+                  <th>Batch Created</th>
                 </tr>
                 {materiallist}
               </table>

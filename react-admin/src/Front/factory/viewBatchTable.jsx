@@ -6,7 +6,7 @@ import { DarkModeContext } from "../../context/darkModeContext";
 import { useNavigate } from "react-router-dom";
 
 
-const SpinningWeavingTable = () =>{
+const ViewBatchTable = () =>{
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [materiallist, setMateriallist] =  useState(null);
@@ -23,10 +23,9 @@ const SpinningWeavingTable = () =>{
     if(totalbatchids>0){
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
-        //console.log("myrecord", object);
-        if (object.itemState === 1) {
+        console.log("myrecord", object);
+        if (object.itemState === 1 || object.itemState === 2 || object.itemState === 3) {
           // console.log("inner loop", object.PolyesterAmount.toNumber());
-          // console.log("cotton loop", object.CottonAmount.toNumber());
           allsupplymateriallist.push(
             <><tr> 
               <td>{i}</td>
@@ -35,7 +34,7 @@ const SpinningWeavingTable = () =>{
               <td>{object.PolyesterAmount.toNumber()}</td>
               <td>{object.CottonAmount.toNumber()}</td>
               <td>{object.WoolAmount.toNumber()}</td>
-              <td><button className='' onClick={() => navigate('/SellItemFormData',{state:{i}})} >Sell</button></td>
+              <td><button className='' onClick={() => navigate('/viewBatchStatus',{state:{i}})} >View Status</button></td>
             </tr></>
           )
          
@@ -70,10 +69,10 @@ const SpinningWeavingTable = () =>{
                     <th>Batch ID</th>
                     <th>Raw Material Supplier</th>
                     <th>Warehouse Address</th>
-                    <th>Polyster Amount</th>
-                    <th>Cotton Amount</th>
-                    <th>Wool Amount</th>
-                    <th>Action</th>
+                      <th>Polyster Amount</th>
+                      <th>Cotton Amount</th>
+                      <th>Wool Amount</th>
+                      <th>Action</th>
                     </tr>
                     {materiallist}
                   </table>
@@ -88,4 +87,4 @@ const SpinningWeavingTable = () =>{
     
 }
 
-export default SpinningWeavingTable
+export default ViewBatchTable

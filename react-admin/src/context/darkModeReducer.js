@@ -65,7 +65,13 @@ const DarkModeReducer = (state, action) => {
         ...state,
         ownSupplyChainAddress: action.ownSupplyChainAddress,
       };
-    }   
+    }
+    case "updateDate":{
+      return {
+        ...state,
+        dateContract: action.dateContract,
+      };
+    } 
     default:
       return state;
   }
