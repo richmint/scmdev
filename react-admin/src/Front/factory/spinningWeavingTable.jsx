@@ -4,7 +4,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useNavigate } from "react-router-dom";
-
+import Button from 'react-bootstrap/Button';
 
 const SpinningWeavingTable = () =>{
   const navigate = useNavigate();
@@ -19,23 +19,28 @@ const SpinningWeavingTable = () =>{
 
     console.log("supplyChainContract ", supplyChainContract)
     const totalbatchids = (await  supplyChainContract.totalBatchs());
-    console.log("totalbatchids",totalbatchids);
+    //console.log("totalbatchids",totalbatchids);
     if(totalbatchids>0){
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
         //console.log("myrecord", object);
         if (object.itemState === 1) {
-          // console.log("inner loop", object.PolyesterAmount.toNumber());
-          // console.log("cotton loop", object.CottonAmount.toNumber());
+         const Batchid = i;
           allsupplymateriallist.push(
             <><tr> 
               <td>{i}</td>
               <td>{object.RawMaterialSupplierID}</td>
-              <td>{object.warehouseID}</td>
+              {/* <td>{object.warehouseID}</td> */}
               <td>{object.PolyesterAmount.toNumber()}</td>
               <td>{object.CottonAmount.toNumber()}</td>
               <td>{object.WoolAmount.toNumber()}</td>
-              <td><button className='' onClick={() => navigate('/SellItemFormData',{state:{i}})} >Sell</button></td>
+              <td> 
+
+              <Button variant="outline-primary" onClick={() => navigate('/viewSpinningMaterial',{state:{object}})}>View</Button>
+
+              {/* <Button variant="outline-primary" onClick={() => navigate('/viewSpinningMaterial',{state:{RawMaterialSupplierID: object.RawMaterialSupplierID, warehouseID: object.warehouseID, polysteramount: object.PolyesterAmount.toNumber(), CottonAmount: object.CottonAmount.toNumber(), WoolAmount: object.WoolAmount.toNumber() }})}>View</Button>{' '} */}
+              <Button variant="outline-success" onClick={() => navigate('/spinningBatchCompleteForm',{state:{i}})}>Continue</Button>
+              </td>
             </tr></>
           )
          
@@ -69,7 +74,7 @@ const SpinningWeavingTable = () =>{
                     <tr>
                     <th>Batch ID</th>
                     <th>Raw Material Supplier</th>
-                    <th>Warehouse Address</th>
+                    {/* <th>Warehouse Address</th> */}
                     <th>Polyster Amount</th>
                     <th>Cotton Amount</th>
                     <th>Wool Amount</th>
@@ -77,7 +82,6 @@ const SpinningWeavingTable = () =>{
                     </tr>
                     {materiallist}
                   </table>
-    
                 </div>
               </div>
             </div>

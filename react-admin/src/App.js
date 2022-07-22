@@ -32,6 +32,8 @@ import SpinningWaevingMaterial from './Front/factory/spinningWeaving';
 import ManufactureGarmentMaterial from './Front/factory/manufactureGarment';
 import ViewBatch from './Front/factory/viewBatch';
 import ViewBatchStatus from './Front/factory/viewBatchStatus';
+import ViewSpinningMaterial from './Front/factory/viewspinningMaterial';
+import Spinningbatchcompleteform from './Front/factory/spinningbatchcompleteform';
 
 //End Front
 import {BrowserRouter, Routes, Route, useNavigate, Link, Navigate, Switch, Router } from "react-router-dom";
@@ -143,7 +145,7 @@ function App() {
     }
   },[FrontAuth]); 
 
-  console.log("Admin Token",token,token ? "Token Present" : "token not present");
+  //console.log("Admin Token",token,token ? "Token Present" : "token not present");
   return (
     <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
@@ -184,7 +186,11 @@ function App() {
               <Route path="/manufactureGarmentMaterial" element={frontToken ? <ManufactureGarmentMaterial /> : <Navigate to={"/userlogin"} />} />
               <Route path="/viewBatch" element={frontToken ? <ViewBatch /> : <Navigate to={"/userlogin"} />} />
               <Route path="/viewBatchStatus" element={frontToken ? <ViewBatchStatus /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/viewSpinningMaterial" element={frontToken ? <ViewSpinningMaterial /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/spinningBatchCompleteForm" element={frontToken ? <Spinningbatchcompleteform /> : <Navigate to={"/userlogin"} />} />
 
+              
+              
               
 
               <Route path="/storedItemsInWarehouse" element={frontToken ? <StoredItemsInWarehouse /> : <Navigate to={"/userlogin"} />} />

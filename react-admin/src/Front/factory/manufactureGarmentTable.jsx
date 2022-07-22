@@ -4,7 +4,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useNavigate } from "react-router-dom";
-
+import Button from 'react-bootstrap/Button';
 
 const ManufactureGarmentTable = () =>{
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const ManufactureGarmentTable = () =>{
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
         console.log("myrecord", object);
-        if (object.itemState === 1) {
+        if (object.itemState === 2) {
           // console.log("inner loop", object.PolyesterAmount.toNumber());
           // console.log("cotton loop", object.CottonAmount.toNumber());
           allsupplymateriallist.push(
@@ -35,7 +35,11 @@ const ManufactureGarmentTable = () =>{
               <td>{object.PolyesterAmount.toNumber()}</td>
               <td>{object.CottonAmount.toNumber()}</td>
               <td>{object.WoolAmount.toNumber()}</td>
-              <td><button className='' onClick={() => navigate('/SellItemFormData',{state:{i}})} >Sell</button></td>
+              <td>
+              <Button variant="outline-primary" onClick={() => navigate('/viewSpinningMaterial',{state:{object}})}>View</Button>
+              <Button variant="outline-success" onClick={() => navigate('/SellItemFormData',{state:{i}})}>Continue</Button>
+
+                </td>
             </tr></>
           )
          

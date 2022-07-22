@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import App from "./App";
 import { DarkModeContextProvider } from "./context/darkModeContext";
 import store from "./store";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
