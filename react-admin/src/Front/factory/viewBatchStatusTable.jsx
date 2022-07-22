@@ -4,7 +4,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useNavigate } from "react-router-dom";
-
+import Button from 'react-bootstrap/Button';
 
 const ViewBatchStatusTable = () =>{
   const navigate = useNavigate();
@@ -31,10 +31,12 @@ const ViewBatchStatusTable = () =>{
               <td>{i}</td>
               <td>{object.RawMaterialSupplierID}</td>
               <td>{object.warehouseID}</td>
-              <td><button className='Danger'>Complete</button></td>
-              <td><button className='Danger'>Incomplete</button></td>
-              <td><button className='Danger'>Incomplete</button></td>
-              <td><button className='Danger'>Incomplete</button></td>
+              <td>
+              <Button variant="outline-success">Complete</Button>
+                </td>
+              <td> <Button variant="outline-danger">Incomplete</Button></td>
+              <td> <Button variant="outline-danger">Incomplete</Button></td>
+              <td> <Button variant="outline-danger">Incomplete</Button></td>
             </tr></>
           )
          

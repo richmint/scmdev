@@ -8,15 +8,16 @@ import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
 import { ethers } from 'ethers';
 import { Link, useNavigate } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 import "./navbar.scss";
 const Navbar = (props) => {
 
 	const userName = localStorage.userName;
 	const userRole = localStorage.userRole;
 
-	let supplyChainTokenAddress = '0xc6e7DF5E7b4f2A278906862b61205850344D4e7d';
-	let supplyChainAddress = '0x59b670e9fA9D0A427751Af201D676719a970857b';
-	let dateAddress = '0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1';
+	let supplyChainTokenAddress = '0x610178dA211FEF7D417bC0e6FeD39F05609AD788';
+	let supplyChainAddress = '0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e';
+	let dateAddress = '0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0';
 
 	const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownerSupplyChainAddress,dateContract } = useContext(DarkModeContext);
 	const [errorMessage, setErrorMessage] = useState(null);
@@ -43,7 +44,6 @@ const Navbar = (props) => {
 				})
 				.catch(error => {
 					setErrorMessage(error.message);
-
 				});
 
 		} else {
@@ -104,14 +104,13 @@ const Navbar = (props) => {
 		<div className="navbar">
 			<div className="wrapper">
 				<div className="search">
-					<input type="text" placeholder="Search..." />
-					<SearchOutlinedIcon />
+					
 				</div>
 				<div className="items">
 					<div className="item">
 
 						{<h3>{userName}({userRole}){defaultAccount}	</h3>}
-						<button onClick={connectWalletHandler}>Connect Metamask</button>
+						<Button variant="outline-success" onClick={connectWalletHandler}>Connect Metamask</Button>
 					</div>
 					<div className="item">
 						<DarkModeOutlinedIcon

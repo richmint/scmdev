@@ -4,6 +4,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useNavigate } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 const RawMaterialTable = () => {
   const navigate = useNavigate();
@@ -31,7 +32,9 @@ const RawMaterialTable = () => {
             <td>{object.PolyesterAmount.toNumber()}</td>
             <td>{object.CottonAmount.toNumber()}</td>
             <td>{object.WoolAmount.toNumber()}</td>
-            <td><button className='' onClick={() => navigate('/BuyRawMaterial',{state:{i}})} >Buy</button></td>
+            <td> 
+            <Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial',{state:{i}})}>Buy</Button>
+              </td>
           </tr></>
         )
        

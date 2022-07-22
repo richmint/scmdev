@@ -12,10 +12,13 @@
       padding: 10px;
       margin: 20px;
       display: flex;
+      border-left: 6px solid red;
 
       h1 {
-        color: lightgray;
+        color: darkgray;
         font-size: 20px;
+        font-weight: bold;
+        
       }
 
       .left {
@@ -38,6 +41,7 @@
           flex-wrap: wrap;
           gap: 30px;
           justify-content: space-around;
+          
 
           .formInput {
             width: 45%;
