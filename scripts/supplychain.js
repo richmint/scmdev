@@ -36,21 +36,21 @@ async function main() {
   // const supplychain =await ethers.getContractAt("Supplychain","0x6C60E1BAc9c8Ef98953BaF5bceF2941FbF547E34")
   
 
-  // console.log("Transfering ownership to supplychain contract...");
-  // await supplyChainToken.transferOwnership(supplychain.address);
+  console.log("Transfering ownership to supplychain contract...");
+  await supplyChainToken.transferOwnership(supplychain.address);
 
 
-  // await supplychain.addRawMaterialSupplier(rawMaterialSupplierSigner1.address);
+  await supplychain.addRawMaterialSupplier(rawMaterialSupplierSigner1.address);
 
-  // await supplychain.addWarehouse(warehouseSigner.address);
-  // await supplychain.addFactory(factorySigner1.address);
+  await supplychain.addWarehouse(warehouseSigner.address);
+  await supplychain.addFactory(factorySigner1.address);
 
-  // await supplychain.addDistributor(distributorSigner1.address);
-  // await supplychain.addDistributor(distributorSigner2.address);
+  await supplychain.addDistributor(distributorSigner1.address);
+  await supplychain.addDistributor(distributorSigner2.address);
 
 
-  // await supplychain.addRetailer(retailerSigner1.address);
-  // await supplychain.addRetailer(retailerSigner2.address);
+  await supplychain.addRetailer(retailerSigner1.address);
+  await supplychain.addRetailer(retailerSigner2.address);
 
 
 
@@ -67,10 +67,10 @@ async function main() {
  
   // ----------------------------RAW MATERIAL SUPPLIER ADDs A BATCH----------------------------
 
-  // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(100,110,100);
-  // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(220,210,200);
-  // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(300,320,310);
-  // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(340,430,400); 
+  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(100,110,100);
+  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(220,210,200);
+  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(300,320,310);
+  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(340,430,400); 
 
   // ----------------------------RAW MATERIAL SUPPLIER VIEW BATCHES THAT HE ADDED----------------
 
