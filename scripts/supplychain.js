@@ -36,21 +36,21 @@ async function main() {
   // const supplychain =await ethers.getContractAt("Supplychain","0x6C60E1BAc9c8Ef98953BaF5bceF2941FbF547E34")
   
 
-  console.log("Transfering ownership to supplychain contract...");
-  await supplyChainToken.transferOwnership(supplychain.address);
+  // console.log("Transfering ownership to supplychain contract...");
+  // await supplyChainToken.transferOwnership(supplychain.address);
 
 
-  await supplychain.addRawMaterialSupplier(rawMaterialSupplierSigner1.address);
+  // await supplychain.addRawMaterialSupplier(rawMaterialSupplierSigner1.address);
 
-  await supplychain.addWarehouse(warehouseSigner.address);
-  await supplychain.addFactory(factorySigner1.address);
+  // await supplychain.addWarehouse(warehouseSigner.address);
+  // await supplychain.addFactory(factorySigner1.address);
 
-  await supplychain.addDistributor(distributorSigner1.address);
-  await supplychain.addDistributor(distributorSigner2.address);
+  // await supplychain.addDistributor(distributorSigner1.address);
+  // await supplychain.addDistributor(distributorSigner2.address);
 
 
-  await supplychain.addRetailer(retailerSigner1.address);
-  await supplychain.addRetailer(retailerSigner2.address);
+  // await supplychain.addRetailer(retailerSigner1.address);
+  // await supplychain.addRetailer(retailerSigner2.address);
 
 
 
@@ -67,10 +67,10 @@ async function main() {
  
   // ----------------------------RAW MATERIAL SUPPLIER ADDs A BATCH----------------------------
 
-  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(100,110,100);
-  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(220,210,200);
-  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(300,320,310);
-  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(340,430,400); 
+  // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(100,110,100);
+  // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(220,210,200);
+  // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(300,320,310);
+  // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(340,430,400); 
 
   // ----------------------------RAW MATERIAL SUPPLIER VIEW BATCHES THAT HE ADDED----------------
 
@@ -87,7 +87,7 @@ async function main() {
   // ----------------------------RAW MATERIAL SUPPLIER APPROVE SUPPYTOKEN ------------------------
 
     
-  await supplyChainToken.connect(rawMaterialSupplierSigner1).setApprovalForAll(supplychain.address,true);
+  // await supplyChainToken.connect(rawMaterialSupplierSigner1).setApprovalForAll(supplychain.address,true);
   // console.log(await supplyChainToken.isApprovedForAll(rawMaterialSupplierSigner1.address,supplychain.address))
  
 
@@ -161,8 +161,8 @@ async function main() {
   //     }    
   // }    
 
-  await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing(0,10,"Plain Blue T-shirts");
-  await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing(1,12,"Ruff Grean Tank tops");
+  // await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing(0,10,"Plain Blue T-shirts");
+  // await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing(1,12,"Ruff Grean Tank tops");
 
 
   // ---------------------------- FACTORY SELL TO DISTRIBUTOR --------------------------------
@@ -177,8 +177,8 @@ async function main() {
   //     }    
   // }    
   
-  await supplychain.connect(factorySigner1).factorySellItemToDistributors(0,[distributorSigner1.address,distributorSigner2.address],[5,5]);
-  await supplychain.connect(factorySigner1).factorySellItemToDistributors(1,[distributorSigner1.address,distributorSigner2.address],[6,6]);
+  // await supplychain.connect(factorySigner1).factorySellItemToDistributors(0,[distributorSigner1.address,distributorSigner2.address],[5,5]);
+  // await supplychain.connect(factorySigner1).factorySellItemToDistributors(1,[distributorSigner1.address,distributorSigner2.address],[6,6]);
 
 
 
@@ -254,7 +254,7 @@ async function main() {
   // ---------------------------- DISTRIBUTOR APPROVE SUPPYTOKEN ----------------------------
   
   
-  await supplyChainToken.connect(distributorSigner1).setApprovalForAll(supplychain.address,true);
+  // await supplyChainToken.connect(distributorSigner1).setApprovalForAll(supplychain.address,true);
 
 
   // ---------------------------- DISTRIBUTOR SELL TO RETAILER ---------------------------------

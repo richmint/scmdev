@@ -36,15 +36,12 @@ const SpinningWeavingTable = () =>{
               <td>{object.CottonAmount.toNumber()}</td>
               <td>{object.WoolAmount.toNumber()}</td>
               <td>  
-
-              <Button variant="outline-success" onClick={() => navigate('/viewSpinningMaterial',{state:object})}>View</Button>
-
+              <Button variant="outline-success" onClick={() => navigate('/viewSpinningMaterial',{state:i})}>View</Button>
               {/* <Button variant="outline-primary" onClick={() => navigate('/viewSpinningMaterial',{state:{RawMaterialSupplierID: object.RawMaterialSupplierID, warehouseID: object.warehouseID, polysteramount: object.PolyesterAmount.toNumber(), CottonAmount: object.CottonAmount.toNumber(), WoolAmount: object.WoolAmount.toNumber() }})}>View</Button>{' '} */}
               <Button variant="outline-success" onClick={() => navigate('/spinningBatchCompleteForm',{state:{i}})}>Continue</Button>
               </td>
             </tr></>
           )
-         
         }     
       }
     }else {
@@ -54,7 +51,6 @@ const SpinningWeavingTable = () =>{
         </tr></>
       )
     }
-   
     setMateriallist(allsupplymateriallist);
   }
 
