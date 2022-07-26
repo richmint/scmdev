@@ -25,7 +25,7 @@ const SellItemTable = () =>{
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
         console.log("myrecord", object);
-        if (object.itemState === 3) {
+        if (object.itemState === 3 && object.factoryID.toLowerCase() === ownSupplyChainAddress.toLowerCase()) {
           // console.log("inner loop", object.PolyesterAmount.toNumber());
           // console.log("cotton loop", object.CottonAmount.toNumber());
           allsupplymateriallist.push(

@@ -9,7 +9,7 @@ import { useLocation } from "react-router-dom";
 
 const ViewSpinningMaterial= () =>{
     let data = useLocation();
-    console.log("Coming data is ",data.state.polysteramount);
+    console.log("Coming data is ",parseInt(data.state.PolyesterAmount , 16));
 //  console.log(({fialpolamount}));
     return(
         <div className="list">

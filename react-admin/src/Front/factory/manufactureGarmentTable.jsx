@@ -15,18 +15,15 @@ const ManufactureGarmentTable = () =>{
   const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress } = useContext(DarkModeContext);
 
   const allsupplymateriallist = [];
-  const getSupplyChainHandler = async (event) => {
-
-    console.log("supplyChainContract ", supplyChainContract)
+  const getSupplyChainHandler = async (event) => { 
+    
     const totalbatchids = (await  supplyChainContract.totalBatchs());
     console.log("totalbatchids",totalbatchids);
     if(totalbatchids>0){
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
-        console.log("myrecord", object);
-        if (object.itemState === 2) {
-          // console.log("inner loop", object.PolyesterAmount.toNumber());
-          // console.log("cotton loop", object.CottonAmount.toNumber());
+        //console.log("myrecord", object);
+        if (object.itemState === 2 && object.factoryID.toLowerCase() === ownSupplyChainAddress.toLowerCase()) {
           allsupplymateriallist.push(
             <><tr> 
               <td>{i}</td>
@@ -35,9 +32,9 @@ const ManufactureGarmentTable = () =>{
               <td>{object.PolyesterAmount.toNumber()}</td>
               <td>{object.CottonAmount.toNumber()}</td>
               <td>{object.WoolAmount.toNumber()}</td>
-              <td>
+              <td> 
               <Button variant="outline-primary" onClick={() => navigate('/viewSpinningMaterial',{state:{object}})}>View</Button>
-              <Button variant="outline-success" onClick={() => navigate('/SellItemFormData',{state:{i}})}>Continue</Button>
+              <Button variant="outline-success" onClick={() => navigate('/garmentBatchCompleteForm',{state:{i}})}>Continue</Button>
 
                 </td>
             </tr></>

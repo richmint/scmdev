@@ -34,7 +34,7 @@ const ViewBatchTable = () =>{
               <td>{object.PolyesterAmount.toNumber()}</td>
               <td>{object.CottonAmount.toNumber()}</td>
               <td>{object.WoolAmount.toNumber()}</td>
-              <td>
+              <td> 
               <Button variant="outline-success" onClick={() => navigate('/viewBatchStatus',{state:{i}})}>View</Button>
                 </td>
             </tr></>

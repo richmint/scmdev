@@ -34,6 +34,7 @@ import ViewBatch from './Front/factory/viewBatch';
 import ViewBatchStatus from './Front/factory/viewBatchStatus';
 import ViewSpinningMaterial from './Front/factory/viewspinningMaterial';
 import Spinningbatchcompleteform from './Front/factory/spinningbatchcompleteform';
+import GarmentBatchCompleteForm from './Front/factory/garmentBatchCompleteForm';
 
 //End Front
 import {BrowserRouter, Routes, Route, useNavigate, Link, Navigate, Switch, Router } from "react-router-dom";
@@ -188,6 +189,7 @@ function App() {
               <Route path="/viewBatchStatus" element={frontToken ? <ViewBatchStatus /> : <Navigate to={"/userlogin"} />} />
               <Route path="/viewSpinningMaterial" element={frontToken ? <ViewSpinningMaterial /> : <Navigate to={"/userlogin"} />} />
               <Route path="/spinningBatchCompleteForm" element={frontToken ? <Spinningbatchcompleteform /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/garmentBatchCompleteForm" element={frontToken ? <GarmentBatchCompleteForm /> : <Navigate to={"/userlogin"} />} />
 
               
               

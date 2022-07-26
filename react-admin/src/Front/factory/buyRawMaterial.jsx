@@ -23,7 +23,7 @@ const BuyRawMaterial = () =>{
        navigate("/availableRawMaterialToBuy")
     }
   }
-
+ 
     let data = useLocation();
     data = data.state.i;
     //console.log("Comming data is",data)
