@@ -71,13 +71,13 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
     mapping (uint => uint[]) private retailerUnits;
     mapping (uint => uint[]) private retailerCounters;
 
+    mapping (uint =>mapping(address =>uint)) public retailerTimeStamp;
 
     event RawMaterialSupplierSuppliesRM(uint _supplyChainId);
     event FactoryBuyRawMaterial(uint _supplyChainId);
     event FactorySellItemToDistributors(uint _supplyChainId);
     event DistributorSellToRetailer(uint _supplyChainId);
     event RetailerSellToCustomer(uint _supplyChainId);
-    event valueeeeeeee(uint a,uint b);
 
     function rawMaterialSupplierSuppliesRM(uint _polyesterAmount, uint _cottonAmount, uint _woolAmount) public
         onlyRawMaterialSupplier()
@@ -173,8 +173,8 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         ) public onlyFactory(){
             Item memory item =items[_supplyChainId];
             item.itemState =State.factorySellItemToDistributors;
-            uint _units =item.totalUnits;
-
+            uint _units =item.totalUnits;            
+               
             SupplyChainToken(supplyChainToken).mint(msg.sender,_supplyChainId,(_units-1));
             uint lastq=0;
             for(uint i=0; i<distributors.length; i++){
@@ -186,7 +186,7 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
                 lastq +=quantity[i];
             }
             items[_supplyChainId] =item;
-
+            
             uint length =wareHouseItems[item.warehouseID].length;
             if (length >0){
                 for(uint i=0; i<length; i++){
@@ -198,10 +198,11 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
             timeStamps[_supplyChainId].push(block.timestamp);
             emit FactorySellItemToDistributors(_supplyChainId);
     }
+
     function distributorSellToRetailer(
-        uint _supplyChainId
-        // address[] memory retailers,
-        // uint[] memory quantity 
+        uint _supplyChainId,
+        address[] memory retailers,
+        uint[] memory quantity 
     ) public onlyDistributor(){
             uint units;
             uint counter;  
@@ -216,18 +217,19 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
                     break;  
                 }  
             } 
-            // emit valueeeeeeee(units,counter);
             
-            // require(units>0 ,"DISTRIBUTOR INTERNAL ERROR");
-            // uint lastq=counter;
-            // for(uint i=0; i<retailers.length; i++){
-            //     require(isRetailer(retailers[i]),"NOT A VALID RETAILER ADDRESS ! PLEASE CONTACT ADMIN");
-            //     retailerID[_supplyChainId].push(retailers[i]);
-            //     retailerUnits[_supplyChainId].push(quantity[i]); 
-            //     retailerCounters[_supplyChainId].push(lastq);
-            //     SupplyChainToken(supplyChainToken).safeTransferFrom(msg.sender,retailers[i],_supplyChainId,quantity[i],"0x00",lastq);
-            //     lastq +=quantity[i];
-            // }
+            require(units>0 ,"DISTRIBUTOR INTERNAL ERROR");
+            uint lastq=counter;
+            for(uint i=0; i<retailers.length; i++){
+                require(isRetailer(retailers[i]),"NOT A VALID RETAILER ADDRESS ! PLEASE CONTACT ADMIN");
+                retailerID[_supplyChainId].push(retailers[i]);
+                retailerUnits[_supplyChainId].push(quantity[i]); 
+                retailerCounters[_supplyChainId].push(lastq);
+                SupplyChainToken(supplyChainToken).safeTransferFrom(msg.sender,retailers[i],_supplyChainId,quantity[i],"0x00",lastq);
+                lastq +=quantity[i];
+                retailerTimeStamp[_supplyChainId][retailers[i]]=block.timestamp;
+            }
+
             emit DistributorSellToRetailer(_supplyChainId);
     }
 

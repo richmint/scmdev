@@ -13,7 +13,7 @@ async function main() {
         distributorSigner1, 
         distributorSigner2, 
         retailerSigner1, 
-        // retailerSigner2, 
+        retailerSigner2, 
         // customerSigner 
         ] = await ethers.getSigners();
 
@@ -50,14 +50,14 @@ async function main() {
 
 
   await supplychain.addRetailer(retailerSigner1.address);
-  // await supplychain.addRetailer(retailerSigner2.address);
+  await supplychain.addRetailer(retailerSigner2.address);
 
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////     RAW MATERIAL SUPPLIER         //////////////////////////////
+///////////////////////////////       RAW MATERIAL SUPPLIER         /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -161,8 +161,8 @@ async function main() {
   //     }    
   // }    
 
-  // await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing(0,10,"Plain Blue T-shirts");
-  // await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing(1,10,"Ruff Grean Tank tops");
+  await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing(0,10,"Plain Blue T-shirts");
+  await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing(1,12,"Ruff Grean Tank tops");
 
 
   // ---------------------------- FACTORY SELL TO DISTRIBUTOR --------------------------------
@@ -177,17 +177,18 @@ async function main() {
   //     }    
   // }    
   
-  // await supplychain.connect(factorySigner1).factorySellItemToDistributors(0,[distributorSigner1.address,distributorSigner2.address],[5,5]);
+  await supplychain.connect(factorySigner1).factorySellItemToDistributors(0,[distributorSigner1.address,distributorSigner2.address],[5,5]);
+  await supplychain.connect(factorySigner1).factorySellItemToDistributors(1,[distributorSigner1.address,distributorSigner2.address],[6,6]);
 
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////             WAREHOUSE            //////////////////////////////
+///////////////////////////////             WAREHOUSE            ///////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
  
 
 
@@ -215,83 +216,17 @@ async function main() {
 
       
   
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////             DISTRIBUTOR            //////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+ 
 
+// ------------------------------------  AVAILABLE ITEMS TO SELL -------------------------------
 
-
-
-
-
-
-
-
-
-// --------------------------------------------FOR DISTRIBUTOR -------------------------------------------------
-
-
-
-
-
-  // console.log(await supplychain.getWarehouseItems(warehouseSigner.address))
-
-  // console.log(await supplychain.items(0))
-  // console.log((await supplychain.getDistributors(0)).length);
-  // console.log((await supplychain.getDistributors(0)));
-  // console.log(await supplychain.getDistributorUnits(0));
-  // console.log(await supplychain.getDistributorCounters(0));
-
-  // ------------FOR DISTRIBUTOR VIEW-------------------------
-  // const total =await supplychain.totalBatchs()
-  // // console.log(total)
-  // for(let i =0; i<total; i++){
-  //   let array = await supplychain.getDistributors(i);
-  //   if(array.length>0){
-  //     for(let k=0; k<array.length; k++){
-  //       if(array[k]===distributorSigner1.address){
-  //         // If this run this mean this distributor is involved in ith batch
-  //         // HERE i IS SUPPLY TOKEN ID
-  //         console.log(await supplychain.items(i))
-  //         let dunits =await supplychain.getDistributorUnits(i)
-  //         console.log(dunits[k]);
-  //         let dcounter =await supplychain.getDistributorCounters(i)
-  //         console.log(dcounter[k]);
-  //       }   
-  //     }
-  //   }
-  // }
-  // console.log("TOKEN O")
-  // console.log(await supplyChainToken.entityMap(2,0,0));
-  // console.log(await supplyChainToken.entityMap(2,0,1));
-  // console.log(await supplyChainToken.entityMap(2,0,2));
-  // console.log("TOKEN 1")
-  
-  // console.log(await supplyChainToken.entityMap(2,1,0));
-  // console.log(await supplyChainToken.entityMap(2,1,1));
-  // console.log(await supplyChainToken.entityMap(2,1,2));
-  // console.log("TOKEN 2")
-
-  // console.log(await supplyChainToken.entityMap(2,2,0));
-  // console.log(await supplyChainToken.entityMap(2,2,1));
-  // console.log(await supplyChainToken.entityMap(2,2,2));
-  // console.log("TOKEN 3")
-
-  // console.log(await supplyChainToken.entityMap(2,3,0));
-  // console.log(await supplyChainToken.entityMap(2,3,1));
-  // console.log(await supplyChainToken.entityMap(2,3,2));
-  // console.log("TOKEN 4")
-
-  // console.log(await supplyChainToken.entityMap(2,4,0));
-  // console.log(await supplyChainToken.entityMap(2,4,1));
-  // console.log(await supplyChainToken.entityMap(2,4,2));
-  
-  // console.log((await supplychain.getDistributors(0)))
-  // console.log(await supplychain.getDistributorUnits(0))
-  // console.log(await supplychain.getDistributorCounters(0))
-  // await supplyChainToken.connect(distributorSigner1).setApprovalForAll(supplychain.address,true);
-  // await supplychain.connect(distributorSigner1).distributorSellToRetailer(0);
-  // await supplychain.connect(distributorSigner1).distributorSellToRetailer(0,[retailerSigner1.address,retailerSigner2.address],[2,3]);
-  // console.log((await supplychain.getDistributors(0)))
-  // console.log(await supplychain.getDistributorUnits(0))
-  // console.log(await supplychain.getDistributorCounters(0))
 
   // const total =await supplychain.totalBatchs()
   // console.log(total)
@@ -302,15 +237,51 @@ async function main() {
   //       if(array[k]===distributorSigner1.address){
   //         // If this run this mean this distributor is involved in ith batch
   //         // HERE i IS SUPPLY TOKEN ID
-  //         console.log(await supplychain.items(i))
+  //         const object =await supplychain.items(i);
+  //         console.log(object)
   //         let dunits =await supplychain.getDistributorUnits(i)
   //         console.log(dunits[k]);
   //         let dcounter =await supplychain.getDistributorCounters(i)
   //         console.log(dcounter[k]);
+  //         const data =await supplychain.timeStamps(object.supplyChainId,object.itemState);
+  //         console.log(await dateTime.getDay(data.toNumber()),await dateTime.getMonth(data.toNumber()),await dateTime.getYear(data.toNumber()));
   //       }   
   //     }
   //   }
   // }
+
+  
+  // ---------------------------- DISTRIBUTOR APPROVE SUPPYTOKEN ----------------------------
+  
+  
+  await supplyChainToken.connect(distributorSigner1).setApprovalForAll(supplychain.address,true);
+
+
+  // ---------------------------- DISTRIBUTOR SELL TO RETAILER ---------------------------------
+
+  // await supplychain.connect(distributorSigner1).distributorSellToRetailer(0,[retailerSigner1.address,retailerSigner2.address],[2,3]);
+  // await supplychain.connect(distributorSigner1).distributorSellToRetailer(1,[retailerSigner1.address,retailerSigner2.address],[4,2]);
+         
+
+  // const total =await supplychain.totalBatchs()
+  // for(let i =0; i<total; i++){
+  //   let array = await supplychain.getRetailers(i);
+  //   if(array.length>0){
+  //     for(let k=0; k<array.length; k++){
+  //       if(array[k]===retailerSigner1.address){
+  //         const object =await supplychain.items(i);
+  //         console.log(object)
+  //         let dunits =await supplychain.getRetailersUnits(i)
+  //         console.log(dunits[k]);
+  //         let dcounter =await supplychain.getRetailersCounters(i)
+  //         console.log(dcounter[k]);
+  //         const data = await supplychain.retailerTimeStamp(k,retailerSigner1.address);
+  //         console.log(await dateTime.getDay(data.toNumber()),await dateTime.getMonth(data.toNumber()),await dateTime.getYear(data.toNumber()));
+  //       }   
+  //     }
+  //   }
+  // }
+
 }
 
 main()
