@@ -206,6 +206,8 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
     ) public onlyDistributor(){
             uint units;
             uint counter;  
+            Item memory item =items[_supplyChainId];
+            item.itemState =State.DistributorSellToRetailer;
             address[] memory distributors =  getDistributors(_supplyChainId);  
             for(uint k=0; k<distributors.length; k++){   
                 if(distributors[k]!=address(0) && distributors[k]==msg.sender){ 
@@ -217,7 +219,7 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
                     break;  
                 }  
             } 
-            
+            items[_supplyChainId] =item;
             require(units>0 ,"DISTRIBUTOR INTERNAL ERROR");
             uint lastq=counter;
             for(uint i=0; i<retailers.length; i++){
