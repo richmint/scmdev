@@ -12,12 +12,14 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "./SupplyChainERC1155.sol";  
 import "hardhat/console.sol";   
 
-contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Retailer, Customer{
+// contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Retailer, Customer{
+contract Supplychain{
     using Counters for Counters.Counter;
     address supplyChainToken;
     Counters.Counter private supplyChainId;
 
-    constructor(address _supplychainToken) RawMaterialSupplier() Warehouse() Factory() Distributor() Retailer() Customer(){
+    // constructor(address _supplychainToken) RawMaterialSupplier() Warehouse() Factory() Distributor() Retailer() Customer(){
+    constructor(address _supplychainToken) {
         supplyChainToken =_supplychainToken;
     }
 
@@ -51,6 +53,8 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         address RawMaterialSupplierID;  // Metamask-Ethereum address of the RawMaterialSupplier
         address warehouseID;            // Metamask-Ethereum address of the warehouse
         address factoryID;              // Metamask-Ethereum address of the factory
+        address distributorId;          // Metamask-Ethereum address of the distributor
+        
     }
     struct Yarn{
         uint YarnAmount;     
@@ -59,19 +63,26 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
     }
 
     mapping (uint =>Yarn) public YarnDetails;
+
     mapping (uint =>uint[]) public timeStamps;
     mapping (uint => Item) public items;
+
     mapping (address => Item[]) private wareHouseItems;
 
-    mapping (uint => address[]) private distributorID;
-    mapping (uint => uint[]) private distributorUnits;
-    mapping (uint => uint[]) private distributorCounters;
+    // mapping (uint => address[]) private distributorID;
+    // mapping (uint => uint[]) private distributorUnits;
+    // mapping (uint => uint[]) private distributorCounters;
 
     mapping (uint => address[]) private retailerID;
     mapping (uint => uint[]) private retailerUnits;
     mapping (uint => uint[]) private retailerCounters;
 
-    mapping (uint =>mapping(address =>uint)) public retailerTimeStamp;
+    mapping (uint => address[]) private customerId;
+    mapping (uint => uint[]) private customerUnits;
+    mapping (uint => uint[]) private customerCounters;
+
+
+
 
     event RawMaterialSupplierSuppliesRM(uint _supplyChainId);
     event FactoryBuyRawMaterial(uint _supplyChainId);
@@ -80,7 +91,7 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
     event RetailerSellToCustomer(uint _supplyChainId);
 
     function rawMaterialSupplierSuppliesRM(uint _polyesterAmount, uint _cottonAmount, uint _woolAmount) public
-        onlyRawMaterialSupplier()
+        // onlyRawMaterialSupplier()
         {
         uint currentId =supplyChainId.current();
         Item memory item =Item({  
@@ -93,7 +104,8 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
                 Description:"",
                 RawMaterialSupplierID: msg.sender,
                 warehouseID:address(0),
-                factoryID:address(0)
+                factoryID:address(0),
+                distributorId:address(0)
             });
         items[currentId] =item;
         SupplyChainToken(supplyChainToken).mint(msg.sender,currentId,1);
@@ -108,9 +120,10 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         uint _polysteramount,
         uint _cottonamount,
         uint _woolamount
-    ) public onlyFactory() 
+    ) public 
+    // onlyFactory() 
     {
-        require(isWarehouse(_warehouse),"NOT A VALID WAREHOUSE ADDRESS ! PLEASE CONTACT ADMIN");
+        // require(isWarehouse(_warehouse),"NOT A VALID WAREHOUSE ADDRESS ! PLEASE CONTACT ADMIN");
         Item memory item =items[_supplyChainId];
         address rawMaterialSupplier =item.RawMaterialSupplierID;
 
@@ -128,7 +141,10 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         emit FactoryBuyRawMaterial(_supplyChainId);
     }
 
-    function factoryCompleteSpinningWaeving(uint _supplyChainId, uint _yarnAmount, string memory _yarnColor, string memory _yarnType) public onlyFactory() {
+    function factoryCompleteSpinningWaeving(uint _supplyChainId, uint _yarnAmount, string memory _yarnColor, string memory _yarnType) 
+    public 
+    // onlyFactory() 
+    {
         Item memory item =items[_supplyChainId];        
         YarnDetails[_supplyChainId].YarnAmount =_yarnAmount;
         YarnDetails[_supplyChainId].YarnColor=_yarnColor;
@@ -147,7 +163,9 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         timeStamps[_supplyChainId].push(block.timestamp);
     }
 
-    function factoryCompleteGarmentManufacturing(uint _supplyChainId, uint _totalUnits, string memory _description) public onlyFactory() {
+    function factoryCompleteGarmentManufacturing(uint _supplyChainId, uint _totalUnits, string memory _description) public 
+    // onlyFactory() 
+    {
         require(_totalUnits>=1,"Units should be greater that 1");
         Item memory item =items[_supplyChainId];
         item.totalUnits =_totalUnits;
@@ -168,23 +186,15 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
 
     function factorySellItemToDistributors(
         uint _supplyChainId,
-        address[] memory distributors,
-        uint[] memory quantity 
-        ) public onlyFactory(){
+        address distributor
+        ) public 
+        // onlyFactory()
+        {
             Item memory item =items[_supplyChainId];
             item.itemState =State.factorySellItemToDistributors;
-            uint _units =item.totalUnits;            
-               
-            SupplyChainToken(supplyChainToken).mint(msg.sender,_supplyChainId,(_units-1));
-            uint lastq=0;
-            for(uint i=0; i<distributors.length; i++){
-                require(isDistributor(distributors[i]),"NOT A VALID DISTRIBUTOR ADDRESS ! PLEASE CONTACT ADMIN");
-                distributorID[_supplyChainId].push(distributors[i]);
-                distributorUnits[_supplyChainId].push(quantity[i]); 
-                distributorCounters[_supplyChainId].push(lastq);
-                SupplyChainToken(supplyChainToken).safeTransferFrom(msg.sender,distributors[i],_supplyChainId,quantity[i],"0x00",lastq);
-                lastq +=quantity[i];
-            }
+            item.distributorId =distributor;
+
+            SupplyChainToken(supplyChainToken).safeTransferFrom(msg.sender,distributor,_supplyChainId,1,"0x00",0);
             items[_supplyChainId] =item;
             
             uint length =wareHouseItems[item.warehouseID].length;
@@ -203,34 +213,64 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
         uint _supplyChainId,
         address[] memory retailers,
         uint[] memory quantity 
-    ) public onlyDistributor(){
-            uint units;
-            uint counter;  
-            address[] memory distributors =  getDistributors(_supplyChainId);  
-            for(uint k=0; k<distributors.length; k++){   
-                if(distributors[k]!=address(0) && distributors[k]==msg.sender){ 
-                    units = getDistributorUnits(_supplyChainId)[k];  
-                    counter = getDistributorCounters(_supplyChainId)[k]; 
-                    delete distributorID[_supplyChainId][k];  
-                    delete distributorUnits[_supplyChainId][k];  
-                    delete distributorCounters[_supplyChainId][k];  
-                    break;  
-                }  
-            } 
-            
-            require(units>0 ,"DISTRIBUTOR INTERNAL ERROR");
-            uint lastq=counter;
+    ) public 
+    // onlyDistributor()
+    {
+            Item memory item =items[_supplyChainId];
+            item.itemState =State.DistributorSellToRetailer;
+            uint units =item.totalUnits;
+            SupplyChainToken(supplyChainToken).mint(msg.sender,_supplyChainId,(units-1));
+            items[_supplyChainId] =item;
+            uint lastq=0;
             for(uint i=0; i<retailers.length; i++){
-                require(isRetailer(retailers[i]),"NOT A VALID RETAILER ADDRESS ! PLEASE CONTACT ADMIN");
+                // require(isRetailer(retailers[i]),"NOT A VALID RETAILER ADDRESS ! PLEASE CONTACT ADMIN");
                 retailerID[_supplyChainId].push(retailers[i]);
                 retailerUnits[_supplyChainId].push(quantity[i]); 
                 retailerCounters[_supplyChainId].push(lastq);
                 SupplyChainToken(supplyChainToken).safeTransferFrom(msg.sender,retailers[i],_supplyChainId,quantity[i],"0x00",lastq);
                 lastq +=quantity[i];
-                retailerTimeStamp[_supplyChainId][retailers[i]]=block.timestamp;
             }
-
+            timeStamps[_supplyChainId].push(block.timestamp);
             emit DistributorSellToRetailer(_supplyChainId);
+    }
+
+    function customerBuyItem(
+        uint _supplyChainId,
+        address retailer,
+        uint quantity 
+    ) public{
+        uint length =retailerID[_supplyChainId].length;
+        uint counter1;
+        uint counter2;
+        for(uint i=0; i<length; i++){
+            if(retailerID[_supplyChainId][i]==retailer){
+                counter1 =i;
+                break;
+            }
+        }       
+        require(getRetailersUnits(_supplyChainId)[counter1]>=quantity,"No More Items left");
+                                                
+        length=customerId[_supplyChainId].length;
+        for(uint i=0; i<length; i++){
+            if(customerId[_supplyChainId][i]==msg.sender){
+                counter2 =i;
+                break;
+            }   
+        }   
+        if(counter2==0){
+            customerId[_supplyChainId].push(msg.sender);
+            customerUnits[_supplyChainId].push(quantity); 
+            customerCounters[_supplyChainId].push(retailerCounters[_supplyChainId][counter1]);
+            SupplyChainToken(supplyChainToken).safeTransferFrom(retailer,msg.sender,_supplyChainId,quantity,"0x00",retailerCounters[_supplyChainId][counter1]);
+        }else{  
+            customerUnits[_supplyChainId][counter2]=quantity; 
+            customerCounters[_supplyChainId][counter2]=retailerCounters[_supplyChainId][counter1];
+            SupplyChainToken(supplyChainToken).safeTransferFrom(retailer,msg.sender,_supplyChainId,quantity,"0x00",retailerCounters[_supplyChainId][counter1]);
+        }       
+
+        retailerUnits[_supplyChainId][counter1]-=quantity;
+        retailerCounters[_supplyChainId][counter1]+=quantity;
+        
     }
 
     function totalBatchs() public view returns(uint256){
@@ -239,18 +279,6 @@ contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Ret
     
     function getWarehouseItems(address warehouse) public view returns (Item[] memory){
         return wareHouseItems[warehouse];
-    }
-    
-    function getDistributors(uint _supplychianId) public view returns(address[] memory){
-        return distributorID[_supplychianId];
-    }
-
-    function getDistributorUnits(uint _supplychianId) public view returns(uint[] memory){
-        return distributorUnits[_supplychianId];
-    }
-    
-    function getDistributorCounters(uint _supplychianId) public view returns(uint[] memory){
-        return distributorCounters[_supplychianId];
     }
 
     function getRetailers(uint _supplychianId) public view returns(address[] memory){
