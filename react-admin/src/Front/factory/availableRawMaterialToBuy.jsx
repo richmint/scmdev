@@ -10,7 +10,7 @@ import RawMaterialTable from "./rawMaterialTable";
 const AvailableRawMaterialToBuy = () =>{
     return(
         <div className="list">
-            <Sidebar />
+            <Sidebar txt={"avlRawMatforBuy"} />
             <div className="listContainer">
                 <Navbar />
                 <RawMaterialTable />

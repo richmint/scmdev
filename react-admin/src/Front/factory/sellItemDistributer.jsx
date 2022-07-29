@@ -9,7 +9,7 @@ import SellItemTable from "./sellItemTable";
 const SellItemToDistributer = () =>{
     return(
         <div className="list">
-            <Sidebar />
+            <Sidebar txt={"FecItemToDistributer"} />
             <div className="listContainer">
                 <Navbar />
                 <SellItemTable />

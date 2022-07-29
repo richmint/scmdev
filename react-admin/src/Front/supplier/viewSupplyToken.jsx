@@ -9,7 +9,7 @@ import ViewSupplyTable from './viewSupplyTable'
 const ViewSupplyToken = () =>{
     return(
         <div className='list'>
-            <Sidebar />
+            <Sidebar txt={"suppToken"} />
             <div className='listContainer'>
                 <Navbar />
                 <ViewSupplyTable />

@@ -40,6 +40,10 @@ const FinalSellToDistributor = () =>{
 
     const SellItemForm = () =>{
         return(
+            <>
+            <div className="top">          
+                <h4>Sell To Distributer</h4>
+            </div>
             <div className="bottom">
                 <div className="right">
                     <form onSubmit={finalSellItemToDistributor}>
@@ -71,6 +75,7 @@ const FinalSellToDistributor = () =>{
                     </form>
                 </div>
             </div>
+            </>
         )
     }
 

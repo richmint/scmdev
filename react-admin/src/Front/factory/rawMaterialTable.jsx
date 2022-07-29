@@ -61,6 +61,7 @@ const RawMaterialTable = () => {
       <div className="new">
         <div className="newContainer">
           <div className="top">
+            <h4>Raw Material List</h4>
           </div>
           <div className="bottom">
             <div className="right">

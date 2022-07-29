@@ -7,21 +7,32 @@ import { DarkModeContext } from "../../context/darkModeContext";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
+import {useForm} from 'react-hook-form';
+import { yupResolver } from "@hookform/resolvers/yup"; 
+import { GarmentBatchCompleteFormSchema } from '../../Validations/Schema';
+
 const GarmentBatchCompleteForm = () =>{
   let data = useLocation();
   data = data.state.i;
   //console.log("Coming data is ",data);
   
+  const {register, handleSubmit, setError, formState: { errors }} = useForm({
+    defaultValues: {
+      totalitems: '',
+      description: '',
+    },
+    resolver: yupResolver(GarmentBatchCompleteFormSchema),
+  })
 
   const navigate = useNavigate();
   const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract } = useContext(DarkModeContext);
   const [SChainContract, setSChainContract] = useState(supplyChainContract);
 
   const garmentcompleteHandler = async (event) => {
-    event.preventDefault();
-    console.log("batchid",SChainContract);
+    // event.preventDefault();
+    // console.log("batchid",SChainContract);
     
-    const tx = SChainContract.factoryCompleteGarmentManufacturing(data, event.target.totalitems.value,event.target.description.value);
+    const tx = SChainContract.factoryCompleteGarmentManufacturing(data, event.totalitems,event.description);
     //console.log((await tx.wait()));
     if(tx){
        navigate("/manufactureGarmentMaterial")
@@ -33,21 +44,21 @@ const GarmentBatchCompleteForm = () =>{
         return(
             <div className="bottom">
           <div className="right">
-            <form onSubmit={garmentcompleteHandler}>
+            <form onSubmit={handleSubmit(garmentcompleteHandler)}>
               <div className="formInput">
                 <label>Total Items</label>
-                <input id="batchId" type="hidden"  value={data} />
-                <input id="totalitems"  type="text"></input>
+                <input id="totalitems"  type="text"  name="totalitems" {...register("totalitems", { required: true })}></input>
+                {errors.totalitems && <span className='error'> {console.log(errors)} {errors?.totalitems?.message}</span>}
               </div>
               <div className="formInput">
                 <label>Description</label>
-                <textarea rows={4} id="description"  type="text"></textarea>
+                <textarea rows={4} id="description"  type="text" name="description" {...register("description", { required: true })}></textarea>
+                {errors.description && <span className='error'> {console.log(errors)} {errors?.description?.message}</span>}
               </div>
               <div className='formInput'>
               <button type={"submit"}> Submit </button>
               </div>          
             </form>
-            
           </div>
         </div>
         )

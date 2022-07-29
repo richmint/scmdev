@@ -1,6 +1,5 @@
 import React,{useEffect, useState,useContext} from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import {useForm} from 'react-hook-form';
 import './AddMaterialForm.scss'
 //import { fetch, success } from './LoginSlice'
 //import "./login.scss"
@@ -12,25 +11,30 @@ import Sidebar from "../../components/front_sidebar/Sidebar";
 
 import { DarkModeContext } from "../../context/darkModeContext";
 
+import {useForm} from 'react-hook-form';
+import { yupResolver } from "@hookform/resolvers/yup"; 
+import { AddMaterialSchema } from '../../Validations/Schema';
+
 const Materialsupplier = ({ inputs, title, value }) => {
   const { dispatch, metaMask,supplyChainContract ,supplyChainTokenContract } = useContext(DarkModeContext);
   const navigate = useNavigate();  
-  const {register, handleSubmit, formState: { errors }} = useForm({
+  const {register, handleSubmit, setError, formState: { errors }} = useForm({
     defaultValues: {
-      pollyster: '',
-      cotton: '',
-      wool: ''
-    } 
+      polysteramount: '',
+      cottonamount: '',
+      woolamount: '',
+    },
+    resolver: yupResolver(AddMaterialSchema),
   })
 
   const [SChainContract, setSChainContract] = useState(supplyChainContract);
   const [user,setUser] = useState(JSON.parse(sessionStorage.getItem('user'))); 
   
   const addSupplyChainHandler = async (event) => {
-    event.preventDefault();
+    //event.preventDefault();
    // console.log("SChainContract",SChainContract);
-    console.log(await SChainContract.totalBatchs())
-    const tx = await SChainContract.rawMaterialSupplierSuppliesRM(event.target.polysteramount.value, event.target.cottonamount.value, event.target.woolamount.value);
+    //console.log(await SChainContract.totalBatchs())
+    const tx = await SChainContract.rawMaterialSupplierSuppliesRM(event.polysteramount, event.cottonamount, event.woolamount);
     //console.log((await tx.wait()));
     if(tx){
        navigate("/supplyToken")
@@ -40,33 +44,32 @@ const Materialsupplier = ({ inputs, title, value }) => {
  
   return (
     <div className="new">
-       <Sidebar />
+       <Sidebar txt={"supplierAddBatch"} />
       <div className="newContainer">
         <Navbar />
         <div className="top">          
-          <h1>Add Batch</h1>
+          <h4>Add Batch</h4>
         </div>
         <div className="bottom">
           <div className="right">
-            <form onSubmit={addSupplyChainHandler}>
+            <form onSubmit={handleSubmit(addSupplyChainHandler)}>
               <div className="formInput">
                 <label>Polyster Amount</label>
-                <input id="polysteramount"  {...register("pollyster", { required: true })} type="number" />
-                {errors.pollyster && <span className='error'>* Amount is required</span>}
+                <input id="polysteramount" name="polysteramount"  {...register("polysteramount", { required: true })} type="number" />
+                {errors.polysteramount && <span className='error'> {console.log(errors)} {errors?.polysteramount?.message}</span>}
               </div>
               <div className="formInput">
                 <label>Cotton Amount</label>
-                <input id="cottonamount" {...register("cotton", { required: true })} type="number" />
-                {errors.cotton && <span className='error'>* Amount is required</span>}
+                <input id="cottonamount" name="cottonamount" {...register("cottonamount", { required: true })} type="number" />
+                {errors.cottonamount && <span className='error'> {console.log(errors)} {errors?.cottonamount?.message}</span>}
               </div>
               <div className="formInput ">
                 <label>Wool Amount</label>
-                <input id="woolamount" {...register("wool", { required: true })} type="number" />
-                {errors.wool && <span className='error'>* Amount is required</span>}
+                <input id="woolamount" name="woolamount" {...register("woolamount", { required: true })} type="number" />
+                {errors.woolamount && <span className='error'> {console.log(errors)} {errors?.woolamount?.message}</span>}
               </div>  
               <div className='formInput'>
               <button type={"submit"}> Submit </button>
-              {/* <span className='left'><button  type='reset' >Reset</button></span> */}
               </div>          
             </form>
           </div>

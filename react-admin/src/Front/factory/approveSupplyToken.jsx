@@ -71,21 +71,20 @@ const ApproveSupplyToken = () =>{
 
     return (
         <div className="new">
-           <Sidebar />
+           <Sidebar txt={"ApproveFacSupp"} />
           <div className="newContainer">
             <Navbar />
-            <div className="top">          
+            <div className="top"> 
+              <h4>Approve Raw Material</h4>         
             </div>
             <div className="bottom">
               <div className="right">
                 <form onSubmit={handleSubmit(addWarehouseHandler)}>
                   <div className="formInput">
                     <label>You have to approve this plateform to manage your supplychain tokens for the factory to buy. This is to be done only once.</label>
-                    
                   </div>
                   <div className='formInput'>
                   <button disabled={disable} style={disable?{backgroundColor:"gray",cursor:"none"}:{}}  type={"submit"}> Approve </button>
-                  {/* <span className='left'><button  type='reset' >Reset</button></span> */}
                   </div>          
                 </form>
               </div>

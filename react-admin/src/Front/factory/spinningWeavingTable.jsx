@@ -31,13 +31,12 @@ const SpinningWeavingTable = () =>{
             <><tr> 
               <td>{i}</td>
               <td>{object.RawMaterialSupplierID}</td>
-              <td>{object.factoryID}</td>
+              {/* <td>{object.factoryID}</td> */}
               <td>{object.PolyesterAmount.toNumber()}</td>
               <td>{object.CottonAmount.toNumber()}</td>
               <td>{object.WoolAmount.toNumber()}</td>
               <td>  
-              <Button variant="outline-success" onClick={() => navigate('/viewSpinningMaterial',{state:i})}>View</Button>
-              {/* <Button variant="outline-primary" onClick={() => navigate('/viewSpinningMaterial',{state:{RawMaterialSupplierID: object.RawMaterialSupplierID, warehouseID: object.warehouseID, polysteramount: object.PolyesterAmount.toNumber(), CottonAmount: object.CottonAmount.toNumber(), WoolAmount: object.WoolAmount.toNumber() }})}>View</Button>{' '} */}
+              <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus',{state:{i}})}>View</Button>
               <Button variant="outline-success" onClick={() => navigate('/spinningBatchCompleteForm',{state:{i}})}>Continue</Button>
               </td>
             </tr></>
@@ -63,6 +62,7 @@ const SpinningWeavingTable = () =>{
           <div className="new">
             <div className="newContainer">
               <div className="top">
+              <h4>Spinning Weaving List</h4>
               </div>
               <div className="bottom">
                 <div className="right">
@@ -71,7 +71,7 @@ const SpinningWeavingTable = () =>{
                     <tr>
                     <th>Batch ID</th>
                     <th>Raw Material Supplier</th>
-                    <th>Factory Address</th>
+                    {/* <th>Factory Address</th> */}
                     <th>Polyster Amount</th>
                     <th>Cotton Amount</th>
                     <th>Wool Amount</th>
