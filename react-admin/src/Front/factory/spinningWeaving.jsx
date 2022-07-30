@@ -9,7 +9,7 @@ import SpinningWeavingTable from "./spinningWeavingTable";
 const SpinningWeaving= () =>{
     return(
         <div className="list">
-            <Sidebar />
+            <Sidebar txt={"facSpinningWeaving"} />
             <div className="listContainer">
                 <Navbar />
                 <SpinningWeavingTable />

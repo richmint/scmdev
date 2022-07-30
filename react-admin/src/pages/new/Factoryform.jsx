@@ -4,25 +4,37 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import { useState } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { AddNewUserByAdminSchema } from '../../Validations/Schema';
 const Factoryform = ({ inputs, title, value }) => {
   const { dispatch, metaMask, supplyChainContract } = useContext(DarkModeContext);
   const [errorMessage, setErrorMessage] = useState(null);
   const [SCContract, setSCContract] = useState(supplyChainContract);
-  //console.log("SCContract",SCContract);
+
+  const {register, handleSubmit, setError, formState : {errors}} = useForm({
+    defaultValues:{
+      hashAddress:'',
+      name:'',
+      email:'',
+      address:''
+    },
+    resolver:yupResolver(AddNewUserByAdminSchema),
+  })
+
   const addFactoryHandler = (event) => {
-    event.preventDefault();
-    //console.log(SCContract);
-    SCContract.addFactory(event.target.hashaddress.value);
+    console.log(event);
+    SCContract.addFactory(event.hashAddress);
 
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        "hashAddress":event.target.hashaddress.value,
-        "name":event.target.name.value,
-        "email":event.target.email.value,
-        "address":event.target.location.value,
-        "password":event.target.hashaddress.value,
+        "hashAddress":event.hashAddress,
+        "name":event.name,
+        "email":event.email,
+        "address":event.location,
+        "password":event.hashAddress,
         "role":'Factory'
         })
   };
@@ -40,22 +52,26 @@ const Factoryform = ({ inputs, title, value }) => {
         </div>
         <div className="bottom">
           <div className="right">
-            <form onSubmit={addFactoryHandler}>
+            <form onSubmit={handleSubmit(addFactoryHandler)}>
               <div className="formInput">
                 <label>Factory Hash Address</label>
-                <input id="hashaddress" type="text" />
+                <input id="hashAddress" name='hashAddress' type="text" {...register("hashAddress" ,{required:true})} />
+                {errors.hashAddress && <span className='error'> {console.log(errors)} {errors?.hashAddress?.message}</span>}
               </div>
               <div className="formInput">
                 <label>Factory Name</label>
-                <input id="name" type="text" />
+                <input id="name" name='name' type="text" {...register("name" ,{required:true})} />
+                {errors.name && <span className='error'> {console.log(errors)} {errors?.name?.message}</span>}
               </div>
               <div className="formInput">
                 <label>Email</label>
-                <input id="email" type="text" />
+                <input id="email" name='email' type="email" {...register("email" ,{required:true})} />
+                {errors.email && <span className='error'> {console.log(errors)} {errors?.email?.message}</span>}
               </div>
               <div className="formInput">
                 <label>Location</label>
-                <input id="location" type="text" />
+                <input id="address" name='address' type="text" {...register('address',{required:true})} />
+                {errors.address && <span className='error'> {console.log(errors)} {errors?.address?.message}</span>}
               </div>
               <button type={"submit"}> Add Factory </button>
             </form>

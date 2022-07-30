@@ -9,7 +9,7 @@ import ManufactureGarmentTable from "./manufactureGarmentTable";
 const ManufactureGarment= () =>{
     return(
         <div className="list">
-            <Sidebar />
+            <Sidebar txt={"facManuGarment"} />
             <div className="listContainer">
                 <Navbar />
                 <ManufactureGarmentTable />

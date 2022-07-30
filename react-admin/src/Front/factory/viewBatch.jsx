@@ -9,7 +9,7 @@ import ViewBatchTable from "./viewBatchTable";
 const ViewBatch = () =>{
     return(
         <div className="list">
-            <Sidebar />
+            <Sidebar txt={"factoryViewBatch"} />
             <div className="listContainer">
                 <Navbar />
                 <ViewBatchTable />

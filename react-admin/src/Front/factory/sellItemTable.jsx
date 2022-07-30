@@ -32,13 +32,13 @@ const SellItemTable = () =>{
             <><tr> 
               <td>{i}</td>
               <td>{object.RawMaterialSupplierID}</td>
-              <td>{object.warehouseID}</td>
+              {/* <td>{object.warehouseID}</td> */}
               <td>{object.PolyesterAmount.toNumber()}</td>
               <td>{object.CottonAmount.toNumber()}</td>
               <td>{object.WoolAmount.toNumber()}</td>
               <td>
-              <Button variant="outline-primary" onClick={() => navigate('/SellItemFormData',{state:{i}})}>View</Button>
-                <Button variant="outline-success" onClick={() => navigate('/SellItemFormData',{state:{i}})}>Continue</Button>
+              <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus',{state:{i}})}>View</Button>
+              <Button variant="outline-success" onClick={() => navigate('/SellItemFormData',{state:{i}})}>Continue</Button>
                 </td>
             </tr></>
           )
@@ -65,6 +65,7 @@ const SellItemTable = () =>{
           <div className="new">
             <div className="newContainer">
               <div className="top">
+              <h4>Sell Item to Distributer List</h4>
               </div>
               <div className="bottom">
                 <div className="right">
@@ -73,7 +74,7 @@ const SellItemTable = () =>{
                     <tr>
                     <th>Batch ID</th>
                     <th>Raw Material Supplier</th>
-                    <th>Warehouse Address</th>
+                    {/* <th>Warehouse Address</th> */}
                       <th>Polyster Amount</th>
                       <th>Cotton Amount</th>
                       <th>Wool Amount</th>

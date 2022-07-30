@@ -55,7 +55,7 @@ const ApproceMaterialsupplier = ({ inputs, title, value }) => {
  
   return (
     <div className="new">
-       <Sidebar />
+       <Sidebar txt={"SupApprove"} />
       <div className="newContainer">
         <Navbar />
         <div className="top">          

@@ -71,7 +71,7 @@ const ApproveSupplyToken = () =>{
 
     return (
         <div className="new">
-           <Sidebar />
+           <Sidebar txt={"DistApprovetoken"} />
           <div className="newContainer">
             <Navbar />
             <div className="top">          
