@@ -27,9 +27,10 @@ contract Supplychain{
     {
         rawMaterialSupplierSuppliesRM, //  1 July 
         factoryBuyRawMaterial, //  4 july 
-              
+        factoryQCRawMaterials,
         factoryCompleteSpinningWaeving,
         factoryCompleteGarmentManufacturing,
+        factoryQCFinalItems,
         factorySellItemToDistributors,
         DistributorSellToRetailer,
         RetailerSellToCustomer
@@ -42,7 +43,7 @@ contract Supplychain{
         uint supplyChainId;             // Counter for this batch items
         // address entityAddress;               // Metamask-Ethereum address of the current owner (Changes as the product moves through different stages)
         State itemState;                // Product State as represented in the enum above
-
+            
         uint PolyesterAmount;   
         uint CottonAmount;      
         uint WoolAmount;         
@@ -54,24 +55,27 @@ contract Supplychain{
         address warehouseID;            // Metamask-Ethereum address of the warehouse
         address factoryID;              // Metamask-Ethereum address of the factory
         address distributorId;          // Metamask-Ethereum address of the distributor
-        
     }
+
     struct Yarn{
         uint YarnAmount;     
         string YarnColor;   
         string YarnType;
     }
+    struct RawMaterials{
+        uint OGPolyesterAmount;     
+        uint OGCottonAmount;   
+        uint OGWoolAmount;
+        uint OGUnits;
+    }
 
     mapping (uint =>Yarn) public YarnDetails;
+    mapping (uint =>RawMaterials) public OGRawMaterilasDetails;
 
     mapping (uint =>uint[]) public timeStamps;
     mapping (uint => Item) public items;
 
     mapping (address => Item[]) private wareHouseItems;
-
-    // mapping (uint => address[]) private distributorID;
-    // mapping (uint => uint[]) private distributorUnits;
-    // mapping (uint => uint[]) private distributorCounters;
 
     mapping (uint => address[]) private retailerID;
     mapping (uint => uint[]) private retailerUnits;
@@ -97,9 +101,9 @@ contract Supplychain{
         Item memory item =Item({  
                 supplyChainId:currentId,  
                 itemState: defaultState,   
-                PolyesterAmount: _polyesterAmount,
-                CottonAmount:_cottonAmount,
-                WoolAmount:_woolAmount,
+                PolyesterAmount: 0,
+                CottonAmount:0,
+                WoolAmount:0,
                 totalUnits:0,
                 Description:"",
                 RawMaterialSupplierID: msg.sender,
@@ -107,6 +111,9 @@ contract Supplychain{
                 factoryID:address(0),
                 distributorId:address(0)
             });
+        OGRawMaterilasDetails[currentId].OGPolyesterAmount =_polyesterAmount;
+        OGRawMaterilasDetails[currentId].OGCottonAmount=_cottonAmount;
+        OGRawMaterilasDetails[currentId].OGWoolAmount=_woolAmount;
         items[currentId] =item;
         SupplyChainToken(supplyChainToken).mint(msg.sender,currentId,1);
         supplyChainId.increment();
@@ -116,10 +123,7 @@ contract Supplychain{
 
     function factoryBuyRawMaterial(
         uint _supplyChainId, 
-        address _warehouse,
-        uint _polysteramount,
-        uint _cottonamount,
-        uint _woolamount
+        address _warehouse
     ) public 
     // onlyFactory() 
     {
@@ -129,9 +133,6 @@ contract Supplychain{
 
         item.factoryID =msg.sender;
         item.warehouseID=_warehouse;
-        item.PolyesterAmount=_polysteramount;
-        item.CottonAmount=_cottonamount;
-        item.WoolAmount=_woolamount;
         item.itemState=  State.factoryBuyRawMaterial;
         items[_supplyChainId] =item;
         
@@ -139,6 +140,26 @@ contract Supplychain{
         SupplyChainToken(supplyChainToken).safeTransferFrom(rawMaterialSupplier,msg.sender,_supplyChainId,1,"0x00",0);
         timeStamps[_supplyChainId].push(block.timestamp);
         emit FactoryBuyRawMaterial(_supplyChainId);
+    }
+
+    function factoryQCRawMaterials(
+        uint _supplyChainId, 
+        uint _polyesterAmount,
+        uint _cottonAmount, 
+        uint _woolAmount
+    ) public 
+    // onlyFactory() 
+    {
+        // require(isWarehouse(_warehouse),"NOT A VALID WAREHOUSE ADDRESS ! PLEASE CONTACT ADMIN");
+        Item memory item =items[_supplyChainId];
+
+        item.itemState=  State.factoryQCRawMaterials;
+        item.PolyesterAmount =_polyesterAmount;
+        item.CottonAmount=_cottonAmount;
+        item.WoolAmount=  _woolAmount;
+        items[_supplyChainId] =item;
+        
+        timeStamps[_supplyChainId].push(block.timestamp);
     }
 
     function factoryCompleteSpinningWaeving(uint _supplyChainId, uint _yarnAmount, string memory _yarnColor, string memory _yarnType) 
@@ -168,7 +189,7 @@ contract Supplychain{
     {
         require(_totalUnits>=1,"Units should be greater that 1");
         Item memory item =items[_supplyChainId];
-        item.totalUnits =_totalUnits;
+        OGRawMaterilasDetails[_supplyChainId].OGUnits =_totalUnits;
         item.Description=_description;
 
         item.itemState=  State.factoryCompleteGarmentManufacturing;
@@ -181,6 +202,22 @@ contract Supplychain{
                 }
             }
         } 
+        timeStamps[_supplyChainId].push(block.timestamp);
+    }
+        
+    function factoryQCFinalItems(
+        uint _supplyChainId, 
+        uint _totalUnits
+    ) public 
+    // onlyFactory() 
+    {
+        // require(isWarehouse(_warehouse),"NOT A VALID WAREHOUSE ADDRESS ! PLEASE CONTACT ADMIN");
+        Item memory item =items[_supplyChainId];
+
+        item.totalUnits =_totalUnits;
+        item.itemState=  State.factoryQCFinalItems;
+        items[_supplyChainId] =item;
+        
         timeStamps[_supplyChainId].push(block.timestamp);
     }
 
