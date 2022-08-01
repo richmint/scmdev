@@ -142,7 +142,7 @@ async function main() {
 
 
   // let count =await supplychain.totalBatchs();
-  // for (let i=0; i<count ; i++){
+  // for (let i=0; i<count ; i++){ 
   //   let object = await supplychain.items(i);
   //     if (2 === object.itemState && object.factoryID ===factorySigner1.address){
   //         console.log(object);

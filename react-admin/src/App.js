@@ -35,6 +35,8 @@ import ViewBatchStatus from './Front/factory/viewBatchStatus';
 import ViewSpinningMaterial from './Front/factory/viewspinningMaterial';
 import Spinningbatchcompleteform from './Front/factory/spinningbatchcompleteform';
 import GarmentBatchCompleteForm from './Front/factory/garmentBatchCompleteForm';
+import QualityCheckRawMaterail from './Front/factory/qualityCheckRawMaterial';
+import ProductQualityCheck from './Front/factory/productQualtityCheck';
 
 //End Front
 import {BrowserRouter, Routes, Route, useNavigate, Link, Navigate, Switch, Router } from "react-router-dom";
@@ -190,15 +192,12 @@ function App() {
               <Route path="/viewSpinningMaterial" element={frontToken ? <ViewSpinningMaterial /> : <Navigate to={"/userlogin"} />} />
               <Route path="/spinningBatchCompleteForm" element={frontToken ? <Spinningbatchcompleteform /> : <Navigate to={"/userlogin"} />} />
               <Route path="/garmentBatchCompleteForm" element={frontToken ? <GarmentBatchCompleteForm /> : <Navigate to={"/userlogin"} />} />
-
-              
-              
-              
-
               <Route path="/storedItemsInWarehouse" element={frontToken ? <StoredItemsInWarehouse /> : <Navigate to={"/userlogin"} />} />
               <Route path="/availabelItemToSellRetailer" element={frontToken ? <AvailabelItemToSellRetailer /> : <Navigate to={"/userlogin"} />} />
               <Route path="/approveDistributerSupplier" element={frontToken ? <ApproveDistributerSupplier /> : <Navigate to={"/userlogin"} />} />
               <Route path="/finalSellToDistributor" element={frontToken ? <FinalSellToDistributor /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/rawMaterialQualityCheck" element={frontToken ? <QualityCheckRawMaterail /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/productQualityCheck" element={frontToken ? <ProductQualityCheck /> : <Navigate to={"/userlogin"} />} />
 
             </Routes>
       </BrowserRouter>

@@ -91,7 +91,7 @@ const BuyRawMaterial = () =>{
 
     return(
         <div className="new">
-            <Sidebar />
+            <Sidebar txt={"avlRawMatforBuy"} />
             <div className="newContainer">
                 <Navbar />
                 <ConfirmShow data ={data} />

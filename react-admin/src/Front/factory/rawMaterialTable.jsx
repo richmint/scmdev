@@ -32,7 +32,10 @@ const RawMaterialTable = () => {
             <td>{object.PolyesterAmount.toNumber()}</td>
             <td>{object.CottonAmount.toNumber()}</td>
             <td>{object.WoolAmount.toNumber()}</td>
-            <td> 
+            <td>
+            <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck',{state:{i}})}>Quality Check</Button>
+            <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck',{state:{i}})}>View</Button>
+
             <Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial',{state:{i}})}>Buy</Button>
               </td>
           </tr></>

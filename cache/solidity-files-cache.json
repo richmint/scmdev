@@ -110,7 +110,7 @@
       ]
     },
     "C:\\xampp\\htdocs\\scm\\node_modules\\@openzeppelin\\contracts\\access\\Ownable.sol": {
-      "lastModificationDate": 1658837233406,
+      "lastModificationDate": 1659164429264,
       "contentHash": "e436cea06129be2c73cda4b1acc848b5",
       "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
       "solcConfig": {
@@ -147,7 +147,7 @@
       ]
     },
     "C:\\xampp\\htdocs\\scm\\node_modules\\@openzeppelin\\contracts\\utils\\Context.sol": {
-      "lastModificationDate": 1658837232827,
+      "lastModificationDate": 1659164429091,
       "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
@@ -181,20 +181,9 @@
         "Context"
       ]
     },
-<<<<<<< HEAD
     "C:\\xampp\\htdocs\\scm\\contracts\\Supplychain.sol": {
-      "lastModificationDate": 1658830570495,
-      "contentHash": "a821f7e817aac50675658b0a76912aa9",
-=======
-    "/home/alankrit/Desktop/scmdev/contracts/Supplychain.sol": {
-<<<<<<< HEAD
-      "lastModificationDate": 1659156282647,
+      "lastModificationDate": 1659163423196,
       "contentHash": "b31bbdffc83fc4d1ba96a9045a891ba1",
-=======
-      "lastModificationDate": 1659032001805,
-      "contentHash": "c7afbd4d8b2b72164d6e3b55b4761dbe",
->>>>>>> 92060f99cbee682b43f89a029a06109327bddc90
->>>>>>> 477e19c245f6237a4e05ef4acec21a109dbad41f
       "sourceName": "contracts/Supplychain.sol",
       "solcConfig": {
         "version": "0.8.8",
@@ -468,7 +457,7 @@
       ]
     },
     "C:\\xampp\\htdocs\\scm\\node_modules\\@openzeppelin\\contracts\\utils\\Counters.sol": {
-      "lastModificationDate": 1658837232829,
+      "lastModificationDate": 1659164429092,
       "contentHash": "74654e3ae5d7f39555055dfe244dab7a",
       "sourceName": "@openzeppelin/contracts/utils/Counters.sol",
       "solcConfig": {
@@ -503,7 +492,7 @@
       ]
     },
     "C:\\xampp\\htdocs\\scm\\node_modules\\@openzeppelin\\contracts\\token\\ERC1155\\IERC1155.sol": {
-      "lastModificationDate": 1658837233165,
+      "lastModificationDate": 1659164429199,
       "contentHash": "d5a8f6e07ca38ec384856cfe9f08a867",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/IERC1155.sol",
       "solcConfig": {
@@ -616,7 +605,7 @@
       ]
     },
     "C:\\xampp\\htdocs\\scm\\node_modules\\@openzeppelin\\contracts\\utils\\introspection\\IERC165.sol": {
-      "lastModificationDate": 1658837233208,
+      "lastModificationDate": 1659164429210,
       "contentHash": "03e6768535ac4da0e9756f1d8a4a018a",
       "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
       "solcConfig": {
@@ -651,7 +640,7 @@
       ]
     },
     "C:\\xampp\\htdocs\\scm\\node_modules\\@openzeppelin\\contracts\\utils\\Address.sol": {
-      "lastModificationDate": 1658837232796,
+      "lastModificationDate": 1659164429063,
       "contentHash": "c476b3895a94798b88a4bb97399e6dfe",
       "sourceName": "@openzeppelin/contracts/utils/Address.sol",
       "solcConfig": {
