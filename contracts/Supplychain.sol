@@ -57,20 +57,17 @@ contract Supplychain{
         address distributorId;          // Metamask-Ethereum address of the distributor
     }
 
-    struct Yarn{
+    struct OG{
         uint YarnAmount;     
         string YarnColor;   
         string YarnType;
-    }
-    struct RawMaterials{
         uint OGPolyesterAmount;     
         uint OGCottonAmount;   
         uint OGWoolAmount;
         uint OGUnits;
     }
 
-    mapping (uint =>Yarn) public YarnDetails;
-    mapping (uint =>RawMaterials) public OGRawMaterilasDetails;
+    mapping (uint =>OG) public OGDetails;
 
     mapping (uint =>uint[]) public timeStamps;
     mapping (uint => Item) public items;
@@ -111,9 +108,9 @@ contract Supplychain{
                 factoryID:address(0),
                 distributorId:address(0)
             });
-        OGRawMaterilasDetails[currentId].OGPolyesterAmount =_polyesterAmount;
-        OGRawMaterilasDetails[currentId].OGCottonAmount=_cottonAmount;
-        OGRawMaterilasDetails[currentId].OGWoolAmount=_woolAmount;
+        OGDetails[currentId].OGPolyesterAmount =_polyesterAmount;
+        OGDetails[currentId].OGCottonAmount=_cottonAmount;
+        OGDetails[currentId].OGWoolAmount=_woolAmount;
         items[currentId] =item;
         SupplyChainToken(supplyChainToken).mint(msg.sender,currentId,1);
         supplyChainId.increment();
@@ -167,9 +164,9 @@ contract Supplychain{
     // onlyFactory() 
     {
         Item memory item =items[_supplyChainId];        
-        YarnDetails[_supplyChainId].YarnAmount =_yarnAmount;
-        YarnDetails[_supplyChainId].YarnColor=_yarnColor;
-        YarnDetails[_supplyChainId].YarnType=_yarnType;
+        OGDetails[_supplyChainId].YarnAmount =_yarnAmount;
+        OGDetails[_supplyChainId].YarnColor=_yarnColor;
+        OGDetails[_supplyChainId].YarnType=_yarnType;
 
         item.itemState=  State.factoryCompleteSpinningWaeving;
         items[_supplyChainId] =item;
@@ -189,7 +186,7 @@ contract Supplychain{
     {
         require(_totalUnits>=1,"Units should be greater that 1");
         Item memory item =items[_supplyChainId];
-        OGRawMaterilasDetails[_supplyChainId].OGUnits =_totalUnits;
+        OGDetails[_supplyChainId].OGUnits =_totalUnits;
         item.Description=_description;
 
         item.itemState=  State.factoryCompleteGarmentManufacturing;
