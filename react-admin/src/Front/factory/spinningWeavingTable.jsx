@@ -24,7 +24,7 @@ const SpinningWeavingTable = () =>{
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
         //alert(object.factoryID+'= sdfsdf = '+ownSupplyChainAddress);
-        if (object.itemState === 1 && object.factoryID.toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
+        if (object.itemState === 2 && object.factoryID.toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
 
           console.log("myrecord dsdsd", object);
           allsupplymateriallist.push(

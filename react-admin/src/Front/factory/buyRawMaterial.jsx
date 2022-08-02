@@ -19,10 +19,10 @@ const BuyRawMaterial = () =>{
   //console.log("Comming data is",data)
   const {register, handleSubmit, setError, formState: { errors }} = useForm({
     defaultValues: {
-      whHashAdr: '',
-      buyPolysterAmount: '',
-      buyCottonAmount:'',
-      buyWoolAmount:''
+      whHashAdr: ''
+      // buyPolysterAmount: '',
+      // buyCottonAmount:'',
+      // buyWoolAmount:''
     },
     resolver: yupResolver(BuyRawMaterialSchema),
   })
@@ -32,8 +32,8 @@ const BuyRawMaterial = () =>{
   const navigate = useNavigate();
   const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress } = useContext(DarkModeContext);
   const buyMaterialHandler = async (event) => {
-  //console.log("batchid",event.whHashAdr);
-    const tx = supplyChainContract.factoryBuyRawMaterial(data, event.whHashAdr, event.buyPolysterAmount, event.buyCottonAmount, event.buyWoolAmount);
+  console.log("batchid",event.whHashAdr);
+    const tx = supplyChainContract.factoryBuyRawMaterial(data, event.whHashAdr);
     //console.log((await tx.wait()));
     if(tx){
        navigate("/availableRawMaterialToBuy")
@@ -59,7 +59,7 @@ const BuyRawMaterial = () =>{
                   <input id="whHashAdr" name="whHashAdr" type="text" {...register("whHashAdr", { required: true })}/>
                   {errors.whHashAdr && <span className='error'> {console.log(errors)} {errors?.whHashAdr?.message}</span>}
                 </div>
-                <div className="formInput">
+                {/* <div className="formInput">
                   <label>Buy Polyster Amount</label>                  
                   <input id="buyPolysterAmount" name="buyPolysterAmount"  type="text" {...register("buyPolysterAmount", { required: true })} />
                   {errors.buyPolysterAmount && <span className='error'> {console.log(errors)} {errors?.buyPolysterAmount?.message}</span>}
@@ -76,7 +76,7 @@ const BuyRawMaterial = () =>{
                   <input id="buyWoolAmount" name="buyWoolAmount"  type="text" {...register("buyWoolAmount", { required: true })} />
                   {errors.buyWoolAmount && <span className='error'> {console.log(errors)} {errors?.buyWoolAmount?.message}</span>}
 
-                </div>
+                </div> */}
                 <div className='formInput'>
                 <button type={"submit"}> Submit </button>
                 {/* <span className='left'><button  type='reset' >Reset</button></span> */}

@@ -24,10 +24,11 @@ const SellItemTable = () =>{
     if(totalbatchids>0){
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
-        console.log("myrecord", object);
-        if (object.itemState === 3 && object.factoryID.toLowerCase() === ownSupplyChainAddress.toLowerCase()) {
+        //console.log("myrecord", object);
+        if (object.itemState === 4 || object.itemState === 5 && object.factoryID.toLowerCase() === ownSupplyChainAddress.toLowerCase()) {
           // console.log("inner loop", object.PolyesterAmount.toNumber());
-          // console.log("cotton loop", object.CottonAmount.toNumber());
+           console.log("cotton loop", object.totalUnits.toNumber());
+          let totalmanufactured = object.totalUnits.toNumber();
           allsupplymateriallist.push(
             <><tr> 
               <td>{i}</td>
@@ -38,7 +39,9 @@ const SellItemTable = () =>{
               <td>{object.WoolAmount.toNumber()}</td>
               <td>
               <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus',{state:{i}})}>View</Button>
-              <Button variant="outline-success" onClick={() => navigate('/SellItemFormData',{state:{i}})}>Continue</Button>
+               
+              {object.itemState ===5 ?<Button variant="outline-success" onClick={() => navigate('/SellItemFormData',{state:{i}})}>Continue</Button>:<Button variant="outline-info" onClick={() => navigate('/productQualityCheck',{state:{batchid:i,totalmanufactured:totalmanufactured}})}>Quality Check</Button> }
+
                 </td>
             </tr></>
           )

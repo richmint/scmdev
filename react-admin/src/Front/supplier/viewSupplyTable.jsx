@@ -16,15 +16,42 @@ const ViewSupplyTable = () => {
   const allsupplymateriallist = [];
   const getSupplyChainHandler = async (event) => {
 
+
+
+  //   const totalBatchs =await supplyChainContract.totalBatchs()  
+    
+  // for(let i= 0; i<totalBatchs; i++){  
+  //   const item = await supplyChainContract.items(i); 
+    
+  //   if (item.itemState === 0 && item.RawMaterialSupplierID.toLowerCase() === ownSupplyChainAddress){
+      
+  //     console.log("own id", item.RawMaterialSupplierID);
+  //   console.log("owwn id",ownSupplyChainAddress);  
+
+    
+      
+  //   const objectdata = await supplyChainContract.OGDetails(item.itemState);
+  //   console.log("asas", objectdata.OGCottonAmount.toNumber())
+  //     const object =await supplyChainContract.timeStamps(item.supplyChainId,item.itemState);
+  //     console.log("My zasas item",await dateContract.getDay(object.toNumber()),await dateContract.getMonth(object.toNumber()),await dateContract.getYear(object.toNumber()));
+  //   } 
+  // }  
+
+
+
+
+
+
     console.log("Supplier Owner Address ", ownSupplyChainAddress)
     const totalbatchids = await supplyChainTokenContract.getMySupplyTokens(ownSupplyChainAddress);
     console.log("totalbatchids",totalbatchids.length);
     if(totalbatchids.length>0){
       for (let i = 0; i < totalbatchids.length; i++) {
         let object = await supplyChainContract.items(totalbatchids[i].toNumber());
+        let OGObject = await supplyChainContract.OGDetails(object.supplyChainId);
         //console.log(object);
 
-        console.log("date contract",dateContract);
+        //console.log("date contract",dateContract);
         if (object.itemState === 0) {
         const dateObject =await supplyChainContract.timeStamps(i,0);
         const createdday = await dateContract.getDay(dateObject.toNumber())
@@ -36,9 +63,9 @@ const ViewSupplyTable = () => {
           allsupplymateriallist.push(
             <><tr> 
               <td>{totalbatchids[i].toNumber()}</td>
-              <td>{object.PolyesterAmount.toNumber()}</td>
-              <td>{object.CottonAmount.toNumber()}</td>
-              <td>{object.WoolAmount.toNumber()}</td>
+              <td>{OGObject.OGPolyesterAmount.toNumber()}</td>
+            <td>{OGObject.OGCottonAmount.toNumber()}</td>
+            <td>{OGObject.OGWoolAmount.toNumber()}</td>
               <td>Jaipur</td>
               <td>{createdday}:{createmonth}:{createdyear}</td>
             </tr></>

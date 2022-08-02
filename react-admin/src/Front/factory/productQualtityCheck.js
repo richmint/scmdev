@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Navbar from "../../components/front_navbar/Navbar";
 import Sidebar from "../../components/front_sidebar/Sidebar";
+import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useForm } from "react-hook-form";
@@ -10,8 +11,9 @@ import '../../pages/new/new.scss';
 import { ProductQCSchema } from "../../Validations/Schema";
 
 
-const ProductQualityCheck = () =>{
 
+const ProductQualityCheck = () =>{
+    let data = useLocation();
     const { register, handleSubmit, setError, formState: { errors } } = useForm({
         defaultValues: {
             product: ''
@@ -19,8 +21,17 @@ const ProductQualityCheck = () =>{
         resolver: yupResolver(ProductQCSchema),
     })
 
-const addSupplyChainHandler = (event) =>{
-    console.log("Clicked",event);
+    const navigate = useNavigate();
+    const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract } = useContext(DarkModeContext);
+    const [SChainContract, setSChainContract] = useState(supplyChainContract);
+
+const addSupplyChainHandler = async (event) =>{
+    // console.log("SChainContract",SChainContract);
+        const tx = await SChainContract.factoryQCFinalItems(data.state.batchid, event.product);
+        //console.log((await tx.wait()));
+        if(tx){
+           navigate("/viewBatch")
+        }
 }
 
     return(
