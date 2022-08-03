@@ -27,7 +27,7 @@ import BuyRawMaterial from './Front/factory/buyRawMaterial';
 import StoredItemsInWarehouse from './Front/warehouse/viewWarehouseItems';
 import AvailabelItemToSellRetailer from './Front/distributer/sellItemDistributer';
 import ApproveDistributerSupplier from './Front/distributer/approveSupplyToken';
-import FinalSellToDistributor from './Front/distributer/finalSellToDistributor';
+import SellToRetailer from './Front/distributer/sellToRetailer';
 import SpinningWaevingMaterial from './Front/factory/spinningWeaving';
 import ManufactureGarmentMaterial from './Front/factory/manufactureGarment';
 import ViewBatch from './Front/factory/viewBatch';
@@ -193,11 +193,14 @@ function App() {
               <Route path="/spinningBatchCompleteForm" element={frontToken ? <Spinningbatchcompleteform /> : <Navigate to={"/userlogin"} />} />
               <Route path="/garmentBatchCompleteForm" element={frontToken ? <GarmentBatchCompleteForm /> : <Navigate to={"/userlogin"} />} />
               <Route path="/storedItemsInWarehouse" element={frontToken ? <StoredItemsInWarehouse /> : <Navigate to={"/userlogin"} />} />
-              <Route path="/availabelItemToSellRetailer" element={frontToken ? <AvailabelItemToSellRetailer /> : <Navigate to={"/userlogin"} />} />
-              <Route path="/approveDistributerSupplier" element={frontToken ? <ApproveDistributerSupplier /> : <Navigate to={"/userlogin"} />} />
-              <Route path="/finalSellToDistributor" element={frontToken ? <FinalSellToDistributor /> : <Navigate to={"/userlogin"} />} />
               <Route path="/rawMaterialQualityCheck" element={frontToken ? <QualityCheckRawMaterail /> : <Navigate to={"/userlogin"} />} />
               <Route path="/productQualityCheck" element={frontToken ? <ProductQualityCheck /> : <Navigate to={"/userlogin"} />} />
+
+               {/* Front Distributer Routes */}
+              <Route path="/availabelItemToSellRetailer" element={frontToken ? <AvailabelItemToSellRetailer /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/approveDistributerSupplier" element={frontToken ? <ApproveDistributerSupplier /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/sellToRetailer" element={frontToken ? <SellToRetailer /> : <Navigate to={"/userlogin"} />} />
+
 
             </Routes>
       </BrowserRouter>

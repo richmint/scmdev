@@ -16,7 +16,7 @@ const ManufactureGarmentTable = () =>{
 
   const allsupplymateriallist = [];
   const getSupplyChainHandler = async (event) => { 
-    
+     
     const totalbatchids = (await  supplyChainContract.totalBatchs());
     console.log("totalbatchids",totalbatchids);
     if(totalbatchids>0){

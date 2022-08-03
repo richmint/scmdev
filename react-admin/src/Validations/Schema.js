@@ -23,8 +23,7 @@ export const GarmentBatchCompleteFormSchema = yup.object().shape({
   description: yup.string().required("Description is required field"),
 });
 export const SellItemFormDataSchema = yup.object().shape({
-  shirtproduced: yup.string().required("Total Item is required field"),
-  unitSupply: yup.string().required("Description is required field"),
+  distributeradrs: yup.string().required("Distributer address is required field"),
 });
 
 export const AddNewUserByAdminSchema = yup.object().shape({
@@ -34,12 +33,15 @@ export const AddNewUserByAdminSchema = yup.object().shape({
   address:yup.string().required("Location is required")
 }); 
 export const AddMaterialSchema = yup.object().shape({
-  polysteramount: yup.string().required("Polyster Amount is required"),
-  cottonamount: yup.string().required("Cotton Amount is require"),
-  woolamount:yup.string().required("Wool Amount is Required"),
+  polysteramount: yup.number().required("Polyster Amount is required"),
+  cottonamount: yup.number().required("Cotton Amount is require"),
+  woolamount:yup.number().required("Wool Amount is Required"),
 });
-
 
 export const ProductQCSchema = yup.object().shape({
   product: yup.string().required("Fill the final good product")
+})
+
+export const SellToRetailerFormSchema = yup.object().shape({
+  productQty: yup.string().required("Required Field")
 })

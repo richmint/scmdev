@@ -16,7 +16,7 @@ const ProductQualityCheck = () =>{
     let data = useLocation();
     const { register, handleSubmit, setError, formState: { errors } } = useForm({
         defaultValues: {
-            product: ''
+            product: data.state.totalmanufactured
         },
         resolver: yupResolver(ProductQCSchema),
     })
