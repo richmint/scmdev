@@ -28,7 +28,7 @@ const GarmentBatchCompleteForm = () =>{
   const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract } = useContext(DarkModeContext);
   const [SChainContract, setSChainContract] = useState(supplyChainContract);
 
-  const garmentcompleteHandler = async (event) => {
+  const garmentcompleteHandler = async (event) => { 
     // event.preventDefault();
     // console.log("batchid",SChainContract);
     

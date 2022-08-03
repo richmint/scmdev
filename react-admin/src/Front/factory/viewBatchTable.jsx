@@ -23,17 +23,19 @@ const ViewBatchTable = () =>{
     if(totalbatchids>0){
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
-        console.log("myrecord", object);
-        if (object.itemState === 0 || object.itemState === 1 || object.itemState === 2 || object.itemState === 3) {
+        let OGObject = await supplyChainContract.OGDetails(object.itemState);
+
+        //console.log("myrecord", object);
+        if (object.itemState === 0 || object.itemState === 1 || object.itemState === 2 || object.itemState === 3 || object.itemState === 4 || object.itemState === 5) {
           // console.log("inner loop", object.PolyesterAmount.toNumber());
           allsupplymateriallist.push(
             <><tr> 
               <td>{i}</td>
               <td>{object.RawMaterialSupplierID}</td>
-              <td>{object.warehouseID}</td>
-              <td>{object.PolyesterAmount.toNumber()}</td>
-              <td>{object.CottonAmount.toNumber()}</td>
-              <td>{object.WoolAmount.toNumber()}</td>
+              {/* <td>{object.warehouseID}</td> */}
+              <td>{OGObject.OGPolyesterAmount.toNumber()}</td>
+            <td>{OGObject.OGCottonAmount.toNumber()}</td>
+            <td>{OGObject.OGWoolAmount.toNumber()}</td>
               <td> 
               <Button variant="outline-success" onClick={() => navigate('/viewBatchStatus',{state:{i}})}>View</Button>
                 </td>
@@ -71,7 +73,7 @@ const ViewBatchTable = () =>{
                     <tr>
                     <th>Batch ID</th>
                     <th>Raw Material Supplier</th>
-                    <th>Warehouse Address</th>
+                    {/* <th>Warehouse Address</th> */}
                       <th>Polyster Amount</th>
                       <th>Cotton Amount</th>
                       <th>Wool Amount</th>

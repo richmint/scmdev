@@ -7,9 +7,9 @@ export const LoginSchema = yup.object().shape({
 
 export const BuyRawMaterialSchema = yup.object().shape({
   whHashAdr: yup.string().required("Warehouse Address is required field"),
-  buyPolysterAmount: yup.string().required("Polyster Amount is required field"),
-  buyCottonAmount: yup.string().required("Polyster Amount is required field"),
-  buyWoolAmount: yup.string().required("Wool Amount is required field"),
+  // buyPolysterAmount: yup.string().required("Polyster Amount is required field"),
+  // buyCottonAmount: yup.string().required("Polyster Amount is required field"),
+  // buyWoolAmount: yup.string().required("Wool Amount is required field"),
 });
 
 export const SpinningbatchcompleteformSchema = yup.object().shape({
@@ -36,5 +36,10 @@ export const AddNewUserByAdminSchema = yup.object().shape({
 export const AddMaterialSchema = yup.object().shape({
   polysteramount: yup.string().required("Polyster Amount is required"),
   cottonamount: yup.string().required("Cotton Amount is require"),
-  woolamount:yup.string().email().required("Wool Amount is Required"),
+  woolamount:yup.string().required("Wool Amount is Required"),
 });
+
+
+export const ProductQCSchema = yup.object().shape({
+  product: yup.string().required("Fill the final good product")
+})

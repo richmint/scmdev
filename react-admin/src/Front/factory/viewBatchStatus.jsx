@@ -9,7 +9,7 @@ import ViewBatchStatusTable from "./viewBatchStatusTable";
 const ViewBatchStatus = () =>{
     return(
         <div className="list">
-            <Sidebar />
+            <Sidebar txt={"factoryViewBatch"}/>
             <div className="listContainer">
                 <Navbar />
                 <ViewBatchStatusTable />

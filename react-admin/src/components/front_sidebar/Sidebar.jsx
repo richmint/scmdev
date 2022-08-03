@@ -70,6 +70,18 @@ const Sidebar = (props) => {
                     <span>Approve Supply Token</span>
                   </li>
                 </Link>
+                {/* <Link to="/rawMaterialQualityCheck" style={{ textDecoration: "none" }}>
+                  <li style={{backgroundColor: props.txt == "qcCheckRawMat"?"orange":""}}>
+                    <StoreIcon className="icon" />
+                    <span>Quality Check of Raw Material</span>
+                  </li>
+                </Link> */}
+                {/* <Link to="/productQualityCheck" style={{ textDecoration: "none" }}>
+                  <li style={{backgroundColor: props.txt == "productQC"?"orange":""}}>
+                    <StoreIcon className="icon" />
+                    <span>Product Quality Check</span>
+                  </li>
+                </Link> */}
                 <Link to="/viewBatch" style={{ textDecoration: "none" }}>
                   <li style={{backgroundColor: props.txt == "factoryViewBatch"?"orange":""}}>
                     <StoreIcon className="icon" />

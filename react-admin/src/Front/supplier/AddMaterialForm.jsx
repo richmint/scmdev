@@ -32,7 +32,7 @@ const Materialsupplier = ({ inputs, title, value }) => {
   
   const addSupplyChainHandler = async (event) => {
     //event.preventDefault();
-   // console.log("SChainContract",SChainContract);
+    console.log("SChainContract",event);
     //console.log(await SChainContract.totalBatchs())
     const tx = await SChainContract.rawMaterialSupplierSuppliesRM(event.polysteramount, event.cottonamount, event.woolamount);
     //console.log((await tx.wait()));
