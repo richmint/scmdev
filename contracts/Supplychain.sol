@@ -113,8 +113,8 @@ contract Supplychain{
         OGDetails[currentId].OGWoolAmount=_woolAmount;
         items[currentId] =item;
         SupplyChainToken(supplyChainToken).mint(msg.sender,currentId,1);
-        supplyChainId.increment();
         timeStamps[currentId].push(block.timestamp);
+        supplyChainId.increment();
         emit RawMaterialSupplierSuppliesRM(currentId);
     }
 
