@@ -32,14 +32,14 @@ const FinalSellToDistributor = () => {
     const [allSupplier, setallSupplier] = useState([]);
 
     const supplierRecord = async () => {
-        return await fetch("http://162.215.222.118:5150/distributer")
+        return await fetch("http://162.215.222.118:5150/retailer")
             .then(result => result.json())
             .then((resp) => resp)
             .catch((e) => {
                 console.log("error");
                 return [];
             });
-    };
+    }; 
 
     useEffect(() => {
         supplierRecord().then(result => {

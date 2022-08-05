@@ -23,10 +23,31 @@ const ViewBatchStatusTable = () => {
   const [garbageCottonAmount, setgarbageCottonAmount] = useState();
   const [garbageWoolAmount, setgarbageWoolAmount] = useState();
   
-  const [createdday, setcreatedday] = useState();
-  const [createmonth, setcreatemonth] = useState();
-  const [createdyear, setcreatedyear] = useState(); 
+  const [rawcreatedday, setrawcreatedday] = useState();
+  const [rawcreatemonth, setrawcreatemonth] = useState();
+  const [rawcreatedyear, setrawcreatedyear] = useState(); 
+
+  const [spinningcreatedday, setspinningcreatedday] = useState();
+  const [spinningcreatemonth, setspinningcreatemonth] = useState();
+  const [spinningcreatedyear, setspinningcreatedyear] = useState(); 
   
+
+  const [manufactureGarmentday, setmanufactureGarmentday] = useState();
+  const [manufactureGarmentmonth, setmanufactureGarmentmonth] = useState();
+  const [manufactureGarmentyear, setmanufactureGarmentyear] = useState();
+
+  const [sellitemday, setsellitemday] = useState();
+  const [sellitemmonth, setsellitemmonth] = useState();
+  const [sellitemyear, setsellitemyear] = useState();
+
+
+  const [rawlocation, setrawlocation] = useState();
+  const [warelocation, setwarelocation] = useState();
+  const [factlocation, setfactlocation] = useState();
+  
+
+  
+
   const getSupplyChainHandler = async (event) => {
     console.log("supplyChainContract ", supplyChainContract)
     const viewBatchRecord = await supplyChainContract.items(data.state.i);
@@ -35,16 +56,33 @@ const ViewBatchStatusTable = () => {
     let OGViewBatchRecord = await supplyChainContract.OGDetails(viewBatchRecord.supplyChainId);
     setogBatchRecord(OGViewBatchRecord)
 
-    console.log("sdsdf",viewBatchRecord);
+    //console.log("sdsdf",viewBatchRecord.itemState);
 
-    const dateObject =await supplyChainContract.timeStamps(data.state.i,viewBatchRecord.itemState);
-
-    const createdday = await dateContract.getDay(dateObject.toNumber())
-    setcreatedday(createdday)
-    const createmonth = await dateContract.getMonth(dateObject.toNumber())
-    setcreatemonth(createmonth)
-    const createdyear = await dateContract.getYear(dateObject.toNumber())
-    setcreatedyear(createdyear)
+    for (let i = 0; i < viewBatchRecord.itemState; i++) {
+      const dateObjectrec =await supplyChainContract.timeStamps(data.state.i,i);
+      const createdday = await dateContract.getDay(dateObjectrec.toNumber())
+      const createmonth = await dateContract.getMonth(dateObjectrec.toNumber())
+      const createdyear = await dateContract.getYear(dateObjectrec.toNumber())
+      console.log("asdasda",i)
+      if(i == 0){
+        setrawcreatedday(createdday);
+        setrawcreatemonth(createmonth);
+        setrawcreatedyear(createdyear);
+      }else if(i == 3){
+        setspinningcreatedday(createdday);
+        setspinningcreatemonth(createmonth);
+        setspinningcreatedyear(createdyear);
+      }else if(i == 4){
+        setmanufactureGarmentday(createdday);
+        setmanufactureGarmentmonth(createmonth);
+        setmanufactureGarmentyear(createdyear);
+      }else if(i == 6){
+        setsellitemday(createdday);
+        setsellitemmonth(createmonth);
+        setsellitemyear(createdyear);
+      }
+    }
+   
 
     const garbagePolAmount = OGViewBatchRecord.OGPolyesterAmount.toNumber() - viewBatchRecord.PolyesterAmount.toNumber() 
     setgarbagePolyesterAmount(garbagePolAmount)
@@ -52,6 +90,80 @@ const ViewBatchStatusTable = () => {
     setgarbageCottonAmount(garbageCottonAmount)
     const garbageWAmount = OGViewBatchRecord.OGWoolAmount.toNumber() - viewBatchRecord.WoolAmount.toNumber() 
     setgarbageWoolAmount(garbageWAmount)
+
+
+
+
+      const rawmaterialLocation = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({       
+          "hashAddress":viewBatchRecord.RawMaterialSupplierID,       
+          })
+      };
+  
+      fetch("http://127.0.0.1:5150/location",rawmaterialLocation)    
+      .then(res => res.json())
+      .then(data => {
+        if(data){
+          //console.log("Raw Material Location",data)
+          setrawlocation(JSON.stringify(data));
+        }
+      })
+      .catch((error) => {
+        console.error('Error11:', error);
+      });
+      
+      const warehouseLocation = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({       
+          "hashAddress":viewBatchRecord.warehouseID,       
+          })
+      };
+  
+      fetch("http://127.0.0.1:5150/location",warehouseLocation)    
+      .then(res => res.json())
+      .then(data => {
+        if(data){
+          console.log("WArehouse Location",data)
+          //sessionStorage.setItem('user',JSON.stringify(values));
+          setwarelocation(JSON.stringify(data));
+
+        }
+      })
+      .catch((error) => {
+        console.error('Error11:', error);
+      });
+
+
+      const factoryLocation = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({       
+          "hashAddress":viewBatchRecord.factoryID,       
+          })
+      };
+  
+      fetch("http://127.0.0.1:5150/location",factoryLocation)    
+      .then(res => res.json())
+      .then(data => {
+        if(data){
+          console.log("Factory Location",data)
+          //sessionStorage.setItem('user',JSON.stringify(values));
+          setfactlocation(JSON.stringify(data));
+
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+
+
+    
+
+
   }
   const PendingContinue = (props) =>{
     const data = props.data;
@@ -97,7 +209,16 @@ const ViewBatchStatusTable = () => {
                   </Card.Text>
                   <Card.Text style={{ width: '50%', float: 'left' }}>
                     <>
-                      <p><b>Date : </b>{createdday}-{createmonth}-{createdyear}</p>
+                    { rawcreatedday && rawcreatedday !== " " ?  <p><b>Buy Raw Material Date : </b>{rawcreatedday}-{rawcreatemonth}-{rawcreatedyear}</p>:<p></p> }
+                    { spinningcreatedday && spinningcreatedday !== " " ?  <p><b>Spinning Date : </b>{spinningcreatedday}-{spinningcreatemonth}-{spinningcreatedyear}</p>:<p></p> }
+                    { manufactureGarmentday && manufactureGarmentday !== " " ?  <p><b>Manufacture Date : </b>{manufactureGarmentday}-{manufactureGarmentmonth}-{manufactureGarmentyear}</p>:<p></p> }
+                    { sellitemday && sellitemday !== " " ?  <p><b>Sell Date : </b>{sellitemday}-{sellitemmonth}-{sellitemyear}</p>: <p></p> }
+
+                    { rawlocation && rawlocation !== " " ?  <p><b>Raw Material Location : </b>{rawlocation}</p>:<p></p> }
+                    { warelocation && warelocation !== " " ?  <p><b>Warehouse Location  : </b>{warelocation}</p>:<p></p> }
+                    { factlocation && factlocation !== " " ?  <p><b>Factory Location  : </b>{factlocation}</p>:<p></p> }
+
+                    
                       <p><b>Buy Raw Material Status : </b>{batchRecord && batchRecord.itemState == 0 ?<PendingContinue path= {'/BuyRawMaterial'} data={data.state.i}/> :<Button variant="outline-success">Completed</Button> }</p>
                       <p><b>Available Raw Material Quality Check Status : </b>{batchRecord && batchRecord.itemState == 0 || batchRecord && batchRecord.itemState == 1 ?<PendingContinue path= {'/BuyRawMaterial'} data={data.state.i}/> :<Button variant="outline-success">Completed</Button> }</p>
                       <p><b>Spinning Weaving Status : </b> {batchRecord && batchRecord.itemState == 0 || batchRecord && batchRecord.itemState == 1 || batchRecord && batchRecord.itemState == 2 ?<PendingContinue path= {'/garmentBatchCompleteForm'} data={data.state.i}/> :<Button variant="outline-success">Completed</Button> }</p>

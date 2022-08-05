@@ -139,6 +139,23 @@ const Sidebar = (props) => {
           </Link>
                 </>
               )
+            }else if (localStorage.userRole == 'Retailer') {
+              return(
+                <>
+                <Link to="/availabelItemToSellRetailer" style={{ textDecoration: "none" }}>
+            <li style={{backgroundColor: props.txt == "disSellItem"?"orange":""}}>
+              <StoreIcon className="icon" />
+              <span>Availabel Product</span>
+            </li>
+          </Link>
+          <Link to="/approveDistributerSupplier" style={{ textDecoration: "none" }}>
+            <li style={{backgroundColor: props.txt == "DistApprovetoken"?"orange":""}}>
+              <StoreIcon className="icon" />
+              <span>Approve Supply Token</span>
+            </li>
+          </Link>
+                </>
+              )
             }
         })()}
           <li onClick={signOut}>
