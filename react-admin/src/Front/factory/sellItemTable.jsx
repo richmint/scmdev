@@ -18,26 +18,27 @@ const SellItemTable = () =>{
   const allsupplymateriallist = [];
   const getSupplyChainHandler = async (event) => {
 
-    console.log("supplyChainContract ", supplyChainContract)
+    //console.log("supplyChainContract ", supplyChainContract)
     const totalbatchids = (await  supplyChainContract.totalBatchs());
-    console.log("totalbatchids",totalbatchids);
+    //console.log("totalbatchids",totalbatchids);
     if(totalbatchids>0){
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
+        let OGObject = await supplyChainContract.OGDetails(object.supplyChainId);
         //console.log("myrecord", object);
         if (object.itemState === 4 || object.itemState === 5 && object.factoryID.toLowerCase() === ownSupplyChainAddress.toLowerCase()) {
           // console.log("inner loop", object.PolyesterAmount.toNumber());
-           console.log("cotton loop", object.totalUnits.toNumber());
-          let totalmanufactured = object.totalUnits.toNumber();
+          // console.log("cotton loop", OGObject.OGUnits.toNumber());
+          let totalmanufactured = OGObject.OGUnits.toNumber();
           allsupplymateriallist.push(
             <><tr> 
               <td>{i}</td>
               <td>{object.RawMaterialSupplierID}</td>
-              {/* <td>{object.warehouseID}</td> */}
+              <td>{OGObject.OGUnits.toNumber()}</td>
               <td>{object.PolyesterAmount.toNumber()}</td>
               <td>{object.CottonAmount.toNumber()}</td>
               <td>{object.WoolAmount.toNumber()}</td>
-              <td>
+              <td> 
               <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus',{state:{i}})}>View</Button>
                
               {object.itemState ===5 ?<Button variant="outline-success" onClick={() => navigate('/SellItemFormData',{state:{i}})}>Continue</Button>:<Button variant="outline-info" onClick={() => navigate('/productQualityCheck',{state:{batchid:i,totalmanufactured:totalmanufactured}})}>Quality Check</Button> }
@@ -77,7 +78,7 @@ const SellItemTable = () =>{
                     <tr>
                     <th>Batch ID</th>
                     <th>Raw Material Supplier</th>
-                    {/* <th>Warehouse Address</th> */}
+                    <th>Total Manufactured Item</th>
                       <th>Polyster Amount</th>
                       <th>Cotton Amount</th>
                       <th>Wool Amount</th>

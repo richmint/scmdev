@@ -17,16 +17,15 @@ const ViewBatchTable = () =>{
   const allsupplymateriallist = [];
   const getSupplyChainHandler = async (event) => {
 
-    console.log("supplyChainContract ", supplyChainContract)
+    //console.log("supplyChainContract ", supplyChainContract)
     const totalbatchids = (await  supplyChainContract.totalBatchs());
     console.log("totalbatchids",totalbatchids);
     if(totalbatchids>0){
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
-        let OGObject = await supplyChainContract.OGDetails(object.itemState);
+        let OGObject = await supplyChainContract.OGDetails(object.supplyChainId);
 
         //console.log("myrecord", object);
-        if (object.itemState === 0 || object.itemState === 1 || object.itemState === 2 || object.itemState === 3 || object.itemState === 4 || object.itemState === 5) {
           // console.log("inner loop", object.PolyesterAmount.toNumber());
           allsupplymateriallist.push(
             <><tr> 
@@ -41,8 +40,6 @@ const ViewBatchTable = () =>{
                 </td>
             </tr></>
           )
-         
-        }     
       }
     }else {
       allsupplymateriallist.push(
@@ -51,7 +48,6 @@ const ViewBatchTable = () =>{
         </tr></>
       )
     }
-   
     setMateriallist(allsupplymateriallist);
   }
 

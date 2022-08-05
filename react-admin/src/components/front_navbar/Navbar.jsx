@@ -10,7 +10,7 @@ import { ethers } from 'ethers';
 import { Link, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import "./navbar.scss";
-const Navbar = (props) => {
+const Navbar = (props) => { 
 
 	const userName = localStorage.userName;
 	const userRole = localStorage.userRole;

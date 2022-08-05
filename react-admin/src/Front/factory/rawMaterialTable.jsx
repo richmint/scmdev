@@ -14,11 +14,12 @@ const RawMaterialTable = () => {
   const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress } = useContext(DarkModeContext);
 
   const allsupplymateriallist = [];
-  const getSupplyChainHandler = async (event) => {
+  const getSupplyChainHandler = async (event) => { 
 
     //console.log("Factory Address ", ownSupplyChainAddress)
     const totalbatchids = (await supplyChainContract.totalBatchs()).toNumber();
-    if(totalbatchids>0){  for (let i = 0; i < totalbatchids; i++) {
+    if(totalbatchids>0){
+      for (let i = 0; i < totalbatchids; i++) {
       let object = await supplyChainContract.items(i);
       let OGObject = await supplyChainContract.OGDetails(object.supplyChainId);
       //console.log("myrecord", OGObject);

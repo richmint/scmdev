@@ -9,7 +9,7 @@ import { DarkModeContext } from "../../context/darkModeContext";
 // import RawMaterialTable from "./rawMaterialTable";
 //import { fetch, success } from './LoginSlice'
 
-
+ 
 
 
 const ApproveSupplyToken = () =>{
@@ -31,7 +31,7 @@ const ApproveSupplyToken = () =>{
 
   useEffect(()=>{
     (async () => {
-        const res = await supplyChainTokenContract.isApprovedForAll('0x90F79bf6EB2c4f870365E785982E1f101E93b906',supplyChainContract.address);
+        const res = await supplyChainTokenContract.isApprovedForAll('0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65',supplyChainContract.address);
         setDisable(res);
         console.log("Coming res",res)
     })();
