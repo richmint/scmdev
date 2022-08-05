@@ -48,6 +48,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Warehouseform from "./pages/new/Warehuseform";
 import Factoryform from "./pages/new/Factoryform";
 import Rawmaterialsupplierform from "./pages/new/Rawmaterialsupplierform";
+import FrontHome from "./pages/home/frontHome";
 
 const authorizeRoutes = () => (
   <Routes>
@@ -121,11 +122,9 @@ const authorizeRoutes = () => (
 
 
 const LandingPage = () => (
+  
     <div> 
-      <h1>Welcome to the Supply Chain Management</h1>
-        <Link to="/userlogin" style={{ textDecoration: "none" }}>
-          <button>Login</button>
-        </Link>
+      <FrontHome />
     </div>
 )
 
