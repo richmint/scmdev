@@ -58,15 +58,14 @@ body {
 
 .loginbtn {
   background-color: firebrick;
-  margin-left: 75%;
   top: 20px;
-  position: absolute;
   font-size: 13px;
   font-weight: 600;
   padding: 15px 35px;
   color: white;
   border-radius: 5px;
   border: 2px solid white;
+  float: right;
 }
 
 .loginbtn:hover {

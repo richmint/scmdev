@@ -38,6 +38,10 @@ import GarmentBatchCompleteForm from './Front/factory/garmentBatchCompleteForm';
 import QualityCheckRawMaterail from './Front/factory/qualityCheckRawMaterial';
 import ProductQualityCheck from './Front/factory/productQualtityCheck';
 
+//Retailer Routes
+import AvailabeProductforRetailer from './Front/retailer/availabeProduct';
+
+
 //End Front
 import {BrowserRouter, Routes, Route, useNavigate, Link, Navigate, Switch, Router } from "react-router-dom";
 import { productInputs, userInputs, warehouseInputs, factoryInputs, productApproverInputs, distributerInputs, retailerInputs} from "./formSource";
@@ -200,6 +204,8 @@ function App() {
               <Route path="/approveDistributerSupplier" element={frontToken ? <ApproveDistributerSupplier /> : <Navigate to={"/userlogin"} />} />
               <Route path="/sellToRetailer" element={frontToken ? <SellToRetailer /> : <Navigate to={"/userlogin"} />} />
 
+              {/* Front Retailer Routes */}
+              <Route path="/availabeProductforRetailer" element={frontToken ? <AvailabeProductforRetailer /> : <Navigate to={"/userlogin"} />} />
 
             </Routes>
       </BrowserRouter>
