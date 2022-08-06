@@ -106,12 +106,12 @@ const ViewBatchStatusTable = () => {
       .then(res => res.json())
       .then(data => {
         if(data){
-          //console.log("Raw Material Location",data)
-          setrawlocation(JSON.stringify(data));
+          //console.log("Raw Material Location",data.location)
+          setrawlocation(data.location);
         }
       })
       .catch((error) => {
-        console.error('Error11:', error);
+        console.error('Error:', error);
       });
       
       const warehouseLocation = {
@@ -126,9 +126,9 @@ const ViewBatchStatusTable = () => {
       .then(res => res.json())
       .then(data => {
         if(data){
-          console.log("WArehouse Location",data)
+          //console.log("WArehouse Location",data)
           //sessionStorage.setItem('user',JSON.stringify(values));
-          setwarelocation(JSON.stringify(data));
+          setwarelocation(data.location);
 
         }
       })
@@ -149,10 +149,9 @@ const ViewBatchStatusTable = () => {
       .then(res => res.json())
       .then(data => {
         if(data){
-          console.log("Factory Location",data)
+          //console.log("Factory Location",data)
           //sessionStorage.setItem('user',JSON.stringify(values));
-          setfactlocation(JSON.stringify(data));
-
+          setfactlocation(data.location);
         }
       })
       .catch((error) => {
@@ -212,13 +211,11 @@ const ViewBatchStatusTable = () => {
                     { rawcreatedday && rawcreatedday !== " " ?  <p><b>Buy Raw Material Date : </b>{rawcreatedday}-{rawcreatemonth}-{rawcreatedyear}</p>:<p></p> }
                     { spinningcreatedday && spinningcreatedday !== " " ?  <p><b>Spinning Date : </b>{spinningcreatedday}-{spinningcreatemonth}-{spinningcreatedyear}</p>:<p></p> }
                     { manufactureGarmentday && manufactureGarmentday !== " " ?  <p><b>Manufacture Date : </b>{manufactureGarmentday}-{manufactureGarmentmonth}-{manufactureGarmentyear}</p>:<p></p> }
-                    { sellitemday && sellitemday !== " " ?  <p><b>Sell Date : </b>{sellitemday}-{sellitemmonth}-{sellitemyear}</p>: <p></p> }
+                    { sellitemday && sellitemday !== " " ?  <p><b>Factory Sell Date : </b>{sellitemday}-{sellitemmonth}-{sellitemyear}</p>: <p></p> }
 
                     { rawlocation && rawlocation !== " " ?  <p><b>Raw Material Location : </b>{rawlocation}</p>:<p></p> }
                     { warelocation && warelocation !== " " ?  <p><b>Warehouse Location  : </b>{warelocation}</p>:<p></p> }
                     { factlocation && factlocation !== " " ?  <p><b>Factory Location  : </b>{factlocation}</p>:<p></p> }
-
-                    
                       <p><b>Buy Raw Material Status : </b>{batchRecord && batchRecord.itemState == 0 ?<PendingContinue path= {'/BuyRawMaterial'} data={data.state.i}/> :<Button variant="outline-success">Completed</Button> }</p>
                       <p><b>Available Raw Material Quality Check Status : </b>{batchRecord && batchRecord.itemState == 0 || batchRecord && batchRecord.itemState == 1 ?<PendingContinue path= {'/BuyRawMaterial'} data={data.state.i}/> :<Button variant="outline-success">Completed</Button> }</p>
                       <p><b>Spinning Weaving Status : </b> {batchRecord && batchRecord.itemState == 0 || batchRecord && batchRecord.itemState == 1 || batchRecord && batchRecord.itemState == 2 ?<PendingContinue path= {'/garmentBatchCompleteForm'} data={data.state.i}/> :<Button variant="outline-success">Completed</Button> }</p>

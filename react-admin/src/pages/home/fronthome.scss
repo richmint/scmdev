@@ -1,0 +1,144 @@
+.home {
+  display: flex;
+
+  .homeContainer {
+    flex: 6;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+body {
+  margin: 0 auto;
+}
+
+.navbar {
+  position: fixed;
+  z-index: 1;
+  border-bottom: none;
+} 
+
+.frontlogo {
+  margin-left: 100px;
+  margin-top: 10px;
+}
+
+.imgbg {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+}
+
+.scmcnt {
+  position: absolute;
+  top: 25%;
+}
+
+.scmtitle {
+  font-size: 44px;
+  color: white;
+  font-weight: 700;
+  margin-left: 100px;
+}
+
+.scmparagraph {
+  color: white;
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 15px;
+  margin-left: 100px;
+}
+
+.loginbtn {
+  background-color: firebrick;
+  top: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 15px 35px;
+  color: white;
+  border-radius: 5px;
+  border: 2px solid white;
+  float: right;
+}
+
+.loginbtn:hover {
+  background-color: cadetblue;
+}
+
+
+.whyus {
+  padding: 70px;
+  background-color: #f8f8f8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.whyus_cnt {
+  width: 50%;
+  font-size: 22px;
+  font-weight: 700;
+  margin-left: 3%;
+  text-align: center;
+}
+.whyus_img{
+  width: 50%;
+  padding: 20px;
+}
+.text {
+  padding: 15px;
+  text-align: left;
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.whyus_img img {
+  width: 100%;
+}
+
+fieldset {
+  border: 6px solid transparent;
+  border-top-color: #a6283e;
+  box-sizing: border-box;
+
+}
+
+legend {
+  font-weight: bold;
+  text-align: center;
+}
+
+.aboutus {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  left: 0px;
+  width: 100%;
+}
+
+.location {
+  padding: 0 70px;
+}
+
+.last_div {
+  height: 40px;
+  width: 100%;
+  background-color: #a6283e;
+  bottom: 0;
+  left: 0;
+}
+
+.last_div h4 {
+  padding-top: 5px;
+  text-align: center;
+  color: white;
+
+}
+
