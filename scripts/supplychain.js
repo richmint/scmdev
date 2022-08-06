@@ -14,7 +14,7 @@ async function main() {
         distributorSigner2, 
         retailerSigner1, 
         retailerSigner2, 
-        // customerSigner 
+        customerSigner 
         ] = await ethers.getSigners();
 
   const SupplyChainToken = await ethers.getContractFactory("SupplyChainToken");
@@ -302,7 +302,7 @@ async function main() {
 
   // ---------------------------- DISTRIBUTOR SELL TO RETAILER ---------------------------------
 
-  await supplychain.connect(distributorSigner1).distributorSellToRetailer(0,[retailerSigner1.address,retailerSigner2.address],[4,4]);
+  // await supplychain.connect(distributorSigner1).distributorSellToRetailer(0,[retailerSigner1.address,retailerSigner2.address],[4,4]);
   // await supplychain.connect(distributorSigner1).distributorSellToRetailer(1,[retailerSigner1.address,retailerSigner2.address],[5,5]);
 
 
@@ -335,6 +335,37 @@ async function main() {
   //       } 
   //     }
   //   }
+  // }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////             CUSTOMER            ////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////// 
+ 
+
+
+  // await supplychain.connect(customerSigner).customerBuyItem(0,retailerSigner1.address,2);
+  // await supplychain.connect(customerSigner).customerBuyItem(0,retailerSigner1.address,1);
+  // await supplychain.connect(customerSigner).customerBuyItem(1,retailerSigner2.address,3);
+
+
+    // ---------------------------- CUSTOMER PROFILE ---------------------------------
+
+  
+  // const array = await supplychain.getcustomerSCIds(customerSigner.address)
+  // for(let i=0 ; i<array.length; i++){
+  //   const info =await supplychain.customerInfo(customerSigner.address,array[i])
+  //   const object =await supplychain.items(info.supplychainID);
+  //   console.log(info);
+  //   console.log(object);
+  //   console.log(await supplychain.OGDetails(info.supplychainID));
+  //   console.log(info.retailer)
+  //   console.log(info.quantity)
+
   // }
 
 }
