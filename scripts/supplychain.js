@@ -302,8 +302,8 @@ async function main() {
 
   // ---------------------------- DISTRIBUTOR SELL TO RETAILER ---------------------------------
 
-  // await supplychain.connect(distributorSigner1).distributorSellToRetailer(0,[retailerSigner1.address,retailerSigner2.address],[4,4]);
-  // await supplychain.connect(distributorSigner1).distributorSellToRetailer(1,[retailerSigner1.address,retailerSigner2.address],[5,5]);
+  await supplychain.connect(distributorSigner1).distributorSellToRetailer(0,[retailerSigner1.address,retailerSigner2.address],[4,4]);
+  await supplychain.connect(distributorSigner1).distributorSellToRetailer(1,[retailerSigner1.address,retailerSigner2.address],[5,5]);
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -347,10 +347,31 @@ async function main() {
 //////////////////////////////////////////////////////////////////////////////////////////////// 
  
 
+    // ---------------------------- CUSTOMER BUY ITEM LIST  ---------------------------------
 
-  // await supplychain.connect(customerSigner).customerBuyItem(0,retailerSigner1.address,2);
-  // await supplychain.connect(customerSigner).customerBuyItem(0,retailerSigner1.address,1);
-  // await supplychain.connect(customerSigner).customerBuyItem(1,retailerSigner2.address,3);
+  // const total =await supplychain.totalBatchs()
+  // for(let i =0; i<total; i++){
+  //   let array = await supplychain.getRetailers(i);
+  //   if(array.length>0){
+  //     for(let k=0; k<array.length; k++){
+  //         const object =await supplychain.items(i);
+  //         if(object.itemState==7){
+  //           console.log(object)
+  //           let runits =await supplychain.getRetailersUnits(i)
+  //           console.log(runits[k]);
+  //           let retailers =await supplychain.getRetailers(i)
+  //           console.log(retailers[k]);
+  //           // console.log(await supplychain.OGDetails(object.supplyChainId));
+  //           const data = await supplychain.timeStamps(object.supplyChainId,object.itemState);
+  //           console.log(await dateTime.getDay(data.toNumber()),await dateTime.getMonth(data.toNumber()),await dateTime.getYear(data.toNumber()));
+  //         }
+  //     }
+  //   }
+  // }
+  
+  await supplychain.connect(customerSigner).customerBuyItem(0,retailerSigner1.address,2);
+  await supplychain.connect(customerSigner).customerBuyItem(0,retailerSigner1.address,1);
+  await supplychain.connect(customerSigner).customerBuyItem(1,retailerSigner2.address,3);
 
 
     // ---------------------------- CUSTOMER PROFILE ---------------------------------
@@ -362,10 +383,9 @@ async function main() {
   //   const object =await supplychain.items(info.supplychainID);
   //   console.log(info);
   //   console.log(object);
-  //   console.log(await supplychain.OGDetails(info.supplychainID));
+  //   // console.log(await supplychain.OGDetails(info.supplychainID));
   //   console.log(info.retailer)
   //   console.log(info.quantity)
-
   // }
 
 }
