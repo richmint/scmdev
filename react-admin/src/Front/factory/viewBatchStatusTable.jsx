@@ -31,7 +31,6 @@ const ViewBatchStatusTable = () => {
   const [spinningcreatemonth, setspinningcreatemonth] = useState();
   const [spinningcreatedyear, setspinningcreatedyear] = useState(); 
   
-
   const [manufactureGarmentday, setmanufactureGarmentday] = useState();
   const [manufactureGarmentmonth, setmanufactureGarmentmonth] = useState();
   const [manufactureGarmentyear, setmanufactureGarmentyear] = useState();
@@ -40,14 +39,14 @@ const ViewBatchStatusTable = () => {
   const [sellitemmonth, setsellitemmonth] = useState();
   const [sellitemyear, setsellitemyear] = useState();
 
-
   const [rawlocation, setrawlocation] = useState();
   const [warelocation, setwarelocation] = useState();
   const [factlocation, setfactlocation] = useState();
-  
 
+  const [rawName, setrawName] = useState();
+  const [wareName, setwareName] = useState();
+  const [factName, setfactName] = useState();
   
-
   const getSupplyChainHandler = async (event) => {
     console.log("supplyChainContract ", supplyChainContract)
     const viewBatchRecord = await supplyChainContract.items(data.state.i);
@@ -55,7 +54,6 @@ const ViewBatchStatusTable = () => {
 
     let OGViewBatchRecord = await supplyChainContract.OGDetails(viewBatchRecord.supplyChainId);
     setogBatchRecord(OGViewBatchRecord)
-
     //console.log("sdsdf",viewBatchRecord.itemState);
 
     for (let i = 0; i < viewBatchRecord.itemState; i++) {
@@ -63,7 +61,7 @@ const ViewBatchStatusTable = () => {
       const createdday = await dateContract.getDay(dateObjectrec.toNumber())
       const createmonth = await dateContract.getMonth(dateObjectrec.toNumber())
       const createdyear = await dateContract.getYear(dateObjectrec.toNumber())
-      console.log("asdasda",i)
+      //console.log("asdasda",i)
       if(i == 0){
         setrawcreatedday(createdday);
         setrawcreatemonth(createmonth);
@@ -83,16 +81,12 @@ const ViewBatchStatusTable = () => {
       }
     }
    
-
     const garbagePolAmount = OGViewBatchRecord.OGPolyesterAmount.toNumber() - viewBatchRecord.PolyesterAmount.toNumber() 
     setgarbagePolyesterAmount(garbagePolAmount)
     const garbageCottonAmount = OGViewBatchRecord.OGCottonAmount.toNumber() - viewBatchRecord.CottonAmount.toNumber() 
     setgarbageCottonAmount(garbageCottonAmount)
     const garbageWAmount = OGViewBatchRecord.OGWoolAmount.toNumber() - viewBatchRecord.WoolAmount.toNumber() 
     setgarbageWoolAmount(garbageWAmount)
-
-
-
 
       const rawmaterialLocation = {
         method: 'POST',
@@ -107,6 +101,7 @@ const ViewBatchStatusTable = () => {
       .then(data => {
         if(data){
           //console.log("Raw Material Location",data.location)
+          setrawName(data.username)
           setrawlocation(data.location);
         }
       })
@@ -126,17 +121,14 @@ const ViewBatchStatusTable = () => {
       .then(res => res.json())
       .then(data => {
         if(data){
-          //console.log("WArehouse Location",data)
-          //sessionStorage.setItem('user',JSON.stringify(values));
+          //console.log("WArehouse Location",data.username)
+          setwareName(data.username)
           setwarelocation(data.location);
-
         }
       })
       .catch((error) => {
         console.error('Error11:', error);
       });
-
-
       const factoryLocation = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -150,19 +142,13 @@ const ViewBatchStatusTable = () => {
       .then(data => {
         if(data){
           //console.log("Factory Location",data)
-          //sessionStorage.setItem('user',JSON.stringify(values));
+          setfactName(data.username);
           setfactlocation(data.location);
         }
       })
       .catch((error) => {
         console.error('Error:', error);
       });
-
-
-
-    
-
-
   }
   const PendingContinue = (props) =>{
     const data = props.data;
@@ -192,9 +178,19 @@ const ViewBatchStatusTable = () => {
                   <Card.Text style={{ width: '50%', float: 'left' }}>
                     <>
                       <p><b>Batch ID : </b>{data.state.i}</p>
-                      <p><b>Raw Material Supplier : </b> {batchRecord && batchRecord.RawMaterialSupplierID}</p>
-                      <p><b>Warehouse Address : </b> {batchRecord && batchRecord.itemState == 0 ? "Not Added" :batchRecord && batchRecord.warehouseID}</p>
-                      <p><b>Factory Address : </b> {batchRecord && batchRecord.itemState == 0 ? "Not Added" : batchRecord && batchRecord.factoryID}</p>
+                      <p><b>Raw Material Supplier : </b>
+                      {rawName} 
+                      {/* {batchRecord && batchRecord.RawMaterialSupplierID} */}
+                      </p>
+                      <p><b>Warehouse Address : </b> 
+                      {/* {batchRecord && batchRecord.itemState == 0 ? "Not Added" :batchRecord && batchRecord.warehouseID} */}
+                      {batchRecord && batchRecord.itemState == 0 ? "Not Added" :wareName} 
+                      </p>
+                      <p><b>Factory Address : </b> 
+                      {/* {batchRecord && batchRecord.itemState == 0 ? "Not Added" : batchRecord && batchRecord.factoryID} */}
+                      {batchRecord && batchRecord.itemState == 0 ? "Not Added" : factName}
+
+                      </p>
                       <p><b>Polyster Amount : </b> {ogBatchRecord && ogBatchRecord.OGPolyesterAmount.toNumber()}</p>
                       <p><b>Cotton Amount : </b> {ogBatchRecord && ogBatchRecord.OGCottonAmount.toNumber()}</p>
                       <p><b>Wool Amount : </b> {ogBatchRecord && ogBatchRecord.OGWoolAmount.toNumber()}</p>
@@ -221,8 +217,7 @@ const ViewBatchStatusTable = () => {
                       <p><b>Spinning Weaving Status : </b> {batchRecord && batchRecord.itemState == 0 || batchRecord && batchRecord.itemState == 1 || batchRecord && batchRecord.itemState == 2 ?<PendingContinue path= {'/garmentBatchCompleteForm'} data={data.state.i}/> :<Button variant="outline-success">Completed</Button> }</p>
                       <p><b>Manufacture Garment Status : </b> {batchRecord && batchRecord.itemState == 0 || batchRecord && batchRecord.itemState == 1 || batchRecord && batchRecord.itemState == 2 || batchRecord && batchRecord.itemState == 3 ?<PendingContinue path= {'/garmentBatchCompleteForm'} data={data.state.i}/> :<Button variant="outline-success">Completed</Button> }</p>
                       <p><b>Available Sell Item Quality Check : </b> {batchRecord && batchRecord.itemState == 0 || batchRecord && batchRecord.itemState == 1 || batchRecord && batchRecord.itemState == 2 || batchRecord && batchRecord.itemState == 3 || batchRecord && batchRecord.itemState == 4 ?<PendingContinue path= {'/garmentBatchCompleteForm'} data={data.state.i}/> :<Button variant="outline-success">Completed</Button> }</p>
-                      <p><b>Sell Item Status : </b>  {batchRecord && batchRecord.itemState == 0 || batchRecord && batchRecord.itemState == 1 || batchRecord && batchRecord.itemState == 2 || batchRecord && batchRecord.itemState == 3 || batchRecord && batchRecord.itemState == 4 || batchRecord && batchRecord.itemState == 5 ?<PendingContinue path= {'/SellItemFormData'} data={data.state.i} /> :<Button variant="outline-success">Completed</Button> }</p>
-                      
+                      <p><b>Sell Item Status : </b>  {batchRecord && batchRecord.itemState == 0 || batchRecord && batchRecord.itemState == 1 || batchRecord && batchRecord.itemState == 2 || batchRecord && batchRecord.itemState == 3 || batchRecord && batchRecord.itemState == 4 || batchRecord && batchRecord.itemState == 5 ?<PendingContinue path= {'/SellItemFormData'} data={data.state.i} /> :<Button variant="outline-success">Completed</Button> }</p>                      
                     </>
                   </Card.Text>
                 </Card.Body>
