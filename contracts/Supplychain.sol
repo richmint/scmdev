@@ -67,6 +67,13 @@ contract Supplychain{
         uint OGUnits;
     }
 
+    struct cutomerInfoStruct{
+        uint supplychainID;
+        address retailer;
+        uint quantity;
+    }
+    mapping(address =>uint[]) private customerSCIds;
+
     mapping (uint =>OG) public OGDetails;
 
     mapping (uint =>uint[]) public timeStamps;
@@ -78,11 +85,7 @@ contract Supplychain{
     mapping (uint => uint[]) private retailerUnits;
     mapping (uint => uint[]) private retailerCounters;
 
-    mapping (uint => address[]) private customerId;
-    mapping (uint => uint[]) private customerUnits;
-    mapping (uint => uint[]) private customerCounters;
-
-
+    mapping (address =>mapping (uint =>cutomerInfoStruct)) public customerInfo;
 
 
     event RawMaterialSupplierSuppliesRM(uint _supplyChainId);
@@ -218,6 +221,7 @@ contract Supplychain{
         timeStamps[_supplyChainId].push(block.timestamp);
     }
 
+
     function factorySellItemToDistributors(
         uint _supplyChainId,
         address distributor
@@ -242,6 +246,7 @@ contract Supplychain{
             timeStamps[_supplyChainId].push(block.timestamp);
             emit FactorySellItemToDistributors(_supplyChainId);
     }
+
 
     function distributorSellToRetailer(
         uint _supplyChainId,
@@ -270,40 +275,34 @@ contract Supplychain{
 
     function customerBuyItem(
         uint _supplyChainId,
-        address retailer,
-        uint quantity 
+        address _retailer,
+        uint _quantity 
     ) public{
         uint length =retailerID[_supplyChainId].length;
         uint counter1;
-        uint counter2;
         for(uint i=0; i<length; i++){
-            if(retailerID[_supplyChainId][i]==retailer){
+            if(retailerID[_supplyChainId][i]==_retailer){
                 counter1 =i;
                 break;
             }
         }       
-        require(getRetailersUnits(_supplyChainId)[counter1]>=quantity,"No More Items left");
-                                                
-        length=customerId[_supplyChainId].length;
-        for(uint i=0; i<length; i++){
-            if(customerId[_supplyChainId][i]==msg.sender){
-                counter2 =i;
-                break;
-            }   
-        }   
-        if(counter2==0){
-            customerId[_supplyChainId].push(msg.sender);
-            customerUnits[_supplyChainId].push(quantity); 
-            customerCounters[_supplyChainId].push(retailerCounters[_supplyChainId][counter1]);
-            SupplyChainToken(supplyChainToken).safeTransferFrom(retailer,msg.sender,_supplyChainId,quantity,"0x00",retailerCounters[_supplyChainId][counter1]);
-        }else{  
-            customerUnits[_supplyChainId][counter2]=quantity; 
-            customerCounters[_supplyChainId][counter2]=retailerCounters[_supplyChainId][counter1];
-            SupplyChainToken(supplyChainToken).safeTransferFrom(retailer,msg.sender,_supplyChainId,quantity,"0x00",retailerCounters[_supplyChainId][counter1]);
-        }       
+        require(getRetailersUnits(_supplyChainId)[counter1]>=_quantity,"No More Items left");
 
-        retailerUnits[_supplyChainId][counter1]-=quantity;
-        retailerCounters[_supplyChainId][counter1]+=quantity;
+        if(customerInfo[msg.sender][_supplyChainId].retailer ==address(0)){
+            cutomerInfoStruct memory _cutomerInfoStruct =cutomerInfoStruct({
+                supplychainID:_supplyChainId,
+                retailer:_retailer,
+                quantity:_quantity
+            });
+            customerInfo[msg.sender][_supplyChainId]=_cutomerInfoStruct;
+            customerSCIds[msg.sender].push(_supplyChainId);
+            retailerUnits[_supplyChainId][counter1]-=_quantity;
+            retailerCounters[_supplyChainId][counter1]+=_quantity;
+        }else{
+            customerInfo[msg.sender][_supplyChainId].quantity +=_quantity;
+            retailerUnits[_supplyChainId][counter1]-=_quantity;
+            retailerCounters[_supplyChainId][counter1]+=_quantity;
+        }
         
     }
 
@@ -325,5 +324,9 @@ contract Supplychain{
     
     function getRetailersCounters(uint _supplychianId) public view returns(uint[] memory){
         return retailerCounters[_supplychianId];
+    }
+
+    function getcustomerSCIds(address  _address) public view returns(uint[] memory){
+        return customerSCIds[_address];
     }
 }
