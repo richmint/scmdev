@@ -325,7 +325,7 @@ async function main() {
   //         if(object.itemState==7){
   //           console.log(object)
   //           let runits =await supplychain.getRetailersUnits(i)
-  //           console.log(runits[k]);
+  //           console.log(runits[k]); 
   //           let rcounter =await supplychain.getRetailersCounters(i)
   //           console.log(rcounter[k]);
   //           console.log(await supplychain.OGDetails(object.supplyChainId));

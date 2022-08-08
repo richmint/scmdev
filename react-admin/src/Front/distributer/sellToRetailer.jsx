@@ -61,7 +61,11 @@ const FinalSellToDistributor = () => {
             var supplyqty = [];
             supplyqty = event.productQty.split(' ');
     
-        //console.log(supplyqty);
+        // console.log("data ads",data);
+        // console.log("retailer ads",retaileraddress);
+        // console.log("supplyqty ",supplyqty);
+
+        
 
         const tx = SChainContract.distributorSellToRetailer(data, retaileraddress, supplyqty);
         //console.log((await tx.wait()));

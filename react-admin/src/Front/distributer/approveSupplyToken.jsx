@@ -31,7 +31,7 @@ const ApproveSupplyToken = () =>{
 
   useEffect(()=>{
     (async () => {
-        const res = await supplyChainTokenContract.isApprovedForAll('0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65',supplyChainContract.address);
+        const res = await supplyChainTokenContract.isApprovedForAll('0x15d34aaf54267db7d7c367839aaf71a00a2c6a65',supplyChainContract.address);
         setDisable(res);
         console.log("Coming res",res)
     })();

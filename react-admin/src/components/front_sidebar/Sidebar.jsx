@@ -47,12 +47,12 @@ const Sidebar = (props) => {
                     <span>View Supply Tokens</span>
                   </li>
                 </Link>
-                <Link to="/approveSupplier" style={{ textDecoration: "none" }}>
+                 <Link to="/approveSupplier" style={{ textDecoration: "none" }}>
                   <li style={{backgroundColor: props.txt == "SupApprove"?"orange":""}}>
                     <StoreIcon className="icon" />
                     <span>Approve Supply Tokens</span>
                   </li>
-                </Link>
+                </Link> 
           </>
               )
             } else if (localStorage.userRole == 'Factory') {
@@ -69,7 +69,7 @@ const Sidebar = (props) => {
                     <StoreIcon className="icon" />
                     <span>Approve Supply Token</span>
                   </li>
-                </Link>
+                </Link> 
                 {/* <Link to="/rawMaterialQualityCheck" style={{ textDecoration: "none" }}>
                   <li style={{backgroundColor: props.txt == "qcCheckRawMat"?"orange":""}}>
                     <StoreIcon className="icon" />
@@ -144,6 +144,18 @@ const Sidebar = (props) => {
                 <>
                 <Link to="/availabeProductforRetailer" style={{ textDecoration: "none" }}>
             <li style={{backgroundColor: props.txt == "avlprodretailer"?"orange":""}}>
+              <StoreIcon className="icon" />
+              <span>Availabel Product</span>
+            </li> 
+          </Link>
+          
+                </>
+              )
+            }else if (localStorage.userRole == 'Customer') {
+              return(
+                <>
+                <Link to="/availabeProductforCustomer" style={{ textDecoration: "none" }}>
+            <li style={{backgroundColor: props.txt == "avlprodcustomer"?"orange":""}}>
               <StoreIcon className="icon" />
               <span>Availabel Product</span>
             </li> 
