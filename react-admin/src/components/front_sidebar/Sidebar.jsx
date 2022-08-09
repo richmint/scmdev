@@ -153,13 +153,20 @@ const Sidebar = (props) => {
               )
             }else if (localStorage.userRole == 'Customer') {
               return(
-                <>
-                <Link to="/availabeProductforCustomer" style={{ textDecoration: "none" }}>
-            <li style={{backgroundColor: props.txt == "avlprodcustomer"?"orange":""}}>
-              <StoreIcon className="icon" />
-              <span>Availabel Product</span>
-            </li> 
-          </Link>
+              <>
+              <Link to="/availabeProductforCustomer" style={{ textDecoration: "none" }}>
+                <li style={{backgroundColor: props.txt == "avlprodcustomer"?"orange":""}}>
+                  <StoreIcon className="icon" />
+                  <span>Availabel Product</span>
+                </li> 
+              </Link>
+
+              <Link to="/orderhistory" style={{ textDecoration: "none" }}>
+                <li style={{backgroundColor: props.txt == "orderhistory"?"orange":""}}>
+                  <StoreIcon className="icon" />
+                  <span>Order History</span>
+                </li> 
+              </Link>
           
                 </>
               )

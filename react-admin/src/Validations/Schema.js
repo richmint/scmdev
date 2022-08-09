@@ -45,3 +45,6 @@ export const ProductQCSchema = yup.object().shape({
 export const SellToRetailerFormSchema = yup.object().shape({
   productQty: yup.string().required("Required Field")
 })
+export const ProductBuyCustomerSchema = yup.object().shape({
+  productQty: yup.number().required("Required Field")
+})

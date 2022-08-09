@@ -15,42 +15,6 @@ const AvailabeProductTable = () => {
 
 
 
-
-
-
-
-  // const total = await supplychain.totalBatchs()
-  // for(let i =0; i<total; i++){
-  //   let array = await supplychain.getRetailers(i);
-  //   if(array.length>0){
-  //     for(let k=0; k<array.length; k++){
-  //       if(array[k]===retailerSigner1.address){
-  //         const object =await supplychain.items(i);
-  //         if(object.itemState==7){
-  //           console.log(object)
-  //           let runits =await supplychain.getRetailersUnits(i)
-  //           console.log(runits[k]);
-  //           let rcounter =await supplychain.getRetailersCounters(i)
-  //           console.log(rcounter[k]);
-  //           console.log(await supplychain.OGDetails(object.supplyChainId));
-  //           const data = await supplychain.timeStamps(object.supplyChainId,object.itemState);
-  //           console.log(await dateTime.getDay(data.toNumber()),await dateTime.getMonth(data.toNumber()),await dateTime.getYear(data.toNumber()));
-  //         }
-  //       } 
-  //     }
-  //   }
-  // }
-
-
-
-
-
-
-
-
-
-
-
   const allsupplymateriallist = [];
   const getSupplyChainHandler = async (event) => {
 
@@ -63,14 +27,15 @@ const AvailabeProductTable = () => {
         if (retailers.length > 0) {
 
           for (let k = 0; k < retailers.length; k++) {
-            if (retailers[k].toLowerCase() === ownSupplyChainAddress.toLowerCase()) {
+           
+            if (retailers[k].toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
               let object = await supplyChainContract.items(i);
-              //console.log("myrecord", object);
+              //console.log("myrecord",object);
               if (object.itemState === 7) {
-
+ 
                 console.log("sdfsdfsdf", object)
                 let runits = await supplyChainContract.getRetailersUnits(i)
-                console.log("Retailer Unit", runits[k].toNumber());
+                //console.log("Retailer Unit", runits[k].toNumber());
 
                 let rcounter = await supplyChainContract.getRetailersCounters(i)
                 console.log("Availeble Product", rcounter[k].toNumber());
@@ -82,13 +47,13 @@ const AvailabeProductTable = () => {
                 allsupplymateriallist.push(
                   <><tr>
                     <td>{i}</td>
-                    <td>{object.distributorId}</td>
+                    <td>{object.factoryID}</td>
                     <td>{object.distributorId}</td>
                     {/* <td>{object.totalUnits.toNumber()}</td> */}
                     <td>{runits[k].toNumber()}</td>
                     {/* <td>{rcounter[k].toNumber()}</td> */}
                     {/*<td>{object.WoolAmount.toNumber()}</td> */}
-                    <td>{object.distributorId}</td>
+                    <td>{object.Description}</td>
                     {/* <td>
                       <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { i } })}>View</Button>
                     </td> */}

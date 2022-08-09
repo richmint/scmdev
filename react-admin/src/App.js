@@ -41,9 +41,10 @@ import ProductQualityCheck from './Front/factory/productQualtityCheck';
 //Retailer Routes
 import AvailabeProductforRetailer from './Front/retailer/availabeProduct';
 
-//Retailer Routes
+//Customer Routes
 import AvailabeProductforCustomer from './Front/customer/availabeProduct';
-
+import ProductBuyCustomer from './Front/customer/buyProduct';
+import OrderHistory from './Front/customer/orderHistory';
 
 
 
@@ -214,7 +215,9 @@ function App() {
 
               {/* Front Retailer Routes */}
               <Route path="/availabeProductforCustomer" element={frontToken ? <AvailabeProductforCustomer /> : <Navigate to={"/userlogin"} />} />
-              
+              <Route path="/productBuyCustomer" element={frontToken ? <ProductBuyCustomer /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/orderhistory" element={frontToken ? <OrderHistory /> : <Navigate to={"/userlogin"} />} />
+
             </Routes>
       </BrowserRouter>
     </div>

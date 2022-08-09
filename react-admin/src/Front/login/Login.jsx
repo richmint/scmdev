@@ -36,6 +36,7 @@ const Login = () => {
         localStorage.setItem("userEmail",data.userEmail)
         localStorage.setItem("userRole",data.userRole)
         localStorage.setItem("userName",data.userName)
+        localStorage.setItem("address",data.address)
         dispatch(setToken(data));
         navigate("/material-supplier");
     }
