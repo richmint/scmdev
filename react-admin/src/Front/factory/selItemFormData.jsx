@@ -58,7 +58,7 @@ const SellItemFormData = () => {
   }
   return (
     <div className="new">
-      <Sidebar />
+      <Sidebar txt={"FecItemToDistributer"}/>
       <div className="newContainer">
         <Navbar />
         <DataTable data={data} />

@@ -96,7 +96,7 @@ const ViewBatchStatusTable = () => {
           })
       };
   
-      fetch("http://127.0.0.1:5150/location",rawmaterialLocation)    
+      fetch("http://162.215.222.118:5150/location",rawmaterialLocation)    
       .then(res => res.json())
       .then(data => {
         if(data){
@@ -108,7 +108,6 @@ const ViewBatchStatusTable = () => {
       .catch((error) => {
         console.error('Error:', error);
       });
-      
       const warehouseLocation = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -116,12 +115,10 @@ const ViewBatchStatusTable = () => {
           "hashAddress":viewBatchRecord.warehouseID,       
           })
       };
-  
-      fetch("http://127.0.0.1:5150/location",warehouseLocation)    
+      fetch("http://162.215.222.118:5150/location",warehouseLocation)    
       .then(res => res.json())
       .then(data => {
         if(data){
-          //console.log("WArehouse Location",data.username)
           setwareName(data.username)
           setwarelocation(data.location);
         }
@@ -136,12 +133,10 @@ const ViewBatchStatusTable = () => {
           "hashAddress":viewBatchRecord.factoryID,       
           })
       };
-  
-      fetch("http://127.0.0.1:5150/location",factoryLocation)    
+      fetch("http://162.215.222.118:5150/location",factoryLocation)    
       .then(res => res.json())
       .then(data => {
         if(data){
-          //console.log("Factory Location",data)
           setfactName(data.username);
           setfactlocation(data.location);
         }
@@ -159,10 +154,6 @@ const ViewBatchStatusTable = () => {
     </>
     )
   }
-    //console.log("date rec   ", ogBatchRecord);
-    // console.log("date day",createdday);
-    // console.log("date month",createmonth);
-    // console.log("date year",createdyear);
   return (
     <>
       <div className="new">
@@ -180,21 +171,17 @@ const ViewBatchStatusTable = () => {
                       <p><b>Batch ID : </b>{data.state.i}</p>
                       <p><b>Raw Material Supplier : </b>
                       {rawName} 
-                      {/* {batchRecord && batchRecord.RawMaterialSupplierID} */}
                       </p>
                       <p><b>Warehouse Address : </b> 
-                      {/* {batchRecord && batchRecord.itemState == 0 ? "Not Added" :batchRecord && batchRecord.warehouseID} */}
                       {batchRecord && batchRecord.itemState == 0 ? "Not Added" :wareName} 
                       </p>
                       <p><b>Factory Address : </b> 
-                      {/* {batchRecord && batchRecord.itemState == 0 ? "Not Added" : batchRecord && batchRecord.factoryID} */}
                       {batchRecord && batchRecord.itemState == 0 ? "Not Added" : factName}
-
                       </p>
                       <p><b>Polyster Amount : </b> {ogBatchRecord && ogBatchRecord.OGPolyesterAmount.toNumber()}</p>
                       <p><b>Cotton Amount : </b> {ogBatchRecord && ogBatchRecord.OGCottonAmount.toNumber()}</p>
                       <p><b>Wool Amount : </b> {ogBatchRecord && ogBatchRecord.OGWoolAmount.toNumber()}</p>
-                      <p><b>Quality Check Polyster Amount : </b> {batchRecord && batchRecord.PolyesterAmount.toNumber() == 0 ? "Not Checked":batchRecord && batchRecord.PolyesterAmount.toNumber()}</p>
+                      <p><b>Quality Check Polyster Amount : </b> {batchRecord && batchRecord.PolyesterAmount.toNumber() == 0 ? "Not Checked":batchRecord && batchRecord.PolyesterAmount.toNumber() }</p>
                       <p><b>Quality Check Cotton Amount : </b> {batchRecord && batchRecord.CottonAmount.toNumber() == 0 ? "Not Checked":batchRecord && batchRecord.CottonAmount.toNumber()}</p>
                       <p><b>Quality Check Wool Amount : </b> {batchRecord && batchRecord.WoolAmount.toNumber()== 0 ? "Not Checked":batchRecord && batchRecord.WoolAmount.toNumber()}</p>
                       <p><b>Garbage Polyster Amount : </b>{batchRecord && batchRecord.PolyesterAmount.toNumber()== 0 ? "Not Checked":garbagePolyesterAmount}</p>

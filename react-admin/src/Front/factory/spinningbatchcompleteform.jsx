@@ -75,7 +75,7 @@ const Spinningbatchcompleteform = () => {
   }
   return (
     <div className="new">
-      <Sidebar />
+      <Sidebar txt={"facSpinningWeaving"} />
       <div className="newContainer">
         <Navbar />
         <DataTable data={data} />

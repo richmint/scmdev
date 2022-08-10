@@ -10,9 +10,7 @@ import '../supplier/AddMaterialForm.scss';
 import '../../pages/new/new.scss';
 import { ProductQCSchema } from "../../Validations/Schema";
 
-
-
-const ProductQualityCheck = () =>{
+const ProductQualityCheck = () => {
     let data = useLocation();
     const { register, handleSubmit, setError, formState: { errors } } = useForm({
         defaultValues: {
@@ -20,23 +18,18 @@ const ProductQualityCheck = () =>{
         },
         resolver: yupResolver(ProductQCSchema),
     })
-
     const navigate = useNavigate();
     const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract } = useContext(DarkModeContext);
     const [SChainContract, setSChainContract] = useState(supplyChainContract);
-
-const addSupplyChainHandler = async (event) =>{
-    // console.log("SChainContract",SChainContract);
+    const addSupplyChainHandler = async (event) => {
         const tx = await SChainContract.factoryQCFinalItems(data.state.batchid, event.product);
-        //console.log((await tx.wait()));
-        if(tx){
-           navigate("/viewBatch")
+        if (tx) {
+            navigate("/viewBatch")
         }
-}
-
-    return(
+    }
+    return (
         <div className="new">
-            <Sidebar txt={"productQC"} />
+            <Sidebar txt={"FecItemToDistributer"} />
             <div className="newContainer" >
                 <Navbar />
                 <div className="bottom">
@@ -57,5 +50,4 @@ const addSupplyChainHandler = async (event) =>{
         </div>
     )
 }
-
 export default ProductQualityCheck
