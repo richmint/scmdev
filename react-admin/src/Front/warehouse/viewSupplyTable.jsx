@@ -29,7 +29,7 @@ const ViewSupplyTable = () => {
 //  console.log(object[i].itemState);
  
       const data =await supplyChainContract.timeStamps(object[i].supplyChainId,object[i].itemState);
-  
+      console.log("object i=",object[i]);
       const dateObject = await supplyChainContract.timeStamps(i,0);
         const createdday = await dateContract.getDay(dateObject.toNumber())
         const createmonth = await dateContract.getMonth(dateObject.toNumber())
