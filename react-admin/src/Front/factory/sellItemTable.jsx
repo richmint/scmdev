@@ -20,15 +20,14 @@ const SellItemTable = () =>{
 
     //console.log("supplyChainContract ", supplyChainContract)
     const totalbatchids = (await  supplyChainContract.totalBatchs());
-    //console.log("totalbatchids",totalbatchids);
+    var checkvalue = 0;
     if(totalbatchids>0){
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
         let OGObject = await supplyChainContract.OGDetails(object.supplyChainId);
         //console.log("myrecord", object);
         if (object.itemState === 4 || object.itemState === 5 && object.factoryID.toLowerCase() === ownSupplyChainAddress.toLowerCase()) {
-          // console.log("inner loop", object.PolyesterAmount.toNumber());
-          // console.log("cotton loop", OGObject.OGUnits.toNumber());
+          checkvalue = 1;
           let totalmanufactured = OGObject.OGUnits.toNumber();
           allsupplymateriallist.push(
             <><tr> 
@@ -49,10 +48,17 @@ const SellItemTable = () =>{
          
         }     
       }
+      if(checkvalue == 0) {
+        allsupplymateriallist.push(
+          <><tr>
+            <td colSpan="7">No Record Found</td>
+          </tr></>
+        )
+    }
     }else {
       allsupplymateriallist.push(
         <><tr>
-          <td colSpan="6">No Record Found</td>
+          <td colSpan="7">No Record Found</td>
         </tr></>
       )
     }

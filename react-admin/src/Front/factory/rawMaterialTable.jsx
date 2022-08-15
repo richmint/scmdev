@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
 import '../../style/front/viewSupplyTable.scss'
-import { DataGrid } from "@mui/x-data-grid";
-import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
@@ -15,9 +13,8 @@ const RawMaterialTable = () => {
 
   const allsupplymateriallist = [];
   const getSupplyChainHandler = async (event) => { 
-
-    //console.log("Factory Address ", ownSupplyChainAddress)
     const totalbatchids = (await supplyChainContract.totalBatchs()).toNumber();
+    var checkvalue = 0;
     if(totalbatchids>0){
       for (let i = 0; i < totalbatchids; i++) {
       let object = await supplyChainContract.items(i);
@@ -26,16 +23,16 @@ const RawMaterialTable = () => {
       let OGPolyesterAmount = OGObject.OGPolyesterAmount.toNumber();
       let OGCottonAmount = OGObject.OGCottonAmount.toNumber();
       let OGWoolAmount = OGObject.OGWoolAmount.toNumber();
-      if (object.itemState === 0 || object.itemState === 1) {
-
+      if (object.itemState === 0 || object.itemState === 1 && object.factoryID.toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
+        checkvalue = 1;
         allsupplymateriallist.push(
-          <><tr> 
+          <><tr>  
             <td>{i}</td>
             <td>{object.RawMaterialSupplierID}</td>
             <td>{OGObject.OGPolyesterAmount.toNumber()}</td>
             <td>{OGObject.OGCottonAmount.toNumber()}</td>
             <td>{OGObject.OGWoolAmount.toNumber()}</td>
-            <td>{object.itemState ===0 ?<Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial',{state:{i}})}>Buy</Button>:<Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck',{state:{id:i,OGPolyesterAmount:OGPolyesterAmount,OGCottonAmount:OGCottonAmount,OGWoolAmount:OGWoolAmount}})}>Quality Check</Button> }
+            <td>{object.itemState === 0 ?<Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial',{state:{i}})}>Buy</Button>:<Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck',{state:{id:i,OGPolyesterAmount:OGPolyesterAmount,OGCottonAmount:OGCottonAmount,OGWoolAmount:OGWoolAmount}})}>Quality Check</Button> }
               </td>
           </tr></>
         )
@@ -43,6 +40,13 @@ const RawMaterialTable = () => {
       } 
      
     }
+    if(checkvalue == 0) {
+      allsupplymateriallist.push(
+        <><tr>
+          <td colSpan="5">No Record Found</td>
+        </tr></>
+      )
+  }
   }else {
       allsupplymateriallist.push(
         <><tr>

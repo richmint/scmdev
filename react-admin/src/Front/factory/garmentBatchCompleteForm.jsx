@@ -65,7 +65,7 @@ const GarmentBatchCompleteForm = () =>{
     }
     return(
             <div className="new">
-                <Sidebar />
+                <Sidebar txt={"facManuGarment"}  />
                 <div className="newContainer">
                     <Navbar />
                     <DataTable data={data}  />

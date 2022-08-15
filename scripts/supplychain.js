@@ -312,8 +312,10 @@ async function main() {
   //         const object =await supplychain.items(i);
   //         if(object.itemState==7){
   //           console.log(object)
-  //           let units =await supplychain.getRetailersUnits(i)
-  //           console.log(units[k]);
+  //           let runits =await supplychain.getRetailersUnits(i)
+  //           console.log(runits[k]); 
+  //           let rcounter =await supplychain.getRetailersCounters(i)
+  //           console.log(rcounter[k]);
   //           console.log(await supplychain.OGDetails(object.supplyChainId));
   //           const data = await supplychain.timeStamps(object.supplyChainId,object.itemState);
   //           console.log(await dateTime.getDay(data.toNumber()),await dateTime.getMonth(data.toNumber()),await dateTime.getYear(data.toNumber()));

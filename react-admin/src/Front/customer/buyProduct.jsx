@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useMemo } from "react";
 import Navbar from "../../components/front_navbar/Navbar";
 import Sidebar from "../../components/front_sidebar/Sidebar";
 import { useLocation } from "react-router-dom";
@@ -6,48 +6,54 @@ import { useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { ProductBuyCustomerSchema } from "../../Validations/Schema";
 import '../supplier/AddMaterialForm.scss';
 import '../../pages/new/new.scss';
-import { ProductQCSchema } from "../../Validations/Schema";
-
-const ProductQualityCheck = () => {
+const ProductBuyCustomer = () => {
     let data = useLocation();
+    console.log(data);
     const { register, handleSubmit, setError, formState: { errors } } = useForm({
         defaultValues: {
-            product: data.state.totalmanufactured
+            productQty: data.state.productQty,
         },
-        resolver: yupResolver(ProductQCSchema),
+        resolver: yupResolver(ProductBuyCustomerSchema),
     })
     const navigate = useNavigate();
+    const [productQty, setproductQty] = useState(data.state.productQty);
+    const [showError, setShowError] = useState(false);
+    useMemo(() => {
+        (productQty > data.state.productQty) ? setShowError(true) : setShowError(false);
+    }, [productQty])
     const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract } = useContext(DarkModeContext);
     const [SChainContract, setSChainContract] = useState(supplyChainContract);
     const addSupplyChainHandler = async (event) => {
-        const tx = await SChainContract.factoryQCFinalItems(data.state.batchid, event.product);
+        console.log("Product Qty", productQty);
+        const tx = await SChainContract.customerBuyItem(data.state.id, data.state.retailerAddress, productQty);
         if (tx) {
-            navigate("/viewBatch")
+            navigate("/availabeProductforCustomer")
         }
     }
     return (
-        <div className="new">
-            <Sidebar txt={"FecItemToDistributer"} />
-            <div className="newContainer" >
+        <diV className="new">
+            <Sidebar txt={"avlprodcustomer"} />
+            <div className="newContainer">
                 <Navbar />
                 <div className="bottom">
                     <div className="right">
                         <form onSubmit={handleSubmit(addSupplyChainHandler)} >
                             <div className="formInput">
-                                <label>Passed Product</label>
-                                <input id="product" name="product" type="number" {...register("product", { required: true })} />
-                                {errors.product && <span className='error'> {console.log(errors)} {errors?.product?.message}</span>}
+                                <label>Product Quantity</label>
+                                <input id="productQty" name="productQty" type="number" value={productQty} onChange={(e) => setproductQty(e.target.value)} />
+                                {showError ? <span className='error'> Quantity is greater</span> : ""}
                             </div>
                             <div className='formInput'>
-                                <button type={"submit"}> Submit </button>
+                                <button disabled={showError} type={"submit"}> Submit </button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
+        </diV>
     )
 }
-export default ProductQualityCheck
+export default ProductBuyCustomer

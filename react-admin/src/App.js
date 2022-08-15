@@ -41,6 +41,12 @@ import ProductQualityCheck from './Front/factory/productQualtityCheck';
 //Retailer Routes
 import AvailabeProductforRetailer from './Front/retailer/availabeProduct';
 
+//Customer Routes
+import AvailabeProductforCustomer from './Front/customer/availabeProduct';
+import ProductBuyCustomer from './Front/customer/buyProduct';
+import OrderHistory from './Front/customer/orderHistory';
+
+
 
 //End Front
 import {BrowserRouter, Routes, Route, useNavigate, Link, Navigate, Switch, Router } from "react-router-dom";
@@ -206,6 +212,11 @@ function App() {
 
               {/* Front Retailer Routes */}
               <Route path="/availabeProductforRetailer" element={frontToken ? <AvailabeProductforRetailer /> : <Navigate to={"/userlogin"} />} />
+
+              {/* Front Retailer Routes */}
+              <Route path="/availabeProductforCustomer" element={frontToken ? <AvailabeProductforCustomer /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/productBuyCustomer" element={frontToken ? <ProductBuyCustomer /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/orderhistory" element={frontToken ? <OrderHistory /> : <Navigate to={"/userlogin"} />} />
 
             </Routes>
       </BrowserRouter>
