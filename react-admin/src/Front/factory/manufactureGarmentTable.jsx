@@ -13,6 +13,7 @@ const ManufactureGarmentTable = () => {
   const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress } = useContext(DarkModeContext);
   const allsupplymateriallist = [];
   const getSupplyChainHandler = async (event) => {
+    let userdatarec = '';
     const totalbatchids = (await supplyChainContract.totalBatchs());
     var checkvalue = 0;
     if (totalbatchids > 0) {
@@ -20,10 +21,26 @@ const ManufactureGarmentTable = () => {
         let object = await supplyChainContract.items(i);
         if (object.itemState === 3 && object.factoryID.toLowerCase() === ownSupplyChainAddress.toLowerCase()) {
           checkvalue = 1;
+          const rawMaterialRecord = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({       
+              "hashAddress":object.RawMaterialSupplierID,       
+              })
+          };
+          await fetch("http://162.215.222.118:5150/location",rawMaterialRecord)    
+          .then(res => res.json())
+          .then(data => {
+            if(data){
+              userdatarec = data.username
+            }
+          }).catch((error) => { 
+            console.error('Error:', error);
+          });
           allsupplymateriallist.push(
             <><tr>
               <td>{i}</td>
-              <td>{object.RawMaterialSupplierID}</td>
+              <td>{userdatarec && userdatarec }</td>
               <td>{object.PolyesterAmount.toNumber()}</td>
               <td>{object.CottonAmount.toNumber()}</td>
               <td>{object.WoolAmount.toNumber()}</td>

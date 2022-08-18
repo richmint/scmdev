@@ -47,12 +47,12 @@ const Sidebar = (props) => {
                     <span>View Supply Tokens</span>
                   </li>
                 </Link>
-                 <Link to="/approveSupplier" style={{ textDecoration: "none" }}>
+                 {/* <Link to="/approveSupplier" style={{ textDecoration: "none" }}>
                   <li style={{backgroundColor: props.txt == "SupApprove"?"orange":""}}>
                     <StoreIcon className="icon" />
                     <span>Approve Supply Tokens</span>
                   </li>
-                </Link> 
+                </Link>  */}
           </>
               )
             } else if (localStorage.userRole == 'Factory') {
@@ -64,12 +64,12 @@ const Sidebar = (props) => {
                     <span>Available Raw Material to Buy</span>
                   </li>
                 </Link>
-                <Link to="/approveFactorySupplier" style={{ textDecoration: "none" }}>
+                {/* <Link to="/approveFactorySupplier" style={{ textDecoration: "none" }}>
                   <li style={{backgroundColor: props.txt == "ApproveFacSupp"?"orange":""}}>
                     <StoreIcon className="icon" />
                     <span>Approve Supply Token</span>
                   </li>
-                </Link> 
+                </Link>  */}
                 {/* <Link to="/rawMaterialQualityCheck" style={{ textDecoration: "none" }}>
                   <li style={{backgroundColor: props.txt == "qcCheckRawMat"?"orange":""}}>
                     <StoreIcon className="icon" />
@@ -131,12 +131,12 @@ const Sidebar = (props) => {
               <span>Availabel Item To Sell</span>
             </li>
           </Link>
-          <Link to="/approveDistributerSupplier" style={{ textDecoration: "none" }}>
+          {/* <Link to="/approveDistributerSupplier" style={{ textDecoration: "none" }}>
             <li style={{backgroundColor: props.txt == "DistApprovetoken"?"orange":""}}>
               <StoreIcon className="icon" />
               <span>Approve Supply Token</span>
             </li>
-          </Link>
+          </Link> */}
                 </>
               )
             }else if (localStorage.userRole == 'Retailer') {

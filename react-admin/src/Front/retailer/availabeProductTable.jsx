@@ -17,6 +17,8 @@ const AvailabeProductTable = () => {
 
   const allsupplymateriallist = [];
   const getSupplyChainHandler = async (event) => {
+    let distributeruserrec = '';
+    let factoryuserrec = '';
 
     const totalbatch = (await supplyChainContract.totalBatchs());
     //console.log("totalbatch",totalbatch);
@@ -33,22 +35,50 @@ const AvailabeProductTable = () => {
               //console.log("myrecord",object);
               if (object.itemState === 7) {
  
-                console.log("sdfsdfsdf", object)
                 let runits = await supplyChainContract.getRetailersUnits(i)
-                //console.log("Retailer Unit", runits[k].toNumber());
-
                 let rcounter = await supplyChainContract.getRetailersCounters(i)
-                console.log("Availeble Product", rcounter[k].toNumber());
-
                 //console.log("PRoduct Detail",await supplyChainContract.OGDetails(object.supplyChainId));
                 const data = await supplyChainContract.timeStamps(object.supplyChainId, object.itemState);
                 //console.log(await dateContract.getDay(data.toNumber()),await dateContract.getMonth(data.toNumber()),await dateContract.getYear(data.toNumber()));
 
+
+                const distributerRecord = {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({       
+                    "hashAddress":object.distributorId,        
+                    })
+                };
+                await fetch("http://162.215.222.118:5150/location",distributerRecord)    
+                .then(res => res.json())
+                .then(data => {
+                  if(data){
+                    distributeruserrec = data.username
+                  }
+                }).catch((error) => { 
+                  console.error('Error:', error);
+                });
+                const factoryRecord = {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({       
+                    "hashAddress":object.factoryID,       
+                    })
+                };
+                await fetch("http://162.215.222.118:5150/location",factoryRecord)    
+                .then(res => res.json())
+                .then(data => {
+                  if(data){
+                    factoryuserrec = data.username
+                  }
+                }).catch((error) => { 
+                  console.error('Error:', error);
+                });
                 allsupplymateriallist.push(
                   <><tr>
                     <td>{i}</td>
-                    <td>{object.factoryID}</td>
-                    <td>{object.distributorId}</td>
+                    <td>{distributeruserrec && distributeruserrec}</td>
+                    <td>{factoryuserrec && factoryuserrec}</td>
                     {/* <td>{object.totalUnits.toNumber()}</td> */}
                     <td>{runits[k].toNumber()}</td>
                     {/* <td>{rcounter[k].toNumber()}</td> */}
@@ -59,7 +89,6 @@ const AvailabeProductTable = () => {
                     </td> */}
                   </tr></>
                 )
-
               }
             }
           }
@@ -93,8 +122,8 @@ const AvailabeProductTable = () => {
               <table>
                 <tr>
                   <th>Batch ID</th>
-                  <th>Factory Address</th>
                   <th>Distributer Address</th>
+                  <th>Factory Address</th>
                   {/* <th>Total Product</th> */}
                   <th>Total Quantities</th>
                   <th>Product Description</th>

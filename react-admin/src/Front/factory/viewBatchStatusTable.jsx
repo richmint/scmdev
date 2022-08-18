@@ -96,7 +96,7 @@ const ViewBatchStatusTable = () => {
           })
       };
   
-      fetch("http://162.215.222.118:5150/location",rawmaterialLocation)    
+     await fetch("http://162.215.222.118:5150/location",rawmaterialLocation)    
       .then(res => res.json())
       .then(data => {
         if(data){
@@ -115,7 +115,7 @@ const ViewBatchStatusTable = () => {
           "hashAddress":viewBatchRecord.warehouseID,       
           })
       };
-      fetch("http://162.215.222.118:5150/location",warehouseLocation)    
+      await fetch("http://162.215.222.118:5150/location",warehouseLocation)    
       .then(res => res.json())
       .then(data => {
         if(data){
@@ -124,7 +124,7 @@ const ViewBatchStatusTable = () => {
         }
       })
       .catch((error) => {
-        console.error('Error11:', error);
+        console.error('Error:', error);
       });
       const factoryLocation = {
         method: 'POST',
@@ -133,7 +133,7 @@ const ViewBatchStatusTable = () => {
           "hashAddress":viewBatchRecord.factoryID,       
           })
       };
-      fetch("http://162.215.222.118:5150/location",factoryLocation)    
+      await fetch("http://162.215.222.118:5150/location",factoryLocation)    
       .then(res => res.json())
       .then(data => {
         if(data){

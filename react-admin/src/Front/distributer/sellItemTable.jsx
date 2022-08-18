@@ -13,13 +13,64 @@ const SellItemTable = () =>{
   const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress } = useContext(DarkModeContext);
   const allsupplymateriallist = [];
   const getSupplyChainHandler = async (event) => {
+    let userdatarec = '';
+    let wareuserdatarec = '';
+    let factorydatarec = '';
     const totalbatchids = (await  supplyChainContract.totalBatchs());
     var checkvalue = 0;
     if(totalbatchids>0){
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
-        if (object.itemState === 6 && object.distributorId.toLowerCase() === ownSupplyChainAddress) {
+        if (object.itemState === 6  && object.distributorId.toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
           var checkvalue = 1;
+          const rawMaterialRecord = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({       
+              "hashAddress":object.RawMaterialSupplierID,       
+              })
+          };
+          await fetch("http://162.215.222.118:5150/location",rawMaterialRecord)    
+          .then(res => res.json())
+          .then(data => {
+            if(data){
+              userdatarec = data.username
+            }
+          }).catch((error) => { 
+            console.error('Error:', error);
+          });
+          const warehouseRecord = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({       
+              "hashAddress":object.warehouseID,       
+              })
+          };
+          await fetch("http://162.215.222.118:5150/location",warehouseRecord)    
+          .then(res => res.json())
+          .then(data => {
+            if(data){
+              wareuserdatarec = data.username
+            }
+          }).catch((error) => { 
+            console.error('Error:', error);
+          });
+          const factoryRecord = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({       
+              "hashAddress":object.factoryID,       
+              })
+          };
+          await fetch("http://162.215.222.118:5150/location",factoryRecord)    
+          .then(res => res.json())
+          .then(data => {
+            if(data){
+              factorydatarec = data.username
+            }
+          }).catch((error) => { 
+            console.error('Error:', error);
+          });
           allsupplymateriallist.push(
           <>
           <div className="bottom">
@@ -28,9 +79,9 @@ const SellItemTable = () =>{
                 <Card.Body>
                   <Card.Text style={{ width: '50%', float: 'left' }}>
                       <p><b>Batch ID : </b> {object && object.supplyChainId.toNumber()} </p>
-                      <p><b>Raw Material Supplier : </b> {object && object.RawMaterialSupplierID}</p>
-                      <p><b>Warehouse Address : </b> {object && object.warehouseID}</p>
-                      <p><b>Factory Address : </b> {object && object.factoryID}</p>
+                      <p><b>Raw Material Supplier : </b> {userdatarec && userdatarec }</p>
+                      <p><b>Warehouse Address : </b> {wareuserdatarec && wareuserdatarec}</p>
+                      <p><b>Factory Address : </b> {factorydatarec && factorydatarec}</p>
                   </Card.Text>
                   <Card.Text style={{ width: '50%', float: 'left' }}>
                   <p></p>

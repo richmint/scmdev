@@ -18,7 +18,7 @@ const AvailabeProductCustomerTable = () => {
         if (retailers.length > 0) {
           for (let k = 0; k < retailers.length; k++) {
               let object = await supplyChainContract.items(i);
-              const requestOptions = {
+              const requestOptions = { 
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({       
@@ -26,7 +26,7 @@ const AvailabeProductCustomerTable = () => {
                       "role":"Retailer"
                       })
                     }  
-                  await fetch("http://127.0.0.1:5150/retailerbylocation",requestOptions)    
+                  await fetch("http://162.215.222.118:5150/retailerbylocation",requestOptions)    
                     .then(result => result.json())
                     .then(resultdata => {
                       if(resultdata){ 
@@ -36,7 +36,6 @@ const AvailabeProductCustomerTable = () => {
                       } 
                      }
                      )   
-                     console.log("ratailer",retailrHash)
            if(retailrHash == retailers[k]){
               if (object.itemState === 7) { 
                 let runits = await supplyChainContract.getRetailersUnits(i)
@@ -81,7 +80,7 @@ const AvailabeProductCustomerTable = () => {
               <table>
                 <tr>
                   <th>Batch ID</th>
-                   <th>Retailer Address</th>
+                   <th>Retailer</th>
                   <th>Total Quantities</th>
                   <th>Product Description</th>
                    <th>Action</th>
