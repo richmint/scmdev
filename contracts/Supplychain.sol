@@ -15,13 +15,13 @@ import "hardhat/console.sol";
 // contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Retailer, Customer{
 contract Supplychain{
     using Counters for Counters.Counter;
-    address supplyChainToken;
+    // address supplyChainToken;
     Counters.Counter private supplyChainId;
 
     // constructor(address _supplychainToken) RawMaterialSupplier() Warehouse() Factory() Distributor() Retailer() Customer(){
-    constructor(address _supplychainToken) {
-        supplyChainToken =_supplychainToken;
-    }
+    // constructor(address _supplychainToken) {
+    //     supplyChainToken =_supplychainToken;
+    // }
 
     enum State
     {
@@ -115,7 +115,7 @@ contract Supplychain{
         OGDetails[currentId].OGCottonAmount=_cottonAmount;
         OGDetails[currentId].OGWoolAmount=_woolAmount;
         items[currentId] =item;
-        SupplyChainToken(supplyChainToken).mint(msg.sender,currentId,1);
+        // SupplyChainToken(supplyChainToken).mint(msg.sender,currentId,1);
         timeStamps[currentId].push(block.timestamp);
         supplyChainId.increment();
         emit RawMaterialSupplierSuppliesRM(currentId);
@@ -129,7 +129,7 @@ contract Supplychain{
     {
         // require(isWarehouse(_warehouse),"NOT A VALID WAREHOUSE ADDRESS ! PLEASE CONTACT ADMIN");
         Item memory item =items[_supplyChainId];
-        address rawMaterialSupplier =item.RawMaterialSupplierID;
+        // address rawMaterialSupplier =item.RawMaterialSupplierID;
 
         item.factoryID =msg.sender;
         item.warehouseID=_warehouse;
@@ -137,7 +137,7 @@ contract Supplychain{
         items[_supplyChainId] =item;
         
         wareHouseItems[_warehouse].push(item);
-        SupplyChainToken(supplyChainToken).safeTransferFrom(rawMaterialSupplier,msg.sender,_supplyChainId,1,"0x00",0);
+        // SupplyChainToken(supplyChainToken).safeTransferFrom(rawMaterialSupplier,msg.sender,_supplyChainId,1,"0x00",0);
         timeStamps[_supplyChainId].push(block.timestamp);
         emit FactoryBuyRawMaterial(_supplyChainId);
     }
@@ -159,6 +159,17 @@ contract Supplychain{
         item.WoolAmount=  _woolAmount;
         items[_supplyChainId] =item;
         
+        uint length =wareHouseItems[item.warehouseID].length;
+        if (length >0){
+            for(uint i=0; i<length; i++){
+                if(wareHouseItems[item.warehouseID][i].supplyChainId == _supplyChainId){
+                    wareHouseItems[item.warehouseID][i].PolyesterAmount =_polyesterAmount;
+                    wareHouseItems[item.warehouseID][i].CottonAmount =_cottonAmount;
+                    wareHouseItems[item.warehouseID][i].WoolAmount =_woolAmount;
+                    wareHouseItems[item.warehouseID][i].itemState =State.factoryQCRawMaterials;
+                }
+            }
+        }   
         timeStamps[_supplyChainId].push(block.timestamp);
     }
 
@@ -217,6 +228,15 @@ contract Supplychain{
         item.totalUnits =_totalUnits;
         item.itemState=  State.factoryQCFinalItems;
         items[_supplyChainId] =item;
+        uint length =wareHouseItems[item.warehouseID].length;
+        if (length >0){
+            for(uint i=0; i<length; i++){
+                if(wareHouseItems[item.warehouseID][i].supplyChainId == _supplyChainId){
+                    wareHouseItems[item.warehouseID][i].itemState =State.factoryQCFinalItems;
+                    wareHouseItems[item.warehouseID][i].totalUnits =_totalUnits;
+                }
+            }
+        } 
         
         timeStamps[_supplyChainId].push(block.timestamp);
     }
@@ -232,7 +252,7 @@ contract Supplychain{
             item.itemState =State.factorySellItemToDistributors;
             item.distributorId =distributor;
 
-            SupplyChainToken(supplyChainToken).safeTransferFrom(msg.sender,distributor,_supplyChainId,1,"0x00",0);
+            // SupplyChainToken(supplyChainToken).safeTransferFrom(msg.sender,distributor,_supplyChainId,1,"0x00",0);
             items[_supplyChainId] =item;
             
             uint length =wareHouseItems[item.warehouseID].length;
@@ -257,8 +277,8 @@ contract Supplychain{
     {
             Item memory item =items[_supplyChainId];
             item.itemState =State.DistributorSellToRetailer;
-            uint units =item.totalUnits;
-            SupplyChainToken(supplyChainToken).mint(msg.sender,_supplyChainId,(units-1));
+            // uint units =item.totalUnits;
+            // SupplyChainToken(supplyChainToken).mint(msg.sender,_supplyChainId,(units-1));
             items[_supplyChainId] =item;
             uint lastq=0;
             for(uint i=0; i<retailers.length; i++){
@@ -266,7 +286,7 @@ contract Supplychain{
                 retailerID[_supplyChainId].push(retailers[i]);
                 retailerUnits[_supplyChainId].push(quantity[i]); 
                 retailerCounters[_supplyChainId].push(lastq);
-                SupplyChainToken(supplyChainToken).safeTransferFrom(msg.sender,retailers[i],_supplyChainId,quantity[i],"0x00",lastq);
+                // SupplyChainToken(supplyChainToken).safeTransferFrom(msg.sender,retailers[i],_supplyChainId,quantity[i],"0x00",lastq);
                 lastq +=quantity[i];
             }
             timeStamps[_supplyChainId].push(block.timestamp);
