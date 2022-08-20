@@ -127,7 +127,7 @@ const OrderHistoryTable = () => {
     if (customerlist.length > 0) {
         for(let i=0 ; i<customerlist.length; i++){
         let object = await supplyChainContract.items(i);
-        const info =await supplychain.customerInfo(customerSigner.address,array[i])
+        //const info =await supplychain.customerInfo(customerSigner.address,array[i])
   //   const object =await supplychain.items(info.supplychainID);
         if (object.itemState === 3 && object.factoryID.toLowerCase() === ownSupplyChainAddress.toLowerCase()) {
           checkvalue = 1;
