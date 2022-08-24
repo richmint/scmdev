@@ -115,60 +115,32 @@ const OrderHistoryTable = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [materiallist, setMateriallist] = useState(null);
-  const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress } = useContext(DarkModeContext);
+  const { dispatch, metaMask, supplyChainContract, ownSupplyChainAddress } = useContext(DarkModeContext);
 
   const allsupplymateriallist = []; 
   const getOrderHistoryHandler = async (event) => {
-    let userdatarec = '';
-    const totalbatchids = (await supplyChainContract.totalBatchs());
     const customerlist = (await supplyChainContract.getcustomerSCIds(ownSupplyChainAddress));
-
-    var checkvalue = 0;
     if (customerlist.length > 0) {
-        for(let i=0 ; i<customerlist.length; i++){
-        let object = await supplyChainContract.items(i);
-        //const info =await supplychain.customerInfo(customerSigner.address,array[i])
-  //   const object =await supplychain.items(info.supplychainID);
-        if (object.itemState === 3 && object.factoryID.toLowerCase() === ownSupplyChainAddress.toLowerCase()) {
-          checkvalue = 1;
-          const rawMaterialRecord = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({       
-              "hashAddress":object.RawMaterialSupplierID,       
-              })
-          };
-          await fetch("http://162.215.222.118:5150/location",rawMaterialRecord)    
-          .then(res => res.json())
-          .then(data => {
-            if(data){
-              userdatarec = data.username
-            }
-          }).catch((error) => { 
-            console.error('Error:', error);
-          });
+        for(let j=0 ; j<customerlist.length; j++){
+
+          const info =await supplyChainContract.customerInfo(ownSupplyChainAddress,customerlist[j])
+
+        let object = await supplyChainContract.items(info.supplychainID);
+          const i = info.supplychainID.toNumber()
+          //   // console.log(await supplyChainContract.OGDetails(info.supplychainID));
+
           allsupplymateriallist.push(
             <><tr>
-              <td>{i}</td>
-              <td>{userdatarec && userdatarec }</td>
-              <td>{object.PolyesterAmount.toNumber()}</td>
-              <td>{object.CottonAmount.toNumber()}</td>
+              <td>{info.supplychainID.toNumber()}</td>
+              <td>{info.retailer }</td>
+              <td>{info.quantity.toNumber()}</td>
+              <td>{object.Description}</td> 
               <td>
-                <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { i } })}>View</Button>
-                <Button variant="outline-success" onClick={() => navigate('/garmentBatchCompleteForm', { state: { i } })}>Continue</Button>
+              <Button variant="outline-success" onClick={() => navigate('/viewBatchStatus',{state:{i}})}>View</Button>
               </td>
             </tr></>
           )
-
-        }
       }
-      if(checkvalue == 0) {
-        allsupplymateriallist.push(
-          <><tr>
-            <td colSpan="6">No Record Found</td>
-          </tr></>
-        )
-    }
     } else {
       allsupplymateriallist.push(
         <><tr>

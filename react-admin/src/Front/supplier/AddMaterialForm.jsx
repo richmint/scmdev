@@ -1,13 +1,13 @@
 import React,{useEffect, useState,useContext} from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import './AddMaterialForm.scss'
-//import { fetch, success } from './LoginSlice'
-//import "./login.scss"
 import { useNavigate } from "react-router-dom";
-
 import "../../pages/new/new.scss";
 import Navbar from "../../components/front_navbar/Navbar";
-import Sidebar from "../../components/front_sidebar/Sidebar"; 
+import Sidebar from "../../components/front_sidebar/Sidebar";
+import CottonSupplierForm from "./CottonForm.jsx";
+import PolysterSupplierForm from "./PolyesterForm.jsx";
+import WoolSupplierForm from "./WoolForm.jsx"; 
 
 import { DarkModeContext } from "../../context/darkModeContext";
 
@@ -16,8 +16,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { AddMaterialSchema } from '../../Validations/Schema';
 
 const Materialsupplier = ({ inputs, title, value }) => {
-  const { dispatch, metaMask,supplyChainContract ,supplyChainTokenContract } = useContext(DarkModeContext);
-  const navigate = useNavigate();  
+  const { dispatch, metaMask,supplyChainContract } = useContext(DarkModeContext);
+  const navigate = useNavigate(); 
+  
+  const [materialtype, setMaterialtype] = useState('');
+
+  const setval = (data) =>{
+    console.log("fun call",data.target.value)
+  }
+  
   const {register, handleSubmit, setError, formState: { errors }} = useForm({
     defaultValues: {
       polysteramount: '',
@@ -31,8 +38,7 @@ const Materialsupplier = ({ inputs, title, value }) => {
   const [user,setUser] = useState(JSON.parse(sessionStorage.getItem('user'))); 
   
   const addSupplyChainHandler = async (event) => {
-    //event.preventDefault();
-    console.log("SChainContract",event);
+    //console.log("SChainContract",event);
     //console.log(await SChainContract.totalBatchs())
     const tx = await SChainContract.rawMaterialSupplierSuppliesRM(event.polysteramount, event.cottonamount, event.woolamount);
     //console.log((await tx.wait()));
@@ -40,8 +46,6 @@ const Materialsupplier = ({ inputs, title, value }) => {
        navigate("/supplyToken")
     }
   }
-
- 
   return (
     <div className="new">
        <Sidebar txt={"supplierAddBatch"} />
@@ -52,7 +56,26 @@ const Materialsupplier = ({ inputs, title, value }) => {
         </div>
         <div className="bottom">
           <div className="right">
-            <form onSubmit={handleSubmit(addSupplyChainHandler)}>
+          <div className="formInput">
+                <label>Material Type</label>
+                <select defaultValue={materialtype}  onChange={(e) =>setMaterialtype(e.target.value)}>
+                  <option value={''}>Select Material Type</option>
+                  <option value={'Cotton'}>Cotton</option>
+                  <option value={'Polyester'}>Polyester</option>
+                  <option value={'Wool'}>Wool</option>
+                </select>
+              </div>
+
+
+
+              { materialtype == 'Cotton' ?  <CottonSupplierForm /> : '' }
+              { materialtype == 'Polyester' ?  <PolysterSupplierForm /> : '' }
+              { materialtype == 'Wool' ?  <WoolSupplierForm /> : '' }
+
+
+              {console.log("gasjgdasf",materialtype)}
+
+            <form onSubmit={handleSubmit(addSupplyChainHandler)} style={{display: "none"}}>
               <div className="formInput">
                 <label>Polyster Amount</label>
                 <input id="polysteramount" name="polysteramount"  {...register("polysteramount", { required: true })} type="number" />

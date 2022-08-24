@@ -32,7 +32,7 @@ const ManufactureGarmentTable = () => {
           .then(res => res.json())
           .then(data => {
             if(data){
-              userdatarec = data.username
+              userdatarec = data.username 
             }
           }).catch((error) => { 
             console.error('Error:', error);

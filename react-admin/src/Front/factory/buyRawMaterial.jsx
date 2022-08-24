@@ -5,6 +5,7 @@ import Sidebar from "../../components/front_sidebar/Sidebar";
 import '../../style/front/viewSupplyTable.scss'
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
+
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -20,28 +21,18 @@ const BuyRawMaterial = () =>{
   const {register, handleSubmit, setError, formState: { errors }} = useForm({
     defaultValues: {
       whHashAdr: ''
-      // buyPolysterAmount: '',
-      // buyCottonAmount:'',
-      // buyWoolAmount:''
     },
     resolver: yupResolver(BuyRawMaterialSchema),
   })
-
- 
-
   const navigate = useNavigate();
-  const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress } = useContext(DarkModeContext);
+  const { dispatch, metaMask, supplyChainContract, ownSupplyChainAddress } = useContext(DarkModeContext);
   const buyMaterialHandler = async (event) => {
-  console.log("batchid",event.whHashAdr);
     const tx = supplyChainContract.factoryBuyRawMaterial(data, event.whHashAdr);
     //console.log((await tx.wait()));
     if(tx){
        navigate("/availableRawMaterialToBuy")
     }
   }
- 
-   
-    
     const ConfirmShow = (props) =>{
       //const data = props.data
       //const data = props.i
@@ -55,13 +46,16 @@ const BuyRawMaterial = () =>{
             <div className="right">
               <form onSubmit={handleSubmit(buyMaterialHandler)}>
                 <div className="formInput">
-                  <label>Warehouse Address</label>                  
-                  <input id="whHashAdr" name="whHashAdr" type="text" {...register("whHashAdr", { required: true })}/>
+                  <label>Warehouse Address</label>  
+                  <select id="whHashAdr" name="whHashAdr" {...register("whHashAdr", { required: true })} style={{width: "100%",height: "40px"}}>
+                    <option selected="selected" value={'0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC'}>Vipin Yadav</option>
+                    </select>                
+                   {/* <input id="whHashAdr" name="whHashAdr" value={'0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC'} type="hidden" {...register("whHashAdr", { required: true })}/> */}
                   {errors.whHashAdr && <span className='error'> {console.log(errors)} {errors?.whHashAdr?.message}</span>}
                 </div>
                 {/* <div className="formInput">
                   <label>Buy Polyster Amount</label>                  
-                  <input id="buyPolysterAmount" name="buyPolysterAmount"  type="text" {...register("buyPolysterAmount", { required: true })} />
+                  <input id="buyPolysterAmount" name="buyPolysterAmount"   type="text" {...register("buyPolysterAmount", { required: true })} />
                   {errors.buyPolysterAmount && <span className='error'> {console.log(errors)} {errors?.buyPolysterAmount?.message}</span>}
 
                 </div>

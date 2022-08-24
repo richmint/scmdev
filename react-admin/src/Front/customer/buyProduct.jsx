@@ -26,7 +26,7 @@ const ProductBuyCustomer = () => {
     }, [productQty])
     const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract } = useContext(DarkModeContext);
     const [SChainContract, setSChainContract] = useState(supplyChainContract);
-    const addSupplyChainHandler = async (event) => {
+    const buyProductCustomerHandler = async (event) => {
         console.log("Product Qty", productQty);
         const tx = await SChainContract.customerBuyItem(data.state.id, data.state.retailerAddress, productQty);
         if (tx) {
@@ -40,7 +40,7 @@ const ProductBuyCustomer = () => {
                 <Navbar />
                 <div className="bottom">
                     <div className="right">
-                        <form onSubmit={handleSubmit(addSupplyChainHandler)} >
+                        <form onSubmit={handleSubmit(buyProductCustomerHandler)} >
                             <div className="formInput">
                                 <label>Product Quantity</label>
                                 <input id="productQty" name="productQty" type="number" value={productQty} onChange={(e) => setproductQty(e.target.value)} />

@@ -45,7 +45,10 @@ const SellItemFormData = () => {
           <form onSubmit={handleSubmit(sellItemToDistributerHandler)}>
             <div className="formInput">
               <label>Distributer Address</label>
-              <input id="distributeradrs" type="text" name="distributeradrs" {...register("distributeradrs", { required: true })}/>
+              <select id="distributeradrs" name="distributeradrs" {...register("distributeradrs", { required: true })} style={{width: "100%",height: "40px"}}>
+                    <option selected="selected" value={'0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65'}>Rao Tavish</option>
+                    </select>  
+              {/* <input id="distributeradrs" type="text" name="distributeradrs" {...register("distributeradrs", { required: true })}/> */}
               {errors.distributeradrs && <span className='error'> {console.log(errors)} {errors?.distributeradrs?.message}</span>}
             </div>
             <div className='formInput'>

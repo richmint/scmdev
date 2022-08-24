@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Supplychain_abi from '../../artifacts/contracts/Supplychain.sol/Supplychain.json';
 import Date_abi from '../../artifacts/contracts/Helper.sol/DateTime.json';
-import SupplychainToken_abi from '../../artifacts/contracts/SupplyChainERC1155.sol/SupplyChainToken.json';
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import { DarkModeContext } from "../../context/darkModeContext";
@@ -17,11 +16,10 @@ const Navbar = (props) => {
 
 	//console.log(localStorage);
 
-	let supplyChainTokenAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
-	let supplyChainAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
-	let dateAddress = '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0';
+	let supplyChainAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
+	let dateAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
-	const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownerSupplyChainAddress,dateContract } = useContext(DarkModeContext);
+	const { dispatch, metaMask, supplyChainContract, ownerSupplyChainAddress,dateContract } = useContext(DarkModeContext);
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [defaultAccount, setDefaultAccount] = useState(null);
 	const [connButtonText, setConnButtonText] = useState('Connect Wallet');
@@ -30,7 +28,6 @@ const Navbar = (props) => {
 	const [signer, setSigner] = useState(null);
 	const [SChainContract, setSChainContract] = useState(supplyChainContract);
 	const [CreatedDateContract, setCreatedDateContract] = useState(dateContract);
-	const [SChainTokenContract, setSChainTokenContract] = useState(supplyChainTokenContract);
 	const [OwnSupplyChainAddress, setOwnSupplyChainAddress] = useState(ownerSupplyChainAddress);
 
 	useEffect(() => {
@@ -38,7 +35,6 @@ const Navbar = (props) => {
 	}, []);
 	const connectWalletHandler = () => {
 		if (window.ethereum && window.ethereum.isMetaMask) {
-
 			window.ethereum.request({ method: 'eth_requestAccounts' })
 				.then(result => {
 					accountChangedHandler(result[0]);
@@ -47,7 +43,6 @@ const Navbar = (props) => {
 				.catch(error => {
 					setErrorMessage(error.message);
 				});
-
 		} else {
 			console.log('Need to install MetaMask');
 			setErrorMessage('Please install MetaMask browser extension to interact');
@@ -89,11 +84,6 @@ const Navbar = (props) => {
 		// console.log("supplychaintempContract",supplychaintempContract);
 		dispatch({ type: "updateSupplychain", supplyChainContract: supplychaintempContract })
 		// console.log(await supplychaintempContract.totalBatchs());
-  
-		let supplychaintokentempContract = new ethers.Contract(supplyChainTokenAddress, SupplychainToken_abi.abi, tempSigner);
-		setSChainTokenContract(supplychaintokentempContract);
-		dispatch({ type: "updateSupplychainToken", supplyChainTokenContract: supplychaintokentempContract })
-		// console.log("supplychaintokentempContract",supplychaintokentempContract);
 
 		let datetempContract = new ethers.Contract(dateAddress, Date_abi.abi, tempSigner);
 		setCreatedDateContract(datetempContract);

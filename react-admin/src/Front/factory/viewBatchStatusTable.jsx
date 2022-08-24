@@ -10,9 +10,9 @@ import Card from 'react-bootstrap/Card';
 
 const ViewBatchStatusTable = () => {
   let data = useLocation();
-  //console.log("data record", data.state.i);
+  console.log("data record", data.state.i);
   const navigate = useNavigate();
-  const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress, dateContract } = useContext(DarkModeContext);
+  const { dispatch, metaMask, supplyChainContract, ownSupplyChainAddress, dateContract } = useContext(DarkModeContext);
   useEffect(() => {
     getSupplyChainHandler();
   }, []);
