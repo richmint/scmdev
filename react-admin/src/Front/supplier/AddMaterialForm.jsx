@@ -1,5 +1,4 @@
 import React,{useEffect, useState,useContext} from 'react';
-import { useSelector, useDispatch } from 'react-redux'
 import './AddMaterialForm.scss'
 import { useNavigate } from "react-router-dom";
 import "../../pages/new/new.scss";
@@ -8,22 +7,14 @@ import Sidebar from "../../components/front_sidebar/Sidebar";
 import CottonSupplierForm from "./CottonForm.jsx";
 import PolysterSupplierForm from "./PolyesterForm.jsx";
 import WoolSupplierForm from "./WoolForm.jsx"; 
-
 import { DarkModeContext } from "../../context/darkModeContext";
-
 import {useForm} from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup"; 
 import { AddMaterialSchema } from '../../Validations/Schema';
-
 const Materialsupplier = ({ inputs, title, value }) => {
   const { dispatch, metaMask,supplyChainContract } = useContext(DarkModeContext);
   const navigate = useNavigate(); 
-  
   const [materialtype, setMaterialtype] = useState('');
-
-  const setval = (data) =>{
-    console.log("fun call",data.target.value)
-  }
   
   const {register, handleSubmit, setError, formState: { errors }} = useForm({
     defaultValues: {
@@ -33,7 +24,6 @@ const Materialsupplier = ({ inputs, title, value }) => {
     },
     resolver: yupResolver(AddMaterialSchema),
   })
-
   const [SChainContract, setSChainContract] = useState(supplyChainContract);
   const [user,setUser] = useState(JSON.parse(sessionStorage.getItem('user'))); 
   
@@ -43,9 +33,11 @@ const Materialsupplier = ({ inputs, title, value }) => {
     const tx = await SChainContract.rawMaterialSupplierSuppliesRM(event.polysteramount, event.cottonamount, event.woolamount);
     //console.log((await tx.wait()));
     if(tx){
-       navigate("/supplyToken")
+       navigate("/supplyToken",{state:{val:true}})
+       
     }
   }
+  // navigate('/viewBatchStatus',{state:{i}})}
   return (
     <div className="new">
        <Sidebar txt={"supplierAddBatch"} />
@@ -65,17 +57,12 @@ const Materialsupplier = ({ inputs, title, value }) => {
                   <option value={'Wool'}>Wool</option>
                 </select>
               </div>
-
-
-
               { materialtype == 'Cotton' ?  <CottonSupplierForm /> : '' }
               { materialtype == 'Polyester' ?  <PolysterSupplierForm /> : '' }
               { materialtype == 'Wool' ?  <WoolSupplierForm /> : '' }
 
-
-              {console.log("gasjgdasf",materialtype)}
-
-            <form onSubmit={handleSubmit(addSupplyChainHandler)} style={{display: "none"}}>
+            {/* <form onSubmit={handleSubmit(addSupplyChainHandler)} style={{display: "none"}}> */}
+            <form onSubmit={handleSubmit(addSupplyChainHandler)} >
               <div className="formInput">
                 <label>Polyster Amount</label>
                 <input id="polysteramount" name="polysteramount"  {...register("polysteramount", { required: true })} type="number" />

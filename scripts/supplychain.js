@@ -364,7 +364,7 @@ async function main() {
   // await supplychain.connect(customerSigner).customerBuyItem(1,retailerSigner2.address,3);
 
 
-    // ---------------------------- CUSTOMER PROFILE ---------------------------------
+  // ---------------------------- CUSTOMER PROFILE ---------------------------------
   
   // const array = await supplychain.getcustomerSCIds(customerSigner.address)
   // for(let i=0 ; i<array.length; i++){

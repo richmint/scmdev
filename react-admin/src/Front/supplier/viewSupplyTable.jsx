@@ -1,13 +1,45 @@
 
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext,useMemo } from 'react';
 import "./viewSupplyTable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useLocation } from 'react-router-dom';
 
 const ViewSupplyTable = () => {
+  const [show,setShow] = useState(false);
+
+  const value = useLocation();
+  console.log("Direct",value.state)
+  // if(value.state != null){
+  //   console.log("dfsd")
+  //   setShow(value.state.val);
+  // }else{
+  //   setShow(false)
+  // }
+
+  // if(show == true){toast("Wow so easy !")}
+// console.log("data cone frin loaction",value.state.val)
+
+// useMemo(() =>{
+
+// },[show])
+
+  // const Notify = () => {
+  //   return(
+  //     <>
+  //     {show==true?console.log("Rahul"):console.log("saini")}
+  //     </>
+  //   )
+  // }  
+    const toastFun = () => {toast("Wow so easy xfdf!")}
+
   const [data, setData] = useState([]);
   const [materiallist, setMateriallist] =  useState(null);
+ 
+
   const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress, dateContract } = useContext(DarkModeContext);
   const allsupplymateriallist = [];
   const getSupplyChainHandler = async (event) => {
@@ -23,7 +55,7 @@ const ViewSupplyTable = () => {
   //     console.log(await dateTime.getDay(object.toNumber()),await dateTime.getMonth(object.toNumber()),await dateTime.getYear(object.toNumber()));
   //     console.log();
   //   } 
-  // } 
+  // }  
 
     const totalbatchids = await supplyChainContract.totalBatchs()
     var checkvalue = 0;
@@ -72,11 +104,24 @@ const ViewSupplyTable = () => {
  
   return (
     <>
+   {show == true ?console.log("Rajil"):console.log("saini")}
       <div className="new">
         <div className="newContainer">
           <div className="top">
               <h3>View Supply Token</h3>
           </div>
+          <button onClick={toastFun}>Notify!</button>
+          <ToastContainer
+position="bottom-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+/>
           <div className="bottom">
             <div className="right">
               <table>

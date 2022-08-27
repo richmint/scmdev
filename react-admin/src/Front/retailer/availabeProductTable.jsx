@@ -10,48 +10,11 @@ const AvailabeProductTable = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [materiallist, setMateriallist] = useState(null);
-
   const { dispatch, metaMask, supplyChainContract, ownSupplyChainAddress, dateContract } = useContext(DarkModeContext);
-
-
-
   const allsupplymateriallist = [];
   const getSupplyChainHandler = async (event) => {
     let distributeruserrec = '';
     let factoryuserrec = '';
-
-
-
-
-
-    
-  // const total =await supplychain.totalBatchs()
-  // for(let i =0; i<total; i++){
-  //   let array = await supplychain.getRetailers(i);
-  //   if(array.length>0){
-  //     for(let k=0; k<array.length; k++){
-  //       if(array[k]===retailerSigner1.address){
-  //         const object =await supplychain.items(i);
-  //         if(object.itemState==7){
-  //           console.log(object)
-  //           let runits =await supplychain.getRetailersUnits(i)
-  //           console.log(runits[k]); 
-  //           let rcounter =await supplychain.getRetailersCounters(i)
-  //           console.log(rcounter[k]);
-  //           console.log(await supplychain.OGDetails(object.supplyChainId));
-  //           const data = await supplychain.timeStamps(object.supplyChainId,object.itemState);
-  //           console.log(await dateTime.getDay(data.toNumber()),await dateTime.getMonth(data.toNumber()),await dateTime.getYear(data.toNumber()));
-  //         }
-  //       } 
-  //     }
-  //   }
-  // }
-
-
-
-
-
-
 
     const totalbatch = (await supplyChainContract.totalBatchs());
     //console.log("totalbatch",totalbatch.toNumber());
@@ -108,7 +71,8 @@ const AvailabeProductTable = () => {
                   console.error('Error:', error);
                 });
                 allsupplymateriallist.push(
-                  <><tr>
+                <>
+                  <tr>
                     <td>{i}</td>
                     <td>{distributeruserrec && distributeruserrec}</td>
                     <td>{factoryuserrec && factoryuserrec}</td>
@@ -120,7 +84,8 @@ const AvailabeProductTable = () => {
                     {/* <td>
                       <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { i } })}>View</Button>
                     </td> */}
-                  </tr></>
+                  </tr>
+                </>
                 )
               }
             }
