@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import "./sidebar.scss";
 import { logout } from '../../Front/login/LoginSlice';
 import { useDispatch } from 'react-redux';
-
 const Sidebar = (props) => {
   const { dispatch } = useContext(DarkModeContext);
   const navigate = useNavigate();
@@ -100,28 +99,25 @@ const Sidebar = (props) => {
                     <span>Manufacturing Garment</span>
                   </li>
                 </Link>
-                
                 <Link to="/sellItemToDistributer" style={{ textDecoration: "none" }}>
                   <li style={{backgroundColor: props.txt == "FecItemToDistributer"?"orange":""}}>
                     <StoreIcon className="icon" />
                     <span>Sell Item to Distributer</span>
                   </li>
                 </Link>
-                
                 </>
               )
             } else if (localStorage.userRole == 'Warehouse') {
               return(
                 <>
                 <Link to="/storedItemsInWarehouse" style={{ textDecoration: "none" }}>
-            <li style={{backgroundColor: props.txt == "WareSuplyToken"?"orange":""}}>
-              <StoreIcon className="icon" />
-              <span>Stored Items Details</span>
-            </li>
-          </Link>
+                  <li style={{backgroundColor: props.txt == "WareSuplyToken"?"orange":""}}>
+                    <StoreIcon className="icon" />
+                    <span>Stored Items Details</span>
+                  </li>
+                </Link>
                 </>
               )
-
             }else if (localStorage.userRole == 'Distributer') {
               return(
                 <>
@@ -148,7 +144,6 @@ const Sidebar = (props) => {
               <span>Availabel Product</span>
             </li> 
           </Link>
-          
                 </>
               )
             }else if (localStorage.userRole == 'Customer') {
@@ -160,14 +155,12 @@ const Sidebar = (props) => {
                   <span>Availabel Product</span>
                 </li> 
               </Link>
-
               <Link to="/orderhistory" style={{ textDecoration: "none" }}>
                 <li style={{backgroundColor: props.txt == "orderhistory"?"orange":""}}>
                   <StoreIcon className="icon" />
                   <span>Order History</span>
                 </li> 
               </Link>
-          
                 </>
               )
             }
@@ -181,5 +174,4 @@ const Sidebar = (props) => {
     </div>
   );
 };
-
 export default Sidebar;

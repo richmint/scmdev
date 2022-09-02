@@ -178,7 +178,6 @@ function App() {
               <Route path="/admin/users" element={token ? <List />: <Navigate to={"/admin/login"} />} />
               <Route path="/admin/users/:userId" element={token ? <Single />: <Navigate to={"/admin/login"} />} />
               <Route path="/admin/users/new" element={token ? <New inputs={userInputs} title="Add New User" /> : <Navigate to={"/admin/login"} />} />
-           
               <Route index path="/" element={<LandingPage />} />
               <Route path="/userlogin" element={frontToken ? <Navigate to={"/material-supplier"} /> : <Userlogin />} />
               <Route path="/profile" element={frontToken ? <Profile /> : <Navigate to={"/userlogin"} />} />
@@ -186,14 +185,12 @@ function App() {
               <Route path="/addbatch" element={frontToken ? <Addbatch /> : <Navigate to={"/userlogin"} />} />
               <Route path="/supplyToken" element={frontToken ? <ViewSupplyToken /> : <Navigate to={"/userlogin"} />} />
               <Route path="/approveSupplier" element={frontToken ? <Approvesupplier /> : <Navigate to={"/userlogin"} />} />
-              
               {/* Front Factory Routes */}
               <Route path="/availableRawMaterialToBuy" element={frontToken ? <AvailableRawMaterialToBuy /> : <Navigate to={"/userlogin"} />} />
               <Route path="/approveFactorySupplier" element={frontToken ? <ApproveFactorySupplier /> : <Navigate to={"/userlogin"} />} />
               <Route path="/sellItemToDistributer" element={frontToken ? <SellItemToDistributer /> : <Navigate to={"/userlogin"} />} /> 
               <Route path="/sellItemFormData" element={frontToken ? <SellItemFormData /> : <Navigate to={"/userlogin"} />} />
               <Route path="/buyRawMaterial" element={frontToken ? <BuyRawMaterial /> : <Navigate to={"/userlogin"} />} />
-              
               <Route path="/spinningWaevingMaterial" element={frontToken ? <SpinningWaevingMaterial /> : <Navigate to={"/userlogin"} />} />
               <Route path="/manufactureGarmentMaterial" element={frontToken ? <ManufactureGarmentMaterial /> : <Navigate to={"/userlogin"} />} />
               <Route path="/viewBatch" element={frontToken ? <ViewBatch /> : <Navigate to={"/userlogin"} />} />
@@ -204,20 +201,16 @@ function App() {
               <Route path="/storedItemsInWarehouse" element={frontToken ? <StoredItemsInWarehouse /> : <Navigate to={"/userlogin"} />} />
               <Route path="/rawMaterialQualityCheck" element={frontToken ? <QualityCheckRawMaterail /> : <Navigate to={"/userlogin"} />} />
               <Route path="/productQualityCheck" element={frontToken ? <ProductQualityCheck /> : <Navigate to={"/userlogin"} />} />
-
                {/* Front Distributer Routes */}
               <Route path="/availabelItemToSellRetailer" element={frontToken ? <AvailabelItemToSellRetailer /> : <Navigate to={"/userlogin"} />} />
               <Route path="/approveDistributerSupplier" element={frontToken ? <ApproveDistributerSupplier /> : <Navigate to={"/userlogin"} />} />
               <Route path="/sellToRetailer" element={frontToken ? <SellToRetailer /> : <Navigate to={"/userlogin"} />} />
-
               {/* Front Retailer Routes */}
               <Route path="/availabeProductforRetailer" element={frontToken ? <AvailabeProductforRetailer /> : <Navigate to={"/userlogin"} />} />
-
               {/* Front Retailer Routes */}
               <Route path="/availabeProductforCustomer" element={frontToken ? <AvailabeProductforCustomer /> : <Navigate to={"/userlogin"} />} />
               <Route path="/productBuyCustomer" element={frontToken ? <ProductBuyCustomer /> : <Navigate to={"/userlogin"} />} />
               <Route path="/orderhistory" element={frontToken ? <OrderHistory /> : <Navigate to={"/userlogin"} />} />
-
             </Routes>
       </BrowserRouter>
     </div>
