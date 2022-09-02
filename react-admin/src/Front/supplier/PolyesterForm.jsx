@@ -25,7 +25,7 @@ const PolysterSupplierForm = ({ inputs, title, value }) => {
   const addSupplyPolyesterHandler = async (event) => {
     console.log("SChainContract",event);
     //console.log(await SChainContract.totalBatchs())
-    const tx = await SChainContract.rawMaterialSupplierSuppliesRM(event.polysteramount, event.cottonamount, event.woolamount);
+    const tx = await SChainContract.rawMaterialSupplierSuppliesRM(2,[event.polyesterFmax, event.polyesteremax, event.polyesterNeps, event.polysterCvm,0]);
     if(tx){
        navigate("/supplyToken")
     }

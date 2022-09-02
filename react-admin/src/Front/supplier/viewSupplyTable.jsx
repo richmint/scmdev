@@ -44,27 +44,27 @@ const ViewSupplyTable = () => {
   const allsupplymateriallist = [];
   const getSupplyChainHandler = async (event) => {
 
-  //   const totalBatchs =await supplychain.totalBatchs()  
+  // const totalBatchs =await supplychain.totalBatchs()  
   // for(let i= 0; i<totalBatchs; i++){  
   //   const item = await supplychain.items(i);  
-  //   if (item.itemState ==0 && item.RawMaterialSupplierID ==rawMaterialSupplierSigner1.address){ 
-  //     console.log();
+  //   if (item.RawMaterialSupplierID ==rawMaterialSupplierSigner1.address){ 
+  //     console.log(); 
   //     console.log(item);  
-  //     console.log(await supplychain.OGDetails(item.supplyChainId));
+  //     console.log((await supplychain.RawMaterialDetails(item.supplyChainId)));
   //     const object =await supplychain.timeStamps(item.supplyChainId,item.itemState);
   //     console.log(await dateTime.getDay(object.toNumber()),await dateTime.getMonth(object.toNumber()),await dateTime.getYear(object.toNumber()));
   //     console.log();
   //   } 
-  // }  
+  // } 
 
     const totalbatchids = await supplyChainContract.totalBatchs()
     var checkvalue = 0;
     if(totalbatchids.toNumber()>0){
       for (let i = 0; i < totalbatchids.toNumber(); i++) {
         let object = await supplyChainContract.items(i);
-        if (object.itemState === 0 && object.RawMaterialSupplierID.toLowerCase() === ownSupplyChainAddress.toLowerCase()) {
+        if (object.RawMaterialSupplierID.toLowerCase() === ownSupplyChainAddress.toLowerCase()) {
           checkvalue = 1;
-        let OGObject = await supplyChainContract.OGDetails(object.supplyChainId);
+        let OGObject = await supplyChainContract.RawMaterialDetails(object.supplyChainId);
         const dateObject =await supplyChainContract.timeStamps(i,0);
         const createdday = await dateContract.getDay(dateObject.toNumber())
         const createmonth = await dateContract.getMonth(dateObject.toNumber())
@@ -73,8 +73,8 @@ const ViewSupplyTable = () => {
             <>
               <tr> 
                 <td>{i}</td>
-                <td>{OGObject.OGPolyesterAmount.toNumber()}</td>
-                <td>{OGObject.OGCottonAmount.toNumber()}</td>
+                <td>{console.log(OGObject)}</td>
+                <td>{OGObject.rawMaterial1.toNumber()}</td>
                 <td>{OGObject.OGWoolAmount.toNumber()}</td>
                 <td>{createdday}-{createmonth}-{createdyear}</td>
               </tr>
@@ -110,7 +110,7 @@ const ViewSupplyTable = () => {
           <div className="top">
               <h3>View Supply Token</h3>
           </div>
-          <button onClick={toastFun}>Notify!</button>
+          {/* <button onClick={toastFun}>Notify!</button>
           <ToastContainer
 position="bottom-right"
 autoClose={5000}
@@ -121,7 +121,7 @@ rtl={false}
 pauseOnFocusLoss
 draggable
 pauseOnHover
-/>
+/> */}
           <div className="bottom">
             <div className="right">
               <table>

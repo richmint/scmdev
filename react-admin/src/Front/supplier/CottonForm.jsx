@@ -24,7 +24,7 @@ const CottonSupplierForm = ({ inputs, title, value }) => {
   const [SChainContract, setSChainContract] = useState(supplyChainContract);
   const [user,setUser] = useState(JSON.parse(sessionStorage.getItem('user'))); 
   const addSupplyCottonHandler = async (event) => {
-    const tx = await SChainContract.rawMaterialSupplierSuppliesRM(event.polysteramount, event.cottonamount, event.woolamount);
+    const tx = await SChainContract.rawMaterialSupplierSuppliesRM(1,[event.CottonWeight, event.fiberlength, event.fiberStrength, event.cottonMike, event.fqi]);
     if(tx){
        navigate("/supplyToken")
     }
