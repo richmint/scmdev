@@ -106,6 +106,13 @@ async function main() {
 
   // await supplychain.connect(factorySigner1).factoryBuyRawMaterial(0,[50,50,50,50,50]);
   
+  
+  // ---------------------------- FACTORY RECEIVE RAW MATERIALS ------------------------
+
+
+  // await supplychain.connect(factorySigner1).factoryReceiveRawMaterials(0,warehouseSigner.address);
+
+
 
   // ---------------------------- FACTORY COMPLETES QUALITY CONTROL FOR RAW MATERILALS ------------------------
 
@@ -128,11 +135,6 @@ async function main() {
   //     console.log();
   //   } 
   // } 
-
-  // ---------------------------- FACTORY RECEIVE RAW MATERIALS ------------------------
-
-
-  // await supplychain.connect(factorySigner1).factoryReceiveRawMaterials(0,warehouseSigner.address);
 
 
 
