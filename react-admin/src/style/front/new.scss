@@ -32,6 +32,7 @@
           object-fit: cover;
         }
       }
+      
 
       .right {
         flex: 2;
@@ -45,6 +46,8 @@
 
           .formInput {
             width: 45%;
+            float: left;
+            margin: 10px;
 
             label {
               display: flex;
@@ -64,6 +67,17 @@
               justify-content: center;
             }
           }
+
+          .cotton-section{
+            width: 100%;
+          }
+          .polyester-section{
+            width: 100%;
+          }
+          .wool-section{
+            width: 100%;
+          }
+          
 
           button {
             width: 150px;

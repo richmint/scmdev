@@ -7,12 +7,12 @@ const AvailabeProductCustomerTable = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [materiallist, setMateriallist] = useState(null);
-  const [retailrHash, setretailrHash] = useState(null);
-  const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress, dateContract } = useContext(DarkModeContext);
+  const { dispatch, metaMask, supplyChainContract, ownSupplyChainAddress, dateContract } = useContext(DarkModeContext);
   const allsupplymateriallist = [];
   const getProductListHandler = async (event) => {
+    let retailrHash = ''
     const totalbatch = (await supplyChainContract.totalBatchs());
-    if (totalbatch > 0) {
+    if (totalbatch.toNumber() > 0) {
       for (let i = 0; i < totalbatch; i++) {
         let retailers = await supplyChainContract.getRetailers(i);
         if (retailers.length > 0) {
@@ -30,15 +30,17 @@ const AvailabeProductCustomerTable = () => {
                     .then(result => result.json())
                     .then(resultdata => {
                       if(resultdata){ 
-                        setretailrHash(resultdata.hashAddress);
+                        retailrHash = resultdata.hashAddress
                       }else{
                         console.log("error");
                       } 
                      }
                      )   
            if(retailrHash == retailers[k]){
-              if (object.itemState === 7) { 
-                let runits = await supplyChainContract.getRetailersUnits(i)
+            console.log("fgdfgdfg",object.itemState);
+            let runits = await supplyChainContract.getRetailersUnits(i)
+              if (object.itemState === 7 && runits[k].toNumber() !== 0) { 
+                
                 let rcounter = await supplyChainContract.getRetailersCounters(i)
                 const data = await supplyChainContract.timeStamps(object.supplyChainId, object.itemState);
                 allsupplymateriallist.push(
@@ -50,6 +52,12 @@ const AvailabeProductCustomerTable = () => {
                     <td><Button variant="outline-success" onClick={() => navigate('/productBuyCustomer', {state:{id:i,retailerAddress:retailrHash,productQty:runits[k].toNumber()}})}>Buy</Button></td> 
                   </tr>
                   </>     
+                )
+              }else {
+                allsupplymateriallist.push(
+                  <><tr>
+                    <td colSpan="6">No Record Found</td>
+                  </tr></>
                 )
               }
             }

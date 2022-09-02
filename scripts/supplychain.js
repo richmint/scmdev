@@ -28,8 +28,13 @@ async function main() {
   await dateTime.deployed();
   console.log("Date deployed at:", dateTime.address);
 
+<<<<<<< HEAD
   // const supplychain =await ethers.getContractAt("Supplychain","0x1d5a9CFCc4d039BF3DA92E9E3151e83F511bBCAf")
   // const dateTime =await ethers.getContractAt("DateTime","0xf41D5f4EA5037B3cb0799BcFb6Ec66be22908311")
+=======
+  //const supplychain =await ethers.getContractAt("Supplychain","0x1d5a9CFCc4d039BF3DA92E9E3151e83F511bBCAf")
+  //const dateTime =await ethers.getContractAt("DateTime","0xf41D5f4EA5037B3cb0799BcFb6Ec66be22908311")
+>>>>>>> 1f4d01dee83675ffc7ff0c278ab248367619f0fa
 
   // await supplychain.addRawMaterialSupplier(rawMaterialSupplierSigner1.address);
 
@@ -373,7 +378,7 @@ async function main() {
   // await supplychain.connect(customerSigner).customerBuyItem(1,retailerSigner2.address,3);
 
 
-    // ---------------------------- CUSTOMER PROFILE ---------------------------------
+  // ---------------------------- CUSTOMER PROFILE ---------------------------------
   
   // const array = await supplychain.getcustomerSCIds(customerSigner.address)
   // for(let i=0 ; i<array.length; i++){
@@ -387,7 +392,6 @@ async function main() {
   // }
 
 }
-
 main()
   .then(() => process.exit(0))
   .catch((error) => {

@@ -10,19 +10,15 @@ const AvailabeProductTable = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [materiallist, setMateriallist] = useState(null);
-
-  const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress, dateContract } = useContext(DarkModeContext);
-
-
-
+  const { dispatch, metaMask, supplyChainContract, ownSupplyChainAddress, dateContract } = useContext(DarkModeContext);
   const allsupplymateriallist = [];
   const getSupplyChainHandler = async (event) => {
     let distributeruserrec = '';
     let factoryuserrec = '';
 
     const totalbatch = (await supplyChainContract.totalBatchs());
-    //console.log("totalbatch",totalbatch);
-    if (totalbatch > 0) {
+    //console.log("totalbatch",totalbatch.toNumber());
+    if (totalbatch.toNumber() > 0) {
       for (let i = 0; i < totalbatch; i++) {
 
         let retailers = await supplyChainContract.getRetailers(i);
@@ -75,7 +71,8 @@ const AvailabeProductTable = () => {
                   console.error('Error:', error);
                 });
                 allsupplymateriallist.push(
-                  <><tr>
+                <>
+                  <tr>
                     <td>{i}</td>
                     <td>{distributeruserrec && distributeruserrec}</td>
                     <td>{factoryuserrec && factoryuserrec}</td>
@@ -87,7 +84,8 @@ const AvailabeProductTable = () => {
                     {/* <td>
                       <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { i } })}>View</Button>
                     </td> */}
-                  </tr></>
+                  </tr>
+                </>
                 )
               }
             }

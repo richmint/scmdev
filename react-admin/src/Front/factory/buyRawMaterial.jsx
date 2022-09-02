@@ -5,6 +5,7 @@ import Sidebar from "../../components/front_sidebar/Sidebar";
 import '../../style/front/viewSupplyTable.scss'
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
+
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -13,70 +14,74 @@ import {useForm} from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup"; 
 import { BuyRawMaterialSchema } from '../../Validations/Schema';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const BuyRawMaterial = () =>{
+
+  const notify = () => toast("Wow so easy!");
+  //const BuyRawMaterial = async (event) => {
+const[wareHouseMaterialList,setwareHouseMaterialList] = useState();
+let distributeruserrec = '';
   let data = useLocation();
   data = data.state.i;
   //console.log("Comming data is",data)
   const {register, handleSubmit, setError, formState: { errors }} = useForm({
     defaultValues: {
       whHashAdr: ''
-      // buyPolysterAmount: '',
-      // buyCottonAmount:'',
-      // buyWoolAmount:''
     },
     resolver: yupResolver(BuyRawMaterialSchema),
   })
-
- 
-
   const navigate = useNavigate();
-  const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress } = useContext(DarkModeContext);
+  const { dispatch, metaMask, supplyChainContract, ownSupplyChainAddress } = useContext(DarkModeContext);
   const buyMaterialHandler = async (event) => {
-  console.log("batchid",event.whHashAdr);
     const tx = supplyChainContract.factoryBuyRawMaterial(data, event.whHashAdr);
     //console.log((await tx.wait()));
     if(tx){
        navigate("/availableRawMaterialToBuy")
     }
   }
- 
-   
-    
+  
+  useEffect (() =>{
+    getWarehouseList()
+  },[])
+  const listItems = [];
+  function getWarehouseList(){
+    fetch("http://162.215.222.118:5150/warehouse")
+         .then(result=>result.json())
+         .then(data => {
+          if(data){
+            setwareHouseMaterialList(data)
+          }
+        })
+      }
+      const SelectList = (props) =>{
+        const data = props.val;
+        return(
+          <option value={data.hashAddress}>{data.name}</option>
+        )
+      }
     const ConfirmShow = (props) =>{
-      //const data = props.data
-      //const data = props.i
         return(
           <div className="new">
             <div className="newContainer">
               <div className="top">
               <h4>Buy Raw Material</h4>
               </div>
+              <button onClick={notify}>Notify!</button>
+        <ToastContainer />
             <div className="bottom">
             <div className="right">
               <form onSubmit={handleSubmit(buyMaterialHandler)}>
-                <div className="formInput">
-                  <label>Warehouse Address</label>                  
-                  <input id="whHashAdr" name="whHashAdr" type="text" {...register("whHashAdr", { required: true })}/>
+                <div className="formInput"> 
+                  <label>Warehouse Address</label>  
+                  <select id="whHashAdr" name="whHashAdr" {...register("whHashAdr", { required: true })} style={{width: "100%",height: "40px"}}>
+                  {wareHouseMaterialList && wareHouseMaterialList.map((val) => {return <SelectList val={val} />})}
+                  </select>                 
+                   {/* <input id="whHashAdr" name="whHashAdr" value={'0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC'} type="hidden" {...register("whHashAdr", { required: true })}/> */}
                   {errors.whHashAdr && <span className='error'> {console.log(errors)} {errors?.whHashAdr?.message}</span>}
                 </div>
-                {/* <div className="formInput">
-                  <label>Buy Polyster Amount</label>                  
-                  <input id="buyPolysterAmount" name="buyPolysterAmount"  type="text" {...register("buyPolysterAmount", { required: true })} />
-                  {errors.buyPolysterAmount && <span className='error'> {console.log(errors)} {errors?.buyPolysterAmount?.message}</span>}
-
-                </div>
-                <div className="formInput">
-                  <label>Buy Cotton Amount</label>                  
-                  <input id="buyCottonAmount" name="buyCottonAmount"  type="text" {...register("buyCottonAmount", { required: true })} />
-                  {errors.buyCottonAmount && <span className='error'> {console.log(errors)} {errors?.buyCottonAmount?.message}</span>}
-
-                </div>
-                <div className="formInput">
-                  <label>Buy Wool Amount</label>                  
-                  <input id="buyWoolAmount" name="buyWoolAmount"  type="text" {...register("buyWoolAmount", { required: true })} />
-                  {errors.buyWoolAmount && <span className='error'> {console.log(errors)} {errors?.buyWoolAmount?.message}</span>}
-
-                </div> */}
+                
                 <div className='formInput'>
                 <button type={"submit"}> Submit </button>
                 {/* <span className='left'><button  type='reset' >Reset</button></span> */}

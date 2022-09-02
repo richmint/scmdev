@@ -48,12 +48,6 @@ const DarkModeReducer = (state, action) => {
         supplyChainContract: action.supplyChainContract,
       };
     }
-    case "updateSupplychainToken":{
-      return {
-        ...state,
-        supplyChainTokenContract: action.supplyChainTokenContract,
-      };
-    }
     case "updateApproveToken":{
       return {
         ...state,
