@@ -12,16 +12,11 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "./SupplyChainERC1155.sol";  
 import "hardhat/console.sol";   
 
-// contract Supplychain is RawMaterialSupplier,Warehouse, Factory, Distributor, Retailer, Customer{
+
 contract Supplychain{
     using Counters for Counters.Counter;
-    // address supplyChainToken;
     Counters.Counter private supplyChainId;
-
-    // constructor(address _supplychainToken) RawMaterialSupplier() Warehouse() Factory() Distributor() Retailer() Customer(){
-    // constructor(address _supplychainToken) {
-    //     supplyChainToken =_supplychainToken;
-    // }
+    Counters.Counter private productId;
 
     enum State
     {
@@ -43,9 +38,6 @@ contract Supplychain{
     
         uint supplyChainId;             // Counter for this batch items
         State itemState;                // Product State as represented in the enum above
-
-        uint totalUnits;
-        string Description;
         
         address RawMaterialSupplierID;  // Metamask-Ethereum address of the RawMaterialSupplier
         address warehouseID;            // Metamask-Ethereum address of the warehouse
@@ -57,13 +49,22 @@ contract Supplychain{
     }
 
     struct RawMaterials{
-        uint256 rawMaterialType;        
+        uint256 rawMaterialType;  
         uint rawMaterial1;    
         uint rawMaterial2;  
         uint rawMaterial3;
         uint rawMaterial4;
         uint rawMaterial5;
+        uint YarnAmount;
+        string YarnColor;
+        string YarnType;
     }
+    struct ProductBatch{
+        uint productId;
+        uint totalUnits;
+        string Description;
+        address factory;
+    }   
 
     // struct cutomerInfoStruct{
     //     uint supplychainID;
@@ -72,6 +73,9 @@ contract Supplychain{
     // }
     // mapping(address =>uint[]) private customerSCIds;
 
+    mapping(uint =>ProductBatch) public Product;
+    mapping(uint =>uint[]) public ProductIds;
+    
     mapping (uint =>RawMaterials) public RawMaterialDetails;
 
     mapping (uint =>uint[]) public timeStamps;
@@ -92,8 +96,6 @@ contract Supplychain{
         Item memory item =Item({  
                 supplyChainId:currentId,  
                 itemState: defaultState,
-                totalUnits:0,
-                Description:"",
                 RawMaterialSupplierID: msg.sender,
                 warehouseID:address(0),
                 distributorId:address(0),
@@ -107,7 +109,10 @@ contract Supplychain{
             rawMaterial2:_rawMaterials[1],
             rawMaterial3:_rawMaterials[2],
             rawMaterial4:_rawMaterials[3],
-            rawMaterial5:_rawMaterials[4]
+            rawMaterial5:_rawMaterials[4],
+            YarnAmount:0,
+            YarnColor:"",
+            YarnType:""
         });
         RawMaterialDetails[currentId]= rawMaterial;
         items[currentId] =item;
@@ -167,62 +172,74 @@ contract Supplychain{
         require(RawMaterialsBoughtByFactory[msg.sender][_supplyChainId][4]>=_updatedrawmaterials[4],"Raw material 5 exceeded");    
         RawMaterialsBoughtByFactory[msg.sender][_supplyChainId]=_updatedrawmaterials;
         
+        uint length =wareHouseItems[item.warehouseID].length;
+        if (length >0){
+            for(uint i=0; i<length; i++){
+                if(wareHouseItems[item.warehouseID][i].supplyChainId == _supplyChainId){
+                    wareHouseItems[item.warehouseID][i].itemState =State.factoryQCRawMaterials;
+                }
+            }
+        }   
+        timeStamps[_supplyChainId].push(block.timestamp);
+    }
+
+    function factoryCompleteSpinningWaeving(uint _supplyChainId, uint _yarnAmount, string memory _yarnColor, string memory _yarnType) public {
+        Item memory item =items[_supplyChainId];        
+        RawMaterialDetails[_supplyChainId].YarnAmount =_yarnAmount;
+        RawMaterialDetails[_supplyChainId].YarnColor=_yarnColor;
+        RawMaterialDetails[_supplyChainId].YarnType=_yarnType;
+
+        item.itemState=  State.factoryCompleteSpinningWaeving;
+        items[_supplyChainId] =item;
+        uint length =wareHouseItems[item.warehouseID].length;
+        if (length >0){
+            for(uint i=0; i<length; i++){
+                if(wareHouseItems[item.warehouseID][i].supplyChainId == _supplyChainId){
+                    wareHouseItems[item.warehouseID][i].itemState =State.factoryCompleteSpinningWaeving;
+                }
+            }
+        }   
+        timeStamps[_supplyChainId].push(block.timestamp);
+    }
+
+    function factoryCompleteGarmentManufacturing(uint[] memory _supplyChainId, uint _totalUnits, string memory _description) public {
+        require(_totalUnits>=1,"Units should be greater that 1");
+        for(uint i=0;i<_supplyChainId.length; i++){
+            items[_supplyChainId[i]].itemState=State.factoryCompleteGarmentManufacturing;
+            timeStamps[_supplyChainId[i]].push(block.timestamp);   
+        }
+        uint currentId =productId.current();
+        Product[currentId]=ProductBatch({
+            productId:currentId,
+            totalUnits:_totalUnits,
+            Description:_description,
+            factory:msg.sender
+        });
+        ProductIds[currentId]=_supplyChainId;
+        productId.increment();
+
+        for(uint i=0; i<_supplyChainId.length; i++){
+            Item memory item =items[_supplyChainId[i]];        
+            uint length =wareHouseItems[item.warehouseID].length;
+            if (length >0){
+                for(uint k=0; i<length; i++){
+                    if(wareHouseItems[item.warehouseID][k].supplyChainId == _supplyChainId[i]){
+                        wareHouseItems[items[_supplyChainId[i]].warehouseID][k].itemState =State.factoryCompleteGarmentManufacturing;
+                    }
+                }
+            }   
+        }
+
+        // items[_supplyChainId] =item;
         // uint length =wareHouseItems[item.warehouseID].length;
         // if (length >0){
         //     for(uint i=0; i<length; i++){
         //         if(wareHouseItems[item.warehouseID][i].supplyChainId == _supplyChainId){
-        //             wareHouseItems[item.warehouseID][i].PolyesterAmount =_polyesterAmount;
-        //             wareHouseItems[item.warehouseID][i].CottonAmount =_cottonAmount;
-        //             wareHouseItems[item.warehouseID][i].WoolAmount =_woolAmount;
-        //             wareHouseItems[item.warehouseID][i].itemState =State.factoryQCRawMaterials;
+        //             wareHouseItems[item.warehouseID][i].itemState =State.factoryCompleteGarmentManufacturing;
         //         }
         //     }
-        // }   
-        timeStamps[_supplyChainId].push(block.timestamp);
+        // } 
     }
-
-    // function factoryCompleteSpinningWaeving(uint _supplyChainId, uint _yarnAmount, string memory _yarnColor, string memory _yarnType) 
-    // public 
-    // // onlyFactory() 
-    // {
-    //     Item memory item =items[_supplyChainId];        
-    //     OGDetails[_supplyChainId].YarnAmount =_yarnAmount;
-    //     OGDetails[_supplyChainId].YarnColor=_yarnColor;
-    //     OGDetails[_supplyChainId].YarnType=_yarnType;
-
-    //     item.itemState=  State.factoryCompleteSpinningWaeving;
-    //     items[_supplyChainId] =item;
-    //     uint length =wareHouseItems[item.warehouseID].length;
-    //     if (length >0){
-    //         for(uint i=0; i<length; i++){
-    //             if(wareHouseItems[item.warehouseID][i].supplyChainId == _supplyChainId){
-    //                 wareHouseItems[item.warehouseID][i].itemState =State.factoryCompleteSpinningWaeving;
-    //             }
-    //         }
-    //     }   
-    //     timeStamps[_supplyChainId].push(block.timestamp);
-    // }
-
-    // function factoryCompleteGarmentManufacturing(uint _supplyChainId, uint _totalUnits, string memory _description) public 
-    // // onlyFactory() 
-    // {
-    //     require(_totalUnits>=1,"Units should be greater that 1");
-    //     Item memory item =items[_supplyChainId];
-    //     OGDetails[_supplyChainId].OGUnits =_totalUnits;
-    //     item.Description=_description;
-
-    //     item.itemState=  State.factoryCompleteGarmentManufacturing;
-    //     items[_supplyChainId] =item;
-    //     uint length =wareHouseItems[item.warehouseID].length;
-    //     if (length >0){
-    //         for(uint i=0; i<length; i++){
-    //             if(wareHouseItems[item.warehouseID][i].supplyChainId == _supplyChainId){
-    //                 wareHouseItems[item.warehouseID][i].itemState =State.factoryCompleteGarmentManufacturing;
-    //             }
-    //         }
-    //     } 
-    //     timeStamps[_supplyChainId].push(block.timestamp);
-    // }
         
     // function factoryQCFinalItems(
     //     uint _supplyChainId, 
@@ -336,6 +353,13 @@ contract Supplychain{
 
     function totalBatchs() public view returns(uint256){
         return supplyChainId.current();
+    }
+    function totalProductBatchs() public view returns(uint256){
+        return productId.current();
+    }
+
+    function totalProductLength(uint _productId) public view returns(uint256[] memory){
+        return ProductIds[_productId];
     }
     
     function getWarehouseItems(address warehouse) public view returns (Item[] memory){
