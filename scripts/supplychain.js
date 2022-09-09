@@ -161,7 +161,7 @@ async function main() {
   await supplychain.connect(factorySigner1).factoryQCRawMaterials(0,[18,30,50,18,14]);
   await supplychain.connect(factorySigner1).factoryQCRawMaterials(1,[50,50,50,50,50]);
 
-  
+   
   // ---------------------------- FACTORY COMPLETE WEAVING AND SPINNING ------------------------
 
 

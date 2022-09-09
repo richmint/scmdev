@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../../pages/new/new.scss";
 import Navbar from "../../components/front_navbar/Navbar";
 import Sidebar from "../../components/front_sidebar/Sidebar";
-import CottonSupplierForm from "./CottonForm.jsx";
+import CottonSupplierForm from "./CottonForm.jsx"; 
 import PolysterSupplierForm from "./PolyesterForm.jsx";
 import WoolSupplierForm from "./WoolForm.jsx"; 
 import { DarkModeContext } from "../../context/darkModeContext";
@@ -61,8 +61,7 @@ const Materialsupplier = ({ inputs, title, value }) => {
               { materialtype == 'Polyester' ?  <PolysterSupplierForm /> : '' }
               { materialtype == 'Wool' ?  <WoolSupplierForm /> : '' }
 
-            {/* <form onSubmit={handleSubmit(addSupplyChainHandler)} style={{display: "none"}}> */}
-            <form onSubmit={handleSubmit(addSupplyChainHandler)} >
+            <form onSubmit={handleSubmit(addSupplyChainHandler)} style={{display: "none"}} >
               <div className="formInput">
                 <label>Polyster Amount</label>
                 <input id="polysteramount" name="polysteramount"  {...register("polysteramount", { required: true })} type="number" />

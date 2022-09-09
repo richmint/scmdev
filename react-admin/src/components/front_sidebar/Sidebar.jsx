@@ -63,6 +63,12 @@ const Sidebar = (props) => {
                     <span>Available Raw Material to Buy</span>
                   </li>
                 </Link>
+                <Link to="/availableRawMaterialToWarehouse" style={{ textDecoration: "none" }}>
+                  <li style={{backgroundColor: props.txt == "avlRawMatforWarehouse"?"orange":""}}>
+                    <StoreIcon className="icon" />
+                    <span>Available for WareHouse</span>
+                  </li>
+                </Link>
                 {/* <Link to="/approveFactorySupplier" style={{ textDecoration: "none" }}>
                   <li style={{backgroundColor: props.txt == "ApproveFacSupp"?"orange":""}}>
                     <StoreIcon className="icon" />

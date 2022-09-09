@@ -20,6 +20,9 @@ import Addbatch from "./Front/supplier/AddMaterialForm";
 import Approvesupplier from "./Front/supplier/ApproveSupply";
 import ViewSupplyToken from "./Front/supplier/viewSupplyToken";
 import AvailableRawMaterialToBuy from "./Front/factory/availableRawMaterialToBuy";
+import AvailableRawMaterialToWarehouse from "./Front/factory/availableRawMaterialToWarehouse";
+import StoreInWarehouse from "./Front/factory/storeInWarehouse";
+
 import ApproveFactorySupplier from "./Front/factory/approveSupplyToken";
 import SellItemToDistributer from "./Front/factory/sellItemDistributer";
 import SellItemFormData from './Front/factory/selItemFormData';
@@ -188,6 +191,8 @@ function App() {
               {/* Front Factory Routes */}
               <Route path="/availableRawMaterialToBuy" element={frontToken ? <AvailableRawMaterialToBuy /> : <Navigate to={"/userlogin"} />} />
               <Route path="/approveFactorySupplier" element={frontToken ? <ApproveFactorySupplier /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/availableRawMaterialToWarehouse" element={frontToken ? <AvailableRawMaterialToWarehouse /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/storeInWarehouse" element={frontToken ? <StoreInWarehouse /> : <Navigate to={"/userlogin"} />} />
               <Route path="/sellItemToDistributer" element={frontToken ? <SellItemToDistributer /> : <Navigate to={"/userlogin"} />} /> 
               <Route path="/sellItemFormData" element={frontToken ? <SellItemFormData /> : <Navigate to={"/userlogin"} />} />
               <Route path="/buyRawMaterial" element={frontToken ? <BuyRawMaterial /> : <Navigate to={"/userlogin"} />} />

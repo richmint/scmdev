@@ -44,6 +44,23 @@
           justify-content: space-around;
           
 
+          .selectformInput {
+            width: 30%;
+            float: left;
+            margin: 10px;
+
+            label {
+              display: flex;
+              align-items: center;
+              gap: 10px;
+            }
+            select{
+            width: 100%;
+            padding: 5px;
+            }
+
+          }
+
           .formInput {
             width: 45%;
             float: left;
