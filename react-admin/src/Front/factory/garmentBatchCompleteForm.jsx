@@ -6,18 +6,20 @@ import '../../style/front/new.scss'
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-
 import {useForm} from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup"; 
 import { GarmentBatchCompleteFormSchema } from '../../Validations/Schema';
 
+
+import GarmentBatchList from "./getTotalBatch";
 const GarmentBatchCompleteForm = () =>{
+
   let data = useLocation();
   data = data.state.i;
   //console.log("Coming data is ",data);
   
   const {register, handleSubmit, setError, formState: { errors }} = useForm({
-    defaultValues: {
+    defaultValues: { 
       totalitems: '',
       description: '',
     },
@@ -32,7 +34,7 @@ const GarmentBatchCompleteForm = () =>{
     // event.preventDefault();
     // console.log("batchid",SChainContract);
     
-    const tx = SChainContract.factoryCompleteGarmentManufacturing(data, event.totalitems,event.description);
+    const tx = SChainContract.factoryCompleteGarmentManufacturing(0,1, event.totalitems,event.description);
     //console.log((await tx.wait()));
     if(tx){
        navigate("/manufactureGarmentMaterial")
@@ -45,6 +47,9 @@ const GarmentBatchCompleteForm = () =>{
             <div className="bottom">
           <div className="right">
             <form onSubmit={handleSubmit(garmentcompleteHandler)}>
+
+            <GarmentBatchList />
+
               <div className="formInput">
                 <label>Total Items</label>
                 <input id="totalitems"  type="text"  name="totalitems" {...register("totalitems", { required: true })}></input>

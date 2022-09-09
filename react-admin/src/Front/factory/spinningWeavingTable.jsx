@@ -10,6 +10,30 @@ const SpinningWeavingTable = () => {
   const [materiallist, setMateriallist] = useState(null);
   const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress } = useContext(DarkModeContext);
   const allsupplymateriallist = [];
+
+
+
+
+
+  
+
+  // const totalBatchs =await supplychain.totalBatchs()  
+  // for(let i= 0; i<totalBatchs; i++){  
+  //   const item = await supplychain.items(i);  
+  //   if (item.itemState ==3 && (item.factoryID1 ==factorySigner1.address || item.factoryID2 ==factorySigner1.address || item.factoryID2 ==factorySigner1.address) ){
+      
+  //     console.log();
+  //     console.log(item); 
+  //     console.log(await supplychain.RawMaterialDetails(item.supplyChainId));
+  //     const object =await supplychain.timeStamps(item.supplyChainId,item.itemState);
+  //     console.log(await dateTime.getDay(object.toNumber()),await dateTime.getMonth(object.toNumber()),await dateTime.getYear(object.toNumber()));
+  //     console.log();
+  //   } 
+  // } 
+
+
+
+
   const getSupplyChainHandler = async (event) => {
     let userdatarec = '';
     const totalbatchids = (await supplyChainContract.totalBatchs());
@@ -17,9 +41,13 @@ const SpinningWeavingTable = () => {
     if (totalbatchids > 0) {
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
-        if (object.itemState === 2 && object.factoryID.toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
-          checkvalue = 1;
+        if (object.itemState === 3 && object.factoryID1.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID2.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID3.toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
+          
+          let rawMaterialDetails = await supplyChainContract.RawMaterialDetails(object.supplyChainId);
 
+          console.log("Raw Material Details",rawMaterialDetails);
+
+          checkvalue = 1;
           const rawMaterialRecord = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -40,9 +68,11 @@ const SpinningWeavingTable = () => {
             <><tr>
               <td>{i}</td>
               <td>{userdatarec && userdatarec }</td>
-              <td>{object.PolyesterAmount.toNumber()}</td>
-              <td>{object.CottonAmount.toNumber()}</td>
-              <td>{object.WoolAmount.toNumber()}</td>
+              {/* <td>{rawMaterialDetails.rawMaterial1.toNumber()}</td>
+              <td>{rawMaterialDetails.rawMaterial2.toNumber()}</td>
+              <td>{rawMaterialDetails.rawMaterial3.toNumber()}</td>
+              <td>{rawMaterialDetails.rawMaterial3.toNumber()}</td>
+              <td>{rawMaterialDetails.rawMaterial3.toNumber()}</td> */}
               <td>
                 <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { i } })}>View</Button>
                 <Button variant="outline-success" onClick={() => navigate('/spinningBatchCompleteForm', { state: { i } })}>Continue</Button>
@@ -83,9 +113,11 @@ const SpinningWeavingTable = () => {
                 <tr>
                   <th>Batch ID</th>
                   <th>Raw Material Supplier</th>
-                  <th>Polyster Amount</th>
+                  {/* <th>Polyster Amount</th>
                   <th>Cotton Amount</th>
                   <th>Wool Amount</th>
+                  <th>Wool Amount</th>
+                  <th>Wool Amount</th> */}
                   <th>Action</th>
                 </tr>
                 {materiallist}

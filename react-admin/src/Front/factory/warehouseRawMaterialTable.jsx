@@ -29,7 +29,7 @@ const WarehouseRawMaterialTable = () => {
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
         let OGObject = await supplyChainContract.RawMaterialDetails(object.supplyChainId);
-        console.log("item state",object.itemState);
+        console.log("item state ",OGObject.rawMaterialType.toNumber());
              if (object.itemState == 1 && (object.factoryID1.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID2.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID3.toLowerCase() == ownSupplyChainAddress.toLowerCase()) || object.itemState == 2 && (object.factoryID1.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID2.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID3.toLowerCase() == ownSupplyChainAddress.toLowerCase()) ){
         
           const rawMaterialRecord = {
@@ -66,7 +66,7 @@ const WarehouseRawMaterialTable = () => {
                   <td>{rawMaterial3.toNumber()}</td>
                   <td>{rawMaterial4.toNumber()}</td>
                   <td>{rawMaterial5.toNumber()}</td>
-                  <td>{object.itemState === 1 ? <Button variant="outline-primary" onClick={() => navigate('/storeInWarehouse', { state: { id:i } })}>Store</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i,materialType:1,rawMaterial1:rawMaterial1.toNumber(),rawMaterial2:rawMaterial2.toNumber(),rawMaterial3:rawMaterial3.toNumber(),rawMaterial4:rawMaterial4.toNumber(),rawMaterial5:rawMaterial5.toNumber()} })}>Quality Check</Button>}</td>
+                  <td>{object.itemState === 1 ? <Button variant="outline-primary" onClick={() => navigate('/storeInWarehouse', { state: { id:i } })}>Store</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i,materialType:OGObject.rawMaterialType.toNumber(),rawMaterial1:rawMaterial1.toNumber(),rawMaterial2:rawMaterial2.toNumber(),rawMaterial3:rawMaterial3.toNumber(),rawMaterial4:rawMaterial4.toNumber(),rawMaterial5:rawMaterial5.toNumber()} })}>Quality Check</Button>}</td>
                 </tr>
               </>
             )
@@ -87,7 +87,7 @@ const WarehouseRawMaterialTable = () => {
                   <td>{rawMaterial2.toNumber()}</td>
                   <td>{rawMaterial3.toNumber()}</td>
                   <td>{rawMaterial4.toNumber()}</td>
-                <td>{object.itemState === 1 ? <Button variant="outline-primary" onClick={() => navigate('/storeInWarehouse', { state: { id:i } })}>Store</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i} })}>Quality Check</Button>}</td>
+                  <td>{object.itemState === 1 ? <Button variant="outline-primary" onClick={() => navigate('/storeInWarehouse', { state: { id:i } })}>Store</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i,materialType:OGObject.rawMaterialType.toNumber(),rawMaterial1:rawMaterial1.toNumber(),rawMaterial2:rawMaterial2.toNumber(),rawMaterial3:rawMaterial3.toNumber(),rawMaterial4:rawMaterial4.toNumber()} })}>Quality Check</Button>}</td>
               </tr>
             </>
           )
@@ -108,7 +108,7 @@ const WarehouseRawMaterialTable = () => {
                   <td>{rawMaterial2.toNumber()}</td>
                   <td>{rawMaterial3.toNumber()}</td>
                   <td>{rawMaterial4.toNumber()}</td>
-                <td>{object.itemState === 1 ? <Button variant="outline-primary" onClick={() => navigate('/storeInWarehouse', { state: { id:i} })}>Store</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i} })}>Quality Check</Button>}</td>
+                  <td>{object.itemState === 1 ? <Button variant="outline-primary" onClick={() => navigate('/storeInWarehouse', { state: { id:i } })}>Store</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i,materialType:OGObject.rawMaterialType.toNumber(),rawMaterial1:rawMaterial1.toNumber(),rawMaterial2:rawMaterial2.toNumber(),rawMaterial3:rawMaterial3.toNumber(),rawMaterial4:rawMaterial4.toNumber()} })}>Quality Check</Button>}</td>
               </tr>
             </>
           )

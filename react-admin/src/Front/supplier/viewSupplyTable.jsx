@@ -60,13 +60,13 @@ const ViewSupplyTable = () => {
   //     console.log();
   //   } 
   // } 
-
-    const totalbatchids = await supplyChainContract.totalBatchs()
+  console.log("total batchs")
+    const totalbatchids = await supplyChainContract.totalBatchs();
     var checkcottonvalue = 0;
     var checkPolyestervalue = 0;
     var checkWoolvalue = 0;
     
-    if(totalbatchids.toNumber()>0){
+    if(totalbatchids.toNumber() > 0 ){
       for (let i = 0; i < totalbatchids.toNumber(); i++) {
         let object = await supplyChainContract.items(i);
         if (object.RawMaterialSupplierID.toLowerCase() === ownSupplyChainAddress.toLowerCase()) {

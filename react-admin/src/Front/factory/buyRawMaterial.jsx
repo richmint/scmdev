@@ -223,9 +223,9 @@ let distributeruserrec = '';
         }
 
         const [woolDialmeter, setWoolDialmeter] = useState(data.state.rawMaterial1);
-        const [woolStapleLength, setWoolStapleLength] = useState(data.state.rawMaterial1);
-        const [woolFiberLength, setWoolFiberLength] = useState(data.state.rawMaterial1);
-        const [woolCrimpiness, setWoolCrimpiness] = useState(data.state.rawMaterial1);
+        const [woolStapleLength, setWoolStapleLength] = useState(data.state.rawMaterial2);
+        const [woolFiberLength, setWoolFiberLength] = useState(data.state.rawMaterial3);
+        const [woolCrimpiness, setWoolCrimpiness] = useState(data.state.rawMaterial4);
         const [showWoolDialmeterError, setShowWoolDialmeterError] = useState();
         const [woolStapleLengthError, setShowWoolStapleLengthError] = useState();
         const [showWoolFiberLengthError, setshowWoolFiberLengthError] = useState();

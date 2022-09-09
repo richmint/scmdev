@@ -19,7 +19,8 @@ const ManufactureGarmentTable = () => {
     if (totalbatchids > 0) {
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
-        if (object.itemState === 3 && object.factoryID.toLowerCase() === ownSupplyChainAddress.toLowerCase()) {
+          if (object.itemState === 4 && object.factoryID1.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID2.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID3.toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
+
           checkvalue = 1;
           const rawMaterialRecord = {
             method: 'POST',
@@ -41,9 +42,7 @@ const ManufactureGarmentTable = () => {
             <><tr>
               <td>{i}</td>
               <td>{userdatarec && userdatarec }</td>
-              <td>{object.PolyesterAmount.toNumber()}</td>
-              <td>{object.CottonAmount.toNumber()}</td>
-              <td>{object.WoolAmount.toNumber()}</td>
+             
               <td>
                 <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { i } })}>View</Button>
                 <Button variant="outline-success" onClick={() => navigate('/garmentBatchCompleteForm', { state: { i } })}>Continue</Button>
@@ -85,9 +84,7 @@ const ManufactureGarmentTable = () => {
                 <tr>
                   <th>Batch ID</th>
                   <th>Raw Material Supplier</th>
-                  <th>Polyster Amount</th>
-                  <th>Cotton Amount</th>
-                  <th>Wool Amount</th>
+                  
                   <th>Action</th>
                 </tr>
                 {materiallist}
