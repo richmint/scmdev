@@ -98,12 +98,11 @@ async function main() {
   //     console.log();
   //     console.log(item);  
   //     console.log(await supplychain.RawMaterialDetails(item.supplyChainId));
-  //     const object =await supplychain.timeStamps(item.supplyChainId,item.itemState);
+  //     const object = await supplychain.timeStamps(item.supplyChainId,item.itemState);
   //     console.log(await dateTime.getDay(object.toNumber()),await dateTime.getMonth(object.toNumber()),await dateTime.getYear(object.toNumber()));
   //     console.log();  
   //   } 
   // } 
-
 
   await supplychain.connect(factorySigner1).factoryBuyRawMaterial(0,[50,50,50,50,50]);
   await supplychain.connect(factorySigner1).factoryBuyRawMaterial(1,[60,60,60,60,60]);
@@ -147,7 +146,7 @@ async function main() {
   await supplychain.connect(factorySigner1).factoryQCRawMaterials(0,[40,40,40,40,40]);
   await supplychain.connect(factorySigner1).factoryQCRawMaterials(1,[50,50,50,50,50]);
 
-   
+  
   // ---------------------------- FACTORY COMPLETE WEAVING AND SPINNING ------------------------
 
 
@@ -195,12 +194,10 @@ async function main() {
     const object =await supplychain.Product(i);
     if(object.factory === factorySigner1.address){
       console.log(object);
-      
       const supplychainIds =await supplychain.totalProductLength(i);
       for(let j=0; j<supplychainIds.length; j++){
         console.log(await supplychain.items(supplychainIds[j]));
       }
-  
     }
   }
 
@@ -236,7 +233,6 @@ async function main() {
   // await supplychain.connect(factorySigner1).factorySellItemToDistributors(1,distributorSigner1.address);
   // await supplychain.connect(factorySigner1).factorySellItemToDistributors(2,distributorSigner1.address);
   // await supplychain.connect(factorySigner1).factorySellItemToDistributors(3,distributorSigner1.address);
-
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

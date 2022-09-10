@@ -3,37 +3,19 @@ import React, { useEffect, useState, useContext,useMemo } from 'react';
 import "./viewSupplyTable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import { DarkModeContext } from "../../context/darkModeContext";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLocation } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 
 const ViewSupplyTable = () => {
   const [show,setShow] = useState(false);
+  const navigate = useNavigate();
 
   const value = useLocation();
-  //console.log("Direct",value.state)
-  // if(value.state != null){
-  //   console.log("dfsd")
-  //   setShow(value.state.val);
-  // }else{
-  //   setShow(false)
-  // }
-
-  // if(show == true){toast("Wow so easy !")}
-// console.log("data cone frin loaction",value.state.val)
-
-// useMemo(() =>{
-
-// },[show])
-
-  // const Notify = () => {
-  //   return(
-  //     <>
-  //     {show==true?console.log("Rahul"):console.log("saini")}
-  //     </>
-  //   )
-  // }  
     const toastFun = () => {toast("Wow so easy xfdf!")}
 
   const [data, setData] = useState([]);
@@ -60,7 +42,6 @@ const ViewSupplyTable = () => {
   //     console.log();
   //   } 
   // } 
-  console.log("total batchs")
     const totalbatchids = await supplyChainContract.totalBatchs();
     var checkcottonvalue = 0;
     var checkPolyestervalue = 0;
@@ -77,7 +58,7 @@ const ViewSupplyTable = () => {
           const createmonth = await dateContract.getMonth(dateObject.toNumber())
           const createdyear = await dateContract.getYear(dateObject.toNumber())
 
-          console.log(OGObject.rawMaterialType.toNumber());
+          console.log(object);  
 
           if(OGObject.rawMaterialType.toNumber() == 1){
               checkcottonvalue = 1;
@@ -85,15 +66,18 @@ const ViewSupplyTable = () => {
                 <>
                   <tr> 
                     <td>{i}</td>
+                    {object.factoryID1 == '0x0000000000000000000000000000000000000000'?<td>---</td> : <td>{object.factoryID1}</td>}
                     <td>{OGObject.rawMaterial1.toNumber()}</td>
                     <td>{OGObject.rawMaterial2.toNumber()}</td>
                     <td>{OGObject.rawMaterial3.toNumber()}</td>
                     <td>{OGObject.rawMaterial4.toNumber()}</td>
                     <td>{OGObject.rawMaterial5.toNumber()}</td>
                     <td>{createdday}-{createmonth}-{createdyear}</td>
+                    <td>{object.itemState !== 1 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View</Button> : ''}</td>
+
                   </tr>
                 </>
-              )
+              ) 
           }
           if(OGObject.rawMaterialType.toNumber() == 2){
             checkPolyestervalue = 1;
@@ -101,11 +85,14 @@ const ViewSupplyTable = () => {
               <>
                 <tr> 
                   <td>{i}</td>
+                  {object.factoryID1 == '0x0000000000000000000000000000000000000000'?<td>---</td> : <td>{object.factoryID1}</td>}
                   <td>{OGObject.rawMaterial1.toNumber()}</td>
                   <td>{OGObject.rawMaterial2.toNumber()}</td>
                   <td>{OGObject.rawMaterial3.toNumber()}</td>
                   <td>{OGObject.rawMaterial4.toNumber()}</td>
                   <td>{createdday}-{createmonth}-{createdyear}</td>
+                  <td>{object.itemState !== 0 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View</Button> : ''}</td>
+
                 </tr>
               </>
             )
@@ -116,11 +103,14 @@ const ViewSupplyTable = () => {
               <>
                 <tr> 
                   <td>{i}</td>
+
+                  {object.factoryID1 == '0x0000000000000000000000000000000000000000'?<td>---</td> : <td>{object.factoryID1}</td>}
                   <td>{OGObject.rawMaterial1.toNumber()}</td>
                   <td>{OGObject.rawMaterial2.toNumber()}</td>
                   <td>{OGObject.rawMaterial3.toNumber()}</td>
                   <td>{OGObject.rawMaterial4.toNumber()}</td>
                   <td>{createdday}-{createmonth}-{createdyear}</td>
+                  <td>{object.itemState !== 0 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View</Button> : ''}</td>
                 </tr>
               </>
             )
@@ -199,12 +189,14 @@ const ViewSupplyTable = () => {
               <table>
                 <tr>
                   <th>Batch ID</th>
+                  <th>Raw Material Buyer</th>
                   <th>Weight (kg)</th>
                   <th>Fibre length (mm)</th>
                   <th>Fibre Strength (g/T)</th>
                   <th>Mike(mm)</th>
                   <th>FQI (Rd)</th>
                   <th>Date</th>
+                  <th>Action</th>
                 </tr>
                 {materiallist}
               </table>
@@ -216,11 +208,14 @@ const ViewSupplyTable = () => {
               <table>
                 <tr>
                   <th>Batch ID</th>
+                  <th>Raw Material Buyer</th>
                   <th>FMax (kN)</th>
                   <th>EMax (%)</th>
                   <th>Neps (%)</th>
                   <th>Cvm (%)</th>
                   <th>Date</th>
+                  <th>Action</th>
+
                 </tr>
                 {polysterlist}
               </table>
@@ -232,11 +227,13 @@ const ViewSupplyTable = () => {
               <table>
                 <tr>
                   <th>Batch ID</th>
+                  <th>Raw Material Buyer</th>
                   <th>Fibre diameter or Grade (mm)</th>
                   <th>Staple length (mm)</th>
                   <th>Fibre length (mm)</th>
                   <th>Crimpiness (cm)</th>
                   <th>Date</th>
+                  <th>Action</th>
                 </tr>
                 {woollist}
               </table>

@@ -73,10 +73,10 @@ const WarehouseRawMaterialTable = () => {
         }
         if(OGObject.rawMaterialType.toNumber() == 2){
           checkPolyestervalue = 1;
-          let rawMaterial1 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,0);   
-            let rawMaterial2 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,1);   
-            let rawMaterial3 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,2);   
-            let rawMaterial4 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,3);   
+          let rawMaterial1 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,0); 
+            let rawMaterial2 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,1);
+            let rawMaterial3 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,2);
+            let rawMaterial4 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,3);
             
           allPolyesterlist.push(
             <>
