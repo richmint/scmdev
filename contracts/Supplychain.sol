@@ -83,11 +83,6 @@ contract Supplychain{
 
     mapping (address => Item[]) private wareHouseItems;
     mapping(address=>mapping(uint=>uint[])) public RawMaterialsBoughtByFactory;
-    // mapping (uint => address[]) private retailerID;
-    // mapping (uint => uint[]) private retailerUnits;
-    // mapping (uint => uint[]) private retailerCounters;
-
-    // mapping (address =>mapping (uint =>cutomerInfoStruct)) public customerInfo;
 
 
     function rawMaterialSupplierSuppliesRM(uint256 _rawMaterialType,uint256[] memory _rawMaterials) public{
@@ -229,42 +224,34 @@ contract Supplychain{
                 }
             }   
         }
+    }
+        
+    function factoryQCFinalItems(uint _productid, uint _totalUnits ) public {
 
-        // items[_supplyChainId] =item;
+
+        ProductBatch memory product =Product[_productid];
+        product.totalUnits=_totalUnits;
+        Product[_productid] =product;   
+        uint[] memory array =ProductIds[_productid];
+
+        for(uint i=0; i<array.length; i++){
+            Item memory item =items[array[i]];
+            item.itemState=  State.factoryQCFinalItems;
+            items[array[i]] =item;
+        }
+
         // uint length =wareHouseItems[item.warehouseID].length;
         // if (length >0){
         //     for(uint i=0; i<length; i++){
         //         if(wareHouseItems[item.warehouseID][i].supplyChainId == _supplyChainId){
-        //             wareHouseItems[item.warehouseID][i].itemState =State.factoryCompleteGarmentManufacturing;
+        //             wareHouseItems[item.warehouseID][i].itemState =State.factoryQCFinalItems;
+        //             wareHouseItems[item.warehouseID][i].totalUnits =_totalUnits;
         //         }
         //     }
         // } 
+        
+        // timeStamps[_supplyChainId].push(block.timestamp);
     }
-        
-    // function factoryQCFinalItems(
-    //     uint _supplyChainId, 
-    //     uint _totalUnits
-    // ) public 
-    // // onlyFactory() 
-    // {
-    //     // require(isWarehouse(_warehouse),"NOT A VALID WAREHOUSE ADDRESS ! PLEASE CONTACT ADMIN");
-    //     Item memory item =items[_supplyChainId];
-
-    //     item.totalUnits =_totalUnits;
-    //     item.itemState=  State.factoryQCFinalItems;
-    //     items[_supplyChainId] =item;
-    //     uint length =wareHouseItems[item.warehouseID].length;
-    //     if (length >0){
-    //         for(uint i=0; i<length; i++){
-    //             if(wareHouseItems[item.warehouseID][i].supplyChainId == _supplyChainId){
-    //                 wareHouseItems[item.warehouseID][i].itemState =State.factoryQCFinalItems;
-    //                 wareHouseItems[item.warehouseID][i].totalUnits =_totalUnits;
-    //             }
-    //         }
-    //     } 
-        
-    //     timeStamps[_supplyChainId].push(block.timestamp);
-    // }
 
 
     // function factorySellItemToDistributors(
