@@ -26,28 +26,25 @@ const GarmentBatchList = () => {
         let object = await supplyChainContract.items(i);
         // console.log("/indise",object.itemState)
         let OGObject = await supplyChainContract.RawMaterialDetails(object.supplyChainId);
-        // console.log("myrecord", OGObject.rawMaterialType.toNumber());
+         //console.log("myrecord", OGObject); 
         if(OGObject.rawMaterialType.toNumber() == 1){
-          console.log("0 item value",object)
+          //console.log("0 item value",object)
         }
         let abc = OGObject.filter(x => x.rawMaterialType.toNumber() == 1)
-        console.log("abc valye after filter is ",abc);
+        //console.log("abc valye after filter is ",abc);
 
         if(OGObject.rawMaterialType.toNumber() == 2){
-          console.log("1 item value",object)
+          //console.log("1 item value",object)
         }
         if(OGObject.rawMaterialType.toNumber() == 3){
-          console.log("2 item value",object)
+          //console.log("2 item value",object)
         }
       }
     }
   }
-
-
   useEffect(()=>{
     getSupplyChainHandler();
   },[])
-  
   return (
            <div style={{width: "100%"}}>
             <div className="selectformInput">

@@ -29,12 +29,12 @@ const RawMaterialTable = () => {
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
         let OGObject = await supplyChainContract.RawMaterialDetails(object.supplyChainId);
-        console.log("myrecord", OGObject);
+        //console.log("myrecord", OGObject);
         // let rawMaterial1 = OGObject.rawMaterial1.toNumber();
         // let rawMaterial2 = OGObject.rawMaterial2.toNumber();
         // let rawMaterial3 = OGObject.rawMaterial3.toNumber();
 
-        if (object.itemState === 0) {
+        if (object.itemState === 0) { 
           const rawMaterialRecord = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

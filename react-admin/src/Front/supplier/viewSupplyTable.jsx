@@ -30,18 +30,6 @@ const ViewSupplyTable = () => {
   const allWoollist = [];
   const getSupplyChainHandler = async (event) => {
 
-  // const totalBatchs =await supplychain.totalBatchs()  
-  // for(let i= 0; i<totalBatchs; i++){  
-  //   const item = await supplychain.items(i);  
-  //   if (item.RawMaterialSupplierID ==rawMaterialSupplierSigner1.address){ 
-  //     console.log(); 
-  //     console.log(item);  
-  //     console.log((await supplychain.RawMaterialDetails(item.supplyChainId)));
-  //     const object =await supplychain.timeStamps(item.supplyChainId,item.itemState);
-  //     console.log(await dateTime.getDay(object.toNumber()),await dateTime.getMonth(object.toNumber()),await dateTime.getYear(object.toNumber()));
-  //     console.log();
-  //   } 
-  // } 
     const totalbatchids = await supplyChainContract.totalBatchs();
     var checkcottonvalue = 0;
     var checkPolyestervalue = 0;
@@ -51,14 +39,14 @@ const ViewSupplyTable = () => {
       for (let i = 0; i < totalbatchids.toNumber(); i++) {
         let object = await supplyChainContract.items(i);
         if (object.RawMaterialSupplierID.toLowerCase() === ownSupplyChainAddress.toLowerCase()) {
+
           
           let OGObject = await supplyChainContract.RawMaterialDetails(object.supplyChainId);
           const dateObject =await supplyChainContract.timeStamps(i,0);
+
           const createdday = await dateContract.getDay(dateObject.toNumber())
           const createmonth = await dateContract.getMonth(dateObject.toNumber())
           const createdyear = await dateContract.getYear(dateObject.toNumber())
-
-          console.log(object);  
 
           if(OGObject.rawMaterialType.toNumber() == 1){
               checkcottonvalue = 1;
@@ -66,14 +54,13 @@ const ViewSupplyTable = () => {
                 <>
                   <tr> 
                     <td>{i}</td>
-                    {object.factoryID1 == '0x0000000000000000000000000000000000000000'?<td>---</td> : <td>{object.factoryID1}</td>}
                     <td>{OGObject.rawMaterial1.toNumber()}</td>
                     <td>{OGObject.rawMaterial2.toNumber()}</td>
                     <td>{OGObject.rawMaterial3.toNumber()}</td>
                     <td>{OGObject.rawMaterial4.toNumber()}</td>
                     <td>{OGObject.rawMaterial5.toNumber()}</td>
                     <td>{createdday}-{createmonth}-{createdyear}</td>
-                    <td>{object.itemState !== 1 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View</Button> : ''}</td>
+                    <td>{object.itemState !== 0 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View Buyer Detail</Button> : <Button variant="outline-info">Not Sold</Button>}</td>
 
                   </tr>
                 </>
@@ -85,14 +72,12 @@ const ViewSupplyTable = () => {
               <>
                 <tr> 
                   <td>{i}</td>
-                  {object.factoryID1 == '0x0000000000000000000000000000000000000000'?<td>---</td> : <td>{object.factoryID1}</td>}
                   <td>{OGObject.rawMaterial1.toNumber()}</td>
                   <td>{OGObject.rawMaterial2.toNumber()}</td>
                   <td>{OGObject.rawMaterial3.toNumber()}</td>
                   <td>{OGObject.rawMaterial4.toNumber()}</td>
                   <td>{createdday}-{createmonth}-{createdyear}</td>
-                  <td>{object.itemState !== 0 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View</Button> : ''}</td>
-
+                  <td>{object.itemState !== 0 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View Buyer Detail</Button> : <Button variant="outline-info">Not Sold</Button>}</td>
                 </tr>
               </>
             )
@@ -103,14 +88,12 @@ const ViewSupplyTable = () => {
               <>
                 <tr> 
                   <td>{i}</td>
-
-                  {object.factoryID1 == '0x0000000000000000000000000000000000000000'?<td>---</td> : <td>{object.factoryID1}</td>}
                   <td>{OGObject.rawMaterial1.toNumber()}</td>
                   <td>{OGObject.rawMaterial2.toNumber()}</td>
                   <td>{OGObject.rawMaterial3.toNumber()}</td>
                   <td>{OGObject.rawMaterial4.toNumber()}</td>
                   <td>{createdday}-{createmonth}-{createdyear}</td>
-                  <td>{object.itemState !== 0 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View</Button> : ''}</td>
+                  <td>{object.itemState !== 0 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View Buyer Detail</Button> : <Button variant="outline-info">Not Sold</Button>}</td>
                 </tr>
               </>
             )
@@ -120,38 +103,38 @@ const ViewSupplyTable = () => {
       if(checkcottonvalue == 0) {
         allsupplymateriallist.push(
           <><tr>
-            <td colSpan="7">No Record Found</td>
+            <td colSpan="8">No Record Found</td>
           </tr></>
         )
       }
       if(checkPolyestervalue == 0) {
         allPolyesterlist.push(
           <><tr>
-            <td colSpan="6">No Record Found</td>
+            <td colSpan="8">No Record Found</td>
           </tr></>
         )
     }
     if(checkWoolvalue == 0) {
       allWoollist.push(
         <><tr>
-          <td colSpan="6">No Record Found</td>
+          <td colSpan="8">No Record Found</td>
         </tr></>
       )
   }
   }else if(totalbatchids.toNumber() < 1){
     allsupplymateriallist.push(
       <><tr>
-        <td colSpan="6">No Record Found</td>
+        <td colSpan="8">No Record Found</td>
       </tr></>
     )
     allPolyesterlist.push(
       <><tr>
-        <td colSpan="6">No Record Found</td>
+        <td colSpan="8">No Record Found</td>
       </tr></>
     )
     allWoollist.push(
       <><tr>
-        <td colSpan="6">No Record Found</td>
+        <td colSpan="8">No Record Found</td>
       </tr></>
     )
   } 
@@ -189,7 +172,6 @@ const ViewSupplyTable = () => {
               <table>
                 <tr>
                   <th>Batch ID</th>
-                  <th>Raw Material Buyer</th>
                   <th>Weight (kg)</th>
                   <th>Fibre length (mm)</th>
                   <th>Fibre Strength (g/T)</th>
@@ -208,7 +190,6 @@ const ViewSupplyTable = () => {
               <table>
                 <tr>
                   <th>Batch ID</th>
-                  <th>Raw Material Buyer</th>
                   <th>FMax (kN)</th>
                   <th>EMax (%)</th>
                   <th>Neps (%)</th>
@@ -227,7 +208,6 @@ const ViewSupplyTable = () => {
               <table>
                 <tr>
                   <th>Batch ID</th>
-                  <th>Raw Material Buyer</th>
                   <th>Fibre diameter or Grade (mm)</th>
                   <th>Staple length (mm)</th>
                   <th>Fibre length (mm)</th>

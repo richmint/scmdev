@@ -68,7 +68,7 @@ async function main() {
   //   const item = await supplychain.items(i);  
   //   if (item.RawMaterialSupplierID ==rawMaterialSupplierSigner1.address){ 
   //     console.log(); 
-  //     console.log(item);  
+  //     console.log(item); 
   //     console.log((await supplychain.RawMaterialDetails(item.supplyChainId)));
   //     const object =await supplychain.timeStamps(item.supplyChainId,item.itemState);
   //     console.log(await dateTime.getDay(object.toNumber()),await dateTime.getMonth(object.toNumber()),await dateTime.getYear(object.toNumber()));

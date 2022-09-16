@@ -10,13 +10,11 @@ import Card from 'react-bootstrap/Card';
 
 const ViewBatchStatusTable = () => {
   let data = useLocation();
-  console.log("data record", data.state.i);
   const navigate = useNavigate();
   const { dispatch, metaMask, supplyChainContract, ownSupplyChainAddress, dateContract } = useContext(DarkModeContext);
   useEffect(() => {
     getSupplyChainHandler();
   }, []);
-  //console.log("date contract",dateContract);
   const [batchRecord, setbatchRecord] = useState();
   const [ogBatchRecord, setogBatchRecord] = useState();
   const [garbagePolyesterAmount, setgarbagePolyesterAmount] = useState();
@@ -42,26 +40,87 @@ const ViewBatchStatusTable = () => {
   const [rawlocation, setrawlocation] = useState();
   const [warelocation, setwarelocation] = useState();
   const [factlocation, setfactlocation] = useState();
+  const [factlocation2, setfactlocation2] = useState();
+  const [factlocation3, setfactlocation3] = useState();
 
   const [rawName, setrawName] = useState();
   const [wareName, setwareName] = useState();
   const [factName, setfactName] = useState();
-  
+  const [factName2, setfactName2] = useState();
+  const [factName3, setfactName3] = useState();
+
+  const [factory1buyrawMaterial1, setfactory1buyrawMaterial1] = useState();
+  const [factory1buyrawMaterial2, setfactory1buyrawMaterial2] = useState();
+  const [factory1buyrawMaterial3, setfactory1buyrawMaterial3] = useState();
+  const [factory1buyrawMaterial4, setfactory1buyrawMaterial4] = useState();
+  const [factory1buyrawMaterial5, setfactory1buyrawMaterial5] = useState();
+  const [factory2buyrawMaterial1, setfactory2buyrawMaterial1] = useState();
+  const [factory2buyrawMaterial2, setfactory2buyrawMaterial2] = useState();
+  const [factory2buyrawMaterial3, setfactory2buyrawMaterial3] = useState();
+  const [factory2buyrawMaterial4, setfactory2buyrawMaterial4] = useState();
+  const [factory2buyrawMaterial5, setfactory2buyrawMaterial5] = useState();
+  const [factory3buyrawMaterial1, setfactory3buyrawMaterial1] = useState();
+  const [factory3buyrawMaterial2, setfactory3buyrawMaterial2] = useState();
+  const [factory3buyrawMaterial3, setfactory3buyrawMaterial3] = useState();
+  const [factory3buyrawMaterial4, setfactory3buyrawMaterial4] = useState();
+  const [factory3buyrawMaterial5, setfactory3buyrawMaterial5] = useState();
+
   const getSupplyChainHandler = async (event) => {
-    console.log("supplyChainContract ", supplyChainContract)
-    const viewBatchRecord = await supplyChainContract.items(data.state.i);
+    const viewBatchRecord = await supplyChainContract.items(data.state.id);
     setbatchRecord(viewBatchRecord);
 
-    let OGViewBatchRecord = await supplyChainContract.OGDetails(viewBatchRecord.supplyChainId);
+
+    let OGViewBatchRecord = await supplyChainContract.RawMaterialDetails(viewBatchRecord.supplyChainId);
     setogBatchRecord(OGViewBatchRecord)
-    //console.log("sdsdf",viewBatchRecord.itemState);
+
+
+    if(viewBatchRecord.factoryID1 != 0x0000000000000000000000000000000000000000){
+
+    const factory1rawMaterial1 = await supplyChainContract.RawMaterialsBoughtByFactory(viewBatchRecord.factoryID1.toLowerCase(),viewBatchRecord.supplyChainId,0);   
+    const factory1rawMaterial2 = await supplyChainContract.RawMaterialsBoughtByFactory(viewBatchRecord.factoryID1.toLowerCase(),viewBatchRecord.supplyChainId,1);   
+    const factory1rawMaterial3 = await supplyChainContract.RawMaterialsBoughtByFactory(viewBatchRecord.factoryID1.toLowerCase(),viewBatchRecord.supplyChainId,2);   
+    const factory1rawMaterial4 = await supplyChainContract.RawMaterialsBoughtByFactory(viewBatchRecord.factoryID1.toLowerCase(),viewBatchRecord.supplyChainId,3);   
+    const factory1rawMaterial5 = await supplyChainContract.RawMaterialsBoughtByFactory(viewBatchRecord.factoryID1.toLowerCase(),viewBatchRecord.supplyChainId,4);
+    setfactory1buyrawMaterial1(factory1rawMaterial1.toNumber());
+    setfactory1buyrawMaterial2(factory1rawMaterial2.toNumber());
+    setfactory1buyrawMaterial3(factory1rawMaterial3.toNumber());
+    setfactory1buyrawMaterial4(factory1rawMaterial4.toNumber());
+    setfactory1buyrawMaterial5(factory1rawMaterial5.toNumber());
+
+    }
+    if(viewBatchRecord.factoryID2 != 0x0000000000000000000000000000000000000000){
+
+    const factory2rawMaterial1 = await supplyChainContract.RawMaterialsBoughtByFactory(viewBatchRecord.factoryID2.toLowerCase(),viewBatchRecord.supplyChainId,0);   
+    const factory2rawMaterial2 = await supplyChainContract.RawMaterialsBoughtByFactory(viewBatchRecord.factoryID2.toLowerCase(),viewBatchRecord.supplyChainId,1);   
+    const factory2rawMaterial3 = await supplyChainContract.RawMaterialsBoughtByFactory(viewBatchRecord.factoryID2.toLowerCase(),viewBatchRecord.supplyChainId,2);   
+    const factory2rawMaterial4 = await supplyChainContract.RawMaterialsBoughtByFactory(viewBatchRecord.factoryID2.toLowerCase(),viewBatchRecord.supplyChainId,3);   
+    const factory2rawMaterial5 = await supplyChainContract.RawMaterialsBoughtByFactory(viewBatchRecord.factoryID2.toLowerCase(),viewBatchRecord.supplyChainId,4);
+    setfactory2buyrawMaterial1(factory2rawMaterial1);
+    setfactory2buyrawMaterial2(factory2rawMaterial2);
+    setfactory2buyrawMaterial3(factory2rawMaterial3);
+    setfactory2buyrawMaterial4(factory2rawMaterial4);
+    setfactory2buyrawMaterial5(factory2rawMaterial5);
+    }
+    if(viewBatchRecord.factoryID3 != 0x0000000000000000000000000000000000000000){
+
+    const factory3rawMaterial1 = await supplyChainContract.RawMaterialsBoughtByFactory(viewBatchRecord.factoryID3.toLowerCase(),viewBatchRecord.supplyChainId,0);   
+    const factory3rawMaterial2 = await supplyChainContract.RawMaterialsBoughtByFactory(viewBatchRecord.factoryID3.toLowerCase(),viewBatchRecord.supplyChainId,1);   
+    const factory3rawMaterial3 = await supplyChainContract.RawMaterialsBoughtByFactory(viewBatchRecord.factoryID3.toLowerCase(),viewBatchRecord.supplyChainId,2);   
+    const factory3rawMaterial4 = await supplyChainContract.RawMaterialsBoughtByFactory(viewBatchRecord.factoryID3.toLowerCase(),viewBatchRecord.supplyChainId,3);   
+    const factory3rawMaterial5 = await supplyChainContract.RawMaterialsBoughtByFactory(viewBatchRecord.factoryID3.toLowerCase(),viewBatchRecord.supplyChainId,4);
+    setfactory3buyrawMaterial1(factory3rawMaterial1);
+    setfactory3buyrawMaterial2(factory3rawMaterial2);
+    setfactory3buyrawMaterial3(factory3rawMaterial3);
+    setfactory3buyrawMaterial4(factory3rawMaterial4);
+    setfactory3buyrawMaterial5(factory3rawMaterial5);
+    }
 
     for (let i = 0; i < viewBatchRecord.itemState; i++) {
-      const dateObjectrec =await supplyChainContract.timeStamps(data.state.i,i);
+      const dateObjectrec =await supplyChainContract.timeStamps(data.state.id,i);
       const createdday = await dateContract.getDay(dateObjectrec.toNumber())
       const createmonth = await dateContract.getMonth(dateObjectrec.toNumber())
       const createdyear = await dateContract.getYear(dateObjectrec.toNumber())
-      //console.log("asdasda",i)
+     
       if(i == 0){
         setrawcreatedday(createdday);
         setrawcreatemonth(createmonth);
@@ -81,12 +140,13 @@ const ViewBatchStatusTable = () => {
       }
     }
    
-    const garbagePolAmount = OGViewBatchRecord.OGPolyesterAmount.toNumber() - viewBatchRecord.PolyesterAmount.toNumber() 
-    setgarbagePolyesterAmount(garbagePolAmount)
-    const garbageCottonAmount = OGViewBatchRecord.OGCottonAmount.toNumber() - viewBatchRecord.CottonAmount.toNumber() 
-    setgarbageCottonAmount(garbageCottonAmount)
-    const garbageWAmount = OGViewBatchRecord.OGWoolAmount.toNumber() - viewBatchRecord.WoolAmount.toNumber() 
-    setgarbageWoolAmount(garbageWAmount)
+    // const garbagePolAmount = OGViewBatchRecord.OGPolyesterAmount.toNumber() - viewBatchRecord.PolyesterAmount.toNumber() 
+    // setgarbagePolyesterAmount(garbagePolAmount)
+    // const garbageCottonAmount = OGViewBatchRecord.OGCottonAmount.toNumber() - viewBatchRecord.CottonAmount.toNumber() 
+    // setgarbageCottonAmount(garbageCottonAmount)
+    // const garbageWAmount = OGViewBatchRecord.OGWoolAmount.toNumber() - viewBatchRecord.WoolAmount.toNumber() 
+    // setgarbageWoolAmount(garbageWAmount)
+
 
       const rawmaterialLocation = {
         method: 'POST',
@@ -100,7 +160,6 @@ const ViewBatchStatusTable = () => {
       .then(res => res.json())
       .then(data => {
         if(data){
-          //console.log("Raw Material Location",data.location)
           setrawName(data.username)
           setrawlocation(data.location);
         }
@@ -108,29 +167,12 @@ const ViewBatchStatusTable = () => {
       .catch((error) => {
         console.error('Error:', error);
       });
-      const warehouseLocation = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({       
-          "hashAddress":viewBatchRecord.warehouseID,       
-          })
-      };
-      await fetch("http://162.215.222.118:5150/location",warehouseLocation)    
-      .then(res => res.json())
-      .then(data => {
-        if(data){
-          setwareName(data.username)
-          setwarelocation(data.location);
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+
       const factoryLocation = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({       
-          "hashAddress":viewBatchRecord.factoryID,       
+          "hashAddress":viewBatchRecord.factoryID1,       
           })
       };
       await fetch("http://162.215.222.118:5150/location",factoryLocation)    
@@ -144,6 +186,45 @@ const ViewBatchStatusTable = () => {
       .catch((error) => {
         console.error('Error:', error);
       });
+      if(viewBatchRecord.factoryID2 != 0x0000000000000000000000000000000000000000){
+        const factoryLocation2 = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({       
+            "hashAddress":viewBatchRecord.factoryID2,       
+            })
+        };
+        await fetch("http://162.215.222.118:5150/location",factoryLocation2)    
+        .then(res => res.json())
+        .then(data => {
+          if(data){
+            setfactName2(data.username);
+            setfactlocation2(data.location);
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      }else if(viewBatchRecord.factoryID3 != 0x0000000000000000000000000000000000000000){
+        const factoryLocation3 = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({       
+            "hashAddress":viewBatchRecord.factoryID3,       
+            })
+        };
+        await fetch("http://162.215.222.118:5150/location",factoryLocation3)    
+        .then(res => res.json())
+        .then(data => {
+          if(data){
+            setfactName3(data.username);
+            setfactlocation3(data.location);
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      }
   }
   const PendingContinue = (props) =>{
     const data = props.data;
@@ -165,47 +246,118 @@ const ViewBatchStatusTable = () => {
             <div className="right">
               <Card style={{ width: '80rem' }}>
                 <Card.Body>
-                  <Card.Title>Spinning Material Detail</Card.Title>
+                  <Card.Title>Raw Material Detail</Card.Title>
                   <Card.Text style={{ width: '50%', float: 'left' }}>
                     <>
-                      <p><b>Batch ID : </b>{data.state.i}</p>
-                      <p><b>Raw Material Supplier : </b>
-                      {rawName} 
-                      </p>
-                      <p><b>Warehouse Address : </b> 
-                      {batchRecord && batchRecord.itemState == 0 ? "Not Added" :wareName} 
-                      </p>
-                      <p><b>Factory Address : </b> 
-                      {batchRecord && batchRecord.itemState == 0 ? "Not Added" : factName}
-                      </p>
-                      <p><b>Polyster Amount : </b> {ogBatchRecord && ogBatchRecord.OGPolyesterAmount.toNumber()}</p>
-                      <p><b>Cotton Amount : </b> {ogBatchRecord && ogBatchRecord.OGCottonAmount.toNumber()}</p>
-                      <p><b>Wool Amount : </b> {ogBatchRecord && ogBatchRecord.OGWoolAmount.toNumber()}</p>
-                      <p><b>Quality Check Polyster Amount : </b> {batchRecord && batchRecord.PolyesterAmount.toNumber() == 0 ? "Not Checked":batchRecord && batchRecord.PolyesterAmount.toNumber() }</p>
-                      <p><b>Quality Check Cotton Amount : </b> {batchRecord && batchRecord.CottonAmount.toNumber() == 0 ? "Not Checked":batchRecord && batchRecord.CottonAmount.toNumber()}</p>
-                      <p><b>Quality Check Wool Amount : </b> {batchRecord && batchRecord.WoolAmount.toNumber()== 0 ? "Not Checked":batchRecord && batchRecord.WoolAmount.toNumber()}</p>
-                      <p><b>Garbage Polyster Amount : </b>{batchRecord && batchRecord.PolyesterAmount.toNumber()== 0 ? "Not Checked":garbagePolyesterAmount}</p>
-                      <p><b>Garbage Cotton Amount : </b> {batchRecord && batchRecord.CottonAmount.toNumber()== 0 ? "Not Checked":garbageCottonAmount}</p>
-                      <p><b>Garbage Wool Amount : </b> {batchRecord && batchRecord.WoolAmount.toNumber()== 0 ? "Not Checked":garbageWoolAmount}</p>
+                      <p><b>Batch ID : </b>{data.state.id}</p>
+                      <p><b>Raw Material Supplier : </b>{rawName} </p>
+                      { rawlocation && rawlocation !== " " ?  <p><b>Raw Material Location : </b>{rawlocation}</p>:<p></p> }
+                      { rawcreatedday && rawcreatedday !== " " ?  <p><b>Add Raw Material Date : </b>{rawcreatedday}-{rawcreatemonth}-{rawcreatedyear}</p>:<p></p> }
+                      {/* { rawcreatedday && rawcreatedday !== " " ?  <p><b>Buy Raw Material Date : </b>{rawcreatedday}-{rawcreatemonth}-{rawcreatedyear}</p>:<p></p> } */}
+                      <p><b>Buy Raw Material Status : </b>{batchRecord && batchRecord.itemState == 0 ?<PendingContinue path= {'/BuyRawMaterial'} data={data.state.id}/> :<Button variant="outline-success">Completed</Button> }</p>
+                      {/* <p><b>Quality Check Polyster Amount : </b> {ogBatchRecord && ogBatchRecord.rawMaterial1.toNumber() == 0 ? "Not Checked":batchRecord && batchRecord.PolyesterAmount.toNumber() }</p>
+                      <p><b>Quality Check Cotton Amount : </b> {batchRecord && batchRecord.rawMaterial1.toNumber() == 0 ? "Not Checked":batchRecord && batchRecord.CottonAmount.toNumber()}</p>
+                      <p><b>Quality Check Wool Amount : </b> {batchRecord && batchRecord.rawMaterial1.toNumber()== 0 ? "Not Checked":batchRecord && batchRecord.WoolAmount.toNumber()}</p>
+                      <p><b>Garbage Polyster Amount : </b>{batchRecord && batchRecord.rawMaterial1.toNumber()== 0 ? "Not Checked":garbagePolyesterAmount}</p>
+                      <p><b>Garbage Cotton Amount : </b> {batchRecord && batchRecord.rawMaterial1.toNumber()== 0 ? "Not Checked":garbageCottonAmount}</p>
+                      <p><b>Garbage Wool Amount : </b> {batchRecord && batchRecord.rawMaterial1.toNumber()== 0 ? "Not Checked":garbageWoolAmount}</p> */}
                     </>
                   </Card.Text>
                   <Card.Text style={{ width: '50%', float: 'left' }}>
+                  <Card.Title>Remaining Raw Material</Card.Title>
+                  {ogBatchRecord && ogBatchRecord.rawMaterialType.toNumber() == 1 ?
                     <>
-                    { rawcreatedday && rawcreatedday !== " " ?  <p><b>Buy Raw Material Date : </b>{rawcreatedday}-{rawcreatemonth}-{rawcreatedyear}</p>:<p></p> }
-                    { spinningcreatedday && spinningcreatedday !== " " ?  <p><b>Spinning Date : </b>{spinningcreatedday}-{spinningcreatemonth}-{spinningcreatedyear}</p>:<p></p> }
-                    { manufactureGarmentday && manufactureGarmentday !== " " ?  <p><b>Manufacture Date : </b>{manufactureGarmentday}-{manufactureGarmentmonth}-{manufactureGarmentyear}</p>:<p></p> }
-                    { sellitemday && sellitemday !== " " ?  <p><b>Factory Sell Date : </b>{sellitemday}-{sellitemmonth}-{sellitemyear}</p>: <p></p> }
-
-                    { rawlocation && rawlocation !== " " ?  <p><b>Raw Material Location : </b>{rawlocation}</p>:<p></p> }
-                    { warelocation && warelocation !== " " ?  <p><b>Warehouse Location  : </b>{warelocation}</p>:<p></p> }
-                    { factlocation && factlocation !== " " ?  <p><b>Factory Location  : </b>{factlocation}</p>:<p></p> }
-                      <p><b>Buy Raw Material Status : </b>{batchRecord && batchRecord.itemState == 0 ?<PendingContinue path= {'/BuyRawMaterial'} data={data.state.i}/> :<Button variant="outline-success">Completed</Button> }</p>
-                      <p><b>Available Raw Material Quality Check Status : </b>{batchRecord && batchRecord.itemState == 0 || batchRecord && batchRecord.itemState == 1 ?<PendingContinue path= {'/BuyRawMaterial'} data={data.state.i}/> :<Button variant="outline-success">Completed</Button> }</p>
-                      <p><b>Spinning Weaving Status : </b> {batchRecord && batchRecord.itemState == 0 || batchRecord && batchRecord.itemState == 1 || batchRecord && batchRecord.itemState == 2 ?<PendingContinue path= {'/garmentBatchCompleteForm'} data={data.state.i}/> :<Button variant="outline-success">Completed</Button> }</p>
-                      <p><b>Manufacture Garment Status : </b> {batchRecord && batchRecord.itemState == 0 || batchRecord && batchRecord.itemState == 1 || batchRecord && batchRecord.itemState == 2 || batchRecord && batchRecord.itemState == 3 ?<PendingContinue path= {'/garmentBatchCompleteForm'} data={data.state.i}/> :<Button variant="outline-success">Completed</Button> }</p>
-                      <p><b>Available Sell Item Quality Check : </b> {batchRecord && batchRecord.itemState == 0 || batchRecord && batchRecord.itemState == 1 || batchRecord && batchRecord.itemState == 2 || batchRecord && batchRecord.itemState == 3 || batchRecord && batchRecord.itemState == 4 ?<PendingContinue path= {'/garmentBatchCompleteForm'} data={data.state.i}/> :<Button variant="outline-success">Completed</Button> }</p>
-                      <p><b>Sell Item Status : </b>  {batchRecord && batchRecord.itemState == 0 || batchRecord && batchRecord.itemState == 1 || batchRecord && batchRecord.itemState == 2 || batchRecord && batchRecord.itemState == 3 || batchRecord && batchRecord.itemState == 4 || batchRecord && batchRecord.itemState == 5 ?<PendingContinue path= {'/SellItemFormData'} data={data.state.i} /> :<Button variant="outline-success">Completed</Button> }</p>                      
+                    <p><b>Weight	:</b> {ogBatchRecord && ogBatchRecord.rawMaterial1.toNumber()}</p>
+                    <p><b>Fibre length (mm) :</b> {ogBatchRecord && ogBatchRecord.rawMaterial2.toNumber()}</p>
+                    <p><b>Fibre Strength (g/T) :</b> {ogBatchRecord && ogBatchRecord.rawMaterial3.toNumber()}</p>
+                    <p><b>Mike(mm) :</b> {ogBatchRecord && ogBatchRecord.rawMaterial4.toNumber()}</p>
+                    <p><b>FQI (Rd) :</b> {ogBatchRecord && ogBatchRecord.rawMaterial5.toNumber()}</p> 
                     </>
+                    : ''}
+                    {ogBatchRecord && ogBatchRecord.rawMaterialType.toNumber() == 2 ?
+                    <>
+                    <p><b>FMax (kN)	:</b> {ogBatchRecord && ogBatchRecord.rawMaterial1.toNumber()}</p>
+                    <p><b>EMax (%) :</b> {ogBatchRecord && ogBatchRecord.rawMaterial2.toNumber()}</p>
+                    <p><b>Neps (%) :</b> {ogBatchRecord && ogBatchRecord.rawMaterial3.toNumber()}</p>
+                    <p><b>Cvm (%) :</b> {ogBatchRecord && ogBatchRecord.rawMaterial4.toNumber()}</p>
+                    </>
+                    : ''}
+                    {ogBatchRecord && ogBatchRecord.rawMaterialType.toNumber() == 3 ?
+                    <>
+                    <p><b>Fibre diameter or Grade (mm)	:</b> {ogBatchRecord && ogBatchRecord.rawMaterial1.toNumber()}</p>
+                    <p><b>Staple length (mm) :</b> {ogBatchRecord && ogBatchRecord.rawMaterial2.toNumber()}</p>
+                    <p><b>Fibre length (mm) :</b> {ogBatchRecord && ogBatchRecord.rawMaterial3.toNumber()}</p>
+                    <p><b>Crimpiness (cm) :</b> {ogBatchRecord && ogBatchRecord.rawMaterial4.toNumber()}</p>
+                    </>
+                    : ''}
+                  </Card.Text>
+                  
+                </Card.Body>
+                <Card.Body>
+                <Card.Text>
+                  <Card.Title style={{background: "#dedede", padding: "10px"}}>Buyer Detail</Card.Title>
+                      <table>
+                        {ogBatchRecord && ogBatchRecord.rawMaterialType.toNumber() == 1 ?
+                        <tr>
+                        <th>Factory</th>
+                          <th>Location </th>
+                          <th>Weight</th>
+                          <th>Fibre length (mm)</th>
+                          <th>Fibre Strength (g/T)</th>
+                          <th>Mike(mm)</th>
+                          <th>FQI (Rd)</th>
+                        </tr> : ''}
+                        {ogBatchRecord && ogBatchRecord.rawMaterialType.toNumber() == 2 ?
+                        <tr>
+                        <th>Factory</th>
+                          <th>Location </th>
+                          <th>FMax (kN)</th>
+                          <th>EMax (%)</th>
+                          <th>Neps (%)</th>
+                          <th>Mike(mm)</th>
+                        </tr> : ''}
+                        {ogBatchRecord && ogBatchRecord.rawMaterialType.toNumber() == 3 ?
+                        <tr>
+                        <th>Factory</th>
+                          <th>Location </th>
+                          <th>Fibre diameter or Grade (mm)</th>
+                          <th>Staple length (mm)</th>
+                          <th>Fibre length (mm)</th>
+                          <th>Crimpiness (cm)</th>
+                        </tr> : ''}
+                        <tr> 
+                          <td>{batchRecord && batchRecord.itemState == 0 ? "Not Added" : factName}</td>
+                          <td>{ factlocation && factlocation !== " " ?  <span>{factlocation}</span>:<span></span> }</td>
+                          <td>{factory1buyrawMaterial1 && factory1buyrawMaterial1}</td>
+                          <td>{factory1buyrawMaterial2 && factory1buyrawMaterial2}</td>
+                          <td>{factory1buyrawMaterial3 && factory1buyrawMaterial3}</td>
+                          <td>{factory1buyrawMaterial4 && factory1buyrawMaterial4}</td>
+                          {ogBatchRecord && ogBatchRecord.rawMaterialType.toNumber() == 1 ?
+                          <td>{factory1buyrawMaterial5 && factory1buyrawMaterial5}</td>:''}
+                        </tr>
+                        {factName2 && factName2 ?
+                          <tr> 
+                          <td>{batchRecord && batchRecord.itemState == 0 ? "Not Added" : factName2}</td>
+                          <td>{ factlocation2 && factlocation2 !== " " ?  <span>{factlocation2}</span>:<span></span> }</td>
+                          <td>{factory2buyrawMaterial1 && factory2buyrawMaterial1}</td>
+                          <td>{factory2buyrawMaterial2 && factory2buyrawMaterial2}</td>
+                          <td>{factory2buyrawMaterial3 && factory2buyrawMaterial3}</td>
+                          <td>{factory2buyrawMaterial4 && factory2buyrawMaterial4}</td>
+                          {ogBatchRecord && ogBatchRecord.rawMaterialType.toNumber() == 1 ?
+                          <td>{factory2buyrawMaterial5 && factory2buyrawMaterial5}</td>:''}
+                        </tr> : ''}
+                        {factName3 && factName3 ?
+                          <tr> 
+                          <td>{batchRecord && batchRecord.itemState == 0 ? "Not Added" : factName3}</td>
+                          <td>{ factlocation3 && factlocation3 !== " " ?  <span>{factlocation3}</span>:<span></span> }</td>
+                          <td>{factory3buyrawMaterial1 && factory3buyrawMaterial1}</td>
+                          <td>{factory3buyrawMaterial2 && factory3buyrawMaterial2}</td>
+                          <td>{factory3buyrawMaterial3 && factory3buyrawMaterial3}</td>
+                          <td>{factory3buyrawMaterial4 && factory3buyrawMaterial4}</td>
+                          {ogBatchRecord && ogBatchRecord.rawMaterialType.toNumber() == 1 ?
+                          <td>{factory3buyrawMaterial5 && factory3buyrawMaterial5}</td>:''}
+                        </tr> : ''}
+                      </table>
                   </Card.Text>
                 </Card.Body>
               </Card>
