@@ -199,7 +199,7 @@ async function main() {
         console.log(await supplychain.items(supplychainIds[j]));
       }
     }
-  }
+  } 
 
 
   // console.log(await supplychain.ProductIds(0,0));

@@ -13,6 +13,9 @@ import { GarmentBatchCompleteFormSchema } from '../../Validations/Schema';
 
 import GarmentBatchList from "./getTotalBatch";
 const GarmentBatchCompleteForm = () =>{
+  const [CottonBatchId,setCottonBatchId] = useState();
+  const [polysterBatchId,setPolysterBatchId] = useState();
+  const [woolBatchId,setWoolBatchId] = useState();
 
   let data = useLocation();
   data = data.state.i;
@@ -32,7 +35,8 @@ const GarmentBatchCompleteForm = () =>{
 
   const garmentcompleteHandler = async (event) => { 
     // event.preventDefault();
-    // console.log("batchid",SChainContract);
+    console.log("CottonBatchId",CottonBatchId)
+     console.log("batchid",event);
     
     const tx = SChainContract.factoryCompleteGarmentManufacturing(0,1, event.totalitems,event.description);
     //console.log((await tx.wait()));
@@ -47,9 +51,7 @@ const GarmentBatchCompleteForm = () =>{
             <div className="bottom">
           <div className="right">
             <form onSubmit={handleSubmit(garmentcompleteHandler)}>
-
-            <GarmentBatchList />
-
+            <GarmentBatchList cotfun={setCottonBatchId} polyfun={setPolysterBatchId} woolfun={setWoolBatchId}  />
               <div className="formInput">
                 <label>Total Items</label>
                 <input id="totalitems"  type="text"  name="totalitems" {...register("totalitems", { required: true })}></input>

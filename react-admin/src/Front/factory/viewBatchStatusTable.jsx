@@ -10,13 +10,11 @@ import Card from 'react-bootstrap/Card';
 
 const ViewBatchStatusTable = () => {
   let data = useLocation();
-  console.log("data record", data.state.i);
   const navigate = useNavigate();
   const { dispatch, metaMask, supplyChainContract, ownSupplyChainAddress, dateContract } = useContext(DarkModeContext);
   useEffect(() => {
     getSupplyChainHandler();
   }, []);
-  //console.log("date contract",dateContract);
   const [batchRecord, setbatchRecord] = useState();
   const [ogBatchRecord, setogBatchRecord] = useState();
   const [garbagePolyesterAmount, setgarbagePolyesterAmount] = useState();
@@ -48,20 +46,17 @@ const ViewBatchStatusTable = () => {
   const [factName, setfactName] = useState();
   
   const getSupplyChainHandler = async (event) => {
-    console.log("supplyChainContract ", supplyChainContract)
     const viewBatchRecord = await supplyChainContract.items(data.state.i);
     setbatchRecord(viewBatchRecord);
 
-    let OGViewBatchRecord = await supplyChainContract.OGDetails(viewBatchRecord.supplyChainId);
+    let OGViewBatchRecord = await supplyChainContract.RawMaterialDetails(viewBatchRecord.supplyChainId);
     setogBatchRecord(OGViewBatchRecord)
-    //console.log("sdsdf",viewBatchRecord.itemState);
 
     for (let i = 0; i < viewBatchRecord.itemState; i++) {
       const dateObjectrec =await supplyChainContract.timeStamps(data.state.i,i);
       const createdday = await dateContract.getDay(dateObjectrec.toNumber())
       const createmonth = await dateContract.getMonth(dateObjectrec.toNumber())
       const createdyear = await dateContract.getYear(dateObjectrec.toNumber())
-      //console.log("asdasda",i)
       if(i == 0){
         setrawcreatedday(createdday);
         setrawcreatemonth(createmonth);
@@ -81,12 +76,12 @@ const ViewBatchStatusTable = () => {
       }
     }
    
-    const garbagePolAmount = OGViewBatchRecord.OGPolyesterAmount.toNumber() - viewBatchRecord.PolyesterAmount.toNumber() 
-    setgarbagePolyesterAmount(garbagePolAmount)
-    const garbageCottonAmount = OGViewBatchRecord.OGCottonAmount.toNumber() - viewBatchRecord.CottonAmount.toNumber() 
-    setgarbageCottonAmount(garbageCottonAmount)
-    const garbageWAmount = OGViewBatchRecord.OGWoolAmount.toNumber() - viewBatchRecord.WoolAmount.toNumber() 
-    setgarbageWoolAmount(garbageWAmount)
+    // const garbagePolAmount = OGViewBatchRecord.OGPolyesterAmount.toNumber() - viewBatchRecord.PolyesterAmount.toNumber() 
+    // setgarbagePolyesterAmount(garbagePolAmount)
+    // const garbageCottonAmount = OGViewBatchRecord.OGCottonAmount.toNumber() - viewBatchRecord.CottonAmount.toNumber() 
+    // setgarbageCottonAmount(garbageCottonAmount)
+    // const garbageWAmount = OGViewBatchRecord.OGWoolAmount.toNumber() - viewBatchRecord.WoolAmount.toNumber() 
+    // setgarbageWoolAmount(garbageWAmount)
 
       const rawmaterialLocation = {
         method: 'POST',
@@ -100,7 +95,6 @@ const ViewBatchStatusTable = () => {
       .then(res => res.json())
       .then(data => {
         if(data){
-          //console.log("Raw Material Location",data.location)
           setrawName(data.username)
           setrawlocation(data.location);
         }
@@ -130,7 +124,7 @@ const ViewBatchStatusTable = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({       
-          "hashAddress":viewBatchRecord.factoryID,       
+          "hashAddress":viewBatchRecord.factoryID1,       
           })
       };
       await fetch("http://162.215.222.118:5150/location",factoryLocation)    
@@ -178,7 +172,7 @@ const ViewBatchStatusTable = () => {
                       <p><b>Factory Address : </b> 
                       {batchRecord && batchRecord.itemState == 0 ? "Not Added" : factName}
                       </p>
-                      <p><b>Polyster Amount : </b> {ogBatchRecord && ogBatchRecord.OGPolyesterAmount.toNumber()}</p>
+                      {/* <p><b>Polyster Amount : </b> {ogBatchRecord && ogBatchRecord.OGPolyesterAmount.toNumber()}</p>
                       <p><b>Cotton Amount : </b> {ogBatchRecord && ogBatchRecord.OGCottonAmount.toNumber()}</p>
                       <p><b>Wool Amount : </b> {ogBatchRecord && ogBatchRecord.OGWoolAmount.toNumber()}</p>
                       <p><b>Quality Check Polyster Amount : </b> {batchRecord && batchRecord.PolyesterAmount.toNumber() == 0 ? "Not Checked":batchRecord && batchRecord.PolyesterAmount.toNumber() }</p>
@@ -186,7 +180,7 @@ const ViewBatchStatusTable = () => {
                       <p><b>Quality Check Wool Amount : </b> {batchRecord && batchRecord.WoolAmount.toNumber()== 0 ? "Not Checked":batchRecord && batchRecord.WoolAmount.toNumber()}</p>
                       <p><b>Garbage Polyster Amount : </b>{batchRecord && batchRecord.PolyesterAmount.toNumber()== 0 ? "Not Checked":garbagePolyesterAmount}</p>
                       <p><b>Garbage Cotton Amount : </b> {batchRecord && batchRecord.CottonAmount.toNumber()== 0 ? "Not Checked":garbageCottonAmount}</p>
-                      <p><b>Garbage Wool Amount : </b> {batchRecord && batchRecord.WoolAmount.toNumber()== 0 ? "Not Checked":garbageWoolAmount}</p>
+                      <p><b>Garbage Wool Amount : </b> {batchRecord && batchRecord.WoolAmount.toNumber()== 0 ? "Not Checked":garbageWoolAmount}</p> */}
                     </>
                   </Card.Text>
                   <Card.Text style={{ width: '50%', float: 'left' }}>

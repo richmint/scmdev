@@ -8,34 +8,12 @@ const SpinningWeavingTable = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [materiallist, setMateriallist] = useState(null);
-  const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress } = useContext(DarkModeContext);
+  const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress, dateContract } = useContext(DarkModeContext);
   const allsupplymateriallist = [];
-
-
-
-
-
-  
-
-  // const totalBatchs =await supplychain.totalBatchs()  
-  // for(let i= 0; i<totalBatchs; i++){  
-  //   const item = await supplychain.items(i);  
-  //   if (item.itemState ==3 && (item.factoryID1 ==factorySigner1.address || item.factoryID2 ==factorySigner1.address || item.factoryID2 ==factorySigner1.address) ){
-      
-  //     console.log();
-  //     console.log(item); 
-  //     console.log(await supplychain.RawMaterialDetails(item.supplyChainId));
-  //     const object =await supplychain.timeStamps(item.supplyChainId,item.itemState);
-  //     console.log(await dateTime.getDay(object.toNumber()),await dateTime.getMonth(object.toNumber()),await dateTime.getYear(object.toNumber()));
-  //     console.log();
-  //   } 
-  // } 
-
-
-
 
   const getSupplyChainHandler = async (event) => {
     let userdatarec = '';
+    let wareHousedatarec = '';
     const totalbatchids = (await supplyChainContract.totalBatchs());
     var checkvalue = 0;
     if (totalbatchids > 0) {
@@ -45,7 +23,11 @@ const SpinningWeavingTable = () => {
           
           let rawMaterialDetails = await supplyChainContract.RawMaterialDetails(object.supplyChainId);
 
-          console.log("Raw Material Details",rawMaterialDetails);
+          const dateObject =await supplyChainContract.timeStamps(i,object.itemState);
+
+          const createdday = await dateContract.getDay(dateObject.toNumber())
+          const createmonth = await dateContract.getMonth(dateObject.toNumber())
+          const createdyear = await dateContract.getYear(dateObject.toNumber())
 
           checkvalue = 1;
           const rawMaterialRecord = {
@@ -64,15 +46,33 @@ const SpinningWeavingTable = () => {
           }).catch((error) => { 
             console.error('Error:', error);
           });
+          const wareHouseDetail = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({       
+              "hashAddress":object.warehouseID,       
+              })
+          };
+          await fetch("http://162.215.222.118:5150/location",wareHouseDetail)    
+          .then(res => res.json())
+          .then(data => {
+            if(data){
+              wareHousedatarec = data.username 
+            }
+          }).catch((error) => { 
+            console.error('Error:', error);
+          });
           allsupplymateriallist.push(
             <><tr>
               <td>{i}</td>
               <td>{userdatarec && userdatarec }</td>
-              {/* <td>{rawMaterialDetails.rawMaterial1.toNumber()}</td>
-              <td>{rawMaterialDetails.rawMaterial2.toNumber()}</td>
-              <td>{rawMaterialDetails.rawMaterial3.toNumber()}</td>
-              <td>{rawMaterialDetails.rawMaterial3.toNumber()}</td>
-              <td>{rawMaterialDetails.rawMaterial3.toNumber()}</td> */}
+              <td>
+                {rawMaterialDetails.rawMaterialType.toNumber() == 1 ? "Cotton" : "" }
+                {rawMaterialDetails.rawMaterialType.toNumber() == 2 ? "Polyester" : "" }
+                {rawMaterialDetails.rawMaterialType.toNumber() == 3 ? "Wool" : "" }
+                </td>
+              <td>{wareHousedatarec && wareHousedatarec}</td>
+              <td>{createdday}-{createmonth}-{createdyear}</td>
               <td>
                 <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { i } })}>View</Button>
                 <Button variant="outline-success" onClick={() => navigate('/spinningBatchCompleteForm', { state: { i } })}>Continue</Button>
@@ -113,11 +113,9 @@ const SpinningWeavingTable = () => {
                 <tr>
                   <th>Batch ID</th>
                   <th>Raw Material Supplier</th>
-                  {/* <th>Polyster Amount</th>
-                  <th>Cotton Amount</th>
-                  <th>Wool Amount</th>
-                  <th>Wool Amount</th>
-                  <th>Wool Amount</th> */}
+                  <th>Material Type</th>
+                  <th>Warehouse</th>
+                  <th>Date</th>
                   <th>Action</th>
                 </tr>
                 {materiallist}
