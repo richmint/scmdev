@@ -19,6 +19,9 @@ import Materialsupplier from "./Front/supplier/Dashboard";
 import Addbatch from "./Front/supplier/AddMaterialForm";
 import Approvesupplier from "./Front/supplier/ApproveSupply";
 import ViewSupplyToken from "./Front/supplier/viewSupplyToken";
+import ViewBatchSupplier from './Front/supplier/viewBatchStatus';
+
+
 import AvailableRawMaterialToBuy from "./Front/factory/availableRawMaterialToBuy";
 import AvailableRawMaterialToWarehouse from "./Front/factory/availableRawMaterialToWarehouse";
 import StoreInWarehouse from "./Front/factory/storeInWarehouse";
@@ -188,6 +191,8 @@ function App() {
               <Route path="/addbatch" element={frontToken ? <Addbatch /> : <Navigate to={"/userlogin"} />} />
               <Route path="/supplyToken" element={frontToken ? <ViewSupplyToken /> : <Navigate to={"/userlogin"} />} />
               <Route path="/approveSupplier" element={frontToken ? <Approvesupplier /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/viewBatchSupplier" element={frontToken ? <ViewBatchSupplier /> : <Navigate to={"/userlogin"} />} />
+              
               {/* Front Factory Routes */}
               <Route path="/availableRawMaterialToBuy" element={frontToken ? <AvailableRawMaterialToBuy /> : <Navigate to={"/userlogin"} />} />
               <Route path="/approveFactorySupplier" element={frontToken ? <ApproveFactorySupplier /> : <Navigate to={"/userlogin"} />} />

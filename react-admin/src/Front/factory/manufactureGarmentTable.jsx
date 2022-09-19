@@ -19,6 +19,9 @@ const ManufactureGarmentTable = () => {
     if (totalbatchids > 0) {
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
+        let RawMaterialDetails = await supplyChainContract.RawMaterialDetails(object.supplyChainId);
+        console.log("type",RawMaterialDetails)
+
           if (object.itemState === 4 && object.factoryID1.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID2.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID3.toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
 
           checkvalue = 1;
@@ -41,7 +44,7 @@ const ManufactureGarmentTable = () => {
           allsupplymateriallist.push(
             <><tr>
               <td>{i}</td>
-              <td>{userdatarec && userdatarec }</td>
+              <td>{userdatarec && userdatarec  }{console.log(",dhf",userdatarec)}</td>
              
               <td>
                 <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { i } })}>View</Button>
