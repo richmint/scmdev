@@ -20,7 +20,6 @@ contract Supplychain{
 
     enum State
     {
-        rawMaterialSupplierSuppliesRM, 
         factoryBuyRawMaterial, 
         factoryReceiveRawMaterials,
         factoryQCRawMaterials,
@@ -32,20 +31,19 @@ contract Supplychain{
         RetailerSellToCustomer
     }  
 
-    State constant defaultState = State.rawMaterialSupplierSuppliesRM;
+    enum ProductState
+    {
+        factoryCompleteGarmentManufacturing,
+        factoryQCFinalItems,
+        factorySellItemToDistributors
+    }
+
+    State constant defaultState = State.factoryBuyRawMaterial;
 
     struct Item{
-    
         uint supplyChainId;             // Counter for this batch items
-        State itemState;                // Product State as represented in the enum above
-        
         address RawMaterialSupplierID;  // Metamask-Ethereum address of the RawMaterialSupplier
-        address warehouseID;            // Metamask-Ethereum address of the warehouse
-        address distributorId;          // Metamask-Ethereum address of the distributor
-        address factoryID1;              // Metamask-Ethereum address of the factory1
-        address factoryID2;              // Metamask-Ethereum address of the factory2
-        address factoryID3;              // Metamask-Ethereum address of the factory3
-
+        uint timeStamp0;
     }
 
     struct RawMaterials{
@@ -59,30 +57,49 @@ contract Supplychain{
         string YarnColor;
         string YarnType;
     }
+
     struct ProductBatch{
         uint productId;
+        ProductState productState;
         uint totalUnits;
+        uint totalUnitsAfterQC;
         string Description;
         address factory;
+        uint timeStamp6;
+        uint timeStamp7;
     }   
 
-    // struct cutomerInfoStruct{
-    //     uint supplychainID;
-    //     address retailer;
-    //     uint quantity;
-    // }
-    // mapping(address =>uint[]) private customerSCIds;
+    struct FactoryDetail{
+        State itemState;                // Product State as represented in the enum above
+        address factory;
+        address warehouse;
+        uint timeStamp1;
+        uint timeStamp2;
+        uint timeStamp3;
+        uint timeStamp4;
+        uint timeStamp5;
+    }
+
+
+    mapping(uint=> FactoryDetail[]) public IdToFactory;
 
     mapping(uint =>ProductBatch) public Product;
     mapping(uint =>uint[]) public ProductIds;
-    
-    mapping (uint =>RawMaterials) public RawMaterialDetails;
 
-    mapping (uint =>uint[]) public timeStamps;
+    mapping (uint =>RawMaterials) public RawMaterialDetails;
+    mapping (uint =>RawMaterials) public RawMaterialSupplierRawMaterial;
+
+    mapping (uint =>mapping (address=>RawMaterials)) public FactoryRawMaterialsORIGIONAL;
+    mapping (uint =>mapping (address=>RawMaterials)) public FactoryRawMaterialsAferQC;
     mapping (uint => Item) public items;
 
-    mapping (address => Item[]) private wareHouseItems;
-    mapping(address=>mapping(uint=>uint[])) public RawMaterialsBoughtByFactory;
+
+    function checkInArray(address _target,FactoryDetail[] memory array) internal pure returns(bool){
+        for(uint i=0;i <array.length; i++){
+            if(array[i].factory==_target) return true;
+        }
+        return false;
+    }
 
 
     function rawMaterialSupplierSuppliesRM(uint256 _rawMaterialType,uint256[] memory _rawMaterials) public{
@@ -90,13 +107,8 @@ contract Supplychain{
         uint currentId =supplyChainId.current();
         Item memory item =Item({  
                 supplyChainId:currentId,  
-                itemState: defaultState,
                 RawMaterialSupplierID: msg.sender,
-                warehouseID:address(0),
-                distributorId:address(0),
-                factoryID1:address(0),
-                factoryID2:address(0),
-                factoryID3:address(0)
+                timeStamp0:block.timestamp
             }); 
         RawMaterials memory rawMaterial=RawMaterials({
             rawMaterialType :_rawMaterialType,
@@ -110,147 +122,140 @@ contract Supplychain{
             YarnType:""
         });
         RawMaterialDetails[currentId]= rawMaterial;
+        RawMaterialSupplierRawMaterial[currentId]= rawMaterial;
+
         items[currentId] =item;
-        timeStamps[currentId].push(block.timestamp);
         supplyChainId.increment();
     }
 
+
     function factoryBuyRawMaterial(uint256 _supplyChainId, uint[] memory _rawMaterials) public {
         
-        Item memory item =items[_supplyChainId];               
-        require(RawMaterialDetails[_supplyChainId].rawMaterial1>=_rawMaterials[0],"Raw material 1 exceeded");         
-        require(RawMaterialDetails[_supplyChainId].rawMaterial2>=_rawMaterials[1],"Raw material 2 exceeded");         
-        require(RawMaterialDetails[_supplyChainId].rawMaterial3>=_rawMaterials[2],"Raw material 3 exceeded");         
-        require(RawMaterialDetails[_supplyChainId].rawMaterial4>=_rawMaterials[3],"Raw material 4 exceeded");         
-        require(RawMaterialDetails[_supplyChainId].rawMaterial5>=_rawMaterials[4],"Raw material 5 exceeded");         
-                 
-        item.itemState=  State.factoryBuyRawMaterial;   
+        FactoryDetail[] memory a =IdToFactory[_supplyChainId];
+        require(!checkInArray(msg.sender,a),"You can't buy same batch twice");
+             
+        require(RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial1>=_rawMaterials[0],"Raw material 1 exceeded");         
+        require(RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial2>=_rawMaterials[1],"Raw material 2 exceeded");         
+        require(RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial3>=_rawMaterials[2],"Raw material 3 exceeded");         
+        require(RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial4>=_rawMaterials[3],"Raw material 4 exceeded");         
+        require(RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial5>=_rawMaterials[4],"Raw material 5 exceeded");         
 
-        RawMaterialDetails[_supplyChainId].rawMaterial1-=_rawMaterials[0];
-        RawMaterialDetails[_supplyChainId].rawMaterial2-=_rawMaterials[1];
-        RawMaterialDetails[_supplyChainId].rawMaterial3-=_rawMaterials[2];
-        RawMaterialDetails[_supplyChainId].rawMaterial4-=_rawMaterials[3];
-        RawMaterialDetails[_supplyChainId].rawMaterial5-=_rawMaterials[4]; 
+        RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial1-=_rawMaterials[0];
+        RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial2-=_rawMaterials[1];
+        RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial3-=_rawMaterials[2];
+        RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial4-=_rawMaterials[3];
+        RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial5-=_rawMaterials[4]; 
 
-        if(item.factoryID1 ==address(0)){
-            item.factoryID1=msg.sender;
-        }else if(item.factoryID2 ==address(0)){
-            item.factoryID2=msg.sender;
-        }else if(item.factoryID3 ==address(0)){
-            item.factoryID3=msg.sender;
-        }else{
-            revert("Maximum of three factory can buy a batch");
+        FactoryDetail memory f =FactoryDetail({
+            itemState: defaultState,
+            factory:msg.sender,
+            warehouse:address(0),
+            timeStamp1:block.timestamp,
+            timeStamp2:0,
+            timeStamp3:0,
+            timeStamp4:0,
+            timeStamp5:0
+        });
+        IdToFactory[_supplyChainId].push(f);
+        FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial1=_rawMaterials[0];
+        FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial2=_rawMaterials[1];
+        FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial3=_rawMaterials[2];
+        FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial4=_rawMaterials[3];
+        FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial5=_rawMaterials[4]; 
+
+    }
+
+    function factoryReceiveRawMaterials(uint256 _supplyChainId, address _warehouse) public{
+        FactoryDetail[] memory fd =IdToFactory[_supplyChainId];
+        for(uint i=0; i<fd.length; i++){
+            if(fd[i].factory==msg.sender && fd[i].itemState== State.factoryBuyRawMaterial ){
+                fd[i].warehouse =_warehouse;
+                fd[i].itemState =State.factoryReceiveRawMaterials;
+                fd[i].timeStamp2 =block.timestamp;
+                IdToFactory[_supplyChainId][i]=fd[i];
+                return;
+            }
         }
-        items[_supplyChainId] =item;
-        RawMaterialsBoughtByFactory[msg.sender][_supplyChainId]=_rawMaterials;
-        timeStamps[_supplyChainId].push(block.timestamp);
     }
 
-    function factoryReceiveRawMaterials(uint256 _supplyChainId,address _warehouse) public{
-        Item memory item =items[_supplyChainId]; 
-        item.warehouseID=_warehouse;                    
-        item.itemState=  State.factoryReceiveRawMaterials;   
-        items[_supplyChainId] =item;
-        wareHouseItems[_warehouse].push(item);
-        timeStamps[_supplyChainId].push(block.timestamp);
-    }
 
     function factoryQCRawMaterials(uint _supplyChainId, uint256[] memory _updatedrawmaterials ) public {
-        
-        Item memory item =items[_supplyChainId];
-        item.itemState =State.factoryQCRawMaterials;
-        items[_supplyChainId] =item;
-        require(RawMaterialsBoughtByFactory[msg.sender][_supplyChainId][0]>=_updatedrawmaterials[0],"Raw material 1 exceeded");         
-        require(RawMaterialsBoughtByFactory[msg.sender][_supplyChainId][1]>=_updatedrawmaterials[1],"Raw material 2 exceeded");         
-        require(RawMaterialsBoughtByFactory[msg.sender][_supplyChainId][2]>=_updatedrawmaterials[2],"Raw material 3 exceeded");         
-        require(RawMaterialsBoughtByFactory[msg.sender][_supplyChainId][3]>=_updatedrawmaterials[3],"Raw material 4 exceeded");       
-        require(RawMaterialsBoughtByFactory[msg.sender][_supplyChainId][4]>=_updatedrawmaterials[4],"Raw material 5 exceeded");    
-        RawMaterialsBoughtByFactory[msg.sender][_supplyChainId]=_updatedrawmaterials;
-        
-        uint length =wareHouseItems[item.warehouseID].length;
-        if (length >0){
-            for(uint i=0; i<length; i++){
-                if(wareHouseItems[item.warehouseID][i].supplyChainId == _supplyChainId){
-                    wareHouseItems[item.warehouseID][i].itemState =State.factoryQCRawMaterials;
-                }
+        FactoryDetail[] memory fd =IdToFactory[_supplyChainId];
+        for(uint i=0; i<fd.length; i++){
+            if(fd[i].factory==msg.sender && fd[i].itemState== State.factoryReceiveRawMaterials ){
+                fd[i].itemState =State.factoryQCRawMaterials;
+                fd[i].timeStamp3 =block.timestamp;
+                IdToFactory[_supplyChainId][i]=fd[i];
+                break;
             }
-        }   
-        timeStamps[_supplyChainId].push(block.timestamp);
+        }
+        require(_updatedrawmaterials[0] <=FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial1,"CANT BE MORE THEN THE ORIGINAL");
+        require(_updatedrawmaterials[1] <=FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial2,"CANT BE MORE THEN THE ORIGINAL");
+        require(_updatedrawmaterials[2] <=FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial3,"CANT BE MORE THEN THE ORIGINAL");
+        require(_updatedrawmaterials[3] <=FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial4,"CANT BE MORE THEN THE ORIGINAL");
+        require(_updatedrawmaterials[4] <=FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial5,"CANT BE MORE THEN THE ORIGINAL");
+        
+        FactoryRawMaterialsAferQC[_supplyChainId][msg.sender].rawMaterial1= _updatedrawmaterials[0];
+        FactoryRawMaterialsAferQC[_supplyChainId][msg.sender].rawMaterial2= _updatedrawmaterials[1];
+        FactoryRawMaterialsAferQC[_supplyChainId][msg.sender].rawMaterial3= _updatedrawmaterials[2];
+        FactoryRawMaterialsAferQC[_supplyChainId][msg.sender].rawMaterial4= _updatedrawmaterials[3];
+        FactoryRawMaterialsAferQC[_supplyChainId][msg.sender].rawMaterial5= _updatedrawmaterials[4];
     }
+
 
     function factoryCompleteSpinningWaeving(uint _supplyChainId, uint _yarnAmount, string memory _yarnColor, string memory _yarnType) public {
-        Item memory item =items[_supplyChainId];        
-        RawMaterialDetails[_supplyChainId].YarnAmount =_yarnAmount;
-        RawMaterialDetails[_supplyChainId].YarnColor=_yarnColor;
-        RawMaterialDetails[_supplyChainId].YarnType=_yarnType;
-
-        item.itemState=  State.factoryCompleteSpinningWaeving;
-        items[_supplyChainId] =item;
-        uint length =wareHouseItems[item.warehouseID].length;
-        if (length >0){
-            for(uint i=0; i<length; i++){
-                if(wareHouseItems[item.warehouseID][i].supplyChainId == _supplyChainId){
-                    wareHouseItems[item.warehouseID][i].itemState =State.factoryCompleteSpinningWaeving;
-                }
+        FactoryDetail[] memory fd =IdToFactory[_supplyChainId];
+        for(uint i=0; i<fd.length; i++){
+            if(fd[i].factory==msg.sender && fd[i].itemState== State.factoryQCRawMaterials ){
+                fd[i].itemState =State.factoryCompleteSpinningWaeving;
+                fd[i].timeStamp4 =block.timestamp;
+                IdToFactory[_supplyChainId][i]=fd[i];
+                break;
             }
-        }   
-        timeStamps[_supplyChainId].push(block.timestamp);
+        }
+        FactoryRawMaterialsAferQC[_supplyChainId][msg.sender].YarnAmount= _yarnAmount;
+        FactoryRawMaterialsAferQC[_supplyChainId][msg.sender].YarnColor= _yarnColor;
+        FactoryRawMaterialsAferQC[_supplyChainId][msg.sender].YarnType= _yarnType;
     }
 
-    function factoryCompleteGarmentManufacturing(uint[] memory _supplyChainId, uint _totalUnits, string memory _description) public {
+
+    function factoryCompleteGarmentManufacturing(uint[] memory _supplyChainIds, uint _totalUnits, string memory _description) public {
         require(_totalUnits>=1,"Units should be greater that 1");
-        for(uint i=0;i<_supplyChainId.length; i++){
-            items[_supplyChainId[i]].itemState=State.factoryCompleteGarmentManufacturing;
-            timeStamps[_supplyChainId[i]].push(block.timestamp);   
+        
+        for(uint i=0;i<_supplyChainIds.length; i++){
+            FactoryDetail[] memory fd =IdToFactory[_supplyChainIds[i]];
+            for(uint j=0; i<fd.length; i++){
+                if(fd[j].factory==msg.sender && fd[j].itemState== State.factoryCompleteSpinningWaeving ){
+                    fd[j].itemState =State.factoryCompleteGarmentManufacturing;
+                    IdToFactory[_supplyChainIds[i]][j]=fd[j];
+                    break;
+                }
+            }
         }
         uint currentId =productId.current();
         Product[currentId]=ProductBatch({
             productId:currentId,
+            productState:ProductState.factoryCompleteGarmentManufacturing,
             totalUnits:_totalUnits,
+            totalUnitsAfterQC:0,
             Description:_description,
-            factory:msg.sender
-        });
-        ProductIds[currentId]=_supplyChainId;
+            factory:msg.sender,
+            timeStamp6:block.timestamp,
+            timeStamp7:0
+        }); 
+        ProductIds[currentId]=_supplyChainIds;
         productId.increment();
-
-        for(uint i=0; i<_supplyChainId.length; i++){
-            Item memory item =items[_supplyChainId[i]];        
-            uint length =wareHouseItems[item.warehouseID].length;
-            if (length >0){
-                for(uint k=0; i<length; i++){
-                    if(wareHouseItems[item.warehouseID][k].supplyChainId == _supplyChainId[i]){
-                        wareHouseItems[items[_supplyChainId[i]].warehouseID][k].itemState =State.factoryCompleteGarmentManufacturing;
-                    }
-                }
-            }   
-        }
     }
         
+
     function factoryQCFinalItems(uint _productid, uint _totalUnits ) public {
 
-
         ProductBatch memory product =Product[_productid];
-        product.totalUnits=_totalUnits;
+        product.productState=ProductState.factoryQCFinalItems;
+        product.totalUnitsAfterQC=_totalUnits;
+        product.timeStamp7=block.timestamp;
         Product[_productid] =product;   
-        uint[] memory array =ProductIds[_productid];
 
-        for(uint i=0; i<array.length; i++){
-            Item memory item =items[array[i]];
-            item.itemState=  State.factoryQCFinalItems;
-            items[array[i]] =item;
-        }
-
-        // uint length =wareHouseItems[item.warehouseID].length;
-        // if (length >0){
-        //     for(uint i=0; i<length; i++){
-        //         if(wareHouseItems[item.warehouseID][i].supplyChainId == _supplyChainId){
-        //             wareHouseItems[item.warehouseID][i].itemState =State.factoryQCFinalItems;
-        //             wareHouseItems[item.warehouseID][i].totalUnits =_totalUnits;
-        //         }
-        //     }
-        // } 
-        
-        // timeStamps[_supplyChainId].push(block.timestamp);
     }
 
 
@@ -341,17 +346,18 @@ contract Supplychain{
     function totalBatchs() public view returns(uint256){
         return supplyChainId.current();
     }
+
     function totalProductBatchs() public view returns(uint256){
         return productId.current();
     }
 
-    function totalProductLength(uint _productId) public view returns(uint256[] memory){
-        return ProductIds[_productId];
-    }
+    // function totalProductLength(uint _productId) public view returns(uint256[] memory){
+    //     return ProductIds[_productId];
+    // }
     
-    function getWarehouseItems(address warehouse) public view returns (Item[] memory){
-        return wareHouseItems[warehouse];
-    }
+    // function getWarehouseItems(address warehouse) public view returns (Item[] memory){
+    //     return wareHouseItems[warehouse];
+    // }
 
     // function getRetailers(uint _supplychianId) public view returns(address[] memory){
     //     return retailerID[_supplychianId];
