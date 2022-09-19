@@ -9,6 +9,7 @@ async function main() {
         rawMaterialSupplierSigner2,  
         warehouseSigner, 
         factorySigner1, 
+        factorySigner2, 
         distributorSigner1, 
         distributorSigner2, 
         retailerSigner1, 
@@ -57,7 +58,7 @@ async function main() {
  
   // ----------------------------  RAW MATERIAL SUPPLIER ADDs A BATCH  ----------------------------
 
-  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(1,[100,100,100,100,100]);
+  // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(1,[100,100,100,100,100]);
   // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(2,[120,120,120,120,120]);
   // await supplychain.connect(rawMaterialSupplierSigner2).rawMaterialSupplierSuppliesRM(1,[110,110,110,110,110]);
   
@@ -137,7 +138,7 @@ async function main() {
   //         break;
   //       }
   //     }
-  //   } 
+    // } 
   // } 
 
 
@@ -337,8 +338,8 @@ async function main() {
 
   // ---------------------------- FACTORY COMPLETES QUALITY CONTROL FOR FINAL ITEMS ------------------------
 
+
   // await supplychain.connect(factorySigner1).factoryQCFinalItems(0,130);
-  
   
   // const totalBatches =await supplychain.totalProductBatchs();
   // for(let i=0; i<totalBatches; i++){

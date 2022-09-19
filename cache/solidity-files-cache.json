@@ -181,15 +181,9 @@
         "Context"
       ]
     },
-<<<<<<< HEAD
     "/home/alankrit/Desktop/scmdev/contracts/Supplychain.sol": {
       "lastModificationDate": 1663562196077,
       "contentHash": "465fdc2921316f0b449be7e87645a27e",
-=======
-    "C:\\xampp\\htdocs\\scm\\contracts\\Supplychain.sol": {
-      "lastModificationDate": 1662787186003,
-      "contentHash": "4b4a3a402df856fa5753d610ad0b06ec",
->>>>>>> ebafc4b7567177b4f59758225f60c9238b71c03f
       "sourceName": "contracts/Supplychain.sol",
       "solcConfig": {
         "version": "0.8.8",
