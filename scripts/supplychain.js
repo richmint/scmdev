@@ -9,7 +9,6 @@ async function main() {
         rawMaterialSupplierSigner2,  
         warehouseSigner, 
         factorySigner1, 
-        factorySigner2, 
         distributorSigner1, 
         distributorSigner2, 
         retailerSigner1, 
@@ -59,7 +58,6 @@ async function main() {
   // ----------------------------  RAW MATERIAL SUPPLIER ADDs A BATCH  ----------------------------
 
   await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(1,[100,100,100,100,100]);
-<<<<<<< HEAD
   // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(2,[120,120,120,120,120]);
   // await supplychain.connect(rawMaterialSupplierSigner2).rawMaterialSupplierSuppliesRM(1,[110,110,110,110,110]);
   
@@ -69,18 +67,12 @@ async function main() {
   
   // -------------------------  RAW MATERIAL SUPPLIER VIEW BATCHES THAT HE ADDED  -------------------
   
-=======
-  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(2,[120,120,120,120,120]);
-
-  // -------------------------  RAW MATERIAL SUPPLIER VIEW BATCHES THAT HE ADDED  -------------------
->>>>>>> ebafc4b7567177b4f59758225f60c9238b71c03f
 
   // const totalBatchs =await supplychain.totalBatchs()  
   // for(let i= 0; i<totalBatchs; i++){  
   //   const item = await supplychain.items(i); 
     
   //   if (item.RawMaterialSupplierID ==rawMaterialSupplierSigner1.address){ 
-<<<<<<< HEAD
 
   //     // console.log(item);  
   //     console.log("ORIGNAL RAW MATERIALS THAT THE SUPPLIER UPLOAEDED -");
@@ -145,14 +137,6 @@ async function main() {
   //         break;
   //       }
   //     }
-=======
-  //     console.log(); 
-  //     console.log(item); 
-  //     console.log((await supplychain.RawMaterialDetails(item.supplyChainId)));
-  //     const object =await supplychain.timeStamps(item.supplyChainId,item.itemState);
-  //     console.log(await dateTime.getDay(object.toNumber()),await dateTime.getMonth(object.toNumber()),await dateTime.getYear(object.toNumber()));
-  //     console.log();
->>>>>>> ebafc4b7567177b4f59758225f60c9238b71c03f
   //   } 
   // } 
 
@@ -176,7 +160,6 @@ async function main() {
   // const totalBatchs =await supplychain.totalBatchs()  
   // for(let i= 0; i<totalBatchs; i++){  
   //   const item = await supplychain.items(i);  
-<<<<<<< HEAD
   //   // if (){ 
 
   //     console.log(item);  
@@ -205,23 +188,6 @@ async function main() {
       
   //   // } 
   // } 
-=======
-  //   if (item.itemState ==0){
-  //     console.log();
-  //     console.log(item);  
-  //     console.log(await supplychain.RawMaterialDetails(item.supplyChainId));
-  //     const object = await supplychain.timeStamps(item.supplyChainId,item.itemState);
-  //     console.log(await dateTime.getDay(object.toNumber()),await dateTime.getMonth(object.toNumber()),await dateTime.getYear(object.toNumber()));
-  //     console.log();  
-  //   } 
-  // } 
-
-  await supplychain.connect(factorySigner1).factoryBuyRawMaterial(0,[50,50,50,50,50]);
-  await supplychain.connect(factorySigner1).factoryBuyRawMaterial(1,[60,60,60,60,60]);
-  
-  
-  // ---------------------------- FACTORY RECEIVE RAW MATERIALS ------------------------
->>>>>>> ebafc4b7567177b4f59758225f60c9238b71c03f
 
 
   
@@ -254,14 +220,6 @@ async function main() {
 
   // ---------------------------- FACTORY RECEIVE RAW MATERIALS ------------------------
 
-<<<<<<< HEAD
-=======
-  //     const object =await supplychain.timeStamps(item.supplyChainId,item.itemState);
-  //     console.log(await dateTime.getDay(object.toNumber()),await dateTime.getMonth(object.toNumber()),await dateTime.getYear(object.toNumber()));
-  //     console.log();
-  //   } 
-  // } 
->>>>>>> ebafc4b7567177b4f59758225f60c9238b71c03f
 
   // await supplychain.connect(factorySigner1).factoryReceiveRawMaterials(0,warehouseSigner.address);
   // await supplychain.connect(factorySigner1).factoryReceiveRawMaterials(1,warehouseSigner.address);
@@ -287,7 +245,6 @@ async function main() {
   // }
 
 
-<<<<<<< HEAD
   
   
   // ---------------------------- FACTORY COMPLETES QUALITY CONTROL FOR RAW MATERILALS ------------------------
@@ -295,18 +252,10 @@ async function main() {
 
   // await supplychain.connect(factorySigner1).factoryQCRawMaterials(0,[28,30,40,18,14]);
   // await supplychain.connect(factorySigner1).factoryQCRawMaterials(1,[20,20,20,20,20]);
-=======
-  await supplychain.connect(factorySigner1).factoryQCRawMaterials(0,[40,40,40,40,40]);
-  await supplychain.connect(factorySigner1).factoryQCRawMaterials(1,[50,50,50,50,50]);
-
-  
-  // ---------------------------- FACTORY COMPLETE WEAVING AND SPINNING ------------------------
->>>>>>> ebafc4b7567177b4f59758225f60c9238b71c03f
 
 
   // const totalBatchs =await supplychain.totalBatchs()  
   // for(let i= 0; i<totalBatchs; i++){  
-<<<<<<< HEAD
   //   let j=1;
   //   while(j){
   //     try {
@@ -334,28 +283,10 @@ async function main() {
 
   // await supplychain.connect(factorySigner1).factoryCompleteSpinningWaeving(0,100,"Blue","Plain");
   // await supplychain.connect(factorySigner1).factoryCompleteSpinningWaeving(0,120,"Green","Ruff");
-=======
-  //   const item = await supplychain.items(i);  
-  //   if (item.itemState ==3 && (item.factoryID1 ==factorySigner1.address || item.factoryID2 ==factorySigner1.address || item.factoryID2 ==factorySigner1.address) ){
-      
-  //     console.log();
-  //     console.log(item); 
-  //     console.log(await supplychain.RawMaterialDetails(item.supplyChainId));
-  //     const object =await supplychain.timeStamps(item.supplyChainId,item.itemState);
-  //     console.log(await dateTime.getDay(object.toNumber()),await dateTime.getMonth(object.toNumber()),await dateTime.getYear(object.toNumber()));
-  //     console.log();
-  //   } 
-  // } 
-
-  await supplychain.connect(factorySigner1).factoryCompleteSpinningWaeving(0,100,"Blue","Plain");
-
-  // ---------------------------- FACTORY COMPLETE GARMENT PRODUCTION ------------------------
->>>>>>> ebafc4b7567177b4f59758225f60c9238b71c03f
 
 
   // const totalBatchs =await supplychain.totalBatchs()  
   // for(let i= 0; i<totalBatchs; i++){  
-<<<<<<< HEAD
   //   let j=1;
   //   while(j){
   //     try {
@@ -364,19 +295,6 @@ async function main() {
   //       if(data.factory==factorySigner1.address && data.itemState ==3){
   //         console.log(data);
   //         console.log(item);  
-=======
-  //   const item = await supplychain.items(i);  
-  //   if (item.itemState ==4 && (item.factoryID1 ==factorySigner1.address || item.factoryID2 ==factorySigner1.address || item.factoryID2 ==factorySigner1.address) ){
-      
-  //     console.log();
-  //     console.log(item); 
-  //     console.log(await supplychain.RawMaterialDetails(item.supplyChainId));
-  //     const object =await supplychain.timeStamps(item.supplyChainId,item.itemState);
-  //     console.log(await dateTime.getDay(object.toNumber()),await dateTime.getMonth(object.toNumber()),await dateTime.getYear(object.toNumber()));
-  //     console.log();
-  //   } 
-  // } 
->>>>>>> ebafc4b7567177b4f59758225f60c9238b71c03f
   
   //         console.log("Raw materials after quality control.")
   //         console.log(await supplychain.FactoryRawMaterialsAferQC(i,factorySigner1.address));
@@ -388,18 +306,13 @@ async function main() {
   //   }
   // }
 
-<<<<<<< HEAD
 
   
   // ---------------------------- FACTORY COMPLETE GARMENT PRODUCTION ------------------------
 
-=======
-  await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing([0,1],140,"Plain Blue T-shirts");
->>>>>>> ebafc4b7567177b4f59758225f60c9238b71c03f
 
   // await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing([0,1],140,"Plain Blue T-shirts");
 
-<<<<<<< HEAD
 
   // const totalBatches =await supplychain.totalProductBatchs();
   // for(let i=0; i<totalBatches; i++){
@@ -512,21 +425,6 @@ async function main() {
 
 
 
-=======
-  // ---------------------------- FACTORY COMPLETES QUALITY CONTROL FOR FINAL ITEMS ------------------------
-
-  let count =await supplychain.totalProductBatchs();
-  for(let i=0; i<count; i++){
-    const object =await supplychain.Product(i);
-    if(object.factory === factorySigner1.address){
-      console.log(object);
-      const supplychainIds =await supplychain.totalProductLength(i);
-      for(let j=0; j<supplychainIds.length; j++){
-        console.log(await supplychain.items(supplychainIds[j]));
-      }
-    }
-  }
->>>>>>> ebafc4b7567177b4f59758225f60c9238b71c03f
 
 
   // console.log(await supplychain.ProductIds(0,0));
