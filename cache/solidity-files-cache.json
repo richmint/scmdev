@@ -182,8 +182,8 @@
       ]
     },
     "/home/alankrit/Desktop/scmdev/contracts/Supplychain.sol": {
-      "lastModificationDate": 1663709767362,
-      "contentHash": "b07c5e776052f17ac7970a3e24d3c94a",
+      "lastModificationDate": 1663711873732,
+      "contentHash": "a376a4cd34c36f575bb238dbd1897904",
       "sourceName": "contracts/Supplychain.sol",
       "solcConfig": {
         "version": "0.8.8",
@@ -675,8 +675,8 @@
       ]
     },
     "/home/alankrit/Desktop/scmdev/contracts/Supplychain2.sol": {
-      "lastModificationDate": 1663615927721,
-      "contentHash": "6cc40c14e81c91c7e756b1b2710d8953",
+      "lastModificationDate": 1663711055332,
+      "contentHash": "f52495b13cbe7bc67826519dc3998c14",
       "sourceName": "contracts/Supplychain2.sol",
       "solcConfig": {
         "version": "0.8.8",
@@ -701,15 +701,9 @@
           }
         }
       },
-      "imports": [
-        "hardhat/console.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.4"
-      ],
-      "artifacts": [
-        "Supplychain2"
-      ]
+      "imports": [],
+      "versionPragmas": [],
+      "artifacts": []
     }
   }
 }

@@ -14,7 +14,8 @@ async function main() {
         distributorSigner2, 
         retailerSigner1, 
         retailerSigner2, 
-        customerSigner 
+        customerSigner1, 
+        customerSigner2 
         ] = await ethers.getSigners();
 
   
@@ -338,19 +339,6 @@ async function main() {
 
   // ---------------------------- FACTORY COMPLETES QUALITY CONTROL FOR FINAL ITEMS ------------------------
 
-<<<<<<< HEAD
-  let count =await supplychain.totalProductBatchs();
-  for(let i=0; i<count; i++){
-    const object =await supplychain.Product(i);
-    if(object.factory === factorySigner1.address){
-      console.log(object);
-      const supplychainIds =await supplychain.totalProductLength(i);
-      for(let j=0; j<supplychainIds.length; j++){
-        console.log(await supplychain.items(supplychainIds[j]));
-      }
-    }
-  } 
-=======
 
   await supplychain.connect(factorySigner1).factoryQCFinalItems(0,130);
   
@@ -462,9 +450,7 @@ async function main() {
 
 
 
-
 // ------------------ DISTBIBUTOR VIEW WHEN THE FACTORY SHIPS A PRODUCT BATCH ---------------------------
-
 
 
   // const totalBatches =await supplychain.totalProductBatchs();
@@ -473,7 +459,6 @@ async function main() {
   //   if(data.productState==1 ){
   //     // console.log(data);
 
-<<<<<<< HEAD
   //     let j=1;
   //     while(j){
   //       try {
@@ -488,92 +473,6 @@ async function main() {
   //         break;
   //       }
   //     }
-=======
-
-
-//          completed
-
-
-
-
-
-
-
-
-
->>>>>>> dc78ff47041f7f1d51bbad9380e50dbed990c58b
-
-
-  // console.log(await supplychain.ProductIds(0,0));
-  // console.log(await supplychain.ProductIds(0,1));
-
-  // console.log(await supplychain.items(0));
-
-  // await supplychain.connect(factorySigner1).factoryQCFinalItems(0,8);
-  // await supplychain.connect(factorySigner1).factoryQCFinalItems(1,10);
-  // await supplychain.connect(factorySigner1).factoryQCFinalItems(2,8);
-  // await supplychain.connect(factorySigner1).factoryQCFinalItems(3,8);
-
-  
-
-  // ---------------------------- FACTORY SELL TO DISTRIBUTOR --------------------------------
-
-  // let count =await supplychain.totalBatchs();
-  // for (let i=0; i<count ; i++){
-  //   let object = await supplychain.items(i);
-  //     if (5 === object.itemState && object.factoryID ===factorySigner1.address){
-  //         console.log();
-  //         console.log(object);
-  //         console.log(await supplychain.OGDetails(object.supplyChainId));
-  //         const data =await supplychain.timeStamps(object.supplyChainId,object.itemState);
-  //         console.log(await dateTime.getDay(data.toNumber()),await dateTime.getMonth(data.toNumber()),await dateTime.getYear(data.toNumber()));
-  //         console.log();
-  //     }    
-  // }    
-  
-  // await supplychain.connect(factorySigner1).factorySellItemToDistributors(0,distributorSigner1.address);
-  // await supplychain.connect(factorySigner1).factorySellItemToDistributors(1,distributorSigner1.address);
-  // await supplychain.connect(factorySigner1).factorySellItemToDistributors(2,distributorSigner1.address);
-  // await supplychain.connect(factorySigner1).factorySellItemToDistributors(3,distributorSigner1.address);
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////             WAREHOUSE            ///////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////
- 
-
-
-
-  // -----------------------------FOR WAREHOUSE DASHBOARD-------------------------------------
-
-
-  // let object =await supplychain.getWarehouseItems(warehouseSigner.address)   
-  // console.log(object);
-  // for(let i=0;i <object.length; i++){
-  //   if(object[i].itemState==1){
-  //     console.log(object[i]);
-  //     console.log("factory bought raw materials")
-  //   }else if(object[i].itemState==2){
-  //     console.log(object[i])
-  //     console.log("factory complete Quality Check")
-  //     console.log(await supplychain.OGDetails(object[i].supplyChainId));
-  //   }else if(object[i].itemState==3){
-  //     console.log(object[i])
-  //     console.log("factory complete spinning and weaving")
-  //     console.log(await supplychain.OGDetails(object[i].supplyChainId));
-  //   }else if(object[i].itemState==4){
-  //     console.log(object[i])
-  //     console.log("factory complete garment production")
-  //     console.log(await supplychain.OGDetails(object[i].supplyChainId));
-  //   }else if(object[i].itemState==5){
-  //     console.log(object[i])
-  //     console.log("factory complete final quality check")
-  //     console.log(await supplychain.OGDetails(object[i].supplyChainId));
->>>>>>> 8e92ecf79f2b6952215a1125b5a22c0798362b50
   //   }
   // }
 
@@ -584,31 +483,200 @@ async function main() {
   await supplychain.connect(distributorSigner1).distributorReceivesProductBatch(0);
 
 
-  const totalBatches =await supplychain.totalProductBatchs();
-  for(let i=0; i<totalBatches; i++){
-    const data =await supplychain.Product(i);
-    if(data.productState==1 ){
-      // console.log(data);
+  // const totalBatches =await supplychain.totalProductBatchs();
+  // for(let i=0; i<totalBatches; i++){
+  //   const data =await supplychain.Product(i);
+  //   if(data.productState==1 ){
+  //     // console.log(data);
 
-      let j=1;
-      while(j){
-        try {
-          const data =await supplychain.ProductIdToDistributor(i,j-1);
-          if(data.distributor ==distributorSigner1.address && data.distributorState==1){
-            console.log(data);
-            console.log("TimeStamp when factory sell to this distributor is :", data.timeStamp9);
-            // This data is about i th product distributors
-          }
-          j++; 
-        } catch (error) {
-          break;
-        }
-      }
-    }
-  }
+  //     let j=1;
+  //     while(j){
+  //       try {
+  //         const data =await supplychain.ProductIdToDistributor(i,j-1);
+  //         if(data.distributor ==distributorSigner1.address && data.distributorState==1){
+  //           console.log(data);
+  //           console.log("TimeStamp when factory sell to this distributor is :", data.timeStamp9);
+  //           // This data is about i th product distributors
+  //         }
+  //         j++; 
+  //       } catch (error) {
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }
+
+
+  // ----------------------------- DISTBIBUTOR SELL TO A RETAILER  ---------------------------
+
+  await supplychain.connect(distributorSigner1).distributorSellsToRetailer(0,retailerSigner1.address,35);
+  await supplychain.connect(distributorSigner1).distributorSellsToRetailer(0,retailerSigner2.address,5);
+
+
+  // ----------------- DISTRIBUTOR VIEW OF WHICH PRODUCT BATCH HE HAS SENT TO WHICH RETAILER --------------
+  
+
+  // const totalBatches =await supplychain.totalProductBatchs();
+  // for(let i=0; i<totalBatches; i++){
+  //   const data =await supplychain.Product(i);
+  //   if(data.productState==1 ){
+  //     // console.log(data);
+  //     // This data is about i th product
+
+  //     let j=1;
+  //     while(j){
+  //       try {
+  //         const data =await supplychain.ProductIdToRetailer(i,j-1);
+  //         if(data.distributor==distributorSigner1.address){
+  //           console.log(data); 
+  //         }
+  //         j++; 
+  //       } catch (error) {
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////             RETAILER            //////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////
+  
+
+// ------------------ RETAILER VIEW WHEN THE DISTRIBUTOR SHIPS A PRODUCT BATCH ---------------------------
+
+
+  // const totalBatches =await supplychain.totalProductBatchs();
+  // for(let i=0; i<totalBatches; i++){
+  //   const data =await supplychain.Product(i);
+  //   if(data.productState==1 ){
+  //     // console.log(data);
+
+  //     let j=1;
+  //     while(j){
+  //       try {
+  //         const data =await supplychain.ProductIdToRetailer(i,j-1);
+  //         if(data.retailer ==retailerSigner1.address && data.retailerState==0){
+  //           console.log(data); 
+  //         }
+  //         j++; 
+  //       } catch (error) {
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }
+ 
+  
+
+  // ----------------------------- RETAILER RECEIVES THE PRODUCT BATCH ---------------------------
+
+
+  await supplychain.connect(retailerSigner1).retailerReceivesProductBatch(0);
+
+
+  // const totalBatches =await supplychain.totalProductBatchs();
+  // for(let i=0; i<totalBatches; i++){
+  //   const data =await supplychain.Product(i);
+  //   if(data.productState==1 ){
+  //     console.log(data);
+
+  //     let j=1;
+  //     while(j){
+  //       try {
+  //         const data =await supplychain.ProductIdToRetailer(i,j-1);
+  //         if(data.retailer ==retailerSigner1.address && data.retailerState==1){
+  //           console.log(data);
+  //         }
+  //         j++; 
+  //       } catch (error) {
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }
 
 
 
+  // ------------------------------- RETAILER SELL TO A CUSTOMER  ---------------------------
+
+  await supplychain.connect(retailerSigner1).retailerSellToCustomer(0,customerSigner1.address,2);
+  await supplychain.connect(retailerSigner1).retailerSellToCustomer(0,customerSigner2.address,3);
+
+
+  // ----------------- RETAILER VIEW OF WHICH PRODUCT BATCH HE HAS SENT TO WHICH CUSTOMER --------------
+  
+
+  // const totalBatches =await supplychain.totalProductBatchs();
+  // for(let i=0; i<totalBatches; i++){
+  //   const data =await supplychain.Product(i);
+  //   if(data.productState==1 ){
+  //     // console.log(data);
+  //     // This data is about i th product
+        
+  //     let j=1;
+  //     while(j){
+  //       try {
+  //         const data =await supplychain.ProductIdToCustomer(i,j-1);
+  //         if(data.retailer==retailerSigner1.address){
+  //           console.log(data); 
+  //         }
+  //         j++; 
+  //       } catch (error) {
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////             CUSTOMER            ////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+  // ----------------- CUSTOMER VIEW OF WHICH PRODUCT PRODUCT HE HAS BOUGHT ---------------------
+  
+
+  // const totalBatches =await supplychain.totalProductBatchs();
+  // for(let i=0; i<totalBatches; i++){
+  //   const data =await supplychain.Product(i);
+  //   if(data.productState==1 ){
+  //     // console.log(data);
+  //     // This data is about i th product
+      
+  //     let j=1;
+  //     while(j){
+  //       try {
+  //         console.log(data);
+  //         const data2 =await supplychain.ProductIdToCustomer(i,j-1);
+
+  //         const supplychianId =await supplychain.ProductIds(i,0);
+  //         console.log(await supplychain.items(supplychianId));
+  //         console.log(await supplychain.RawMaterialDetails(supplychianId));
+
+  //         // const supplychianId =await supplychain.ProductIds(i,1);
+          
+  //         if(data2.customer==customerSigner1.address){
+  //           console.log(data2);  
+  //         }
+  //         j++; 
+  //       } catch (error) {
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }
+  
 
 }
 main()

@@ -24,18 +24,13 @@ contract Supplychain{
         factoryReceiveRawMaterials,
         factoryQCRawMaterials,
         factoryCompleteSpinningWaeving,
-        factoryCompleteGarmentManufacturing,
-        factoryQCFinalItems,
-        factorySellItemToDistributors,
-        DistributorSellToRetailer,
-        RetailerSellToCustomer
+        factoryCompleteGarmentManufacturing
     }  
 
     enum ProductState
     {
         factoryCompleteGarmentManufacturing,
-        factoryQCFinalItems,
-        factorySellItemToDistributors
+        factoryQCFinalItems
     }
     enum DistributorState
     {
