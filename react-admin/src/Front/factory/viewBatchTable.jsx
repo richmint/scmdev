@@ -20,7 +20,7 @@ const ViewBatchTable = () =>{
     if(totalbatchids>0){
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
-        let OGObject = await supplyChainContract.OGDetails(object.supplyChainId);
+        let OGObject = await supplyChainContract.RawMaterialDetails(object.supplyChainId);
 
         const rawMaterialRecord = {
           method: 'POST',
@@ -42,9 +42,9 @@ const ViewBatchTable = () =>{
             <><tr> 
               <td>{i}</td>     
               <td>{userdatarec && userdatarec }</td>
-              <td>{OGObject.OGPolyesterAmount.toNumber()}</td>
-              <td>{OGObject.OGCottonAmount.toNumber()}</td>
-              <td>{OGObject.OGWoolAmount.toNumber()}</td>
+              <td>{OGObject.rawMaterial1.toNumber()}</td>
+              <td>{OGObject.rawMaterial2.toNumber()}</td>
+              <td>{OGObject.rawMaterial3.toNumber()}</td>
               <td><Button variant="outline-success" onClick={() => navigate('/viewBatchStatus',{state:{i}})}>View</Button></td>
             </tr></>
           )

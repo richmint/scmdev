@@ -338,6 +338,19 @@ async function main() {
 
   // ---------------------------- FACTORY COMPLETES QUALITY CONTROL FOR FINAL ITEMS ------------------------
 
+<<<<<<< HEAD
+  let count =await supplychain.totalProductBatchs();
+  for(let i=0; i<count; i++){
+    const object =await supplychain.Product(i);
+    if(object.factory === factorySigner1.address){
+      console.log(object);
+      const supplychainIds =await supplychain.totalProductLength(i);
+      for(let j=0; j<supplychainIds.length; j++){
+        console.log(await supplychain.items(supplychainIds[j]));
+      }
+    }
+  } 
+=======
 
   await supplychain.connect(factorySigner1).factoryQCFinalItems(0,130);
   
@@ -460,6 +473,7 @@ async function main() {
   //   if(data.productState==1 ){
   //     // console.log(data);
 
+<<<<<<< HEAD
   //     let j=1;
   //     while(j){
   //       try {
@@ -474,6 +488,92 @@ async function main() {
   //         break;
   //       }
   //     }
+=======
+
+
+//          completed
+
+
+
+
+
+
+
+
+
+>>>>>>> dc78ff47041f7f1d51bbad9380e50dbed990c58b
+
+
+  // console.log(await supplychain.ProductIds(0,0));
+  // console.log(await supplychain.ProductIds(0,1));
+
+  // console.log(await supplychain.items(0));
+
+  // await supplychain.connect(factorySigner1).factoryQCFinalItems(0,8);
+  // await supplychain.connect(factorySigner1).factoryQCFinalItems(1,10);
+  // await supplychain.connect(factorySigner1).factoryQCFinalItems(2,8);
+  // await supplychain.connect(factorySigner1).factoryQCFinalItems(3,8);
+
+  
+
+  // ---------------------------- FACTORY SELL TO DISTRIBUTOR --------------------------------
+
+  // let count =await supplychain.totalBatchs();
+  // for (let i=0; i<count ; i++){
+  //   let object = await supplychain.items(i);
+  //     if (5 === object.itemState && object.factoryID ===factorySigner1.address){
+  //         console.log();
+  //         console.log(object);
+  //         console.log(await supplychain.OGDetails(object.supplyChainId));
+  //         const data =await supplychain.timeStamps(object.supplyChainId,object.itemState);
+  //         console.log(await dateTime.getDay(data.toNumber()),await dateTime.getMonth(data.toNumber()),await dateTime.getYear(data.toNumber()));
+  //         console.log();
+  //     }    
+  // }    
+  
+  // await supplychain.connect(factorySigner1).factorySellItemToDistributors(0,distributorSigner1.address);
+  // await supplychain.connect(factorySigner1).factorySellItemToDistributors(1,distributorSigner1.address);
+  // await supplychain.connect(factorySigner1).factorySellItemToDistributors(2,distributorSigner1.address);
+  // await supplychain.connect(factorySigner1).factorySellItemToDistributors(3,distributorSigner1.address);
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////             WAREHOUSE            ///////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+
+
+
+  // -----------------------------FOR WAREHOUSE DASHBOARD-------------------------------------
+
+
+  // let object =await supplychain.getWarehouseItems(warehouseSigner.address)   
+  // console.log(object);
+  // for(let i=0;i <object.length; i++){
+  //   if(object[i].itemState==1){
+  //     console.log(object[i]);
+  //     console.log("factory bought raw materials")
+  //   }else if(object[i].itemState==2){
+  //     console.log(object[i])
+  //     console.log("factory complete Quality Check")
+  //     console.log(await supplychain.OGDetails(object[i].supplyChainId));
+  //   }else if(object[i].itemState==3){
+  //     console.log(object[i])
+  //     console.log("factory complete spinning and weaving")
+  //     console.log(await supplychain.OGDetails(object[i].supplyChainId));
+  //   }else if(object[i].itemState==4){
+  //     console.log(object[i])
+  //     console.log("factory complete garment production")
+  //     console.log(await supplychain.OGDetails(object[i].supplyChainId));
+  //   }else if(object[i].itemState==5){
+  //     console.log(object[i])
+  //     console.log("factory complete final quality check")
+  //     console.log(await supplychain.OGDetails(object[i].supplyChainId));
+>>>>>>> 8e92ecf79f2b6952215a1125b5a22c0798362b50
   //   }
   // }
 

@@ -87,12 +87,12 @@ const Sidebar = (props) => {
                     <span>Product Quality Check</span>
                   </li>
                 </Link> */}
-                <Link to="/viewBatch" style={{ textDecoration: "none" }}>
+                {/* <Link to="/viewBatch" style={{ textDecoration: "none" }}>
                   <li style={{backgroundColor: props.txt == "factoryViewBatch"?"orange":""}}>
                     <StoreIcon className="icon" />
                     <span>View Batch Status</span>
                   </li>
-                </Link>
+                </Link> */}
                 <Link to="/spinningWaevingMaterial" style={{ textDecoration: "none" }}>
                   <li style={{backgroundColor: props.txt == "facSpinningWeaving"?"orange":""}}>
                     <StoreIcon className="icon" />
