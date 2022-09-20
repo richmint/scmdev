@@ -37,6 +37,17 @@ contract Supplychain{
         factoryQCFinalItems,
         factorySellItemToDistributors
     }
+    enum DistributorState
+    {
+        factorySellProductToDistributor,
+        distributorReceivesProduct
+    }
+
+    enum RetailerState
+    {
+        distributorSellToRetailer,
+        retailerReceivesProduct
+    }
 
     State constant defaultState = State.factoryBuyRawMaterial;
 
@@ -62,6 +73,7 @@ contract Supplychain{
         uint productId;
         ProductState productState;
         uint totalUnits;
+        uint leftUnits;
         uint totalUnitsAfterQC;
         string Description;
         address factory;
@@ -80,8 +92,38 @@ contract Supplychain{
         uint timeStamp5;
     }
 
+    struct DistributorDetail{
+        DistributorState distributorState;
+        address distributor;
+        uint quantity;
+        uint quantityLeft;
+        uint timeStamp8;
+        uint timeStamp9;
+    }
+
+    struct RetailerDetail{
+        RetailerState retailerState;
+        address retailer;
+        address distributor;
+        uint quantity;
+        uint quantityLeft;
+        uint timeStamp10;
+        uint timeStamp11;
+    }
+
+    struct CustomerDetail{
+        address distributor;    
+        address retailer;
+        address customer;
+        uint quantity;
+        uint timeStamp12;
+    }
+
 
     mapping(uint=> FactoryDetail[]) public IdToFactory;
+    mapping(uint=> DistributorDetail[]) public ProductIdToDistributor;
+    mapping(uint=> RetailerDetail[]) public ProductIdToRetailer;
+    mapping(uint=> CustomerDetail[]) public ProductIdToCustomer;
 
     mapping(uint =>ProductBatch) public Product;
     mapping(uint =>uint[]) public ProductIds;
@@ -93,10 +135,24 @@ contract Supplychain{
     mapping (uint =>mapping (address=>RawMaterials)) public FactoryRawMaterialsAferQC;
     mapping (uint => Item) public items;
 
-
+    
     function checkInArray(address _target,FactoryDetail[] memory array) internal pure returns(bool){
         for(uint i=0;i <array.length; i++){
             if(array[i].factory==_target) return true;
+        }
+        return false;
+    }
+
+    function checkInDArray(address _target,DistributorDetail[] memory array) internal pure returns(bool){
+        for(uint i=0;i <array.length; i++){
+            if(array[i].distributor==_target) return true;
+        }
+        return false;
+    }
+
+    function checkInRArray(address _target,RetailerDetail[] memory array) internal pure returns(bool){
+        for(uint i=0;i <array.length; i++){
+            if(array[i].retailer==_target) return true;
         }
         return false;
     }
@@ -128,17 +184,16 @@ contract Supplychain{
         supplyChainId.increment();
     }
 
-
     function factoryBuyRawMaterial(uint256 _supplyChainId, uint[] memory _rawMaterials) public {
         
         FactoryDetail[] memory a =IdToFactory[_supplyChainId];
         require(!checkInArray(msg.sender,a),"You can't buy same batch twice");
              
-        require(RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial1>=_rawMaterials[0],"Raw material 1 exceeded");         
-        require(RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial2>=_rawMaterials[1],"Raw material 2 exceeded");         
-        require(RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial3>=_rawMaterials[2],"Raw material 3 exceeded");         
-        require(RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial4>=_rawMaterials[3],"Raw material 4 exceeded");         
-        require(RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial5>=_rawMaterials[4],"Raw material 5 exceeded");         
+        // require(RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial1>=_rawMaterials[0],"Raw material 1 exceeded");         
+        // require(RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial2>=_rawMaterials[1],"Raw material 2 exceeded");         
+        // require(RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial3>=_rawMaterials[2],"Raw material 3 exceeded");         
+        // require(RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial4>=_rawMaterials[3],"Raw material 4 exceeded");         
+        // require(RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial5>=_rawMaterials[4],"Raw material 5 exceeded");         
 
         RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial1-=_rawMaterials[0];
         RawMaterialSupplierRawMaterial[_supplyChainId].rawMaterial2-=_rawMaterials[1];
@@ -189,11 +244,11 @@ contract Supplychain{
                 break;
             }
         }
-        require(_updatedrawmaterials[0] <=FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial1,"CANT BE MORE THEN THE ORIGINAL");
-        require(_updatedrawmaterials[1] <=FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial2,"CANT BE MORE THEN THE ORIGINAL");
-        require(_updatedrawmaterials[2] <=FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial3,"CANT BE MORE THEN THE ORIGINAL");
-        require(_updatedrawmaterials[3] <=FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial4,"CANT BE MORE THEN THE ORIGINAL");
-        require(_updatedrawmaterials[4] <=FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial5,"CANT BE MORE THEN THE ORIGINAL");
+        // require(_updatedrawmaterials[0] <=FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial1,"CANT BE MORE THEN THE ORIGINAL");
+        // require(_updatedrawmaterials[1] <=FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial2,"CANT BE MORE THEN THE ORIGINAL");
+        // require(_updatedrawmaterials[2] <=FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial3,"CANT BE MORE THEN THE ORIGINAL");
+        // require(_updatedrawmaterials[3] <=FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial4,"CANT BE MORE THEN THE ORIGINAL");
+        // require(_updatedrawmaterials[4] <=FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial5,"CANT BE MORE THEN THE ORIGINAL");
         
         FactoryRawMaterialsAferQC[_supplyChainId][msg.sender].rawMaterial1= _updatedrawmaterials[0];
         FactoryRawMaterialsAferQC[_supplyChainId][msg.sender].rawMaterial2= _updatedrawmaterials[1];
@@ -218,7 +273,6 @@ contract Supplychain{
         FactoryRawMaterialsAferQC[_supplyChainId][msg.sender].YarnType= _yarnType;
     }
 
-
     function factoryCompleteGarmentManufacturing(uint[] memory _supplyChainIds, uint _totalUnits, string memory _description) public {
         require(_totalUnits>=1,"Units should be greater that 1");
         
@@ -237,6 +291,7 @@ contract Supplychain{
             productId:currentId,
             productState:ProductState.factoryCompleteGarmentManufacturing,
             totalUnits:_totalUnits,
+            leftUnits:_totalUnits,
             totalUnitsAfterQC:0,
             Description:_description,
             factory:msg.sender,
@@ -247,101 +302,103 @@ contract Supplychain{
         productId.increment();
     }
         
-
     function factoryQCFinalItems(uint _productid, uint _totalUnits ) public {
-
         ProductBatch memory product =Product[_productid];
         product.productState=ProductState.factoryQCFinalItems;
+        product.leftUnits=_totalUnits;
         product.totalUnitsAfterQC=_totalUnits;
         product.timeStamp7=block.timestamp;
         Product[_productid] =product;   
-
     }
 
 
-    // function factorySellItemToDistributors(
-    //     uint _supplyChainId,
-    //     address distributor
-    //     ) public 
-    //     // onlyFactory()
-    //     {
-    //         Item memory item =items[_supplyChainId];
-    //         item.itemState =State.factorySellItemToDistributors;
-    //         item.distributorId =distributor;
+    function factorySellItemToDistributor(uint _productId, address distributor,uint quantity) public {
+        DistributorDetail[] memory a =ProductIdToDistributor[_productId];
+        require(!checkInDArray(distributor,a),"You can't send the same product batch twice to the same distributor");
+         
+        require(Product[_productId].leftUnits>=quantity,"Insufficient quantity for this product left");
+        Product[_productId].leftUnits-=quantity;
 
-    //         // SupplyChainToken(supplyChainToken).safeTransferFrom(msg.sender,distributor,_supplyChainId,1,"0x00",0);
-    //         items[_supplyChainId] =item;
-            
-    //         uint length =wareHouseItems[item.warehouseID].length;
-    //         if (length >0){
-    //             for(uint i=0; i<length; i++){
-    //                 if(wareHouseItems[item.warehouseID][i].supplyChainId == _supplyChainId){
-    //                     wareHouseItems[item.warehouseID][i].itemState =State.factorySellItemToDistributors;
-    //                 }
-    //             }
-    //         }   
-    //         timeStamps[_supplyChainId].push(block.timestamp);
-    //         emit FactorySellItemToDistributors(_supplyChainId);
-    // }
+        DistributorDetail memory d =DistributorDetail({
+            distributorState: DistributorState.factorySellProductToDistributor,
+            distributor:distributor,
+            quantity :quantity,
+            quantityLeft:quantity,
+            timeStamp8:block.timestamp,
+            timeStamp9:0
+        });
+        ProductIdToDistributor[_productId].push(d);
+    }
 
 
-    // function distributorSellToRetailer(
-    //     uint _supplyChainId,
-    //     address[] memory retailers,
-    //     uint[] memory quantity 
-    // ) public 
-    // // onlyDistributor()
-    // {
-    //         Item memory item =items[_supplyChainId];
-    //         item.itemState =State.DistributorSellToRetailer;
-    //         // uint units =item.totalUnits;
-    //         // SupplyChainToken(supplyChainToken).mint(msg.sender,_supplyChainId,(units-1));
-    //         items[_supplyChainId] =item;
-    //         uint lastq=0;
-    //         for(uint i=0; i<retailers.length; i++){
-    //             // require(isRetailer(retailers[i]),"NOT A VALID RETAILER ADDRESS ! PLEASE CONTACT ADMIN");
-    //             retailerID[_supplyChainId].push(retailers[i]);
-    //             retailerUnits[_supplyChainId].push(quantity[i]); 
-    //             retailerCounters[_supplyChainId].push(lastq);
-    //             // SupplyChainToken(supplyChainToken).safeTransferFrom(msg.sender,retailers[i],_supplyChainId,quantity[i],"0x00",lastq);
-    //             lastq +=quantity[i];
-    //         }
-    //         timeStamps[_supplyChainId].push(block.timestamp);
-    //         emit DistributorSellToRetailer(_supplyChainId);
-    // }
+    function distributorReceivesProductBatch(uint _productId) public {
+        DistributorDetail[] memory d =ProductIdToDistributor[_productId];
+        for(uint i=0; i<d.length; i++){
+            if(d[i].distributor==msg.sender && d[i].distributorState== DistributorState.factorySellProductToDistributor ){
+                d[i].distributorState =DistributorState.distributorReceivesProduct;
+                d[i].timeStamp9 =block.timestamp;
+                ProductIdToDistributor[_productId][i]=d[i];
+                return;
+            }
+        }
+    }
 
-    // function customerBuyItem(
-    //     uint _supplyChainId,
-    //     address _retailer,
-    //     uint _quantity 
-    // ) public{
-    //     uint length =retailerID[_supplyChainId].length;
-    //     uint counter1;
-    //     for(uint i=0; i<length; i++){
-    //         if(retailerID[_supplyChainId][i]==_retailer){
-    //             counter1 =i;
-    //             break;
-    //         }
-    //     }       
-    //     require(getRetailersUnits(_supplyChainId)[counter1]>=_quantity,"No More Items left");
+    function distributorSellsToRetailer(uint _productId, address _retailer,uint _quantity) public{   
+        RetailerDetail[] memory a =ProductIdToRetailer[_productId];
+        require(!checkInRArray(_retailer,a),"You can't send the same product batch twice to the same retailer");
+        DistributorDetail[] memory d =ProductIdToDistributor[_productId];
+        for(uint i=0; i<d.length; i++){
+            if(d[i].distributor==msg.sender){
+                require(d[i].quantityLeft>=_quantity,"Insufficient quantity for this product left");
+                ProductIdToDistributor[_productId][i].quantityLeft-=_quantity;
+                RetailerDetail memory r =RetailerDetail({
+                    retailerState: RetailerState.distributorSellToRetailer,
+                    retailer:_retailer,
+                    distributor:msg.sender,
+                    quantity:_quantity,
+                    quantityLeft:_quantity,
+                    timeStamp10:block.timestamp,
+                    timeStamp11:0
+                });
+                ProductIdToRetailer[_productId].push(r);
+                return;
+            }
+        }
+    }
 
-    //     if(customerInfo[msg.sender][_supplyChainId].retailer ==address(0)){
-    //         cutomerInfoStruct memory _cutomerInfoStruct =cutomerInfoStruct({
-    //             supplychainID:_supplyChainId,
-    //             retailer:_retailer,
-    //             quantity:_quantity
-    //         });
-    //         customerInfo[msg.sender][_supplyChainId]=_cutomerInfoStruct;
-    //         customerSCIds[msg.sender].push(_supplyChainId);
-    //         retailerUnits[_supplyChainId][counter1]-=_quantity;
-    //         retailerCounters[_supplyChainId][counter1]+=_quantity;
-    //     }else{
-    //         customerInfo[msg.sender][_supplyChainId].quantity +=_quantity;
-    //         retailerUnits[_supplyChainId][counter1]-=_quantity;
-    //         retailerCounters[_supplyChainId][counter1]+=_quantity;
-    //     }
-        
-    // }
+
+    function retailerReceivesProductBatch(uint _productId) public {
+        RetailerDetail[] memory r =ProductIdToRetailer[_productId];
+        for(uint i=0; i<r.length; i++){
+            if(r[i].retailer==msg.sender && r[i].retailerState== RetailerState.distributorSellToRetailer ){
+                r[i].retailerState =RetailerState.retailerReceivesProduct;
+                r[i].timeStamp11 =block.timestamp;
+                ProductIdToRetailer[_productId][i]=r[i];
+                return;
+            }
+        }
+    }
+
+
+    function retailerSellToCustomer(uint _productId,address _customer, uint _quantity) public{
+        RetailerDetail[] memory r =ProductIdToRetailer[_productId];
+        for(uint i=0; i<r.length; i++){
+            if(r[i].retailer==msg.sender){
+                require(r[i].quantityLeft>=_quantity,"Insufficient quantity for this product left");
+                ProductIdToRetailer[_productId][i].quantityLeft-=_quantity;
+                CustomerDetail memory c =CustomerDetail({
+                    distributor:r[i].distributor,
+                    retailer:msg.sender,
+                    customer:_customer,
+                    quantity:_quantity,
+                    timeStamp12:block.timestamp
+                });
+                ProductIdToCustomer[_productId].push(c);
+                return;
+            }
+        }
+    }
+
 
     function totalBatchs() public view returns(uint256){
         return supplyChainId.current();
@@ -351,27 +408,4 @@ contract Supplychain{
         return productId.current();
     }
 
-    // function totalProductLength(uint _productId) public view returns(uint256[] memory){
-    //     return ProductIds[_productId];
-    // }
-    
-    // function getWarehouseItems(address warehouse) public view returns (Item[] memory){
-    //     return wareHouseItems[warehouse];
-    // }
-
-    // function getRetailers(uint _supplychianId) public view returns(address[] memory){
-    //     return retailerID[_supplychianId];
-    // }
-
-    // function getRetailersUnits(uint _supplychianId) public view returns(uint[] memory){
-    //     return retailerUnits[_supplychianId];
-    // }
-    
-    // function getRetailersCounters(uint _supplychianId) public view returns(uint[] memory){
-    //     return retailerCounters[_supplychianId];
-    // }
-
-    // function getcustomerSCIds(address  _address) public view returns(uint[] memory){
-    //     return customerSCIds[_address];
-    // }
 }
