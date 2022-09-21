@@ -10,7 +10,7 @@ const ManufactureGarmentTable = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [materiallist, setMateriallist] = useState(null);
-  const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress,dateContract } = useContext(DarkModeContext);
+  const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress, dateContract } = useContext(DarkModeContext);
   const allsupplymateriallist = [];
   const getSupplyChainHandler = async (event) => {
     let userdatarec = '';
@@ -19,83 +19,112 @@ const ManufactureGarmentTable = () => {
     var checkvalue = 0;
     if (totalbatchids > 0) {
       for (let i = 0; i < totalbatchids; i++) {
-        let object = await supplyChainContract.items(i);
-        
 
-          if (object.itemState === 4 && object.factoryID1.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID2.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID3.toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
-            checkvalue = 1;
-            let rawMaterialDetails = await supplyChainContract.RawMaterialDetails(object.supplyChainId);
+        let j = 1;
+        while (j) {
+          try {
 
-            const dateObject =await supplyChainContract.timeStamps(i,object.itemState);
+            let object = await supplyChainContract.items(i);
+            const manufactureData = await supplyChainContract.IdToFactory(i, j - 1);
 
-          const createdday = await dateContract.getDay(dateObject.toNumber())
-          const createmonth = await dateContract.getMonth(dateObject.toNumber())
-          const createdyear = await dateContract.getYear(dateObject.toNumber())
-          const rawMaterialRecord = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({       
-              "hashAddress":object.RawMaterialSupplierID,       
-              })
-          };
-          await fetch("http://162.215.222.118:5150/location",rawMaterialRecord)    
-          .then(res => res.json())
-          .then(data => {
-            if(data){
-              userdatarec = data.username 
+
+            if (manufactureData.itemState === 3 && manufactureData.factory.toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
+              checkvalue = 1;
+
+              let rawMaterialDetails = await supplyChainContract.RawMaterialDetails(object.supplyChainId);
+              let factoryRawMaterialsAferQC = await supplyChainContract.FactoryRawMaterialsAferQC(i,ownSupplyChainAddress.toLowerCase());
+
+
+              const createdday = await dateContract.getDay(manufactureData.timeStamp4.toNumber())
+              const createmonth = await dateContract.getMonth(manufactureData.timeStamp4.toNumber())
+              const createdyear = await dateContract.getYear(manufactureData.timeStamp4.toNumber())
+
+              let hour = await dateContract.getHour(manufactureData.timeStamp4.toNumber())
+              let minute = await dateContract.getMinute(manufactureData.timeStamp4.toNumber());
+              let second = await dateContract.getSecond(manufactureData.timeStamp4.toNumber());
+
+              if (hour + 5 > 24) {
+                hour = ((hour + 5) - 24);
+              } else {
+                hour += 5;
+              }
+              if (minute + 35 > 60) {
+                hour++;
+                minute = ((minute + 35) - 60);
+              } else {
+                minute = minute + 35;
+              }
+              const rawMaterialRecord = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  "hashAddress": object.RawMaterialSupplierID,
+                })
+              };
+              await fetch("http://162.215.222.118:5150/location", rawMaterialRecord)
+                .then(res => res.json())
+                .then(data => {
+                  if (data) {
+                    userdatarec = data.username
+                  }
+                }).catch((error) => {
+                  console.error('Error:', error);
+                });
+              const wareHouseDetail = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  "hashAddress": manufactureData.warehouse,
+                })
+              };
+              await fetch("http://162.215.222.118:5150/location", wareHouseDetail)
+                .then(res => res.json())
+                .then(data => {
+                  if (data) {
+                    wareHousedatarec = data.username
+                  }
+                }).catch((error) => {
+                  console.error('Error:', error);
+                });
+              allsupplymateriallist.push(
+                <><tr>
+                  <td>{i}</td>
+                  <td>{userdatarec && userdatarec}</td>
+                  <td>{wareHousedatarec && wareHousedatarec}</td>
+                  <td>
+                    {rawMaterialDetails.rawMaterialType.toNumber() == 1 ? "Cotton" : ""}
+                    {rawMaterialDetails.rawMaterialType.toNumber() == 2 ? "Polyester" : ""}
+                    {rawMaterialDetails.rawMaterialType.toNumber() == 3 ? "Wool" : ""}</td>
+                  <td>{factoryRawMaterialsAferQC && factoryRawMaterialsAferQC.YarnAmount.toNumber()}</td>
+                  <td>{factoryRawMaterialsAferQC && factoryRawMaterialsAferQC.YarnColor}</td>
+                  <td>{factoryRawMaterialsAferQC && factoryRawMaterialsAferQC.YarnType}</td>
+                  <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
+                  <td>
+                    <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { i } })}>View</Button>
+                    <Button variant="outline-success" onClick={() => navigate('/garmentBatchCompleteForm', { state: { i } })}>Continue</Button>
+                  </td>
+                </tr></>
+              )
             }
-          }).catch((error) => { 
-            console.error('Error:', error);
-          });
-          const wareHouseDetail = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({       
-              "hashAddress":object.warehouseID,       
-              })
-          };
-          await fetch("http://162.215.222.118:5150/location",wareHouseDetail)    
-          .then(res => res.json())
-          .then(data => {
-            if(data){
-              wareHousedatarec = data.username 
-            }
-          }).catch((error) => { 
-            console.error('Error:', error);
-          });
-          allsupplymateriallist.push(
-            <><tr>
-              <td>{i}</td>
-              <td>{userdatarec && userdatarec}</td>
-              <td>{wareHousedatarec && wareHousedatarec}</td>
-              <td>
-                {rawMaterialDetails.rawMaterialType.toNumber() == 1 ? "Cotton" : "" }
-                {rawMaterialDetails.rawMaterialType.toNumber() == 2 ? "Polyester" : "" }
-                {rawMaterialDetails.rawMaterialType.toNumber() == 3 ? "Wool" : "" }</td>
-              <td>{rawMaterialDetails && rawMaterialDetails.YarnAmount.toNumber()}</td>
-              <td>{rawMaterialDetails && rawMaterialDetails.YarnColor}</td>
-              <td>{rawMaterialDetails && rawMaterialDetails.YarnType}</td>
-              <td>{createdday}-{createmonth}-{createdyear}</td>
-              <td>
-                <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { i } })}>View</Button>
-                <Button variant="outline-success" onClick={() => navigate('/garmentBatchCompleteForm', { state: { i } })}>Continue</Button>
-              </td>
-            </tr></>
-          )
 
+            j++;
+          } catch (error) {
+            break;
+          }
         }
+
       }
-      if(checkvalue == 0) {
+      if (checkvalue == 0) {
         allsupplymateriallist.push(
           <><tr>
-            <td colSpan="6">No Record Found</td>
+            <td colSpan="9">No Record Found</td>
           </tr></>
         )
-    }
+      }
     } else {
       allsupplymateriallist.push(
         <><tr>
-          <td colSpan="6">No Record Found</td>
+          <td colSpan="9">No Record Found</td>
         </tr></>
       )
     }

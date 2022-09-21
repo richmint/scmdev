@@ -339,6 +339,21 @@ async function main() {
 
   // ---------------------------- FACTORY COMPLETES QUALITY CONTROL FOR FINAL ITEMS ------------------------
 
+<<<<<<< HEAD
+  let count =await supplychain.totalProductBatchs();
+  for(let i=0; i<count; i++){
+    const object =await supplychain.Product(i);
+    if(object.factory === factorySigner1.address){
+      console.log(object);
+      const supplychainIds =await supplychain.totalProductLength(i);
+      for(let j=0; j<supplychainIds.length; j++){
+        console.log(await supplychain.items(supplychainIds[j]));
+      }
+    }
+  } 
+
+=======
+>>>>>>> bc30e4d3ffb85a42cfd3b238f9b7844c06a47381
 
   await supplychain.connect(factorySigner1).factoryQCFinalItems(0,130);
   
@@ -438,6 +453,37 @@ async function main() {
 
 
 
+<<<<<<< HEAD
+
+
+
+
+
+
+
+
+
+
+
+//          completed
+
+
+
+
+
+
+
+  // console.log(await supplychain.ProductIds(0,0));
+  // console.log(await supplychain.ProductIds(0,1));
+
+  // console.log(await supplychain.items(0));
+
+  // await supplychain.connect(factorySigner1).factoryQCFinalItems(0,8);
+  // await supplychain.connect(factorySigner1).factoryQCFinalItems(1,10);
+  // await supplychain.connect(factorySigner1).factoryQCFinalItems(2,8);
+  // await supplychain.connect(factorySigner1).factoryQCFinalItems(3,8);
+
+=======
   ////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -445,6 +491,7 @@ async function main() {
   ////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> bc30e4d3ffb85a42cfd3b238f9b7844c06a47381
   
 
 
