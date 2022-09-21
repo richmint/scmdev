@@ -339,6 +339,7 @@ async function main() {
 
   // ---------------------------- FACTORY COMPLETES QUALITY CONTROL FOR FINAL ITEMS ------------------------
 
+<<<<<<< HEAD
   let count =await supplychain.totalProductBatchs();
   for(let i=0; i<count; i++){
     const object =await supplychain.Product(i);
@@ -350,6 +351,8 @@ async function main() {
       }
     }
   } 
+=======
+>>>>>>> 2d8a7033f4a63bf48dd279da7e22eeb5e2e8f569
 
   await supplychain.connect(factorySigner1).factoryQCFinalItems(0,130);
   
@@ -449,6 +452,7 @@ async function main() {
 
 
 
+<<<<<<< HEAD
 
 
 
@@ -476,6 +480,8 @@ async function main() {
   // await supplychain.connect(factorySigner1).factoryQCFinalItems(2,8);
   // await supplychain.connect(factorySigner1).factoryQCFinalItems(3,8);
 
+=======
+>>>>>>> 2d8a7033f4a63bf48dd279da7e22eeb5e2e8f569
   ////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -483,7 +489,11 @@ async function main() {
   ////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
  
+=======
+  
+>>>>>>> 2d8a7033f4a63bf48dd279da7e22eeb5e2e8f569
 
 
 
