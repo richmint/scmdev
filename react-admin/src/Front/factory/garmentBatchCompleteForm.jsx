@@ -40,7 +40,7 @@ const GarmentBatchCompleteForm = () =>{
        console.log("woolBatchId",woolBatchId)
        console.log("polysterBatchId",polysterBatchId)
       // console.log("Event",event)
-    const tx = await SChainContract.factoryCompleteGarmentManufacturing([0,1,2],event.totalitems,event.description);
+    const tx = await SChainContract.factoryCompleteGarmentManufacturing([0,1],event.totalitems,event.description);
     if(tx){
       navigate("/manufactureGarmentMaterial")
    }
