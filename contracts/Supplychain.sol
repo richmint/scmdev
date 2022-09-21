@@ -64,17 +64,6 @@ contract Supplychain{
         string YarnType;
     }
 
-    struct ProductBatch{
-        uint productId;
-        ProductState productState;
-        uint totalUnits;
-        uint leftUnits;
-        uint totalUnitsAfterQC;
-        string Description;
-        address factory;
-        uint timeStamp6;
-        uint timeStamp7;
-    }   
 
     struct FactoryDetail{
         State itemState;                // Product State as represented in the enum above
@@ -86,6 +75,18 @@ contract Supplychain{
         uint timeStamp4;
         uint timeStamp5;
     }
+
+    struct ProductBatch{
+        uint productId;
+        ProductState productState;
+        uint totalUnits;
+        uint leftUnits;
+        uint totalUnitsAfterQC;
+        string Description;
+        address factory;
+        uint timeStamp6;
+        uint timeStamp7;
+    }   
 
     struct DistributorDetail{
         DistributorState distributorState;
