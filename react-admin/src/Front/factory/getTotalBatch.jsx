@@ -13,14 +13,19 @@ const GarmentBatchList = (props) => {
   const polyesterBatch = [];
   const woolBatch = [];
 
-
-
   const getSupplyChainHandler = async (event) => {
     const totalbatchids = (await supplyChainContract.totalBatchs()).toNumber();
     if (totalbatchids > 0) {
       for (let i = 0; i < totalbatchids; i++) {
+        let j=1;
+     while(j){
+       try {
+        
+
         let object = await supplyChainContract.items(i);
-        if (object.itemState === 4 && object.factoryID1.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID2.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID3.toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
+        const manufactureData = await supplyChainContract.IdToFactory(i, j - 1);
+
+        if (manufactureData.itemState === 3 && manufactureData.factory.toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
           let OGObject = await supplyChainContract.RawMaterialDetails(object.supplyChainId);
 
           if (OGObject.rawMaterialType.toNumber() == 1) {
@@ -42,6 +47,11 @@ const GarmentBatchList = (props) => {
             )
           }
         }
+        j++; 
+      } catch (error) {
+        break;
+      }
+    }
       }
       setCottonBatchList(cottonBatch);
       setPolysterBatchList(polyesterBatch)
@@ -76,7 +86,7 @@ const GarmentBatchList = (props) => {
         <option value={''}>Select Batch</option>
         {woolBatchList}
         </select>
-      </div>:""} 
+      </div>:""}
     </div>
   );
 };

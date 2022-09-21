@@ -41,12 +41,29 @@ const ViewSupplyTable = () => {
         if (object.RawMaterialSupplierID.toLowerCase() === ownSupplyChainAddress.toLowerCase()) {
 
           
-          let OGObject = await supplyChainContract.RawMaterialDetails(object.supplyChainId);
-          const dateObject =await supplyChainContract.timeStamps(i,0);
+          let OGObject = await supplyChainContract.RawMaterialSupplierRawMaterial(object.supplyChainId);
+          //const dateObject =await supplyChainContract.timeStamps(i,0); 
 
-          const createdday = await dateContract.getDay(dateObject.toNumber())
-          const createmonth = await dateContract.getMonth(dateObject.toNumber())
-          const createdyear = await dateContract.getYear(dateObject.toNumber())
+
+          let createdhour = await dateContract.getHour(object.timeStamp0.toNumber())
+          let createdminute = await dateContract.getMinute(object.timeStamp0.toNumber())
+          let createdsecond = await dateContract.getSecond(object.timeStamp0.toNumber())
+
+          if(createdhour+5>24){ 
+            createdhour = ((createdhour+5) -24);
+                }else{
+                  createdhour +=5;
+                }
+                if(createdminute+35> 60){
+                  createdhour++;
+                  createdminute = ((createdminute+35)-60);
+                }else{
+                  createdminute=createdminute+35;
+                }
+
+          const createdday = await dateContract.getDay(object.timeStamp0.toNumber())
+          const createmonth = await dateContract.getMonth(object.timeStamp0.toNumber())
+          const createdyear = await dateContract.getYear(object.timeStamp0.toNumber())
 
           if(OGObject.rawMaterialType.toNumber() == 1){
               checkcottonvalue = 1;
@@ -59,9 +76,8 @@ const ViewSupplyTable = () => {
                     <td>{OGObject.rawMaterial3.toNumber()}</td>
                     <td>{OGObject.rawMaterial4.toNumber()}</td>
                     <td>{OGObject.rawMaterial5.toNumber()}</td>
-                    <td>{createdday}-{createmonth}-{createdyear}</td>
+                    <td>{createdday}-{createmonth}-{createdyear} {createdhour}:{createdminute}:{createdsecond}</td>
                     <td>{object.itemState !== 0 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View Buyer Detail</Button> : <Button variant="outline-info">Not Sold</Button>}</td>
-
                   </tr>
                 </>
               ) 
@@ -76,7 +92,7 @@ const ViewSupplyTable = () => {
                   <td>{OGObject.rawMaterial2.toNumber()}</td>
                   <td>{OGObject.rawMaterial3.toNumber()}</td>
                   <td>{OGObject.rawMaterial4.toNumber()}</td>
-                  <td>{createdday}-{createmonth}-{createdyear}</td>
+                  <td>{createdday}-{createmonth}-{createdyear} {createdhour}:{createdminute}:{createdsecond}</td>
                   <td>{object.itemState !== 0 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View Buyer Detail</Button> : <Button variant="outline-info">Not Sold</Button>}</td>
                 </tr>
               </>
@@ -92,7 +108,7 @@ const ViewSupplyTable = () => {
                   <td>{OGObject.rawMaterial2.toNumber()}</td>
                   <td>{OGObject.rawMaterial3.toNumber()}</td>
                   <td>{OGObject.rawMaterial4.toNumber()}</td>
-                  <td>{createdday}-{createmonth}-{createdyear}</td>
+                  <td>{createdday}-{createmonth}-{createdyear} {createdhour}:{createdminute}:{createdsecond}</td>
                   <td>{object.itemState !== 0 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View Buyer Detail</Button> : <Button variant="outline-info">Not Sold</Button>}</td>
                 </tr>
               </>

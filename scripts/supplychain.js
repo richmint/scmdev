@@ -338,7 +338,6 @@ async function main() {
 
   // ---------------------------- FACTORY COMPLETES QUALITY CONTROL FOR FINAL ITEMS ------------------------
 
-<<<<<<< HEAD
   let count =await supplychain.totalProductBatchs();
   for(let i=0; i<count; i++){
     const object =await supplychain.Product(i);
@@ -350,7 +349,7 @@ async function main() {
       }
     }
   } 
-=======
+
 
   // await supplychain.connect(factorySigner1).factoryQCFinalItems(0,130);
   
@@ -435,11 +434,6 @@ async function main() {
 
 
 
-
-
-
-
->>>>>>> dc78ff47041f7f1d51bbad9380e50dbed990c58b
 
 
   // console.log(await supplychain.ProductIds(0,0));

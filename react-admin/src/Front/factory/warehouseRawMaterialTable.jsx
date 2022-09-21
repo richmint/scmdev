@@ -6,13 +6,13 @@ import Button from 'react-bootstrap/Button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const WarehouseRawMaterialTable = () => { 
+const WarehouseRawMaterialTable = () => {
   const notify = () => toast("Wow so easy!");
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [materiallist, setMateriallist] = useState(null);
-  const [polysterlist, setPolysterlist] =  useState(null);
-  const [woollist, setWoollist] =  useState(null);
+  const [polysterlist, setPolysterlist] = useState(null);
+  const [woollist, setWoollist] = useState(null);
 
   const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress } = useContext(DarkModeContext);
 
@@ -20,6 +20,35 @@ const WarehouseRawMaterialTable = () => {
   const allPolyesterlist = [];
   const allWoollist = [];
   const getSupplyChainHandler = async (event) => {
+
+
+
+
+    //   const totalBatchs =await supplychain.totalBatchs()  
+    // for(let i= 0; i<totalBatchs; i++){  
+    //   let j=1;
+    //   while(j){
+    //     try {
+    //       const data =await supplychain.IdToFactory(i,j-1);
+    //       const item =await supplychain.items(i);
+    //       if(data.factory==factorySigner1.address && data.itemState==0){
+    //         console.log(data);
+    //         console.log(item);  
+    //         console.log(await supplychain.FactoryRawMaterialsORIGIONAL(i,factorySigner1.address));
+    //       }
+    //       j++; 
+    //     } catch (error) {
+    //       break;
+    //     }
+    //   }
+    // }
+
+
+
+
+
+
+
     let userdatarec = '';
     const totalbatchids = (await supplyChainContract.totalBatchs()).toNumber();
     var checkcottonvalue = 0;
@@ -27,115 +56,120 @@ const WarehouseRawMaterialTable = () => {
     var checkWoolvalue = 0;
     if (totalbatchids > 0) {
       for (let i = 0; i < totalbatchids; i++) {
-        let object = await supplyChainContract.items(i);
-        let OGObject = await supplyChainContract.RawMaterialDetails(object.supplyChainId);
-        console.log("item state ",OGObject.rawMaterialType.toNumber());
-             if (object.itemState == 1 && (object.factoryID1.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID2.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID3.toLowerCase() == ownSupplyChainAddress.toLowerCase()) || object.itemState == 2 && (object.factoryID1.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID2.toLowerCase() == ownSupplyChainAddress.toLowerCase() || object.factoryID3.toLowerCase() == ownSupplyChainAddress.toLowerCase()) ){
-        
-          const rawMaterialRecord = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              "hashAddress": object.RawMaterialSupplierID,
-            })
-          };
-          await fetch("http://162.215.222.118:5150/location", rawMaterialRecord)
-            .then(res => res.json())
-            .then(data => {
-              if (data) {
-                userdatarec = data.username
+
+
+        let j = 1;
+        while (j) {
+          try {
+
+            let object = await supplyChainContract.items(i);
+            const OGObject = await supplyChainContract.IdToFactory(i, j - 1);
+
+            if (OGObject.itemState == 0 || OGObject.itemState == 1 && OGObject.factory.toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
+
+              let RawMaterialDetails = await supplyChainContract.RawMaterialDetails(object.supplyChainId);
+              const rawMaterialRecord = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  "hashAddress": object.RawMaterialSupplierID,
+                })
+              };
+              await fetch("http://162.215.222.118:5150/location", rawMaterialRecord)
+                .then(res => res.json())
+                .then(data => {
+                  if (data) {
+                    userdatarec = data.username
+                  }
+                })
+                .catch((error) => {
+                  console.error('Error:', error);
+                });
+
+              if (RawMaterialDetails.rawMaterialType.toNumber() == 1) {
+                checkcottonvalue = 1;
+                let FactoryRawMaterialsOriginal = await supplyChainContract.FactoryRawMaterialsORIGIONAL(i,ownSupplyChainAddress.toLowerCase());
+                allsupplymateriallist.push(
+                  <>
+                    <tr>
+                      <td>{i}</td>
+                      <td> {userdatarec && userdatarec}</td> 
+                      <td>{FactoryRawMaterialsOriginal.rawMaterial1.toNumber()}</td>
+                      <td>{FactoryRawMaterialsOriginal.rawMaterial2.toNumber()}</td>
+                      <td>{FactoryRawMaterialsOriginal.rawMaterial3.toNumber()}</td>
+                      <td>{FactoryRawMaterialsOriginal.rawMaterial4.toNumber()}</td>
+                      <td>{FactoryRawMaterialsOriginal.rawMaterial5.toNumber()}</td>
+                       <td>{OGObject.itemState === 0 ? <Button variant="outline-primary" onClick={() => navigate('/storeInWarehouse', { state: { id: i } })}>Store</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i, materialType: RawMaterialDetails.rawMaterialType.toNumber(), rawMaterial1: FactoryRawMaterialsOriginal.rawMaterial1.toNumber(), rawMaterial2: FactoryRawMaterialsOriginal.rawMaterial2.toNumber(), rawMaterial3: FactoryRawMaterialsOriginal.rawMaterial3.toNumber(), rawMaterial4: FactoryRawMaterialsOriginal.rawMaterial4.toNumber(), rawMaterial5: FactoryRawMaterialsOriginal.rawMaterial5.toNumber() } })}>Quality Check</Button>}</td>
+                    </tr>
+                  </>
+                )
               }
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-            });
-          if(OGObject.rawMaterialType.toNumber() == 1){
-            checkcottonvalue = 1;
-            let rawMaterial1 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,0);   
-            let rawMaterial2 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,1);   
-            let rawMaterial3 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,2);   
-            let rawMaterial4 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,3);   
-            let rawMaterial5 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,4);
-            allsupplymateriallist.push(
-              <>
-                <tr> 
-                  <td>{i}</td>
-                  <td> {userdatarec && userdatarec}</td>
-                  <td>{rawMaterial1.toNumber()}</td>
-                  <td>{rawMaterial2.toNumber()}</td>
-                  <td>{rawMaterial3.toNumber()}</td>
-                  <td>{rawMaterial4.toNumber()}</td>
-                  <td>{rawMaterial5.toNumber()}</td>
-                  <td>{object.itemState === 1 ? <Button variant="outline-primary" onClick={() => navigate('/storeInWarehouse', { state: { id:i } })}>Store</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i,materialType:OGObject.rawMaterialType.toNumber(),rawMaterial1:rawMaterial1.toNumber(),rawMaterial2:rawMaterial2.toNumber(),rawMaterial3:rawMaterial3.toNumber(),rawMaterial4:rawMaterial4.toNumber(),rawMaterial5:rawMaterial5.toNumber()} })}>Quality Check</Button>}</td>
-                </tr>
-              </>
-            )
+              if (RawMaterialDetails.rawMaterialType.toNumber() == 2) {
+                
+                checkPolyestervalue = 1;
+                let FactoryRawMaterialsOriginal = await supplyChainContract.FactoryRawMaterialsORIGIONAL(i,ownSupplyChainAddress.toLowerCase());
+                
+                allPolyesterlist.push(
+                  <>
+                    <tr>
+                      <td>{i}</td>
+                      <td> {userdatarec && userdatarec}</td>
+                      <td>{FactoryRawMaterialsOriginal.rawMaterial1.toNumber()}</td>
+                      <td>{FactoryRawMaterialsOriginal.rawMaterial2.toNumber()}</td>
+                      <td>{FactoryRawMaterialsOriginal.rawMaterial3.toNumber()}</td>
+                      <td>{FactoryRawMaterialsOriginal.rawMaterial4.toNumber()}</td>
+                      <td>{OGObject.itemState === 0 ? <Button variant="outline-primary" onClick={() => navigate('/storeInWarehouse', { state: { id: i } })}>Store</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i,  materialType: RawMaterialDetails.rawMaterialType.toNumber(), rawMaterial1: FactoryRawMaterialsOriginal.rawMaterial1.toNumber(), rawMaterial2: FactoryRawMaterialsOriginal.rawMaterial2.toNumber(), rawMaterial3: FactoryRawMaterialsOriginal.rawMaterial3.toNumber(), rawMaterial4: FactoryRawMaterialsOriginal.rawMaterial4.toNumber() } })}>Quality Check</Button>}</td>
+                    </tr>
+                  </>
+                )
+              }
+              if (RawMaterialDetails.rawMaterialType.toNumber() == 3) {
+                checkWoolvalue = 1;
+                let FactoryRawMaterialsOriginal = await supplyChainContract.FactoryRawMaterialsORIGIONAL(i,ownSupplyChainAddress.toLowerCase());
+
+                allWoollist.push(
+                  <>
+                    <tr>
+                      <td>{i}</td>
+                      <td> {userdatarec && userdatarec}</td>
+                      <td>{FactoryRawMaterialsOriginal.rawMaterial1.toNumber()}</td>
+                      <td>{FactoryRawMaterialsOriginal.rawMaterial2.toNumber()}</td>
+                      <td>{FactoryRawMaterialsOriginal.rawMaterial3.toNumber()}</td>
+                      <td>{FactoryRawMaterialsOriginal.rawMaterial4.toNumber()}</td>
+                      <td>{OGObject.itemState === 0 ? <Button variant="outline-primary" onClick={() => navigate('/storeInWarehouse', { state: { id: i } })}>Store</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i, materialType: RawMaterialDetails.rawMaterialType.toNumber(), rawMaterial1: FactoryRawMaterialsOriginal.rawMaterial1.toNumber(), rawMaterial2: FactoryRawMaterialsOriginal.rawMaterial2.toNumber(), rawMaterial3: FactoryRawMaterialsOriginal.rawMaterial3.toNumber(), rawMaterial4: FactoryRawMaterialsOriginal.rawMaterial4.toNumber() } })}>Quality Check</Button>}</td>
+                    </tr>
+                  </>
+                )
+              }
+            }
+
+            j++;
+          } catch (error) {
+            break;
+          }
         }
-        if(OGObject.rawMaterialType.toNumber() == 2){
-          checkPolyestervalue = 1;
-          let rawMaterial1 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,0); 
-            let rawMaterial2 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,1);
-            let rawMaterial3 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,2);
-            let rawMaterial4 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,3);
-            
-          allPolyesterlist.push(
-            <>
-              <tr> 
-                <td>{i}</td>
-                <td> {userdatarec && userdatarec}</td>
-                <td>{rawMaterial1.toNumber()}</td>
-                  <td>{rawMaterial2.toNumber()}</td>
-                  <td>{rawMaterial3.toNumber()}</td>
-                  <td>{rawMaterial4.toNumber()}</td>
-                  <td>{object.itemState === 1 ? <Button variant="outline-primary" onClick={() => navigate('/storeInWarehouse', { state: { id:i } })}>Store</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i,materialType:OGObject.rawMaterialType.toNumber(),rawMaterial1:rawMaterial1.toNumber(),rawMaterial2:rawMaterial2.toNumber(),rawMaterial3:rawMaterial3.toNumber(),rawMaterial4:rawMaterial4.toNumber()} })}>Quality Check</Button>}</td>
-              </tr>
-            </>
-          )
-        }
-        if(OGObject.rawMaterialType.toNumber() == 3){
-          checkWoolvalue = 1;
-          let rawMaterial1 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,0);   
-          let rawMaterial2 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,1);   
-          let rawMaterial3 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,2);   
-          let rawMaterial4 = await supplyChainContract.RawMaterialsBoughtByFactory(ownSupplyChainAddress.toLowerCase(),object.supplyChainId,3);   
-            
-          allWoollist.push( 
-            <>
-              <tr> 
-                <td>{i}</td>
-                <td> {userdatarec && userdatarec}</td>
-                <td>{rawMaterial1.toNumber()}</td>
-                  <td>{rawMaterial2.toNumber()}</td>
-                  <td>{rawMaterial3.toNumber()}</td>
-                  <td>{rawMaterial4.toNumber()}</td>
-                  <td>{object.itemState === 1 ? <Button variant="outline-primary" onClick={() => navigate('/storeInWarehouse', { state: { id:i } })}>Store</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i,materialType:OGObject.rawMaterialType.toNumber(),rawMaterial1:rawMaterial1.toNumber(),rawMaterial2:rawMaterial2.toNumber(),rawMaterial3:rawMaterial3.toNumber(),rawMaterial4:rawMaterial4.toNumber()} })}>Quality Check</Button>}</td>
-              </tr>
-            </>
-          )
-        }
-       
+
       }
+      if (checkcottonvalue == 0) {
+        allsupplymateriallist.push(
+          <><tr>
+            <td colSpan="8">No Record Found</td>
+          </tr></>
+        )
       }
-      if(checkcottonvalue == 0) {
-            allsupplymateriallist.push(
-              <><tr>
-                <td colSpan="8">No Record Found</td>
-              </tr></>
-            )
-        }
-    if(checkPolyestervalue == 0) {
-          allPolyesterlist.push(
-            <><tr>
-              <td colSpan="7">No Record Found</td>
-            </tr></>
-          )
+      if (checkPolyestervalue == 0) {
+        allPolyesterlist.push(
+          <><tr>
+            <td colSpan="7">No Record Found</td>
+          </tr></>
+        )
       }
-      if(checkWoolvalue == 0) {
-          allWoollist.push(
-            <><tr>
-              <td colSpan="7">No Record Found</td>
-            </tr></>
-          )
+      if (checkWoolvalue == 0) {
+        allWoollist.push(
+          <><tr>
+            <td colSpan="7">No Record Found</td>
+          </tr></>
+        )
       }
     } else {
       allsupplymateriallist.push(
@@ -144,7 +178,7 @@ const WarehouseRawMaterialTable = () => {
         </tr></>
       )
       allPolyesterlist.push(
-        
+
         <><tr>
           <td colSpan="7">No Record Found</td>
         </tr></>
@@ -183,7 +217,7 @@ const WarehouseRawMaterialTable = () => {
             /> */}
           <div className="bottom">
             <div className="right">
-            <h6>Cotton List</h6>
+              <h6>Cotton List</h6>
               <table>
                 <tr>
                   <th>Batch ID</th>
@@ -201,7 +235,7 @@ const WarehouseRawMaterialTable = () => {
           </div>
           <div className="bottom">
             <div className="right">
-            <h6>Polyester List</h6>
+              <h6>Polyester List</h6>
               <table>
                 <tr>
                   <th>Batch ID</th>
@@ -218,7 +252,7 @@ const WarehouseRawMaterialTable = () => {
           </div>
           <div className="bottom">
             <div className="right">
-            <h6>Wool List</h6>
+              <h6>Wool List</h6>
               <table>
                 <tr>
                   <th>Batch ID</th>
@@ -240,6 +274,6 @@ const WarehouseRawMaterialTable = () => {
 
 };
 
-export default WarehouseRawMaterialTable; 
+export default WarehouseRawMaterialTable;
 
 
