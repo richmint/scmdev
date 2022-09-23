@@ -31,10 +31,6 @@ const RawMaterialTable = () => {
         let OGObject = await supplyChainContract.RawMaterialSupplierRawMaterial(object.supplyChainId);
         //console.log("myrecord", OGObject);
 
-        // let rawMaterial1 = OGObject.rawMaterial1.toNumber();
-        // let rawMaterial2 = OGObject.rawMaterial2.toNumber();
-        // let rawMaterial3 = OGObject.rawMaterial3.toNumber();
-
         if (OGObject.rawMaterial1.toNumber() != 0 || OGObject.rawMaterial2.toNumber() != 0 || OGObject.rawMaterial3.toNumber() != 0 || OGObject.rawMaterial4.toNumber() != 0 || OGObject.rawMaterial5.toNumber() != 0) { 
           const rawMaterialRecord = {
             method: 'POST',
@@ -147,32 +143,32 @@ const RawMaterialTable = () => {
     if(checkPolyestervalue == 0) {
           allPolyesterlist.push(
             <><tr>
-              <td colSpan="7">No Record Found</td>
+              <td colSpan="8">No Record Found</td>
             </tr></>
           )
       }
       if(checkWoolvalue == 0) {
           allWoollist.push(
             <><tr>
-              <td colSpan="7">No Record Found</td>
+              <td colSpan="8">No Record Found</td>
             </tr></>
           )
       }
     } else {
       allsupplymateriallist.push(
         <><tr>
-          <td colSpan="7">No Record Found</td>
+          <td colSpan="8">No Record Found</td>
         </tr></>
       )
       allPolyesterlist.push(
         
         <><tr>
-          <td colSpan="7">No Record Found</td>
+          <td colSpan="8">No Record Found</td>
         </tr></>
       )
       allWoollist.push(
         <><tr>
-          <td colSpan="7">No Record Found</td>
+          <td colSpan="8">No Record Found</td>
         </tr></>
       )
     }

@@ -20,15 +20,18 @@ const SellItemTable = () => {
     if (totalbatchids > 0) {
       for (let i = 0; i < totalbatchids; i++) {
         const productData = await supplyChainContract.Product(i);
-        if (productData.productState === 0 && productData.factory.toLowerCase() === ownSupplyChainAddress.toLowerCase()) {
+
+        if (productData.productState === 0 && productData.factory.toLowerCase() === ownSupplyChainAddress.toLowerCase() || productData.productState === 1 && productData.factory.toLowerCase() === ownSupplyChainAddress.toLowerCase()  && productData.leftUnits>0) {
+
+
           checkvalue = 1;
+
+          const productBatchId = productData.productId.toNumber()
 
           let j = 1;
           while (j) {
             try {
-
               const supplychainID =await supplyChainContract.ProductIds(i,j-1);
-
               //console.log("isdjlfjklgjkl",productData.timeStamp6.toNumber());
           const productDataBatchRecord = await supplyChainContract.items(supplychainID.toNumber());
 
@@ -79,10 +82,10 @@ const SellItemTable = () => {
                   <td>{productData.productId.toNumber()}</td>
                   <td>{userdatarec && userdatarec }</td>
                   <td>{productData.totalUnits.toNumber()}</td>
-                  <td>{productData.Description}</td>
+                  <td>{productData.Description}</td> 
                   <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
-                  <td><Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { i } })}>View</Button>
-                    {productData.productState === 5 ? <Button variant="outline-success" onClick={() => navigate('/SellItemFormData', { state: { i } })}>Continue</Button> : <Button variant="outline-info" onClick={() => navigate('/productQualityCheck', { state: { batchid: i, totalmanufactured: totalmanufactured } })}>Quality Check</Button>}
+                  <td><Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { productBatchId } })}>View</Button>
+                    {productData.productState === 0 ? <Button variant="outline-info" onClick={() => navigate('/productQualityCheck', { state: { productBatchId: productBatchId, totalmanufactured: totalmanufactured } })}>Quality Check</Button>:<Button variant="outline-success" onClick={() => navigate('/SellItemFormData', { state: { productBatchId: productBatchId, leftUnits: productData.leftUnits.toNumber() } })}>Continue</Button>}
                   </td>
                 </tr></>
               )

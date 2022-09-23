@@ -18,11 +18,11 @@ const ProductQualityCheck = () => {
         },
         resolver: yupResolver(ProductQCSchema),
     })
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
     const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract } = useContext(DarkModeContext);
     const [SChainContract, setSChainContract] = useState(supplyChainContract);
     const addSupplyChainHandler = async (event) => {
-        const tx = await SChainContract.factoryQCFinalItems(data.state.batchid, event.product);
+        const tx = await SChainContract.factoryQCFinalItems(data.state.productBatchId, event.product);
         if (tx) {
             navigate("/viewBatch")
         }

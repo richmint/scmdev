@@ -65,24 +65,24 @@ const GarmentBatchList = (props) => {
 
   return (
     
-    <div style={{ width: "100%" }}>
+    <div style={{ width: "100%",display:"flex",justifyContent:"space-around",marginTop:"15px"}}>
       {cottonBatchList &&  cottonBatchList ?  <div className="selectformInput">
         <label>Select Cotton Batches</label>
-        <select  onChange={(e) => props.cotfun(e.target.value)}>
+        <select style={{width: '100%',padding: '5px'}} onChange={(e) => props.cotfun(e.target.value)}>
         <option value={''}>Select Batch</option>
           {cottonBatchList}
         </select>
       </div>:''}
       {polysterBatchList && polysterBatchList ?<div className="selectformInput">
         <label>Select Polyester Batches</label>
-        <select  onChange={(e) => props.polyfun(e.target.value)} >
+        <select style={{width: '100%',padding: '5px'}}  onChange={(e) => props.polyfun(e.target.value)} >
         <option value={''}>Select Batch</option>
           {polysterBatchList}
         </select>
       </div> :"" }
       {woolBatchList && woolBatchList ?  <div className="selectformInput">
         <label>Select Wool Batches</label>
-        <select  onChange={(e) => props.woolfun(e.target.value)} >
+        <select  style={{width: '100%',padding: '5px'}} onChange={(e) => props.woolfun(e.target.value)} >
         <option value={''}>Select Batch</option>
         {woolBatchList}
         </select>
