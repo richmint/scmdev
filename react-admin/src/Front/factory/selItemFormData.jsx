@@ -15,7 +15,6 @@ const SellItemFormData = () => {
   let productBatchData = useLocation();
   const productBatchId = productBatchData.state.productBatchId;
 
-
   const { register, setError, formState: { errors } } = useForm({
     defaultValues: {
       distributeradrs: '',
@@ -28,39 +27,74 @@ const SellItemFormData = () => {
   const [SChainContract, setSChainContract] = useState(supplyChainContract);
 
   const sellItemToDistributerHandler = async (event) => {
-    //event.preventDefault();
     console.log("batchid", event);
     const tx = SChainContract.factorySellItemToDistributor(event.productBatchId, event.distributeradrs, event.sellProductQty);
-    //const tx = SChainContract.factorySellItemToDistributors(data, 10, [0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65, 0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc], [5, 5]);
-    //console.log((await tx.wait()));
     if (tx) {
       navigate("/sellItemToDistributer")
     }
   }
-
   const DataTable = (props) => {
 
     const [sellProductQty, setSellProductQty] = useState(productBatchData.state.leftUnits);
     const [productBatchIds, setProductBatchIds] = useState(productBatchData.state.productBatchId);
-    const [distributeradrs, setDistributeradrs] = useState();
-
+    const [distributeradrs, setDistributeradrs] = useState('');
+    const [distributorList,setDistributorList] = useState();
     const [showSellProductQtyError, setShowSellProductQtyError] = useState("");
+    const [showDistributorSelectError, setShowDistributorSelectError] = useState("");
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      const data = {
-        productBatchId: productBatchIds,
-        sellProductQty: sellProductQty,
-        distributeradrs: distributeradrs
+      if(distributeradrs == ''){
+        setShowDistributorSelectError("Select an Distributor")
+      }else{
+        const data = {
+          productBatchId: productBatchIds,
+          sellProductQty: sellProductQty,
+          distributeradrs: distributeradrs
+        }
+        sellItemToDistributerHandler(data)
       }
-      sellItemToDistributerHandler(data)
+    }
+
+    const sellItemToDistributerHandler = async (event) => {
+      // event.preventDefault();
+      console.log("Detail", event);
+      const tx = SChainContract.factorySellItemToDistributor(event.productBatchId, event.distributeradrs, event.sellProductQty);
+      if (tx) {
+        navigate("/sellItemToDistributer")
+      }
     }
 
     useMemo(() => {
       (sellProductQty == '') ? setShowSellProductQtyError("Please fill value") : (sellProductQty > productBatchData.state.leftUnits) ? setShowSellProductQtyError("Value is greater") : setShowSellProductQtyError(false);
     }, [sellProductQty])
+  
+    useMemo(()=>{
+      setShowDistributorSelectError('');
+    },[distributeradrs])
 
+    useEffect(() =>{
+      getDistributorList()
+    },[])
 
+    function getDistributorList(){
+      fetch("http://162.215.222.118:5150/distributer")
+           .then(result=>result.json())
+           .then(data => {
+            if(data){
+              console.log("Data in useEffect ",data)
+              setDistributorList(data)
+            }
+          })
+        }
+
+        const SelectList = (props) =>{
+          const data = props.val;
+          console.log("Select list",data)
+          return(
+            <option value={data.hashAddress}>{data.name}</option>
+          )
+        }
     const data = props.data;
     return (
       <div className="bottom">
@@ -69,16 +103,15 @@ const SellItemFormData = () => {
             <div className="formInput">
               <label>Distributer Address</label>
               <select id="distributeradrs" defaultValue={distributeradrs} onChange={(e) => setDistributeradrs(e.target.value)} name="distributeradrs" style={{ width: "100%", height: "40px" }}>
-                <option value={""}>Select An Distributor</option>
-                <option value={'0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65'}>Rao Tavish</option>
-              </select>
-              {errors.distributeradrs && <span className='error'> {console.log(errors)} {errors?.distributeradrs?.message}</span>}
+              <option value={''}>Select Distributor</option>
+                {distributorList && distributorList.map((val) => {return <SelectList val={val} />})}
+              </select>   
+              <span className='error'> {showDistributorSelectError}</span>
             </div>
             <div className="formInput">
               <label>Sell Product Quantity</label>
               <input id="sellProductQty" name="sellProductQty" type="text" value={sellProductQty} onChange={(e) => setSellProductQty(e.target.value)} />
               {showSellProductQtyError == '' ? '' : <span className='error'> {showSellProductQtyError}</span>}
-
             </div>
             <div className='formInput'>
               <button type={"submit"}> Submit </button>
