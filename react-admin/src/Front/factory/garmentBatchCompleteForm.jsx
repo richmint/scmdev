@@ -36,11 +36,11 @@ const GarmentBatchCompleteForm = () =>{
 
   const garmentcompleteHandler = async (event) => { 
     if(CottonBatchId != undefined || woolBatchId != undefined || polysterBatchId != undefined ){
-      let CottonBatchId = '';
        console.log("woolBatchId",woolBatchId)
        console.log("polysterBatchId",polysterBatchId)
-      // console.log("Event",event)
-    const tx = await SChainContract.factoryCompleteGarmentManufacturing([0,1,2],event.totalitems,event.description);
+       console.log("woolBatchId",woolBatchId)
+      console.log("Event",event)
+    const tx = await SChainContract.factoryCompleteGarmentManufacturing([CottonBatchId,polysterBatchId,woolBatchId],event.totalitems,event.description);
     if(tx){
       navigate("/manufactureGarmentMaterial")
    }
@@ -59,7 +59,6 @@ const GarmentBatchCompleteForm = () =>{
             <div className="bottom">
           <div className="right">
             <form onSubmit={handleSubmit(garmentcompleteHandler)}>
-            <GarmentBatchList cotfun={setCottonBatchId} polyfun={setPolysterBatchId} woolfun={setWoolBatchId}  />
               <div className="formInput">
                 <label>Total Items</label>
                 <input id="totalitems"  type="text"  name="totalitems" {...register("totalitems", { required: true })}></input>
@@ -84,6 +83,7 @@ const GarmentBatchCompleteForm = () =>{
                 <Sidebar txt={"facManuGarment"}  />
                 <div className="newContainer">
                     <Navbar />
+                    <GarmentBatchList cotfun={setCottonBatchId} polyfun={setPolysterBatchId} woolfun={setWoolBatchId}  />
                     <DataTable data={data}  />
                 </div>
             </div>

@@ -181,9 +181,15 @@
         "Context"
       ]
     },
+<<<<<<< HEAD
     "/home/alankrit/Desktop/scmdev/contracts/Supplychain.sol": {
       "lastModificationDate": 1664228595321,
       "contentHash": "f3cfceaf6003e26eec04d724ea66f30e",
+=======
+    "C:\\xampp\\htdocs\\scm\\contracts\\Supplychain.sol": {
+      "lastModificationDate": 1663756267698,
+      "contentHash": "bb91ccb922ac4be9716fe377cde31798",
+>>>>>>> 3f055c36a9ea15a3461d97224e9393185b0e35c1
       "sourceName": "contracts/Supplychain.sol",
       "solcConfig": {
         "version": "0.8.8",
@@ -674,9 +680,9 @@
         "Address"
       ]
     },
-    "/home/alankrit/Desktop/scmdev/contracts/Supplychain2.sol": {
-      "lastModificationDate": 1663711055332,
-      "contentHash": "f52495b13cbe7bc67826519dc3998c14",
+    "C:\\xampp\\htdocs\\scm\\contracts\\Supplychain2.sol": {
+      "lastModificationDate": 1663745834192,
+      "contentHash": "2c6a10950ac0b910417614537c14fb3e",
       "sourceName": "contracts/Supplychain2.sol",
       "solcConfig": {
         "version": "0.8.8",
