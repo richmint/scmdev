@@ -61,7 +61,10 @@ async function main() {
 
   // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(1,[100,100,100,100,100]);
   // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(2,[120,120,120,120,120]);
+<<<<<<< HEAD
   
+=======
+>>>>>>> 5203a0a3b18ed18876f509149b7a1f64f3098f82
   // await supplychain.connect(rawMaterialSupplierSigner2).rawMaterialSupplierSuppliesRM(1,[110,110,110,110,110]);
   
   // await supplychain.connect(factorySigner1).factoryBuyRawMaterial(0,[40,40,40,40,40]);
@@ -164,46 +167,48 @@ async function main() {
   // for(let i= 0; i<totalBatchs; i++){  
   //   const item = await supplychain.items(i);  
   //   let j=1;
+  //   let flag=true;
   //   while(j){
   //     try {
   //       const data =await supplychain.IdToFactory(i,j-1);
   //       if(data.factory==factorySigner1.address){
-  //           return;
+  //         flag=false;
   //       }
   //       j++; 
   //     } catch (error) {
   //       break;
   //     }
   //   }
-  //   console.log(item);  
-  //   console.log(await supplychain.RawMaterialSupplierRawMaterial(item.supplyChainId));  
-    
-  //   console.log("Date");
-  //   console.log(await dateTime.getDay(item.timeStamp0.toNumber()),await dateTime.getMonth(item.timeStamp0.toNumber()),await dateTime.getYear(item.timeStamp0.toNumber()));
-  //   console.log("Time"); 
-  
-  //   let hour =await dateTime.getHour(item.timeStamp0.toNumber())
-  //   let minute =await dateTime.getMinute(item.timeStamp0.toNumber());
-  //   let second =await dateTime.getSecond(item.timeStamp0.toNumber());
-
-  //   if(hour+5>24){
-  //     hour = ((hour+5) -24);
-  //   }else{
-  //     hour +=5;
-  //   }
-  //   if(minute+35> 60){
-  //     hour++;
-  //     minute = ((minute+35)-60);
-  //   }else{
-  //     minute=minute+35;
-  //   }
-  //   console.log(hour,minute,second);
-  // } 
+  //   if(flag){
+  //     console.log(item);  
+  //     console.log(await supplychain.RawMaterialSupplierRawMaterial(item.supplyChainId));  
+      
+  //     console.log("Date");
+  //     console.log(await dateTime.getDay(item.timeStamp0.toNumber()),await dateTime.getMonth(item.timeStamp0.toNumber()),await dateTime.getYear(item.timeStamp0.toNumber()));
+  //     console.log("Time"); 
+      
+  //     let hour =await dateTime.getHour(item.timeStamp0.toNumber())
+  //     let minute =await dateTime.getMinute(item.timeStamp0.toNumber());
+  //     let second =await dateTime.getSecond(item.timeStamp0.toNumber());
+      
+  //     if(hour+5>24){
+  //       hour = ((hour+5) -24);
+  //     }else{
+  //       hour +=5;
+  //     }
+  //     if(minute+35> 60){
+  //       hour++;
+  //       minute = ((minute+35)-60);
+  //     }else{
+  //       minute=minute+35;
+  //     }
+  //     console.log(hour,minute,second);
+  //   } 
+  // }
 
   
   // await supplychain.connect(factorySigner1).factoryBuyRawMaterial(0,[40,40,40,40,40]);
   // await supplychain.connect(factorySigner1).factoryBuyRawMaterial(1,[50,50,50,50,50]);
-
 
   // --------------------------- FACTORY AFTER BUYING A BATCH OF RAW MATERIALS --------------------
 
@@ -293,7 +298,10 @@ async function main() {
   // ---------------------------- FACTORY COMPLETE WEAVING AND SPINNING ------------------------
 
   // await supplychain.connect(factorySigner1).factoryCompleteSpinningWaeving(0,100,"Blue","Plain");
+<<<<<<< HEAD
   // await supplychain.connect(factorySigner1).factoryCompleteSpinningWaeving(0,120,"Green","Ruff");
+=======
+>>>>>>> 5203a0a3b18ed18876f509149b7a1f64f3098f82
   // await supplychain.connect(factorySigner1).factoryCompleteSpinningWaeving(1,120,"Green","Ruff");
 
 
@@ -324,8 +332,11 @@ async function main() {
 
   // await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing([0,1],140,"Plain Blue T-shirts");
 
+<<<<<<< HEAD
   // ------ VIEW OF MANUFACTURED PRODUCTS ------
 
+=======
+>>>>>>> 5203a0a3b18ed18876f509149b7a1f64f3098f82
 
   // const totalBatches =await supplychain.totalProductBatchs();
   // for(let i=0; i<totalBatches; i++){
@@ -400,7 +411,10 @@ async function main() {
 
   // await supplychain.connect(factorySigner1).factorySellItemToDistributor(0,distributorSigner1.address,40);
   // await supplychain.connect(factorySigner1).factorySellItemToDistributor(0,distributorSigner2.address,50);
+<<<<<<< HEAD
   
+=======
+>>>>>>> 5203a0a3b18ed18876f509149b7a1f64f3098f82
   
 
   // ----------------- FACTORY VIEW OF WHICH PRODUCT BATCH HE HAS SENT TO WHICH DISTRIBUTOR --------------
@@ -542,7 +556,11 @@ async function main() {
 
 // ----------------------------- DISTBIBUTOR RECEIVES THE PRODUCT BATCH ---------------------------
 
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> 5203a0a3b18ed18876f509149b7a1f64f3098f82
   // await supplychain.connect(distributorSigner1).distributorReceivesProductBatch(0);
 
 
