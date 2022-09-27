@@ -163,46 +163,48 @@ async function main() {
   // for(let i= 0; i<totalBatchs; i++){  
   //   const item = await supplychain.items(i);  
   //   let j=1;
+  //   let flag=true;
   //   while(j){
   //     try {
   //       const data =await supplychain.IdToFactory(i,j-1);
   //       if(data.factory==factorySigner1.address){
-  //           return;
+  //         flag=false;
   //       }
   //       j++; 
   //     } catch (error) {
   //       break;
   //     }
   //   }
-  //   console.log(item);  
-  //   console.log(await supplychain.RawMaterialSupplierRawMaterial(item.supplyChainId));  
-    
-  //   console.log("Date");
-  //   console.log(await dateTime.getDay(item.timeStamp0.toNumber()),await dateTime.getMonth(item.timeStamp0.toNumber()),await dateTime.getYear(item.timeStamp0.toNumber()));
-  //   console.log("Time"); 
-  
-  //   let hour =await dateTime.getHour(item.timeStamp0.toNumber())
-  //   let minute =await dateTime.getMinute(item.timeStamp0.toNumber());
-  //   let second =await dateTime.getSecond(item.timeStamp0.toNumber());
-
-  //   if(hour+5>24){
-  //     hour = ((hour+5) -24);
-  //   }else{
-  //     hour +=5;
-  //   }
-  //   if(minute+35> 60){
-  //     hour++;
-  //     minute = ((minute+35)-60);
-  //   }else{
-  //     minute=minute+35;
-  //   }
-  //   console.log(hour,minute,second);
-  // } 
+  //   if(flag){
+  //     console.log(item);  
+  //     console.log(await supplychain.RawMaterialSupplierRawMaterial(item.supplyChainId));  
+      
+  //     console.log("Date");
+  //     console.log(await dateTime.getDay(item.timeStamp0.toNumber()),await dateTime.getMonth(item.timeStamp0.toNumber()),await dateTime.getYear(item.timeStamp0.toNumber()));
+  //     console.log("Time"); 
+      
+  //     let hour =await dateTime.getHour(item.timeStamp0.toNumber())
+  //     let minute =await dateTime.getMinute(item.timeStamp0.toNumber());
+  //     let second =await dateTime.getSecond(item.timeStamp0.toNumber());
+      
+  //     if(hour+5>24){
+  //       hour = ((hour+5) -24);
+  //     }else{
+  //       hour +=5;
+  //     }
+  //     if(minute+35> 60){
+  //       hour++;
+  //       minute = ((minute+35)-60);
+  //     }else{
+  //       minute=minute+35;
+  //     }
+  //     console.log(hour,minute,second);
+  //   } 
+  // }
 
   
   // await supplychain.connect(factorySigner1).factoryBuyRawMaterial(0,[40,40,40,40,40]);
   // await supplychain.connect(factorySigner1).factoryBuyRawMaterial(1,[50,50,50,50,50]);
-
 
   // --------------------------- FACTORY AFTER BUYING A BATCH OF RAW MATERIALS --------------------
 
