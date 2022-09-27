@@ -58,15 +58,21 @@ async function main() {
 
  
   // ----------------------------  RAW MATERIAL SUPPLIER ADDs A BATCH  ----------------------------
+<<<<<<< HEAD
 
   // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(1,[100,100,100,100,100]);
   // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(2,[120,120,120,120,120]);
+=======
+  
+  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(1,[100,100,100,100,100]);
+  await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(2,[120,120,120,120,120]);
+>>>>>>> f763619bf37ba616d4d64f5d024a3ea035b5366a
   // await supplychain.connect(rawMaterialSupplierSigner2).rawMaterialSupplierSuppliesRM(1,[110,110,110,110,110]);
   
   // await supplychain.connect(factorySigner1).factoryBuyRawMaterial(0,[40,40,40,40,40]);
   // await supplychain.connect(factorySigner2).factoryBuyRawMaterial(0,[30,20,60,20,20]);
-
   
+   
   // -------------------------  RAW MATERIAL SUPPLIER VIEW BATCHES THAT HE ADDED  -------------------
   
 
@@ -139,7 +145,7 @@ async function main() {
   //         break;
   //       }
   //     }
-    // } 
+  //   } 
   // } 
 
 
@@ -156,41 +162,48 @@ async function main() {
 
 
   // -------------------------------FACTORY BUY RAW MATERIALS ------------------------------------
-  // -------------------- ALL BATCHES UPLOADED BY RAW MATERIAL SUPPLIERS ----------------------
+  // -------------------- ALL BATCHES UPLOADED BY RAW MATERIAL SUPPLIERS ------------------------
 
 
   // const totalBatchs =await supplychain.totalBatchs()  
   // for(let i= 0; i<totalBatchs; i++){  
   //   const item = await supplychain.items(i);  
-  //   // if (){ 
-
-  //     console.log(item);  
-  //     console.log(await supplychain.RawMaterialSupplierRawMaterial(item.supplyChainId));  
-      
-  //     console.log("Date");
-  //     console.log(await dateTime.getDay(item.timeStamp0.toNumber()),await dateTime.getMonth(item.timeStamp0.toNumber()),await dateTime.getYear(item.timeStamp0.toNumber()));
-  //     console.log("Time"); 
-      
-  //     let hour =await dateTime.getHour(item.timeStamp0.toNumber())
-  //     let minute =await dateTime.getMinute(item.timeStamp0.toNumber());
-  //     let second =await dateTime.getSecond(item.timeStamp0.toNumber());
-
-  //     if(hour+5>24){
-  //       hour = ((hour+5) -24);
-  //     }else{
-  //       hour +=5;
+  //   let j=1;
+  //   while(j){
+  //     try {
+  //       const data =await supplychain.IdToFactory(i,j-1);
+  //       if(data.factory==factorySigner1.address){
+  //           return;
+  //       }
+  //       j++; 
+  //     } catch (error) {
+  //       break;
   //     }
-  //     if(minute+35> 60){
-  //       hour++;
-  //       minute = ((minute+35)-60);
-  //     }else{
-  //       minute=minute+35;
-  //     }
-  //     console.log(hour,minute,second);
-      
-  //   // } 
+  //   }
+  //   console.log(item);  
+  //   console.log(await supplychain.RawMaterialSupplierRawMaterial(item.supplyChainId));  
+    
+  //   console.log("Date");
+  //   console.log(await dateTime.getDay(item.timeStamp0.toNumber()),await dateTime.getMonth(item.timeStamp0.toNumber()),await dateTime.getYear(item.timeStamp0.toNumber()));
+  //   console.log("Time"); 
+  
+  //   let hour =await dateTime.getHour(item.timeStamp0.toNumber())
+  //   let minute =await dateTime.getMinute(item.timeStamp0.toNumber());
+  //   let second =await dateTime.getSecond(item.timeStamp0.toNumber());
+
+  //   if(hour+5>24){
+  //     hour = ((hour+5) -24);
+  //   }else{
+  //     hour +=5;
+  //   }
+  //   if(minute+35> 60){
+  //     hour++;
+  //     minute = ((minute+35)-60);
+  //   }else{
+  //     minute=minute+35;
+  //   }
+  //   console.log(hour,minute,second);
   // } 
-
 
   
   // await supplychain.connect(factorySigner1).factoryBuyRawMaterial(0,[40,40,40,40,40]);
@@ -236,6 +249,7 @@ async function main() {
   //       const item =await supplychain.items(i);
   //       if(data.factory==factorySigner1.address && data.itemState ==1){
   //         console.log(data);
+  //         console.log("Warehouse :",data.warehouse);
   //         console.log(item);  
   //         // console.log(await supplychain.FactoryRawMaterialsORIGIONAL(i,factorySigner1.address));
   //       }
@@ -284,7 +298,11 @@ async function main() {
   // ---------------------------- FACTORY COMPLETE WEAVING AND SPINNING ------------------------
 
   // await supplychain.connect(factorySigner1).factoryCompleteSpinningWaeving(0,100,"Blue","Plain");
+<<<<<<< HEAD
   // await supplychain.connect(factorySigner1).factoryCompleteSpinningWaeving(0,120,"Green","Ruff");
+=======
+  // await supplychain.connect(factorySigner1).factoryCompleteSpinningWaeving(1,120,"Green","Ruff");
+>>>>>>> f763619bf37ba616d4d64f5d024a3ea035b5366a
 
 
   // const totalBatchs =await supplychain.totalBatchs()  
@@ -312,8 +330,13 @@ async function main() {
   
   // ---------------------------- FACTORY COMPLETE GARMENT PRODUCTION ------------------------
 
-
   // await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing([0,1],140,"Plain Blue T-shirts");
+
+<<<<<<< HEAD
+  // await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing([0,1],140,"Plain Blue T-shirts");
+=======
+  // ------ VIEW OF MANUFACTURED PRODUCTS ------
+>>>>>>> f763619bf37ba616d4d64f5d024a3ea035b5366a
 
 
   // const totalBatches =await supplychain.totalProductBatchs();
@@ -321,13 +344,34 @@ async function main() {
   //   const data =await supplychain.Product(i);
   //   if(data.factory ==factorySigner1.address && data.productState==0){
   //     console.log(data);
+  //     // This data is for ith product
 
+
+  //     // This loop is for the batches that this product is made up of.
   //     let j=1;
   //     while(j){
   //       try {
   //         const supplychainID =await supplychain.ProductIds(i,j-1);
   //         console.log(supplychainID);
   //         console.log(await supplychain.items(supplychainID));
+          
+
+
+  //         // ---- Run this loop for factory related details of this batch i.e. warehouse address, timestamps etc.
+
+  //         // let k=1;
+  //         // while(k){
+  //         //   try {
+  //         //     const data =await supplychain.IdToFactory(supplychainID,k-1);
+  //         //     if(data.factory == factorySigner1.address){
+  //         //       console.log(data);
+  //         //     }
+  //         //     k++; 
+  //         //   } catch (error) {
+  //         //     break;
+  //         //   }
+  //         // }
+
   //         j++; 
   //       } catch (error) {
   //         break;
@@ -366,33 +410,39 @@ async function main() {
   // ------------------------ FACTORY SELLS PRODUCT BATCH (PARTIAL OR COMPLETE )TO A DISTRIBUTORS  ------------------------
 
 
+<<<<<<< HEAD
   // await supplychain.connect(factorySigner1).factorySellItemToDistributor(0,distributorSigner1.address,40);
   // await supplychain.connect(factorySigner1).factorySellItemToDistributor(0,distributorSigner2.address,50);
+=======
+  // await supplychain.connect(factorySigner1).factorySellItemToDistributor(0,distributorSigner1.address,120);
+  // await supplychain.connect(factorySigner1).factorySellItemToDistributor(0,distributorSigner2.address,10);
+>>>>>>> f763619bf37ba616d4d64f5d024a3ea035b5366a
   
 
   // ----------------- FACTORY VIEW OF WHICH PRODUCT BATCH HE HAS SENT TO WHICH DISTRIBUTOR --------------
-  
 
 
   // const totalBatches =await supplychain.totalProductBatchs();
   // for(let i=0; i<totalBatches; i++){
   //   const data =await supplychain.Product(i);
   //   if(data.factory ==factorySigner1.address && data.productState==1 ){
-  //     console.log(data);
-  //     // This data is about i th product
+      
+  //     if(data.leftUnits>0){
+  //       console.log(data);
+  //       // This data is about i th product
+  //       let j=1;
+  //       while(j){
+  //         try {
+  //           const data =await supplychain.ProductIdToDistributor(i,j-1);
+  //           console.log(data);
+  //           console.log("TimeStamp when factory sell to this distributor is :", data.timeStamp8);
+  //           // This data is about i th product distributors
 
-  //     let j=1;
-  //     while(j){
-  //       try {
-  //         const data =await supplychain.ProductIdToDistributor(i,j-1);
-  //         console.log(data);
-  //         console.log("TimeStamp when factory sell to this distributor is :", data.timeStamp8);
-  //         // This data is about i th product distributors
-
-  //         j++; 
-  //       } catch (error) {
-  //         break;
-  //       }
+  //           j++; 
+  //         } catch (error) {
+  //           break;
+  //         } 
+  //       } 
   //     }
   //   }
   // }
@@ -457,7 +507,36 @@ async function main() {
   // for(let i=0; i<totalBatches; i++){
   //   const data =await supplychain.Product(i);
   //   if(data.productState==1 ){
-  //     // console.log(data);
+  //     console.log(data);
+
+  //     // let k=1;
+  //     // while(k){
+  //     //   try {
+  //     //     const supplychainID =await supplychain.ProductIds(i,k-1);
+  //     //     console.log(supplychainID);
+  //     //     console.log(await supplychain.items(supplychainID));
+          
+  //     //     // ---- Run this loop for factory related details of this batch i.e. warehouse address, timestamps etc.
+
+  //     //     // let l=1;
+  //     //     // while(l){
+  //     //     //   try {
+  //     //     //     const data2 =await supplychain.IdToFactory(supplychainID,l-1);
+  //     //     //     if(data2.factory == data.factory){
+  //     //     //       console.log(data2);
+  //     //     //       break;
+  //     //     //     }
+  //     //     //     l++; 
+  //     //     //   } catch (error) {
+  //     //     //     break;
+  //     //     //   }
+  //     //     // }
+
+  //     //     k++; 
+  //     //   } catch (error) {
+  //     //     break;
+  //     //   }
+  //     // }
 
   //     let j=1;
   //     while(j){
@@ -479,7 +558,11 @@ async function main() {
 
 // ----------------------------- DISTBIBUTOR RECEIVES THE PRODUCT BATCH ---------------------------
 
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> f763619bf37ba616d4d64f5d024a3ea035b5366a
   // await supplychain.connect(distributorSigner1).distributorReceivesProductBatch(0);
 
 
@@ -487,7 +570,7 @@ async function main() {
   // for(let i=0; i<totalBatches; i++){
   //   const data =await supplychain.Product(i);
   //   if(data.productState==1 ){
-  //     // console.log(data);
+  //     console.log(data);
 
   //     let j=1;
   //     while(j){
@@ -522,7 +605,7 @@ async function main() {
   //   if(data.productState==1 ){
   //     // console.log(data);
   //     // This data is about i th product
-
+      
   //     let j=1;
   //     while(j){
   //       try {
@@ -530,7 +613,7 @@ async function main() {
   //         if(data.distributor==distributorSigner1.address){
   //           console.log(data); 
   //         }
-  //         j++; 
+  //         j++;  
   //       } catch (error) {
   //         break;
   //       }
@@ -556,6 +639,35 @@ async function main() {
   //   const data =await supplychain.Product(i);
   //   if(data.productState==1 ){
   //     // console.log(data);
+
+  //     // let k=1;
+  //     // while(k){
+  //     //   try {
+  //     //     const supplychainID =await supplychain.ProductIds(i,k-1);
+  //     //     console.log(supplychainID);
+  //     //     console.log(await supplychain.items(supplychainID));
+          
+  //     //     // ---- Run this loop for factory related details of this batch i.e. warehouse address, timestamps etc.
+
+  //     //     // let l=1;
+  //     //     // while(l){
+  //     //     //   try {
+  //     //     //     const data2 =await supplychain.IdToFactory(supplychainID,l-1);
+  //     //     //     if(data2.factory == data.factory){
+  //     //     //       console.log(data2);
+  //     //     //       break;
+  //     //     //     }
+  //     //     //     l++; 
+  //     //     //   } catch (error) {
+  //     //     //     break;
+  //     //     //   }
+  //     //     // }
+
+  //     //     k++; 
+  //     //   } catch (error) {
+  //     //     break;
+  //     //   }
+  //     // }
 
   //     let j=1;
   //     while(j){

@@ -32,6 +32,7 @@ contract Supplychain{
         factoryCompleteGarmentManufacturing,
         factoryQCFinalItems
     }
+
     enum DistributorState
     {
         factorySellProductToDistributor,
@@ -73,7 +74,7 @@ contract Supplychain{
         uint timeStamp2;
         uint timeStamp3;
         uint timeStamp4;
-        uint timeStamp5;
+        // uint timeStamp5;
     }
 
     struct ProductBatch{
@@ -204,8 +205,8 @@ contract Supplychain{
             timeStamp1:block.timestamp,
             timeStamp2:0,
             timeStamp3:0,
-            timeStamp4:0,
-            timeStamp5:0
+            timeStamp4:0
+            // timeStamp5:0
         });
         IdToFactory[_supplyChainId].push(f);
         FactoryRawMaterialsORIGIONAL[_supplyChainId][msg.sender].rawMaterial1=_rawMaterials[0];
@@ -274,11 +275,11 @@ contract Supplychain{
         
         for(uint i=0;i<_supplyChainIds.length; i++){
             FactoryDetail[] memory fd =IdToFactory[_supplyChainIds[i]];
-            for(uint j=0; i<fd.length; i++){
+            for(uint j=0; j<fd.length; j++){
                 if(fd[j].factory==msg.sender && fd[j].itemState== State.factoryCompleteSpinningWaeving ){
                     fd[j].itemState =State.factoryCompleteGarmentManufacturing;
                     IdToFactory[_supplyChainIds[i]][j]=fd[j];
-                    break;
+                    // break;
                 }
             }
         }
