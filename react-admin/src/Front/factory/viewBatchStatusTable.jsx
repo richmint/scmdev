@@ -52,6 +52,8 @@ const ViewBatchStatusTable = () => {
     let OGViewBatchRecord = await supplyChainContract.RawMaterialDetails(viewBatchRecord.supplyChainId);
     setogBatchRecord(OGViewBatchRecord)
 
+    console.log("viewBatchRecord",OGViewBatchRecord)
+
     for (let i = 0; i < viewBatchRecord.itemState; i++) {
       const dateObjectrec =await supplyChainContract.timeStamps(data.state.i,i);
       const createdday = await dateContract.getDay(dateObjectrec.toNumber())

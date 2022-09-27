@@ -27,6 +27,8 @@ const ManufactureGarmentTable = () => {
             let object = await supplyChainContract.items(i);
             const manufactureData = await supplyChainContract.IdToFactory(i, j - 1);
 
+            console.log("manufactureData.itemState",manufactureData.itemState)
+
 
             if (manufactureData.itemState === 3 && manufactureData.factory.toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
               checkvalue = 1;
