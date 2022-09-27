@@ -29,7 +29,6 @@ const RawMaterialTable = () => {
       for (let i = 0; i < totalbatchids; i++) {
         let object = await supplyChainContract.items(i);
         let OGObject = await supplyChainContract.RawMaterialSupplierRawMaterial(object.supplyChainId);
-        //console.log("myrecord", OGObject);
 
         if (OGObject.rawMaterial1.toNumber() != 0 || OGObject.rawMaterial2.toNumber() != 0 || OGObject.rawMaterial3.toNumber() != 0 || OGObject.rawMaterial4.toNumber() != 0 || OGObject.rawMaterial5.toNumber() != 0) { 
           const rawMaterialRecord = {
@@ -186,18 +185,7 @@ const RawMaterialTable = () => {
           <div className="top">
             <h4>Raw Material List</h4>
           </div>
-          {/* <button onClick={notify}>Notify!</button>
-          <ToastContainer
-            position="bottom-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            /> */}
+          
           <div className="bottom">
             <div className="right">
             <h6>Cotton List</h6>

@@ -15,85 +15,87 @@ const SellItemTable = () => {
   const allsupplymateriallist = [];
   const getSupplyChainHandler = async (event) => {
     let userdatarec = '';
-    const totalbatchids = (await supplyChainContract.totalBatchs());
+    const totalbatchids = (await supplyChainContract.totalProductBatchs());
+    console.log("totalbatchids", totalbatchids.toNumber())
     var checkvalue = 0;
-    if (totalbatchids > 0) {
+    if (totalbatchids.toNumber() > 0) {
       for (let i = 0; i < totalbatchids; i++) {
+
         const productData = await supplyChainContract.Product(i);
-
-        if (productData.productState === 0 && productData.factory.toLowerCase() === ownSupplyChainAddress.toLowerCase() || productData.productState === 1 && productData.factory.toLowerCase() === ownSupplyChainAddress.toLowerCase()  && productData.leftUnits>0) {
-
-
+        if (productData.productState === 0 && productData.factory.toLowerCase() === ownSupplyChainAddress.toLowerCase() || productData.productState === 1 && productData.factory.toLowerCase() === ownSupplyChainAddress.toLowerCase() && productData.leftUnits > 0) {
           checkvalue = 1;
 
           const productBatchId = productData.productId.toNumber()
+          const createdday = await dateContract.getDay(productData.timeStamp6.toNumber())
+          const createmonth = await dateContract.getMonth(productData.timeStamp6.toNumber())
+          const createdyear = await dateContract.getYear(productData.timeStamp6.toNumber())
 
+          let hour = await dateContract.getHour(productData.timeStamp6.toNumber())
+          let minute = await dateContract.getMinute(productData.timeStamp6.toNumber());
+          let second = await dateContract.getSecond(productData.timeStamp6.toNumber());
+
+          if (hour + 5 > 24) {
+            hour = ((hour + 5) - 24);
+          } else {
+            hour += 5;
+          }
+          if (minute + 35 > 60) {
+            hour++;
+            minute = ((minute + 35) - 60);
+          } else {
+            minute = minute + 35;
+          }
+
+          const batchArray = [];
           let j = 1;
           while (j) {
             try {
-              const supplychainID =await supplyChainContract.ProductIds(i,j-1);
-              //console.log("isdjlfjklgjkl",productData.timeStamp6.toNumber());
-          const productDataBatchRecord = await supplyChainContract.items(supplychainID.toNumber());
 
-          const createdday = await dateContract.getDay(productData.timeStamp6.toNumber())
-              const createmonth = await dateContract.getMonth(productData.timeStamp6.toNumber())
-              const createdyear = await dateContract.getYear(productData.timeStamp6.toNumber())
-
-              let hour = await dateContract.getHour(productData.timeStamp6.toNumber())
-              let minute = await dateContract.getMinute(productData.timeStamp6.toNumber());
-              let second = await dateContract.getSecond(productData.timeStamp6.toNumber());
-
-              if (hour + 5 > 24) {
-                hour = ((hour + 5) - 24);
-              } else {
-                hour += 5;
-              }
-              if (minute + 35 > 60) {
-                hour++;
-                minute = ((minute + 35) - 60);
-              } else {
-                minute = minute + 35;
-              }
-
-
-              //console.log("productData",productDataBatchRecord)
-              //let OGObject = await supplyChainContract.OGDetails(productData.supplyChainId);
-
-              let totalmanufactured = productData.totalUnits.toNumber();
-              const rawMaterialRecord = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  "hashAddress": productDataBatchRecord.RawMaterialSupplierID,
-                })
-              };
-              await fetch("http://162.215.222.118:5150/location", rawMaterialRecord)
-                .then(res => res.json())
-                .then(data => {
-                  if (data) {
-                    userdatarec = data.username
-                  }
-                }).catch((error) => {
-                  console.error('Error:', error);
-                });
-              allsupplymateriallist.push(
-                <><tr>
-                  <td>{supplychainID.toNumber()}</td>
-                  <td>{productData.productId.toNumber()}</td>
-                  <td>{userdatarec && userdatarec }</td>
-                  <td>{productData.totalUnits.toNumber()}</td>
-                  <td>{productData.Description}</td> 
-                  <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
-                  <td><Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { productBatchId } })}>View</Button>
-                    {productData.productState === 0 ? <Button variant="outline-info" onClick={() => navigate('/productQualityCheck', { state: { productBatchId: productBatchId, totalmanufactured: totalmanufactured } })}>Quality Check</Button>:<Button variant="outline-success" onClick={() => navigate('/SellItemFormData', { state: { productBatchId: productBatchId, leftUnits: productData.leftUnits.toNumber() } })}>Continue</Button>}
-                  </td>
-                </tr></>
-              )
+              const supplychainID = await supplyChainContract.ProductIds(i, j - 1);
+              
+              //const productDataBatchRecord = await supplyChainContract.items(supplychainID.toNumber());
+              batchArray.push(supplychainID.toNumber())
+              console.log("supplychainID",supplychainID.toNumber())
               j++;
             } catch (error) {
               break;
             }
           }
+
+          //console.log("productData",productDataBatchRecord)
+          //let OGObject = await supplyChainContract.OGDetails(productData.supplyChainId);
+
+          let totalmanufactured = productData.totalUnits.toNumber();
+          const rawMaterialRecord = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              "hashAddress": productData.factory,
+            })
+          };
+          await fetch("http://162.215.222.118:5150/location", rawMaterialRecord)
+            .then(res => res.json())
+            .then(data => {
+              if (data) {
+                userdatarec = data.username
+              }
+            }).catch((error) => {
+              console.error('Error:', error);
+            }); 
+          allsupplymateriallist.push(
+            <><tr>
+              <td>{batchArray.join(",")}</td>
+              <td>{productData.productId.toNumber()}</td>
+              <td>{userdatarec && userdatarec}</td>
+              <td>{productData.totalUnits.toNumber()}</td>
+              <td>{productData.Description}</td>
+              <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
+              <td><Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { productBatchId } })}>View</Button>
+                {productData.productState === 0 ? <Button variant="outline-info" onClick={() => navigate('/productQualityCheck', { state: { productBatchId: productBatchId, totalmanufactured: totalmanufactured } })}>Quality Check</Button> : <Button variant="outline-success" onClick={() => navigate('/SellItemFormData', { state: { productBatchId: productBatchId, leftUnits: productData.leftUnits.toNumber() } })}>Continue</Button>}
+              </td>
+            </tr></>
+          )
+
         }
       }
       if (checkvalue == 0) {
