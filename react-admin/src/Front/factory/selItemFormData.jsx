@@ -58,7 +58,7 @@ const SellItemFormData = () => {
 
     const sellItemToDistributerHandler = async (event) => {
       // event.preventDefault();
-      console.log("Detail", event);
+      //console.log("Detail", event);
       const tx = SChainContract.factorySellItemToDistributor(event.productBatchId, event.distributeradrs, event.sellProductQty);
       if (tx) {
         navigate("/sellItemToDistributer")
@@ -82,7 +82,7 @@ const SellItemFormData = () => {
            .then(result=>result.json())
            .then(data => {
             if(data){
-              console.log("Data in useEffect ",data)
+              //console.log("Data in useEffect ",data)
               setDistributorList(data)
             }
           })

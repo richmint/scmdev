@@ -58,9 +58,15 @@ async function main() {
 
  
   // ----------------------------  RAW MATERIAL SUPPLIER ADDs A BATCH  ----------------------------
+<<<<<<< HEAD
+
+  // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(1,[100,100,100,100,100]);
+  // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(2,[120,120,120,120,120]);
+=======
   
   await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(1,[100,100,100,100,100]);
   await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(2,[120,120,120,120,120]);
+>>>>>>> f763619bf37ba616d4d64f5d024a3ea035b5366a
   // await supplychain.connect(rawMaterialSupplierSigner2).rawMaterialSupplierSuppliesRM(1,[110,110,110,110,110]);
   
   // await supplychain.connect(factorySigner1).factoryBuyRawMaterial(0,[40,40,40,40,40]);
@@ -294,7 +300,11 @@ async function main() {
   // ---------------------------- FACTORY COMPLETE WEAVING AND SPINNING ------------------------
 
   // await supplychain.connect(factorySigner1).factoryCompleteSpinningWaeving(0,100,"Blue","Plain");
+<<<<<<< HEAD
+  // await supplychain.connect(factorySigner1).factoryCompleteSpinningWaeving(0,120,"Green","Ruff");
+=======
   // await supplychain.connect(factorySigner1).factoryCompleteSpinningWaeving(1,120,"Green","Ruff");
+>>>>>>> f763619bf37ba616d4d64f5d024a3ea035b5366a
 
 
   // const totalBatchs =await supplychain.totalBatchs()  
@@ -324,7 +334,11 @@ async function main() {
 
   // await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing([0,1],140,"Plain Blue T-shirts");
 
+<<<<<<< HEAD
+  // await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing([0,1],140,"Plain Blue T-shirts");
+=======
   // ------ VIEW OF MANUFACTURED PRODUCTS ------
+>>>>>>> f763619bf37ba616d4d64f5d024a3ea035b5366a
 
 
   // const totalBatches =await supplychain.totalProductBatchs();
@@ -398,8 +412,13 @@ async function main() {
   // ------------------------ FACTORY SELLS PRODUCT BATCH (PARTIAL OR COMPLETE )TO A DISTRIBUTORS  ------------------------
 
 
+<<<<<<< HEAD
+  // await supplychain.connect(factorySigner1).factorySellItemToDistributor(0,distributorSigner1.address,40);
+  // await supplychain.connect(factorySigner1).factorySellItemToDistributor(0,distributorSigner2.address,50);
+=======
   // await supplychain.connect(factorySigner1).factorySellItemToDistributor(0,distributorSigner1.address,120);
   // await supplychain.connect(factorySigner1).factorySellItemToDistributor(0,distributorSigner2.address,10);
+>>>>>>> f763619bf37ba616d4d64f5d024a3ea035b5366a
   
 
   // ----------------- FACTORY VIEW OF WHICH PRODUCT BATCH HE HAS SENT TO WHICH DISTRIBUTOR --------------
@@ -541,7 +560,11 @@ async function main() {
 
 // ----------------------------- DISTBIBUTOR RECEIVES THE PRODUCT BATCH ---------------------------
 
+<<<<<<< HEAD
+ 
+=======
 
+>>>>>>> f763619bf37ba616d4d64f5d024a3ea035b5366a
   // await supplychain.connect(distributorSigner1).distributorReceivesProductBatch(0);
 
 
@@ -598,7 +621,7 @@ async function main() {
   //       }
   //     }
   //   }
-  // }
+  // } 
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -736,8 +759,7 @@ async function main() {
 
 
   // ----------------- CUSTOMER VIEW OF WHICH PRODUCT PRODUCT HE HAS BOUGHT ---------------------
-  
-
+   
   // const totalBatches =await supplychain.totalProductBatchs();
   // for(let i=0; i<totalBatches; i++){
   //   const data =await supplychain.Product(i);

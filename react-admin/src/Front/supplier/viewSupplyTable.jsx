@@ -77,7 +77,7 @@ const ViewSupplyTable = () => {
                     <td>{OGObject.rawMaterial4.toNumber()}</td>
                     <td>{OGObject.rawMaterial5.toNumber()}</td>
                     <td>{createdday}-{createmonth}-{createdyear} {createdhour}:{createdminute}:{createdsecond}</td>
-                    <td>{object.itemState !== 0 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View Buyer Detail</Button> : <Button variant="outline-info">Not Sold</Button>}</td>
+                    <td>{object.itemState !== 0 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View</Button> : <Button variant="outline-info">Not Sold</Button>}</td>
                   </tr>
                 </>
               ) 
@@ -93,7 +93,7 @@ const ViewSupplyTable = () => {
                   <td>{OGObject.rawMaterial3.toNumber()}</td>
                   <td>{OGObject.rawMaterial4.toNumber()}</td>
                   <td>{createdday}-{createmonth}-{createdyear} {createdhour}:{createdminute}:{createdsecond}</td>
-                  <td>{object.itemState !== 0 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View Buyer Detail</Button> : <Button variant="outline-info">Not Sold</Button>}</td>
+                  <td>{object.itemState !== 0 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View</Button> : <Button variant="outline-info">Not Sold</Button>}</td>
                 </tr>
               </>
             )
@@ -101,7 +101,7 @@ const ViewSupplyTable = () => {
           if(OGObject.rawMaterialType.toNumber() == 3){
             checkWoolvalue = 1;
             allWoollist.push(
-              <>
+              <> 
                 <tr> 
                   <td>{i}</td>
                   <td>{OGObject.rawMaterial1.toNumber()}</td>
@@ -109,7 +109,7 @@ const ViewSupplyTable = () => {
                   <td>{OGObject.rawMaterial3.toNumber()}</td>
                   <td>{OGObject.rawMaterial4.toNumber()}</td>
                   <td>{createdday}-{createmonth}-{createdyear} {createdhour}:{createdminute}:{createdsecond}</td>
-                  <td>{object.itemState !== 0 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View Buyer Detail</Button> : <Button variant="outline-info">Not Sold</Button>}</td>
+                  <td>{object.itemState !== 0 ? <Button variant="outline-success" onClick={() => navigate('/viewBatchSupplier', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>View</Button> : <Button variant="outline-info">Not Sold</Button>}</td>
                 </tr>
               </>
             )

@@ -76,7 +76,7 @@ let distributeruserrec = '';
 
 
         const handleSubmit = (e) =>{
-          e.preventDefault();
+          e.preventDefault(); 
           const data = {
             cottonWeight:cottonWeight,
             fiberlength: fiberlength,

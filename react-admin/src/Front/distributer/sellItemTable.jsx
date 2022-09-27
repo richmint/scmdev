@@ -27,9 +27,9 @@ const SellItemTable = () => {
           while (j) {
             try {
               const recieveProductData = await supplyChainContract.ProductIdToDistributor(i,j-1);
-               console.log("productData", productData);
-               console.log("recieveProductData", recieveProductData);
-               if(recieveProductData.distributor.toLowerCase() == ownSupplyChainAddress.toLowerCase() && recieveProductData.distributorState==0){
+              //  console.log("productData", productData);
+              //  console.log("recieveProductData", recieveProductData);
+               if(recieveProductData.distributor.toLowerCase() == ownSupplyChainAddress.toLowerCase() && recieveProductData.distributorState==0 || recieveProductData.distributor.toLowerCase() == ownSupplyChainAddress.toLowerCase() && recieveProductData.distributorState==1){
               var checkvalue = 1;
               const rawMaterialRecord = {
                 method: 'POST',
@@ -102,6 +102,24 @@ const SellItemTable = () => {
             const createdyear = await dateContract.getYear(recieveProductData.timeStamp8.toNumber())
 
 
+
+            const batchReceiveHandler = async (event) => {
+              const tx = supplyChainContract.distributorReceivesProductBatch(event.productBatch);
+              console.log("event",event);
+              if(tx){
+                 navigate("/availabelItemToSellRetailer")
+              }
+            }
+
+            const handleSubmit = (e) =>{
+              e.preventDefault();
+              const data = {
+                productBatch:productData.productId.toNumber(),
+              }
+              batchReceiveHandler(data)
+            }
+
+            const productBatchId = productData.productId.toNumber();
               allsupplymateriallist.push(
                 <>
                   <div className="bottom">
@@ -122,7 +140,11 @@ const SellItemTable = () => {
                             <p><b>Date : </b> {createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</p>
                           </Card.Text> 
                           <Card.Text style={{ float: 'right' }}>
-                            <Button variant="outline-success" onClick={() => navigate('/sellToRetailer', { state: { i } })}>Sell To Retailer</Button>
+                            {recieveProductData.distributorState==0 ? 
+                            <form onSubmit={handleSubmit}>
+                              <Button variant="outline-success" type={"submit"} >Batch Receive</Button>
+                            </form> :
+                            <Button variant="outline-success" onClick={() => navigate('/sellToRetailer', { state: { productBatchId:productBatchId,productQty:recieveProductData.quantity.toNumber() } })}>Sell To Retailer</Button> }
                           </Card.Text>
                         </Card.Body>
                       </Card>
