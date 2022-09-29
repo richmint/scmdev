@@ -46,6 +46,9 @@ import ProductQualityCheck from './Front/factory/productQualtityCheck';
 
 //Retailer Routes
 import AvailabeProductforRetailer from './Front/retailer/availabeProduct';
+import AvailableItemForSell from './Front/retailer/sellTable';
+import SellToCustumerForm from './Front/retailer/selltoCustumer';
+import ViewItemSellList from './Front/retailer/viewSellListItem';
 
 //Customer Routes
 import AvailabeProductforCustomer from './Front/customer/availabeProduct';
@@ -193,7 +196,7 @@ function App() {
               <Route path="/approveSupplier" element={frontToken ? <Approvesupplier /> : <Navigate to={"/userlogin"} />} />
               <Route path="/viewBatchSupplier" element={frontToken ? <ViewBatchSupplier /> : <Navigate to={"/userlogin"} />} />
               
-              {/* Front Factory Routes */}
+              {/* {/ Front Factory Routes /} */}
               <Route path="/availableRawMaterialToBuy" element={frontToken ? <AvailableRawMaterialToBuy /> : <Navigate to={"/userlogin"} />} />
               <Route path="/approveFactorySupplier" element={frontToken ? <ApproveFactorySupplier /> : <Navigate to={"/userlogin"} />} />
               <Route path="/availableRawMaterialToWarehouse" element={frontToken ? <AvailableRawMaterialToWarehouse /> : <Navigate to={"/userlogin"} />} />
@@ -211,13 +214,16 @@ function App() {
               <Route path="/storedItemsInWarehouse" element={frontToken ? <StoredItemsInWarehouse /> : <Navigate to={"/userlogin"} />} />
               <Route path="/rawMaterialQualityCheck" element={frontToken ? <QualityCheckRawMaterail /> : <Navigate to={"/userlogin"} />} />
               <Route path="/productQualityCheck" element={frontToken ? <ProductQualityCheck /> : <Navigate to={"/userlogin"} />} />
-               {/* Front Distributer Routes */}
+               {/* {/ Front Distributer Routes /} */}
               <Route path="/availabelItemToSellRetailer" element={frontToken ? <AvailabelItemToSellRetailer /> : <Navigate to={"/userlogin"} />} />
               <Route path="/approveDistributerSupplier" element={frontToken ? <ApproveDistributerSupplier /> : <Navigate to={"/userlogin"} />} />
               <Route path="/sellToRetailer" element={frontToken ? <SellToRetailer /> : <Navigate to={"/userlogin"} />} />
-              {/* Front Retailer Routes */}
+              {/* {/ Front Retailer Routes /} */}
               <Route path="/availabeProductforRetailer" element={frontToken ? <AvailabeProductforRetailer /> : <Navigate to={"/userlogin"} />} />
-              {/* Front Retailer Routes */}
+              <Route path="/sellItem" element={frontToken ? <AvailableItemForSell /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/sellToCustumer" element={frontToken ? <SellToCustumerForm /> : <Navigate to={"/userlogin"} />} />
+              <Route path="/viewSellItem" element={frontToken ? <ViewItemSellList /> : <Navigate to={"/userlogin"} />} />
+              {/* {/ Front customer Routes /} */}
               <Route path="/availabeProductforCustomer" element={frontToken ? <AvailabeProductforCustomer /> : <Navigate to={"/userlogin"} />} />
               <Route path="/productBuyCustomer" element={frontToken ? <ProductBuyCustomer /> : <Navigate to={"/userlogin"} />} />
               <Route path="/orderhistory" element={frontToken ? <OrderHistory /> : <Navigate to={"/userlogin"} />} />
@@ -228,4 +234,3 @@ function App() {
 }
 
 export default App;
-

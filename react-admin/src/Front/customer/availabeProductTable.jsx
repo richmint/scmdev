@@ -26,7 +26,7 @@ const AvailabeProductCustomerTable = () => {
                       "role":"Retailer"
                       })
                     }  
-                  await fetch("http://162.215.222.118:5150/retailerbylocation",requestOptions)    
+                  await fetch("http://162.215.222.118:5151/retailerbylocation",requestOptions)    
                     .then(result => result.json())
                     .then(resultdata => {
                       if(resultdata){ 

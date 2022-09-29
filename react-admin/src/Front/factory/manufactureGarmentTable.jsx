@@ -63,7 +63,7 @@ const ManufactureGarmentTable = () => {
                   "hashAddress": object.RawMaterialSupplierID,
                 })
               };
-              await fetch("http://162.215.222.118:5150/location", rawMaterialRecord)
+              await fetch("http://162.215.222.118:5151/location", rawMaterialRecord)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {
@@ -79,7 +79,7 @@ const ManufactureGarmentTable = () => {
                   "hashAddress": manufactureData.warehouse,
                 })
               };
-              await fetch("http://162.215.222.118:5150/location", wareHouseDetail)
+              await fetch("http://162.215.222.118:5151/location", wareHouseDetail)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {
@@ -102,7 +102,7 @@ const ManufactureGarmentTable = () => {
                   <td>{factoryRawMaterialsAferQC && factoryRawMaterialsAferQC.YarnType}</td>
                   <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
                   <td>
-                    <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { i } })}>View</Button>
+                    {/* <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { i } })}>View</Button> */}
                     <Button variant="outline-success" onClick={() => navigate('/garmentBatchCompleteForm', { state: { i } })}>Continue</Button>
                   </td>
                 </tr></>

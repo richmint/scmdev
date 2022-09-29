@@ -324,6 +324,7 @@ async function main() {
 
   await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing([0,1],140,"Plain Blue T-shirts");
 
+  // ------ VIEW OF MANUFACTURED PRODUCTS ------
 
   // const totalBatches =await supplychain.totalProductBatchs();
   // for(let i=0; i<totalBatches; i++){
@@ -398,6 +399,7 @@ async function main() {
 
   await supplychain.connect(factorySigner1).factorySellItemToDistributor(0,distributorSigner1.address,40);
   await supplychain.connect(factorySigner1).factorySellItemToDistributor(0,distributorSigner2.address,50);
+  
   
 
   // ----------------- FACTORY VIEW OF WHICH PRODUCT BATCH HE HAS SENT TO WHICH DISTRIBUTOR --------------
@@ -687,7 +689,7 @@ async function main() {
   //         break;
   //       }
   //     }
-  //   }
+  //   } 
   // }
 
 

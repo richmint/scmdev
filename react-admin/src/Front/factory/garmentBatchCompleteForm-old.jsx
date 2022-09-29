@@ -13,7 +13,7 @@ import { GarmentBatchCompleteFormSchema } from '../../Validations/Schema';
 import GarmentBatchList from "./getTotalBatch";
 import { useMemo } from "react";
 const GarmentBatchCompleteForm = () =>{
-  const [cottonBatchId,setCottonBatchId] = useState();
+  const [CottonBatchId,setCottonBatchId] = useState();
   const [polysterBatchId,setPolysterBatchId] = useState();
   const [woolBatchId,setWoolBatchId] = useState();
   const [error , seterror]  = useState('')
@@ -36,27 +36,30 @@ const GarmentBatchCompleteForm = () =>{
   const [SChainContract, setSChainContract] = useState(supplyChainContract);
 
   const garmentcompleteHandler = async (event) => { 
-    if(cottonBatchId != undefined || woolBatchId != undefined || polysterBatchId != undefined ){
-      //  console.log("CottonBatchId",cottonBatchId)
-      //  console.log("polysterBatchId",polysterBatchId)
-      //  console.log("woolBatchId",woolBatchId)
-      //  console.log("Event",event)
+    if(CottonBatchId != undefined || woolBatchId != undefined || polysterBatchId != undefined ){
+       console.log("CottonBatchId",CottonBatchId)
+       console.log("polysterBatchId",polysterBatchId)
+       console.log("woolBatchId",woolBatchId)
+       console.log("Event",event)
 
        let arr = [];
-       if(cottonBatchId != undefined ){
-        arr.push(cottonBatchId);
+       if(CottonBatchId != undefined ){
+        arr.push(parseInt(CottonBatchId))
        }
        if(woolBatchId != undefined ){
-        arr.push(woolBatchId);
+        arr.push(parseInt(woolBatchId))
        }
        if(polysterBatchId != undefined ){
-        arr.push(polysterBatchId);
+        arr.push(parseInt(polysterBatchId))
        }
-      
-    const tx = await SChainContract.factoryCompleteGarmentManufacturing(arr,event.totalitems,event.description);
-    if(tx){
-      navigate("/manufactureGarmentMaterial")
-   }
+
+       var newArray = arr.join();
+       console.log("newArray",newArray)
+
+  //   const tx = await SChainContract.factoryCompleteGarmentManufacturing(fData,event.totalitems,event.description);
+  //   if(tx){
+  //     navigate("/manufactureGarmentMaterial")
+  //  }
     }else{
       seterror("*Select at least one Batch")
     }
@@ -64,7 +67,7 @@ const GarmentBatchCompleteForm = () =>{
 
   useMemo(() =>{
     seterror('')
-  },[cottonBatchId,woolBatchId,polysterBatchId])
+  },[CottonBatchId,woolBatchId,polysterBatchId])
 
     const DataTable = (props)=>{
         const data = props.data;
