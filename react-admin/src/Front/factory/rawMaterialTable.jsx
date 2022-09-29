@@ -11,8 +11,8 @@ const RawMaterialTable = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [materiallist, setMateriallist] = useState(null);
-  const [polysterlist, setPolysterlist] =  useState(null);
-  const [woollist, setWoollist] =  useState(null);
+  const [polysterlist, setPolysterlist] = useState(null);
+  const [woollist, setWoollist] = useState(null);
 
   const { dispatch, metaMask, supplyChainContract, supplyChainTokenContract, ownSupplyChainAddress, dateContract } = useContext(DarkModeContext);
 
@@ -27,43 +27,57 @@ const RawMaterialTable = () => {
     var checkWoolvalue = 0;
     if (totalbatchids > 0) {
       for (let i = 0; i < totalbatchids; i++) {
-        let object = await supplyChainContract.items(i);
-        let OGObject = await supplyChainContract.RawMaterialSupplierRawMaterial(object.supplyChainId);
-
-        if (OGObject.rawMaterial1.toNumber() != 0 || OGObject.rawMaterial2.toNumber() != 0 || OGObject.rawMaterial3.toNumber() != 0 || OGObject.rawMaterial4.toNumber() != 0 || OGObject.rawMaterial5.toNumber() != 0) { 
-          const rawMaterialRecord = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              "hashAddress": object.RawMaterialSupplierID,
-            })
-          };
-          await fetch("http://162.215.222.118:5150/location", rawMaterialRecord)
-            .then(res => res.json())
-            .then(data => {
-              if (data) {
-                userdatarec = data.username
-              }
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-            });
-
-
-            let hour =await dateContract.getHour(object.timeStamp0.toNumber())
-            let minute =await dateContract.getMinute(object.timeStamp0.toNumber());
-            let second =await dateContract.getSecond(object.timeStamp0.toNumber());
-
-            if(hour+5>24){
-              hour = ((hour+5) -24);
-            }else{
-              hour +=5;
+        let j = 1;
+        let flag = true;
+        while (j) {
+          try {
+            const data = await supplyChainContract.IdToFactory(i, j - 1);
+            if (data.factory.toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
+              flag = false;
             }
-            if(minute+35> 60){
+            j++;
+          } catch (error) {
+            break;
+          }
+        }
+        if (flag) {
+          let object = await supplyChainContract.items(i);
+          let OGObject = await supplyChainContract.RawMaterialSupplierRawMaterial(object.supplyChainId);
+
+          if (OGObject.rawMaterial1.toNumber() != 0 || OGObject.rawMaterial2.toNumber() != 0 || OGObject.rawMaterial3.toNumber() != 0 || OGObject.rawMaterial4.toNumber() != 0 || OGObject.rawMaterial5.toNumber() != 0) {
+            const rawMaterialRecord = {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                "hashAddress": object.RawMaterialSupplierID,
+              })
+            };
+            await fetch("http://162.215.222.118:5151/location", rawMaterialRecord)
+              .then(res => res.json())
+              .then(data => {
+                if (data) {
+                  userdatarec = data.username
+                }
+              })
+              .catch((error) => {
+                console.error('Error:', error);
+              });
+
+
+            let hour = await dateContract.getHour(object.timeStamp0.toNumber())
+            let minute = await dateContract.getMinute(object.timeStamp0.toNumber());
+            let second = await dateContract.getSecond(object.timeStamp0.toNumber());
+
+            if (hour + 5 > 24) {
+              hour = ((hour + 5) - 24);
+            } else {
+              hour += 5;
+            }
+            if (minute + 35 > 60) {
               hour++;
-              minute = ((minute+35)-60);
-            }else{
-              minute=minute+35;
+              minute = ((minute + 35) - 60);
+            } else {
+              minute = minute + 35;
             }
 
             const createdday = await dateContract.getDay(object.timeStamp0.toNumber())
@@ -71,87 +85,88 @@ const RawMaterialTable = () => {
             const createdyear = await dateContract.getYear(object.timeStamp0.toNumber())
 
 
-          if(OGObject.rawMaterialType.toNumber() == 1){
-            checkcottonvalue = 1;
-            allsupplymateriallist.push(
-              <>
-                <tr> 
-                  <td>{i}</td>
-                  <td> {userdatarec && userdatarec}</td>
-                  <td>{OGObject.rawMaterial1.toNumber()}</td>
-                  <td>{OGObject.rawMaterial2.toNumber()}</td>
-                  <td>{OGObject.rawMaterial3.toNumber()}</td>
-                  <td>{OGObject.rawMaterial4.toNumber()}</td>
-                  <td>{OGObject.rawMaterial5.toNumber()}</td>
-                  <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
+            if (OGObject.rawMaterialType.toNumber() == 1) {
+              checkcottonvalue = 1;
+              allsupplymateriallist.push(
+                <>
+                  <tr>
+                    <td>{i}</td>
+                    <td> {userdatarec && userdatarec}</td>
+                    <td>{OGObject.rawMaterial1.toNumber()}</td>
+                    <td>{OGObject.rawMaterial2.toNumber()}</td>
+                    <td>{OGObject.rawMaterial3.toNumber()}</td>
+                    <td>{OGObject.rawMaterial4.toNumber()}</td>
+                    <td>{OGObject.rawMaterial5.toNumber()}</td>
+                    <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
 
-                  {/* <td>{object.itemState === 1 ? <Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>Buy</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i} })}>Quality Check</Button>}</td> */}
-                  <td><Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>Buy</Button></td>
+                    {/* <td>{object.itemState === 1 ? <Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>Buy</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i} })}>Quality Check</Button>}</td> */}
+                    <td><Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id: i, materialType: 1, rawMaterial1: OGObject.rawMaterial1.toNumber(), rawMaterial2: OGObject.rawMaterial2.toNumber(), rawMaterial3: OGObject.rawMaterial3.toNumber(), rawMaterial4: OGObject.rawMaterial4.toNumber(), rawMaterial5: OGObject.rawMaterial5.toNumber() } })}>Buy</Button></td>
 
-                </tr>
-              </>
-            )
-        }
-        if(OGObject.rawMaterialType.toNumber() == 2){
-          checkPolyestervalue = 1;
-          allPolyesterlist.push(
-            <>
-              <tr> 
-                <td>{i}</td>
-                <td> {userdatarec && userdatarec}</td>
-                <td>{OGObject.rawMaterial1.toNumber()}</td>
-                <td>{OGObject.rawMaterial2.toNumber()}</td>
-                <td>{OGObject.rawMaterial3.toNumber()}</td>
-                <td>{OGObject.rawMaterial4.toNumber()}</td>
-                <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
-                {/* <td>{object.itemState === 1 ? <Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id:i,materialType:2,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber() } })}>Buy</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i} })}>Quality Check</Button>}</td> */}
-                <td><Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id:i,materialType:2,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>Buy</Button></td>
+                  </tr>
+                </>
+              )
+            }
+            if (OGObject.rawMaterialType.toNumber() == 2) {
+              checkPolyestervalue = 1;
+              allPolyesterlist.push(
+                <>
+                  <tr>
+                    <td>{i}</td>
+                    <td> {userdatarec && userdatarec}</td>
+                    <td>{OGObject.rawMaterial1.toNumber()}</td>
+                    <td>{OGObject.rawMaterial2.toNumber()}</td>
+                    <td>{OGObject.rawMaterial3.toNumber()}</td>
+                    <td>{OGObject.rawMaterial4.toNumber()}</td>
+                    <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
+                    {/* <td>{object.itemState === 1 ? <Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id:i,materialType:2,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber() } })}>Buy</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i} })}>Quality Check</Button>}</td> */}
+                    <td><Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id: i, materialType: 2, rawMaterial1: OGObject.rawMaterial1.toNumber(), rawMaterial2: OGObject.rawMaterial2.toNumber(), rawMaterial3: OGObject.rawMaterial3.toNumber(), rawMaterial4: OGObject.rawMaterial4.toNumber(), rawMaterial5: OGObject.rawMaterial5.toNumber() } })}>Buy</Button></td>
 
-              </tr>
-            </>
-          )
-        }
-        if(OGObject.rawMaterialType.toNumber() == 3){
-          checkWoolvalue = 1;
-          allWoollist.push( 
-            <>
-              <tr> 
-                <td>{i}</td>
-                <td> {userdatarec && userdatarec}</td>
-                <td>{OGObject.rawMaterial1.toNumber()}</td>
-                <td>{OGObject.rawMaterial2.toNumber()}</td>
-                <td>{OGObject.rawMaterial3.toNumber()}</td>
-                <td>{OGObject.rawMaterial4.toNumber()}</td>
-                <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
-                {/* <td>{object.itemState === 1 ? <Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id:i,materialType:3,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber() } })}>Buy</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i} })}>Quality Check</Button>}</td> */}
-                <td><Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id:i,materialType:3,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>Buy</Button></td>
+                  </tr>
+                </>
+              )
+            }
+            if (OGObject.rawMaterialType.toNumber() == 3) {
+              checkWoolvalue = 1;
+              allWoollist.push(
+                <>
+                  <tr>
+                    <td>{i}</td>
+                    <td> {userdatarec && userdatarec}</td>
+                    <td>{OGObject.rawMaterial1.toNumber()}</td>
+                    <td>{OGObject.rawMaterial2.toNumber()}</td>
+                    <td>{OGObject.rawMaterial3.toNumber()}</td>
+                    <td>{OGObject.rawMaterial4.toNumber()}</td>
+                    <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
+                    {/* <td>{object.itemState === 1 ? <Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id:i,materialType:3,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber() } })}>Buy</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i} })}>Quality Check</Button>}</td> */}
+                    <td><Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id: i, materialType: 3, rawMaterial1: OGObject.rawMaterial1.toNumber(), rawMaterial2: OGObject.rawMaterial2.toNumber(), rawMaterial3: OGObject.rawMaterial3.toNumber(), rawMaterial4: OGObject.rawMaterial4.toNumber(), rawMaterial5: OGObject.rawMaterial5.toNumber() } })}>Buy</Button></td>
 
-              </tr>
-            </>
-          )
-        }
+                  </tr>
+                </>
+              )
+            }
+          }
         }
       }
-      if(checkcottonvalue == 0) {
-            allsupplymateriallist.push(
-              <><tr>
-                <td colSpan="8">No Record Found</td>
-              </tr></>
-            )
-        }
-    if(checkPolyestervalue == 0) {
-          allPolyesterlist.push(
-            <><tr>
-              <td colSpan="8">No Record Found</td>
-            </tr></>
-          )
+      if (checkcottonvalue == 0) {
+        allsupplymateriallist.push(
+          <><tr>
+            <td colSpan="9">No Record Found</td>
+          </tr></>
+        )
       }
-      if(checkWoolvalue == 0) {
-          allWoollist.push(
-            <><tr>
-              <td colSpan="8">No Record Found</td>
-            </tr></>
-          )
+      if (checkPolyestervalue == 0) {
+        allPolyesterlist.push(
+          <><tr>
+            <td colSpan="8">No Record Found</td>
+          </tr></>
+        )
+      }
+      if (checkWoolvalue == 0) {
+        allWoollist.push(
+          <><tr>
+            <td colSpan="8">No Record Found</td>
+          </tr></>
+        )
       }
     } else {
       allsupplymateriallist.push(
@@ -160,7 +175,7 @@ const RawMaterialTable = () => {
         </tr></>
       )
       allPolyesterlist.push(
-        
+
         <><tr>
           <td colSpan="8">No Record Found</td>
         </tr></>
@@ -185,10 +200,10 @@ const RawMaterialTable = () => {
           <div className="top">
             <h4>Raw Material List</h4>
           </div>
-          
+
           <div className="bottom">
             <div className="right">
-            <h6>Cotton List</h6>
+              <h6>Cotton List</h6>
               <table>
                 <tr>
                   <th>Batch ID</th>
@@ -207,7 +222,7 @@ const RawMaterialTable = () => {
           </div>
           <div className="bottom">
             <div className="right">
-            <h6>Polyester List</h6>
+              <h6>Polyester List</h6>
               <table>
                 <tr>
                   <th>Batch ID</th>
@@ -225,7 +240,7 @@ const RawMaterialTable = () => {
           </div>
           <div className="bottom">
             <div className="right">
-            <h6>Wool List</h6>
+              <h6>Wool List</h6>
               <table>
                 <tr>
                   <th>Batch ID</th>

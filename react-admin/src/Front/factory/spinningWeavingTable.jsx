@@ -23,32 +23,32 @@ const SpinningWeavingTable = () => {
         while (j) {
           try {
             let object = await supplyChainContract.items(i);
-            const factoryData =await supplyChainContract.IdToFactory(i,j-1);
+            const factoryData = await supplyChainContract.IdToFactory(i, j - 1);
             if (factoryData.itemState === 2 && factoryData.factory.toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
               let rawMaterialDetails = await supplyChainContract.RawMaterialDetails(object.supplyChainId);
 
-              let factoryRawMaterialsAferQC = await supplyChainContract.FactoryRawMaterialsAferQC(i,ownSupplyChainAddress.toLowerCase());
+              let factoryRawMaterialsAferQC = await supplyChainContract.FactoryRawMaterialsAferQC(i, ownSupplyChainAddress.toLowerCase());
               const createdday = await dateContract.getDay(factoryData.timeStamp3.toNumber())
               const createmonth = await dateContract.getMonth(factoryData.timeStamp3.toNumber())
               const createdyear = await dateContract.getYear(factoryData.timeStamp3.toNumber())
 
 
-              
-      let hour =await dateContract.getHour(factoryData.timeStamp3.toNumber())
-      let minute =await dateContract.getMinute(factoryData.timeStamp3.toNumber());
-      let second =await dateContract.getSecond(factoryData.timeStamp3.toNumber());
 
-      if(hour+5>24){
-        hour = ((hour+5) -24);
-      }else{
-        hour +=5;
-      }
-      if(minute+35> 60){
-        hour++;
-        minute = ((minute+35)-60);
-      }else{
-        minute=minute+35;
-      }
+              let hour = await dateContract.getHour(factoryData.timeStamp3.toNumber())
+              let minute = await dateContract.getMinute(factoryData.timeStamp3.toNumber());
+              let second = await dateContract.getSecond(factoryData.timeStamp3.toNumber());
+
+              if (hour + 5 > 24) {
+                hour = ((hour + 5) - 24);
+              } else {
+                hour += 5;
+              }
+              if (minute + 35 > 60) {
+                hour++;
+                minute = ((minute + 35) - 60);
+              } else {
+                minute = minute + 35;
+              }
 
               checkvalue = 1;
               const rawMaterialRecord = {
@@ -58,7 +58,7 @@ const SpinningWeavingTable = () => {
                   "hashAddress": object.RawMaterialSupplierID,
                 })
               };
-              await fetch("http://162.215.222.118:5150/location", rawMaterialRecord)
+              await fetch("http://162.215.222.118:5151/location", rawMaterialRecord)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {
@@ -74,7 +74,7 @@ const SpinningWeavingTable = () => {
                   "hashAddress": factoryData.warehouse,
                 })
               };
-              await fetch("http://162.215.222.118:5150/location", wareHouseDetail)
+              await fetch("http://162.215.222.118:5151/location", wareHouseDetail)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {
@@ -87,15 +87,15 @@ const SpinningWeavingTable = () => {
                 <><tr>
                   <td>{i}</td>
                   <td>{userdatarec && userdatarec}</td>
-                  <td> 
-                     {rawMaterialDetails.rawMaterialType.toNumber() == 1 ? "Cotton" : ""}
+                  <td>
+                    {rawMaterialDetails.rawMaterialType.toNumber() == 1 ? "Cotton" : ""}
                     {rawMaterialDetails.rawMaterialType.toNumber() == 2 ? "Polyester" : ""}
-                    {rawMaterialDetails.rawMaterialType.toNumber() == 3 ? "Wool" : ""} 
+                    {rawMaterialDetails.rawMaterialType.toNumber() == 3 ? "Wool" : ""}
                   </td>
                   <td>{wareHousedatarec && wareHousedatarec}</td>
                   <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
                   <td>
-                    <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { i } })}>View</Button>
+                    {/* <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { i } })}>View</Button> */}
                     <Button variant="outline-success" onClick={() => navigate('/spinningBatchCompleteForm', { state: { i } })}>Continue</Button>
                   </td>
                 </tr></>
@@ -110,7 +110,7 @@ const SpinningWeavingTable = () => {
       if (checkvalue == 0) {
         allsupplymateriallist.push(
           <><tr>
-            <td colSpan="6">No Record Found bhhh</td>
+            <td colSpan="6">No Record Found</td>
           </tr></>
         )
       }

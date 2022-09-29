@@ -44,6 +44,8 @@ const ViewBatchStatusTable = () => {
   const [rawName, setrawName] = useState();
   const [wareName, setwareName] = useState();
   const [factName, setfactName] = useState();
+
+  const [batchTypeRec, setbatchTypeRec] = useState();
   
   const getSupplyChainHandler = async (event) => {
     const viewBatchRecord = await supplyChainContract.items(data.state.i);
@@ -52,7 +54,9 @@ const ViewBatchStatusTable = () => {
     let OGViewBatchRecord = await supplyChainContract.RawMaterialDetails(viewBatchRecord.supplyChainId);
     setogBatchRecord(OGViewBatchRecord)
 
-    console.log("viewBatchRecord",viewBatchRecord)
+    const batchType = OGViewBatchRecord.rawMaterialType.toNumber();
+    setbatchTypeRec(batchType)
+
 
     for (let i = 0; i < viewBatchRecord.itemState; i++) {
       const dateObjectrec =await supplyChainContract.timeStamps(data.state.i,i);
@@ -93,7 +97,7 @@ const ViewBatchStatusTable = () => {
           })
       };
   
-     await fetch("http://162.215.222.118:5150/location",rawmaterialLocation)    
+     await fetch("http://162.215.222.118:5151/location",rawmaterialLocation)    
       .then(res => res.json())
       .then(data => {
         if(data){
@@ -111,7 +115,7 @@ const ViewBatchStatusTable = () => {
           "hashAddress":viewBatchRecord.warehouseID,       
           })
       };
-      await fetch("http://162.215.222.118:5150/location",warehouseLocation)    
+      await fetch("http://162.215.222.118:5151/location",warehouseLocation)    
       .then(res => res.json())
       .then(data => {
         if(data){
@@ -129,7 +133,7 @@ const ViewBatchStatusTable = () => {
           "hashAddress":viewBatchRecord.factoryID1,       
           })
       };
-      await fetch("http://162.215.222.118:5150/location",factoryLocation)    
+      await fetch("http://162.215.222.118:5151/location",factoryLocation)    
       .then(res => res.json())
       .then(data => {
         if(data){
@@ -165,6 +169,8 @@ const ViewBatchStatusTable = () => {
                   <Card.Text style={{ width: '50%', float: 'left' }}>
                     <>
                       <p><b>Batch ID : </b>{data.state.i}</p>
+                      <p><b>Batch Type : </b>{batchTypeRec == 1 ? "Cotton": batchTypeRec == 2 ? "Polyester" :  batchTypeRec == 3 ? "Wool" : " "  }</p>
+                      
                       <p><b>Raw Material Supplier : </b>
                       {rawName} 
                       </p>

@@ -119,7 +119,7 @@ const ViewSupplyTable = () => {
                 })
               };
 
-              await fetch("http://162.215.222.118:5150/location", rawMaterialRecords)
+              await fetch("http://162.215.222.118:5151/location", rawMaterialRecords)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {
@@ -136,7 +136,7 @@ const ViewSupplyTable = () => {
                   "hashAddress": warehouseData.factory,
                 })
               };
-              await fetch("http://162.215.222.118:5150/location", factoryRecords)
+              await fetch("http://162.215.222.118:5151/location", factoryRecords)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {

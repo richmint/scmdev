@@ -24,7 +24,7 @@ const ProductQualityCheck = () => {
     const addSupplyChainHandler = async (event) => {
         const tx = await SChainContract.factoryQCFinalItems(data.state.productBatchId, event.product);
         if (tx) {
-            navigate("/viewBatch")
+            navigate("/sellItemToDistributer")
         }
     }
     return (

@@ -16,10 +16,10 @@ const SellItemTable = () => {
   const getSupplyChainHandler = async (event) => {
     let userdatarec = '';
     const totalbatchids = (await supplyChainContract.totalProductBatchs());
-    console.log("totalbatchids", totalbatchids.toNumber())
     var checkvalue = 0;
     if (totalbatchids.toNumber() > 0) {
       for (let i = 0; i < totalbatchids; i++) {
+
 
         const productData = await supplyChainContract.Product(i);
         if (productData.productState === 0 && productData.factory.toLowerCase() === ownSupplyChainAddress.toLowerCase() || productData.productState === 1 && productData.factory.toLowerCase() === ownSupplyChainAddress.toLowerCase() && productData.leftUnits > 0) {
@@ -73,7 +73,7 @@ const SellItemTable = () => {
               "hashAddress": productData.factory,
             })
           };
-          await fetch("http://162.215.222.118:5150/location", rawMaterialRecord)
+          await fetch("http://162.215.222.118:5151/location", rawMaterialRecord)
             .then(res => res.json())
             .then(data => {
               if (data) {
@@ -87,10 +87,11 @@ const SellItemTable = () => {
               <td>{batchArray.join(",")}</td>
               <td>{productData.productId.toNumber()}</td>
               <td>{userdatarec && userdatarec}</td>
-              <td>{productData.totalUnits.toNumber()}</td>
+              <td>{productData.leftUnits.toNumber()}</td>
               <td>{productData.Description}</td>
               <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
-              <td><Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { productBatchId } })}>View</Button>
+              <td>
+                {/* <Button variant="outline-primary" onClick={() => navigate('/viewBatchStatus', { state: { productBatchId } })}>View</Button> */}
                 {productData.productState === 0 ? <Button variant="outline-info" onClick={() => navigate('/productQualityCheck', { state: { productBatchId: productBatchId, totalmanufactured: totalmanufactured } })}>Quality Check</Button> : <Button variant="outline-success" onClick={() => navigate('/SellItemFormData', { state: { productBatchId: productBatchId, leftUnits: productData.leftUnits.toNumber() } })}>Continue</Button>}
               </td>
             </tr></>
@@ -134,7 +135,7 @@ const SellItemTable = () => {
                   <th>Batch ID</th>
                   <th>Product ID</th>
                   <th>Raw Material Supplier</th>
-                  <th>Total Manufactured Item</th>
+                  <th>Manufactured Item</th>
                   <th>Item Type</th>
                   <th>Date</th>
                   <th>Action</th>

@@ -39,7 +39,7 @@ const RawMaterialSupplier = ({ inputs, title, value }) => {
         "role":'Supplier'
         })
   };
-  fetch('http://162.215.222.118:5150/register', requestOptions)
+  fetch('http://162.215.222.118:5151/register', requestOptions)
       .then(response => response.json());
   }
   return (

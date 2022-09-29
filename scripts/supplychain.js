@@ -61,12 +61,7 @@ async function main() {
 
   // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(1,[100,100,100,100,100]);
   // await supplychain.connect(rawMaterialSupplierSigner1).rawMaterialSupplierSuppliesRM(2,[120,120,120,120,120]);
-<<<<<<< HEAD
-  
-=======
->>>>>>> 5203a0a3b18ed18876f509149b7a1f64f3098f82
-  // await supplychain.connect(rawMaterialSupplierSigner2).rawMaterialSupplierSuppliesRM(1,[110,110,110,110,110]);
-  
+    
   // await supplychain.connect(factorySigner1).factoryBuyRawMaterial(0,[40,40,40,40,40]);
   // await supplychain.connect(factorySigner2).factoryBuyRawMaterial(0,[30,20,60,20,20]);
   
@@ -297,11 +292,7 @@ async function main() {
    
   // ---------------------------- FACTORY COMPLETE WEAVING AND SPINNING ------------------------
 
-  // await supplychain.connect(factorySigner1).factoryCompleteSpinningWaeving(0,100,"Blue","Plain");
-<<<<<<< HEAD
   // await supplychain.connect(factorySigner1).factoryCompleteSpinningWaeving(0,120,"Green","Ruff");
-=======
->>>>>>> 5203a0a3b18ed18876f509149b7a1f64f3098f82
   // await supplychain.connect(factorySigner1).factoryCompleteSpinningWaeving(1,120,"Green","Ruff");
 
 
@@ -332,11 +323,7 @@ async function main() {
 
   // await supplychain.connect(factorySigner1).factoryCompleteGarmentManufacturing([0,1],140,"Plain Blue T-shirts");
 
-<<<<<<< HEAD
   // ------ VIEW OF MANUFACTURED PRODUCTS ------
-
-=======
->>>>>>> 5203a0a3b18ed18876f509149b7a1f64f3098f82
 
   // const totalBatches =await supplychain.totalProductBatchs();
   // for(let i=0; i<totalBatches; i++){
@@ -411,10 +398,7 @@ async function main() {
 
   // await supplychain.connect(factorySigner1).factorySellItemToDistributor(0,distributorSigner1.address,40);
   // await supplychain.connect(factorySigner1).factorySellItemToDistributor(0,distributorSigner2.address,50);
-<<<<<<< HEAD
   
-=======
->>>>>>> 5203a0a3b18ed18876f509149b7a1f64f3098f82
   
 
   // ----------------- FACTORY VIEW OF WHICH PRODUCT BATCH HE HAS SENT TO WHICH DISTRIBUTOR --------------
@@ -556,11 +540,6 @@ async function main() {
 
 // ----------------------------- DISTBIBUTOR RECEIVES THE PRODUCT BATCH ---------------------------
 
-<<<<<<< HEAD
-
-=======
- 
->>>>>>> 5203a0a3b18ed18876f509149b7a1f64f3098f82
   // await supplychain.connect(distributorSigner1).distributorReceivesProductBatch(0);
 
 
@@ -708,7 +687,7 @@ async function main() {
   //         break;
   //       }
   //     }
-  //   }
+  //   } 
   // }
 
 
@@ -765,7 +744,7 @@ async function main() {
       
   //     let j=1;
   //     while(j){
-  //       try {
+  //       try { 
   //         console.log(data);
   //         const data2 =await supplychain.ProductIdToCustomer(i,j-1);
 

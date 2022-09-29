@@ -27,9 +27,9 @@ const SellItemTable = () => {
           while (j) {
             try {
               const recieveProductData = await supplyChainContract.ProductIdToDistributor(i,j-1);
-              //  console.log("productData", productData);
-              //  console.log("recieveProductData", recieveProductData);
-               if(recieveProductData.distributor.toLowerCase() == ownSupplyChainAddress.toLowerCase() && recieveProductData.distributorState==0 || recieveProductData.distributor.toLowerCase() == ownSupplyChainAddress.toLowerCase() && recieveProductData.distributorState==1){
+                console.log("productData", productData);
+                console.log("recieveProductData", recieveProductData);
+               if(recieveProductData.distributor.toLowerCase() == ownSupplyChainAddress.toLowerCase() && recieveProductData.distributorState==0 || recieveProductData.distributor.toLowerCase() == ownSupplyChainAddress.toLowerCase() && recieveProductData.distributorState==1 && recieveProductData.quantityLeft.toNumber() > 0){
               var checkvalue = 1;
               const rawMaterialRecord = {
                 method: 'POST',
@@ -38,7 +38,7 @@ const SellItemTable = () => {
                   "hashAddress": productData.factory,
                 })
               };
-              await fetch("http://162.215.222.118:5150/location", rawMaterialRecord)
+              await fetch("http://162.215.222.118:5151/location", rawMaterialRecord)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {
@@ -54,7 +54,7 @@ const SellItemTable = () => {
                   "hashAddress": productData.factory,
                 })
               };
-              await fetch("http://162.215.222.118:5150/location", warehouseRecord)
+              await fetch("http://162.215.222.118:5151/location", warehouseRecord)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {
@@ -70,7 +70,7 @@ const SellItemTable = () => {
                   "hashAddress": productData.factory,
                 })
               };
-              await fetch("http://162.215.222.118:5150/location", factoryRecord)
+              await fetch("http://162.215.222.118:5151/location", factoryRecord)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {
@@ -135,7 +135,7 @@ const SellItemTable = () => {
                           <Card.Text style={{ width: '50%', float: 'left' }}>
                             <p></p>
                             {/* <p><b>Raw Material  : </b> {object.PolyesterAmount.toNumber()} Kg Polyster,{object.CottonAmount.toNumber()} kg Cotton,{object.WoolAmount.toNumber()}Kg Wool</p>*/}
-                            <p><b>Product Quantity : </b> {recieveProductData && recieveProductData.quantity.toNumber()}</p> 
+                            <p><b>Product Quantity : </b> {recieveProductData && recieveProductData.quantityLeft.toNumber()}</p> 
                             <p><b>Description : </b> {productData && productData.Description}</p>
                             <p><b>Date : </b> {createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</p>
                           </Card.Text> 
