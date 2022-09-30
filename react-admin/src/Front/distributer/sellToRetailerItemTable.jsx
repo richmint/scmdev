@@ -7,8 +7,8 @@ const ViewListTable = () =>{
     const navigate = useNavigate();
     var checkListVal = 0;
     const {dispatch,metaMask,supplyChainContract,ownSupplyChainAddress,dateContract} = useContext(DarkModeContext);
-    const allcutomerllist = [];
-    const [customerList, setCustomerList] = useState(null);
+    const allRetailerList = [];
+    const [retailerList, setRetailerList] = useState(null);
 
 
     useEffect(() => {
@@ -16,51 +16,53 @@ const ViewListTable = () =>{
       }, []);
 
       const getSupplyChainHandler = async (event) => {
-        let distributeruserrec = "";
-        let customeruserrec = "";
-    
+        let factoryuserrec = "";
+        let retaileruserrec = "";
+
         const totalBatches =await supplyChainContract.totalProductBatchs();
         if (totalBatches.toNumber() > 0) {
           for (let i = 0; i < totalBatches.toNumber(); i++) {
             const retailer =await supplyChainContract.Product(i);
-            if(retailer.productState){
+            if(retailer.productState == 1){
+              //console.log("retailer",retailer)
                 let j =1 ;
                 while(j){
                     try{
-                        const data = await supplyChainContract.ProductIdToCustomer(i,j-1);
-                        if(data.retailer.toLowerCase() ==ownSupplyChainAddress.toLowerCase()){
-
-                          const distributorRecord = {
+                        const data = await supplyChainContract.ProductIdToRetailer(i,j-1);
+                        //console.log("data asdasd",data)
+                        if(data.distributor.toLowerCase() ==ownSupplyChainAddress.toLowerCase()){
+                          console.log("data asdasd",retailer)
+                          const factoryRecord = {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({       
-                              "hashAddress":data.distributor,       
+                              "hashAddress":retailer.factory,       
                               })  
                           };
-                          const customerRecord = {
+                          const retailerRecord = {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({       
-                              "hashAddress":data.customer,       
+                              "hashAddress":data.retailer,       
                               })  
                           };
                           
-                          await fetch("http://192.168.1.101:5150/location",distributorRecord)    
+                          await fetch("http://192.168.1.101:5150/location",factoryRecord)    
                           .then(res => res.json())
                           .then(data => {
                             if(data){
-                              distributeruserrec = data.username;
+                              factoryuserrec = data.username;
                             } 
                           })
                           .catch((error) => {
                             console.error('Error:', error);
                           });
             
-                          await fetch("http://192.168.1.101:5150/location",customerRecord)    
+                          await fetch("http://192.168.1.101:5150/location",retailerRecord)    
                           .then(res => res.json())
                           .then(data => {
                             if(data){
-                              customeruserrec = data.username;
+                              retaileruserrec = data.username;
                             } 
                           })
                           .catch((error) => {
@@ -68,22 +70,22 @@ const ViewListTable = () =>{
                           });
 
                           let hour = await dateContract.getHour(
-                            data.timeStamp12.toNumber()
+                            retailer.timeStamp7.toNumber()
                           );
                           let minute = await dateContract.getMinute(
-                            data.timeStamp12.toNumber()
+                            retailer.timeStamp7.toNumber()
                           );
                           let second = await dateContract.getSecond(
-                            data.timeStamp12.toNumber()
+                            retailer.timeStamp7.toNumber()
                           );
                           let day = await dateContract.getDay(
-                            data.timeStamp12.toNumber()
+                            retailer.timeStamp7.toNumber()
                           );
                           let month = await dateContract.getMonth(
-                            data.timeStamp12.toNumber()
+                            retailer.timeStamp7.toNumber()
                           );
                           let year = await dateContract.getYear(
-                            data.timeStamp12.toNumber()
+                            retailer.timeStamp7.toNumber()
                           );
                           if (hour + 5 > 24) {
                             hour = hour + 5 - 24;
@@ -98,18 +100,18 @@ const ViewListTable = () =>{
                           }
                           const batchId = retailer.productId.toNumber();
                           checkListVal = 1;
-                          allcutomerllist.push(
+                          allRetailerList.push(
                             <>
                             <tr>
                               <td>{batchId}</td>
-                              <td>{distributeruserrec}</td>
-                              <td>{customeruserrec}</td>
+                              <td>{factoryuserrec}</td>
+                              <td>{retaileruserrec}</td>
                               <td>{data.quantity.toNumber()}</td>
                               <td>{retailer.Description}</td>
                               <td>
                                 {day}-{month}-{year} {hour}:{minute}:{second}
                               </td>
-                            </tr>
+                            </tr> 
                             </>
                           )
                         }
@@ -122,15 +124,15 @@ const ViewListTable = () =>{
           }
         }
         if (checkListVal == 0) {
-          allcutomerllist.push(
+          allRetailerList.push(
             <>
               <tr>
-                <td colSpan="6">No Record Found</td>
+                <td colSpan="6">No Record Found a</td>
               </tr>
             </>
           );
         }
-        setCustomerList(allcutomerllist);
+        setRetailerList(allRetailerList);
       };
 
 
@@ -144,14 +146,14 @@ const ViewListTable = () =>{
             <div className="right">
               <table>
                 <tr>
-                  <th>Batch ID</th>
-                  <th>Distributer Address</th>
-                  <th>Customer Address</th>
+                  <th>Product Batch</th>
+                  <th>Factory Address</th>
+                  <th>Retailer Address</th>
                   <th>Quantities</th>
                   <th>Product Description</th>
                   <th>Date</th>
                 </tr>
-                {customerList}
+                {retailerList}
               </table>
             </div>
           </div>

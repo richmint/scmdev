@@ -1,64 +1,13 @@
-
 import React, { useEffect, useState, useContext } from 'react';
 import "./viewSupplyTable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
-
-
-
-
-
-
-
-
-////////////////////////////////
-
-
-
-
-// let object =await supplychain.getWarehouseItems(warehouseSigner.address)   
-// for(let i=0;i <object.length; i++){
-//   if(object[i].itemState==1){
-//     console.log(object[i]);
-//     console.log("factory bought raw materials")
-//   }else if(object[i].itemState==2){
-//     console.log(object[i])
-//     console.log("factory complete Quality Check")
-//     console.log(await supplychain.OGDetails(object[i].supplyChainId));
-//   }else if(object[i].itemState==3){
-//     console.log(object[i])
-//     console.log("factory complete spinning and weaving")
-//     console.log(await supplychain.OGDetails(object[i].supplyChainId));
-//   }else if(object[i].itemState==4){
-//     console.log(object[i])
-//     console.log("factory complete garment production")
-//     console.log(await supplychain.OGDetails(object[i].supplyChainId));
-//   }else if(object[i].itemState==5){
-//     console.log(object[i])
-//     console.log("factory complete final quality check")
-//     console.log(await supplychain.OGDetails(object[i].supplyChainId));
-//   }
-//   const data =await supplychain.timeStamps(object[i].supplyChainId,object[i].itemState);
-//   console.log(await dateTime.getDay(data.toNumber()),".",await dateTime.getMonth(data.toNumber()),".",await dateTime.getYear(data.toNumber()));
-// }
-
-
-
-
-
-////////////////////////////
-
-
-
-
-
-
-
-
+import Button from 'react-bootstrap/Button';
+import { useNavigate } from "react-router-dom";
 
 const ViewSupplyTable = () => {
-
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [materiallist, setMateriallist] = useState(null);
   const [polysterlist, setPolysterlist] = useState(null);
@@ -90,7 +39,7 @@ const ViewSupplyTable = () => {
 
               const factoryRawMaterialsOriginal = await supplyChainContract.FactoryRawMaterialsORIGIONAL(i, warehouseData.factory);
               const rawMaterialsDetail = await supplyChainContract.RawMaterialDetails(warehouseItem.supplyChainId.toNumber());
-
+              console.log("factoryRawMaterialsOriginal", factoryRawMaterialsOriginal.rawMaterial1.toNumber())
               const factoryRawMaterialsAferQC = await supplyChainContract.FactoryRawMaterialsAferQC(i, warehouseData.factory);
               //console.log("warehouseItem",rawMaterialsDetail.rawMaterialType.toNumber()) 
               let hour = await dateContract.getHour(warehouseItem.timeStamp0.toNumber())
@@ -119,7 +68,7 @@ const ViewSupplyTable = () => {
                 })
               };
 
-              await fetch("http://162.215.222.118:5151/location", rawMaterialRecords)
+              await fetch("http://192.168.1.101:5150/location", rawMaterialRecords)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {
@@ -136,7 +85,7 @@ const ViewSupplyTable = () => {
                   "hashAddress": warehouseData.factory,
                 })
               };
-              await fetch("http://162.215.222.118:5151/location", factoryRecords)
+              await fetch("http://192.168.1.101:5150/location", factoryRecords)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {
@@ -154,12 +103,15 @@ const ViewSupplyTable = () => {
                     <td>{i}</td>
                     <td>{userdatarec && userdatarec}</td>
                     <td>{factoryuserdatarec && factoryuserdatarec}</td>
-                    <td>{factoryRawMaterialsAferQC.rawMaterial1.toNumber()}</td>
-                    <td>{factoryRawMaterialsAferQC.rawMaterial2.toNumber()}</td>
-                    <td>{factoryRawMaterialsAferQC.rawMaterial3.toNumber()}</td>
-                    <td>{factoryRawMaterialsAferQC.rawMaterial4.toNumber()}</td>
-                    <td>{factoryRawMaterialsAferQC.rawMaterial5.toNumber()}</td>
+                    <td>{factoryRawMaterialsOriginal.rawMaterial1.toNumber()}</td>
+                    <td>{factoryRawMaterialsOriginal.rawMaterial2.toNumber()}</td>
+                    <td>{factoryRawMaterialsOriginal.rawMaterial3.toNumber()}</td>
+                    <td>{factoryRawMaterialsOriginal.rawMaterial4.toNumber()}</td>
+                    <td>{factoryRawMaterialsOriginal.rawMaterial5.toNumber()}</td>
                     <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
+                    <td>
+                      <Button variant="outline-info" onClick={() => navigate('/productDetail', { state: { i } })}>View</Button>
+                    </td>
                   </tr></>
                 )
               }
@@ -170,11 +122,14 @@ const ViewSupplyTable = () => {
                     <td>{i}</td>
                     <td>{userdatarec && userdatarec}</td>
                     <td>{factoryuserdatarec && factoryuserdatarec}</td>
-                    <td>{factoryRawMaterialsAferQC.rawMaterial1.toNumber()}</td>
-                    <td>{factoryRawMaterialsAferQC.rawMaterial2.toNumber()}</td>
-                    <td>{factoryRawMaterialsAferQC.rawMaterial3.toNumber()}</td>
-                    <td>{factoryRawMaterialsAferQC.rawMaterial4.toNumber()}</td>
+                    <td>{factoryRawMaterialsOriginal.rawMaterial1.toNumber()}</td>
+                    <td>{factoryRawMaterialsOriginal.rawMaterial2.toNumber()}</td>
+                    <td>{factoryRawMaterialsOriginal.rawMaterial3.toNumber()}</td>
+                    <td>{factoryRawMaterialsOriginal.rawMaterial4.toNumber()}</td>
                     <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
+                    <td>
+                      <Button variant="outline-info" onClick={() => navigate('/productDetail', { state: { i } })}>View</Button>
+                    </td>
                   </tr></>
                 )
               }
@@ -185,11 +140,14 @@ const ViewSupplyTable = () => {
                     <td>{i}</td>
                     <td>{userdatarec && userdatarec}</td>
                     <td>{factoryuserdatarec && factoryuserdatarec}</td>
-                    <td>{factoryRawMaterialsAferQC.rawMaterial1.toNumber()}</td>
-                    <td>{factoryRawMaterialsAferQC.rawMaterial2.toNumber()}</td>
-                    <td>{factoryRawMaterialsAferQC.rawMaterial3.toNumber()}</td>
-                    <td>{factoryRawMaterialsAferQC.rawMaterial4.toNumber()}</td>
+                    <td>{factoryRawMaterialsOriginal.rawMaterial1.toNumber()}</td>
+                    <td>{factoryRawMaterialsOriginal.rawMaterial2.toNumber()}</td>
+                    <td>{factoryRawMaterialsOriginal.rawMaterial3.toNumber()}</td>
+                    <td>{factoryRawMaterialsOriginal.rawMaterial4.toNumber()}</td>
                     <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
+                    <td>
+                      <Button variant="outline-info" onClick={() => navigate('/productDetail', { state: { i } })}>View</Button>
+                    </td>
                   </tr></>
                 )
               }
@@ -269,6 +227,7 @@ const ViewSupplyTable = () => {
                   <th>Fibre Strength (g/T)</th>
                   <th>Mike(mm)</th>
                   <th>FQI (Rd)</th>
+                  <td>Date</td>
                   <th>Action</th>
                 </tr>
                 {materiallist}
@@ -287,6 +246,7 @@ const ViewSupplyTable = () => {
                   <th>EMax (%)</th>
                   <th>Neps (%)</th>
                   <th>Cvm (%)</th>
+                  <td>Date</td>
                   <th>Action</th>
                 </tr>
                 {polysterlist}
@@ -305,6 +265,7 @@ const ViewSupplyTable = () => {
                   <th>Staple length (mm)</th>
                   <th>Fibre length (mm)</th>
                   <th>Crimpiness (cm)</th>
+                  <td>Date</td>
                   <th>Action</th>
                 </tr>
                 {woollist}

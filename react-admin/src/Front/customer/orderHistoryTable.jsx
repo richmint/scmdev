@@ -45,7 +45,7 @@ const OrderHistoryTable = () => {
                   })
                 };
 
-                await fetch("http://162.215.222.118:5151/location", rawMaterialRecord)
+                await fetch("http://192.168.1.101:5150/location", rawMaterialRecord)
                   .then(res => res.json())
                   .then(data => {
                     if (data) {
@@ -65,7 +65,7 @@ const OrderHistoryTable = () => {
                   })
                 };
 
-                await fetch("http://162.215.222.118:5151/location", retailerRecord)
+                await fetch("http://192.168.1.101:5150/location", retailerRecord)
                   .then(res => res.json())
                   .then(data => {
                     if (data) {
@@ -84,7 +84,7 @@ const OrderHistoryTable = () => {
                     })
                   };
   
-                  await fetch("http://162.215.222.118:5151/location", factoryRecord)
+                  await fetch("http://192.168.1.101:5150/location", factoryRecord)
                     .then(res => res.json())
                     .then(data => {
                       if (data) {
@@ -136,8 +136,7 @@ const OrderHistoryTable = () => {
                     <td>{day}-{month}-{year} {hour}:{minute}:{second}</td>
 
                     <td>
-                      <Button variant="outline-success">View</Button>
-                      {/* <Button variant="outline-success" onClick={() => navigate('/viewBatchStatus', { state: { i } })}>View</Button> */}
+                      <Button variant="outline-success" onClick={() => navigate('/productDetail', { state: { i } })}>View</Button>
                     </td>
                   </tr></>
                 )
@@ -146,7 +145,7 @@ const OrderHistoryTable = () => {
                 allsupplymateriallist.push(
                   <>
                     <tr>
-                      <td colSpan="6">No Record Found</td>
+                      <td colSpan="8">No Record Found</td>
                     </tr>
                   </>
                 )
@@ -161,7 +160,7 @@ const OrderHistoryTable = () => {
     } else {
       allsupplymateriallist.push(
         <><tr>
-          <td colSpan="6">No Record Found</td>
+          <td colSpan="8">No Record Found</td>
         </tr></>
       )
     }
@@ -181,7 +180,7 @@ const OrderHistoryTable = () => {
             <div className="right">
               <table>
                 <tr>
-                  <th>Batch ID</th>
+                  <th>Product Batch ID</th>
                   <th>Supplier</th> 
                   <th>Factory</th>
                   <th>Retailer</th>

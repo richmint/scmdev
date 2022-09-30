@@ -82,7 +82,7 @@ const FinalSellToDistributor = () => {
         
 
         function getRetailerList() {
-            fetch("http://162.215.222.118:5151/retailer")
+            fetch("http://192.168.1.101:5150/retailer")
                 .then(result => result.json())
                 .then(data => {
                     if (data) {

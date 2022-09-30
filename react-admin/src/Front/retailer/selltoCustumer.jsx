@@ -40,7 +40,7 @@ useEffect(() =>{
 },[])
 
 function getCustumerList(){
-  fetch("http://162.215.222.118:5151/customer").then(result=>result.json()).then(list =>{
+  fetch("http://192.168.1.101:5150/customer").then(result=>result.json()).then(list =>{
     if(list){
       setCustumerList(list)
     }

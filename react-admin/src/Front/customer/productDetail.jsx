@@ -1,21 +1,20 @@
 import React from "react";
-// import Sidebar from "../../components/sidebar/Sidebar";
 import Sidebar from "../../components/front_sidebar/Sidebar";
+
 import Navbar from "../../components/front_navbar/Navbar";
 import '../../style/front/list.scss'
-import AvailabeProductTable from "./availabeProductTable";
+import DetailPage from "./detailPage";
 
 
-const ManufactureGarment= () =>{
+const ProductDetail = () =>{
     return(
         <div className="list">
-            <Sidebar txt={"avlprodretailer"} />
+            <Sidebar txt={""} />
             <div className="listContainer">
                 <Navbar />
-                <AvailabeProductTable />
+                <DetailPage />
             </div>
         </div>
     )
 }
-
-export default ManufactureGarment
+export default ProductDetail

@@ -58,7 +58,7 @@ const SpinningWeavingTable = () => {
                   "hashAddress": object.RawMaterialSupplierID,
                 })
               };
-              await fetch("http://162.215.222.118:5151/location", rawMaterialRecord)
+              await fetch("http://192.168.1.101:5150/location", rawMaterialRecord)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {
@@ -74,7 +74,7 @@ const SpinningWeavingTable = () => {
                   "hashAddress": factoryData.warehouse,
                 })
               };
-              await fetch("http://162.215.222.118:5151/location", wareHouseDetail)
+              await fetch("http://192.168.1.101:5150/location", wareHouseDetail)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {

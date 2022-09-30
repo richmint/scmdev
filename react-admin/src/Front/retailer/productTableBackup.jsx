@@ -45,7 +45,7 @@ const AvailabeProductTable = () => {
                     "hashAddress":object.distributorId,        
                     })
                 };
-                await fetch("http://162.215.222.118:5151/location",distributerRecord)    
+                await fetch("http://192.168.1.101:5150/location",distributerRecord)    
                 .then(res => res.json())
                 .then(data => {
                   if(data){
@@ -61,7 +61,7 @@ const AvailabeProductTable = () => {
                     "hashAddress":object.factoryID,       
                     })
                 };
-                await fetch("http://162.215.222.118:5151/location",factoryRecord)    
+                await fetch("http://192.168.1.101:5150/location",factoryRecord)    
                 .then(res => res.json())
                 .then(data => {
                   if(data){

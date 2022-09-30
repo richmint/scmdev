@@ -127,10 +127,22 @@ const Sidebar = (props) => {
             } else if (localStorage.userRole == 'Distributer') {
               return (
                 <>
+                  <Link to="/availabelItemForDistributer" style={{ textDecoration: "none" }}>
+                    <li style={{ backgroundColor: props.txt == "AvlForDistributer" ? "orange" : "" }}>
+                      <StoreIcon className="icon" />
+                      <span>Availabel Item</span>
+                    </li>
+                  </Link>
                   <Link to="/availabelItemToSellRetailer" style={{ textDecoration: "none" }}>
                     <li style={{ backgroundColor: props.txt == "disSellItem" ? "orange" : "" }}>
                       <StoreIcon className="icon" />
-                      <span>Availabel Item To Sell</span>
+                      <span>Availabel Item to Sell</span>
+                    </li>
+                  </Link>
+                  <Link to="/sellToRetailerItemList" style={{ textDecoration: "none" }}>
+                    <li style={{ backgroundColor: props.txt == "viewRetailerSellList" ? "orange" : "" }}>
+                      <StoreIcon className="icon" />
+                      <span>View Retailer Sell List</span>
                     </li>
                   </Link>
                   {/* <Link to="/approveDistributerSupplier" style={{ textDecoration: "none" }}>
@@ -159,7 +171,7 @@ const Sidebar = (props) => {
                   <Link to="/viewSellItem" style={{ textDecoration: "none" }}>
                     <li style={{ backgroundColor: props.txt == "viewSellList" ? "orange" : "" }}>
                       <StoreIcon className="icon" />
-                      <span>View Sell Item List</span>
+                      <span>View Customer Sell List</span>
                     </li>
                   </Link>
                 </>

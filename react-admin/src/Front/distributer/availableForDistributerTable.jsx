@@ -6,7 +6,7 @@ import '../distributer/sellItemTable.scss'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-const SellItemTable = () => {
+const AvailableForDistributerTable = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [materiallist, setMateriallist] = useState(null);
@@ -29,7 +29,7 @@ const SellItemTable = () => {
               const recieveProductData = await supplyChainContract.ProductIdToDistributor(i,j-1);
                 console.log("productData", productData);
                 console.log("recieveProductData", recieveProductData);
-               if(recieveProductData.distributor.toLowerCase() == ownSupplyChainAddress.toLowerCase() && recieveProductData.distributorState==1 && recieveProductData.quantityLeft.toNumber() > 0){
+               if(recieveProductData.distributor.toLowerCase() == ownSupplyChainAddress.toLowerCase() && recieveProductData.distributorState==0 ){
               var checkvalue = 1;
               const rawMaterialRecord = {
                 method: 'POST',
@@ -140,7 +140,10 @@ const SellItemTable = () => {
                             <p><b>Date : </b> {createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</p>
                           </Card.Text> 
                           <Card.Text style={{ float: 'right' }}>
-                            <Button variant="outline-success" onClick={() => navigate('/sellToRetailer', { state: { productBatchId:productBatchId,productQty:recieveProductData.quantityLeft.toNumber() } })}>Sell To Retailer</Button>
+                            <form onSubmit={handleSubmit}>
+                              <Button variant="outline-success" type={"submit"} >Batch Receive</Button>
+                            </form>
+                            
                           </Card.Text>
                         </Card.Body>
                       </Card>
@@ -196,4 +199,4 @@ const SellItemTable = () => {
     </>
   );
 }
-export default SellItemTable
+export default AvailableForDistributerTable

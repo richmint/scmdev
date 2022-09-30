@@ -566,7 +566,6 @@ async function main() {
   //   }
   // }
 
-
   // ----------------------------- DISTBIBUTOR SELL TO A RETAILER  ---------------------------
 
   // await supplychain.connect(distributorSigner1).distributorSellsToRetailer(0,retailerSigner1.address,35);

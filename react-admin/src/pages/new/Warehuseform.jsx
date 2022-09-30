@@ -49,7 +49,7 @@ const Warehouseform = ({ inputs, title, value }) => {
             "role":'Warehouse'
             })
       };
-      fetch('http://162.215.222.118:5151/register', requestOptions)
+      fetch('http://192.168.1.101:5150/register', requestOptions)
           .then(response => response.json());
   }
 
