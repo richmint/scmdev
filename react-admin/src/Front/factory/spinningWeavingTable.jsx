@@ -43,11 +43,11 @@ const SpinningWeavingTable = () => {
               } else {
                 hour += 5;
               }
-              if (minute + 35 > 60) {
+              if (minute + 31 > 60) {
                 hour++;
-                minute = ((minute + 35) - 60);
+                minute = ((minute + 31) - 60);
               } else {
-                minute = minute + 35;
+                minute = minute + 31;
               }
 
               checkvalue = 1;

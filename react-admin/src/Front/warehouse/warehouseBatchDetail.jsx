@@ -3,18 +3,18 @@ import Sidebar from "../../components/front_sidebar/Sidebar";
 
 import Navbar from "../../components/front_navbar/Navbar";
 import '../../style/front/list.scss'
-import DetailPage from "./detailPage";
+import WarehouseDetailRecord from "./warehouseDetail";
 
 
-const ProductDetail = () =>{
+const WarehouseBatchDetail = () =>{
     return(
         <div className="list">
-            <Sidebar txt={"orderhistory"} />
+            <Sidebar txt={"WareSuplyToken"} />
             <div className="listContainer">
                 <Navbar />
-                <DetailPage />
+                <WarehouseDetailRecord />
             </div>
         </div>
     )
 }
-export default ProductDetail
+export default WarehouseBatchDetail

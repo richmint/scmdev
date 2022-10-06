@@ -10,6 +10,25 @@ import Card from 'react-bootstrap/Card';
 
 const ViewBatchStatusTable = () => {
   let data = useLocation();
+  let rawMaterial1AfterQC = 0;
+  let rawMaterial2AfterQC = 0;
+  let rawMaterial3AfterQC = 0;
+  let rawMaterial4AfterQC = 0;
+  let rawMaterial5AfterQC = 0;
+
+  let factorybuyrawMaterial1 = 0;
+  let factorybuyrawMaterial2 = 0;
+  let factorybuyrawMaterial3 = 0;
+  let factorybuyrawMaterial4 = 0;
+  let factorybuyrawMaterial5 = 0;
+
+  let rawMaterial1Garbage = 0;
+  let rawMaterial2Garbage = 0;
+  let rawMaterial3Garbage = 0;
+  let rawMaterial4Garbage = 0;
+  let rawMaterial5Garbage = 0;
+  
+
   const navigate = useNavigate();
   const { dispatch, metaMask, supplyChainContract, ownSupplyChainAddress, dateContract } = useContext(DarkModeContext);
   useEffect(() => {
@@ -58,6 +77,37 @@ const ViewBatchStatusTable = () => {
   const [factory1buyrawMaterial4, setfactory1buyrawMaterial4] = useState();
   const [factory1buyrawMaterial5, setfactory1buyrawMaterial5] = useState();
 
+  const [totalrawMaterial1AfterQC, setTotalrawMaterial1AfterQC] = useState();
+  const [totalrawMaterial2AfterQC, setTotalrawMaterial2AfterQC] = useState();
+  const [totalrawMaterial3AfterQC, setTotalrawMaterial3AfterQC] = useState();
+  const [totalrawMaterial4AfterQC, setTotalrawMaterial4AfterQC] = useState();
+  const [totalrawMaterial5AfterQC, setTotalrawMaterial5AfterQC] = useState();
+
+
+  const [totalfactorybuyrawMaterial1, setTotalfactorybuyrawMaterial1] = useState();
+  const [totalfactorybuyrawMaterial2, setTotalfactorybuyrawMaterial2] = useState();
+  const [totalfactorybuyrawMaterial3, setTotalfactorybuyrawMaterial3] = useState();
+  const [totalfactorybuyrawMaterial4, setTotalfactorybuyrawMaterial4] = useState();
+  const [totalfactorybuyrawMaterial5, setTotalfactorybuyrawMaterial5] = useState();
+
+  const [totalrawMaterial1Garbage, setTotalrawMaterial1Garbage] = useState();
+  const [totalrawMaterial2Garbage, setTotalrawMaterial2Garbage] = useState();
+  const [totalrawMaterial3Garbage, setTotalrawMaterial3Garbage] = useState();
+  const [totalrawMaterial4Garbage, setTotalrawMaterial4Garbage] = useState();
+  const [totalrawMaterial5Garbage, setTotalrawMaterial5Garbage] = useState();
+
+  
+
+  
+
+
+
+  const [afterQCrawMaterial1, setafterQCrawMaterial1] = useState();
+  const [afterQCrawMaterial2, setafterQCrawMaterial2] = useState();
+  const [afterQCrawMaterial3, setafterQCrawMaterial3] = useState();
+  const [afterQCrawMaterial4, setafterQCrawMaterial4] = useState();
+  const [afterQCrawMaterial5, setafterQCrawMaterial5] = useState();
+
   const [createdhourRecord, setcreatedhourRecord] = useState();
   const [createdminuteRecord, setcreatedminuteRecord] = useState();
   const [createdsecondRecord, setcreatedsecondRecord] = useState();
@@ -83,73 +133,64 @@ const ViewBatchStatusTable = () => {
     const viewBatchRecord = await supplyChainContract.items(data.state.id);
     setbatchRecord(viewBatchRecord);
 
-
     let OGViewBatchRecord = await supplyChainContract.RawMaterialDetails(viewBatchRecord.supplyChainId);
     setogBatchRecord(OGViewBatchRecord)
 
     let remainingBatchData = await supplyChainContract.RawMaterialSupplierRawMaterial(viewBatchRecord.supplyChainId);
     setRemainingBatchRecord(remainingBatchData)
 
-    console.log("viewBatchRecord",viewBatchRecord)
+    //console.log("viewBatchRecord", viewBatchRecord)
+
+    let supplyCreatedhour = await dateContract.getHour(viewBatchRecord.timeStamp0.toNumber())
+    let supplyCreatedminute = await dateContract.getMinute(viewBatchRecord.timeStamp0.toNumber())
+    let supplyCreatedsecond = await dateContract.getSecond(viewBatchRecord.timeStamp0.toNumber())
 
 
+    setSupplyCreatedhourRecord(supplyCreatedhour);
+    setSupplyCreatedminuteRecord(supplyCreatedminute);
+    setSupplyCreatedsecondRecord(supplyCreatedsecond);
 
+    if (supplyCreatedhour + 5 > 24) {
+      supplyCreatedhour = ((supplyCreatedhour + 5) - 24);
+      setSupplyCreatedhourRecord(supplyCreatedhour);
+    } else {
+      supplyCreatedhour += 5;
+      setSupplyCreatedhourRecord(supplyCreatedhour);
 
+    }
+    if (supplyCreatedminute + 31 > 60) {
+      supplyCreatedhour++;
+      supplyCreatedminute = ((supplyCreatedminute + 31) - 60);
+      setSupplyCreatedminuteRecord(supplyCreatedminute);
 
-      let supplyCreatedhour = await dateContract.getHour(viewBatchRecord.timeStamp0.toNumber())
-        let supplyCreatedminute = await dateContract.getMinute(viewBatchRecord.timeStamp0.toNumber())
-        let supplyCreatedsecond = await dateContract.getSecond(viewBatchRecord.timeStamp0.toNumber())
+    } else {
+      supplyCreatedminute = supplyCreatedminute + 31;
+      setSupplyCreatedminuteRecord(supplyCreatedminute);
 
+    }
 
-        setSupplyCreatedhourRecord(supplyCreatedhour); 
-        setSupplyCreatedminuteRecord(supplyCreatedminute);
-        setSupplyCreatedsecondRecord(supplyCreatedsecond);
-
-        if (supplyCreatedhour + 5 > 24) {
-          supplyCreatedhour = ((supplyCreatedhour + 5) - 24);
-          setSupplyCreatedhourRecord(supplyCreatedhour);
-        } else {
-          supplyCreatedhour += 5;
-          setSupplyCreatedhourRecord(supplyCreatedhour);
-
-        }
-        if (supplyCreatedminute + 35 > 60) {
-          supplyCreatedhour++;
-          supplyCreatedminute = ((supplyCreatedminute + 35) - 60);
-          setSupplyCreatedminuteRecord(supplyCreatedminute);
-
-        } else {
-          supplyCreatedminute = supplyCreatedminute + 35;
-          setSupplyCreatedminuteRecord(supplyCreatedminute);
-
-        }
-
-        setSupplyCreateddayRecord(await dateContract.getDay(viewBatchRecord.timeStamp0.toNumber()));
-        setSupplyCreatemonthRecord(await dateContract.getMonth(viewBatchRecord.timeStamp0.toNumber()));
-        setSupplyCreatedyearRecord(await dateContract.getYear(viewBatchRecord.timeStamp0.toNumber()));
-
-
+    setSupplyCreateddayRecord(await dateContract.getDay(viewBatchRecord.timeStamp0.toNumber()));
+    setSupplyCreatemonthRecord(await dateContract.getMonth(viewBatchRecord.timeStamp0.toNumber()));
+    setSupplyCreatedyearRecord(await dateContract.getYear(viewBatchRecord.timeStamp0.toNumber()));
 
     let j = 1;
     while (j) {
       try {
         const data = await supplyChainContract.IdToFactory(viewBatchRecord.supplyChainId.toNumber(), j - 1);
-        // console.log("dasdasdas");
         //console.log("Factory address :", data.factory); 
 
-        console.log("Date at which the factory bought raw materials");
-        console.log(await dateContract.getDay(data.timeStamp1.toNumber()), await dateContract.getMonth(data.timeStamp1.toNumber()), await dateContract.getYear(data.timeStamp1.toNumber()));
+        //console.log("Date at which the factory bought raw materials");
+        //console.log(await dateContract.getDay(data.timeStamp1.toNumber()), await dateContract.getMonth(data.timeStamp1.toNumber()), await dateContract.getYear(data.timeStamp1.toNumber()));
 
-        console.log("Time which the factory bought raw materials");
-        console.log(await dateContract.getHour(data.timeStamp1.toNumber()), await dateContract.getMinute(data.timeStamp1.toNumber()), await dateContract.getSecond(data.timeStamp1.toNumber()));
-
+        //console.log("Time which the factory bought raw materials");
+        //console.log(await dateContract.getHour(data.timeStamp1.toNumber()), await dateContract.getMinute(data.timeStamp1.toNumber()), await dateContract.getSecond(data.timeStamp1.toNumber()));
 
         let createdhour = await dateContract.getHour(data.timeStamp1.toNumber())
         let createdminute = await dateContract.getMinute(data.timeStamp1.toNumber())
         let createdsecond = await dateContract.getSecond(data.timeStamp1.toNumber())
 
 
-        setcreatedhourRecord(createdhour); 
+        setcreatedhourRecord(createdhour);
         setcreatedminuteRecord(createdminute);
         setcreatedsecondRecord(createdsecond);
 
@@ -161,13 +202,13 @@ const ViewBatchStatusTable = () => {
           setcreatedhourRecord(createdhour);
 
         }
-        if (createdminute + 35 > 60) {
+        if (createdminute + 31 > 60) {
           createdhour++;
-          createdminute = ((createdminute + 35) - 60);
+          createdminute = ((createdminute + 31) - 60);
           setcreatedminuteRecord(createdminute);
 
         } else {
-          createdminute = createdminute + 35;
+          createdminute = createdminute + 31;
           setcreatedminuteRecord(createdminute);
 
         }
@@ -179,11 +220,52 @@ const ViewBatchStatusTable = () => {
         // const data2 =await supplychain.FactoryRawMaterialsORIGIONAL(item.supplyChainId,data.factory)
         // console.log(data2);
         const factory1buyrawMaterial1DAta = await supplyChainContract.FactoryRawMaterialsORIGIONAL(viewBatchRecord.supplyChainId, data.factory);
+        //console.log("factory1buyrawMaterial1DAta", factory1buyrawMaterial1DAta.rawMaterial1.toNumber())
+
+        const rawMaterialAfterQC = await supplyChainContract.FactoryRawMaterialsAferQC(viewBatchRecord.supplyChainId, data.factory);
+        //console.log("after quality control", rawMaterialAfterQC.rawMaterial1.toNumber())
+
+        rawMaterial1AfterQC += rawMaterialAfterQC.rawMaterial1.toNumber();
+        rawMaterial2AfterQC += rawMaterialAfterQC.rawMaterial2.toNumber();
+        rawMaterial3AfterQC += rawMaterialAfterQC.rawMaterial3.toNumber();
+        rawMaterial4AfterQC += rawMaterialAfterQC.rawMaterial4.toNumber();
+        rawMaterial5AfterQC += rawMaterialAfterQC.rawMaterial5.toNumber();
+
+        factorybuyrawMaterial1 += factory1buyrawMaterial1DAta.rawMaterial1.toNumber()
+        factorybuyrawMaterial2 += factory1buyrawMaterial1DAta.rawMaterial2.toNumber()
+        factorybuyrawMaterial3 += factory1buyrawMaterial1DAta.rawMaterial3.toNumber()
+        factorybuyrawMaterial4 += factory1buyrawMaterial1DAta.rawMaterial4.toNumber()
+        factorybuyrawMaterial5 += factory1buyrawMaterial1DAta.rawMaterial5.toNumber()
+        
+
+        let rawMaterial1GarbageData = factory1buyrawMaterial1DAta.rawMaterial1.toNumber() - rawMaterialAfterQC.rawMaterial1.toNumber();
+        rawMaterial1Garbage += rawMaterial1GarbageData
+
+        let rawMaterial2GarbageData = factory1buyrawMaterial1DAta.rawMaterial2.toNumber() - rawMaterialAfterQC.rawMaterial2.toNumber();
+        rawMaterial2Garbage += rawMaterial2GarbageData
+
+        let rawMaterial3GarbageData = factory1buyrawMaterial1DAta.rawMaterial3.toNumber() - rawMaterialAfterQC.rawMaterial3.toNumber();
+        rawMaterial3Garbage += rawMaterial3GarbageData
+
+        let rawMaterial4GarbageData = factory1buyrawMaterial1DAta.rawMaterial4.toNumber() - rawMaterialAfterQC.rawMaterial4.toNumber();
+        rawMaterial4Garbage += rawMaterial4GarbageData
+
+        let rawMaterial5GarbageData = factory1buyrawMaterial1DAta.rawMaterial5.toNumber() - rawMaterialAfterQC.rawMaterial5.toNumber();
+        rawMaterial5Garbage += rawMaterial5GarbageData
+
+        setafterQCrawMaterial1(rawMaterialAfterQC.rawMaterial1.toNumber());
+        setafterQCrawMaterial2(rawMaterialAfterQC.rawMaterial2.toNumber());
+        setafterQCrawMaterial3(rawMaterialAfterQC.rawMaterial3.toNumber());
+        setafterQCrawMaterial4(rawMaterialAfterQC.rawMaterial4.toNumber());
+        setafterQCrawMaterial5(rawMaterialAfterQC.rawMaterial5.toNumber());
+
         setfactory1buyrawMaterial1(factory1buyrawMaterial1DAta.rawMaterial1.toNumber());
         setfactory1buyrawMaterial2(factory1buyrawMaterial1DAta.rawMaterial2.toNumber());
         setfactory1buyrawMaterial3(factory1buyrawMaterial1DAta.rawMaterial3.toNumber());
         setfactory1buyrawMaterial4(factory1buyrawMaterial1DAta.rawMaterial4.toNumber());
         setfactory1buyrawMaterial5(factory1buyrawMaterial1DAta.rawMaterial5.toNumber());
+
+
 
         const factoryLocation = {
           method: 'POST',
@@ -210,7 +292,25 @@ const ViewBatchStatusTable = () => {
       }
     }
 
+    setTotalrawMaterial1AfterQC(rawMaterial1AfterQC)
+    setTotalrawMaterial2AfterQC(rawMaterial2AfterQC)
+    setTotalrawMaterial3AfterQC(rawMaterial3AfterQC)
+    setTotalrawMaterial4AfterQC(rawMaterial4AfterQC)
+    setTotalrawMaterial5AfterQC(rawMaterial5AfterQC)
 
+    setTotalfactorybuyrawMaterial1(factorybuyrawMaterial1)
+    setTotalfactorybuyrawMaterial2(factorybuyrawMaterial2)
+    setTotalfactorybuyrawMaterial3(factorybuyrawMaterial3)
+    setTotalfactorybuyrawMaterial4(factorybuyrawMaterial4)
+    setTotalfactorybuyrawMaterial5(factorybuyrawMaterial5)
+
+    setTotalrawMaterial1Garbage(rawMaterial1Garbage)
+    setTotalrawMaterial2Garbage(rawMaterial2Garbage)
+    setTotalrawMaterial3Garbage(rawMaterial3Garbage)
+    setTotalrawMaterial4Garbage(rawMaterial4Garbage)
+    setTotalrawMaterial5Garbage(rawMaterial5Garbage)
+
+    
     // const garbagePolAmount = OGViewBatchRecord.OGPolyesterAmount.toNumber() - viewBatchRecord.PolyesterAmount.toNumber() 
     // setgarbagePolyesterAmount(garbagePolAmount)
     // const garbageCottonAmount = OGViewBatchRecord.OGCottonAmount.toNumber() - viewBatchRecord.CottonAmount.toNumber() 
@@ -337,57 +437,65 @@ const ViewBatchStatusTable = () => {
                   </Card.Text>
                 </Card.Body>
                 {factName !== undefined ?
-                <Card.Body>
-                  <Card.Text>
-                    <Card.Title style={{ background: "#dedede", padding: "10px" }}>Buyer Detail</Card.Title>
-                    {console.log("ogBatchRecord sds", factName)}
-                    <table>
-                      {ogBatchRecord && ogBatchRecord.rawMaterialType.toNumber() == 1 ?
-                        <tr>
-                          <th>Factory</th>
-                          <th>Location </th>
-                          <th>Weight</th>
-                          <th>Fibre length (mm)</th>
-                          <th>Fibre Strength (g/T)</th>
-                          <th>Mike(mm)</th>
-                          <th>FQI (Rd)</th>
-                          <th>Buy Date</th>
-                        </tr> : ''}
-                      {ogBatchRecord && ogBatchRecord.rawMaterialType.toNumber() == 2 ?
-                        <tr>
-                          <th>Factory</th>
-                          <th>Location </th>
-                          <th>FMax (kN)</th>
-                          <th>EMax (%)</th>
-                          <th>Neps (%)</th>
-                          <th>Mike(mm)</th>
-                          <th>Buy Date</th>
-                        </tr> : ''}
-                      {ogBatchRecord && ogBatchRecord.rawMaterialType.toNumber() == 3 ?
-                        <tr>
-                          <th>Factory</th>
-                          <th>Location </th>
-                          <th>Fibre diameter or Grade (mm)</th>
-                          <th>Staple length (mm)</th>
-                          <th>Fibre length (mm)</th>
-                          <th>Crimpiness (cm)</th>
-                          <th>Buy Date</th>
-                        </tr> : ''}
-                      <tr>
-                        {}
-                        <td>{factName && factName ? factName : ''}</td>
-                        <td>{factlocation && factlocation !== " " ? <span>{factlocation}</span> : <span></span>}</td>
-                        <td>{factory1buyrawMaterial1 && factory1buyrawMaterial1}</td>
-                        <td>{factory1buyrawMaterial2 && factory1buyrawMaterial2}</td>
-                        <td>{factory1buyrawMaterial3 && factory1buyrawMaterial3}</td>
-                        <td>{factory1buyrawMaterial4 && factory1buyrawMaterial4}</td>
+                  <Card.Body>
+                    <Card.Text>
+                      <Card.Title style={{ background: "#dedede", padding: "10px" }}>Buyer Detail</Card.Title>
+                      <table>
                         {ogBatchRecord && ogBatchRecord.rawMaterialType.toNumber() == 1 ?
-                          <td>{factory1buyrawMaterial5 && factory1buyrawMaterial5}</td> : ''}
-                        <td>{createddayRecord}-{createmonthRecord}-{createdyearRecord} {createdhourRecord}:{createdminuteRecord}:{createdsecondRecord}</td>
-                      </tr>
-                    </table>
-                  </Card.Text>
-                </Card.Body> : '' }
+                          <tr>
+                            <th>Factory</th>
+                            <th>Location </th>
+                            <th>Weight / After QC / Garbage</th>
+                            <th>Fibre length (mm) / After QC / Garbage</th>
+                            <th>Fibre Strength (g/T) / After QC / Garbage</th>
+                            <th>Mike(mm) / After QC / Garbage</th>
+                            <th>FQI (Rd) / After QC / Garbage</th>
+                            <th>Buy Date</th>
+                          </tr> : ''}
+                        {ogBatchRecord && ogBatchRecord.rawMaterialType.toNumber() == 2 ?
+                          <tr>
+                            <th>Factory</th>
+                            <th>Location </th>
+                            <th>FMax (kN) / After QC / Garbage</th>
+                            <th>EMax (%) / After QC / Garbage</th>
+                            <th>Neps (%) / After QC / Garbage</th>
+                            <th>Mike(mm) / After QC / Garbage</th>
+                            <th>Buy Date</th>
+                          </tr> : ''}
+                        {ogBatchRecord && ogBatchRecord.rawMaterialType.toNumber() == 3 ?
+                          <tr>
+                            <th>Factory</th>
+                            <th>Location </th>
+                            <th>Fibre diameter or Grade (mm) / After QC / Garbage</th>
+                            <th>Staple length (mm) / After QC / Garbage</th>
+                            <th>Fibre length (mm) / After QC / Garbage</th>
+                            <th>Crimpiness (cm) / After QC / Garbage</th>
+                            <th>Buy Date</th>
+                          </tr> : ''}
+                        <tr>
+                          <td>{factName && factName ? factName : ''}</td>
+                          <td>{factlocation && factlocation !== " " ? <span>{factlocation}</span> : <span></span>}</td>
+                          <td>{factory1buyrawMaterial1 && factory1buyrawMaterial1} / {afterQCrawMaterial1 && afterQCrawMaterial1} / {factory1buyrawMaterial1 - afterQCrawMaterial1}</td>
+                          <td>{factory1buyrawMaterial2 && factory1buyrawMaterial2} / {afterQCrawMaterial2 && afterQCrawMaterial2} / {factory1buyrawMaterial2 - afterQCrawMaterial2}</td>
+                          <td>{factory1buyrawMaterial3 && factory1buyrawMaterial3} / {afterQCrawMaterial3 && afterQCrawMaterial3} / {factory1buyrawMaterial3 - afterQCrawMaterial3}</td>
+                          <td>{factory1buyrawMaterial4 && factory1buyrawMaterial4} / {afterQCrawMaterial4 && afterQCrawMaterial4} / {factory1buyrawMaterial4 - afterQCrawMaterial4}</td>
+                          {ogBatchRecord && ogBatchRecord.rawMaterialType.toNumber() == 1 ?
+                            <td>{factory1buyrawMaterial5 && factory1buyrawMaterial5} / {afterQCrawMaterial5 && afterQCrawMaterial5} / {factory1buyrawMaterial5 - afterQCrawMaterial5}</td> : ''}
+                          <td>{createddayRecord}-{createmonthRecord}-{createdyearRecord} {createdhourRecord}:{createdminuteRecord}:{createdsecondRecord}</td>
+                        </tr>
+                        <tr className='totalCalculation'>
+                          <td colSpan={2}>Total</td>
+                          <td>{totalfactorybuyrawMaterial1 && totalfactorybuyrawMaterial1} / {totalrawMaterial1AfterQC && totalrawMaterial1AfterQC} / {totalrawMaterial1Garbage && totalrawMaterial1Garbage}</td>
+                          <td>{totalfactorybuyrawMaterial2 && totalfactorybuyrawMaterial2} / {totalrawMaterial2AfterQC && totalrawMaterial2AfterQC} / {totalrawMaterial2Garbage && totalrawMaterial2Garbage}</td>
+                          <td>{totalfactorybuyrawMaterial3 && totalfactorybuyrawMaterial3} / {totalrawMaterial3AfterQC && totalrawMaterial3AfterQC} / {totalrawMaterial3Garbage && totalrawMaterial3Garbage}</td>
+                          <td>{totalfactorybuyrawMaterial4 && totalfactorybuyrawMaterial4} / {totalrawMaterial4AfterQC && totalrawMaterial4AfterQC} / {totalrawMaterial4Garbage && totalrawMaterial4Garbage}</td>
+                          {ogBatchRecord && ogBatchRecord.rawMaterialType.toNumber() == 1 ?
+                          <td>{totalfactorybuyrawMaterial5 && totalfactorybuyrawMaterial5} / {totalrawMaterial5AfterQC && totalrawMaterial5AfterQC} / {totalrawMaterial5Garbage && totalrawMaterial5Garbage}</td>
+                          : ''}
+                        </tr>
+                      </table>
+                    </Card.Text>
+                  </Card.Body> : ''}
               </Card>
             </div>
           </div>

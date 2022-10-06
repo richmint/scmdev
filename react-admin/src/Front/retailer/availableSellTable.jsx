@@ -18,7 +18,7 @@ const SellTable = () => {
   const allsupplymateriallist = [];
 
   const getSupplyChainHandler = async (event) => {
-    let distributeruserrec = "";
+    let retaileruserrec = "";
     let factoryuserrec = "";
 
     const totalbatch = await supplyChainContract.totalBatchs();
@@ -30,9 +30,49 @@ const SellTable = () => {
           let j = 1;
           while (j) {
             try {
-              const data = await supplyChainContract.ProductIdToRetailer(i,j - 1);
+              const data = await supplyChainContract.ProductIdToRetailer(i, j - 1);
               if (data.retailer.toLowerCase() == ownSupplyChainAddress && data.retailerState == 1 && data.quantityLeft.toNumber() > 0) {
-                console.log("data",data)
+
+
+                const factoryRecord = {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    "hashAddress": retailers.factory,
+                  })
+                };
+                const distributerRecord = {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    "hashAddress": data.distributor,
+                  })
+                };
+
+                await fetch("http://192.168.1.101:5150/location", factoryRecord)
+                  .then(res => res.json())
+                  .then(data => {
+                    if (data) {
+                      factoryuserrec = data.username;
+                    }
+                  })
+                  .catch((error) => {
+                    console.error('Error:', error);
+                  });
+
+                await fetch("http://192.168.1.101:5150/location", distributerRecord)
+                  .then(res => res.json())
+                  .then(data => {
+                    if (data) {
+                      retaileruserrec = data.username;
+                      
+                    }
+                  })
+                  .catch((error) => {
+                    console.error('Error:', error);
+                  });
+
+                console.log("data", data)
                 let hour = await dateContract.getHour(
                   data.timeStamp10.toNumber()
                 );
@@ -56,11 +96,11 @@ const SellTable = () => {
                 } else {
                   hour += 5;
                 }
-                if (minute + 35 > 60) {
+                if (minute + 31 > 60) {
                   hour++;
-                  minute = minute + 35 - 60;
+                  minute = minute + 31 - 60;
                 } else {
-                  minute = minute + 35;
+                  minute = minute + 31;
                 }
                 const batchId = retailers.productId.toNumber();
                 checkMatVal = 1;
@@ -68,8 +108,8 @@ const SellTable = () => {
                   <>
                     <tr>
                       <td>{batchId}</td>
-                      <td>{data.distributor}</td>
-                      <td>{retailers.factory}</td>
+                      <td>{factoryuserrec }</td>
+                      <td>{retaileruserrec}</td>  
                       <td>{data.quantityLeft.toNumber()}</td>
                       <td>{retailers.Description}</td>
                       <td>
@@ -78,7 +118,7 @@ const SellTable = () => {
                       <td>
                         <Button
                           variant="outline-success"
-                          onClick={() => navigate('/sellToCustumer',{state:{value:data.quantity.toNumber(),id:batchId}})}
+                          onClick={() => navigate('/sellToCustumer', { state: { value: data.quantity.toNumber(), id: batchId } })}
                         >
                           Sell
                         </Button>

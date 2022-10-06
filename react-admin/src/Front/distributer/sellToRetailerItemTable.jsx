@@ -31,7 +31,7 @@ const ViewListTable = () =>{
                         const data = await supplyChainContract.ProductIdToRetailer(i,j-1);
                         //console.log("data asdasd",data)
                         if(data.distributor.toLowerCase() ==ownSupplyChainAddress.toLowerCase()){
-                          console.log("data asdasd",retailer)
+                          //console.log("data asdasd",retailer)
                           const factoryRecord = {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
@@ -92,11 +92,11 @@ const ViewListTable = () =>{
                           } else {
                             hour += 5;
                           }
-                          if (minute + 35 > 60) {
+                          if (minute + 31 > 60) {
                             hour++;
-                            minute = minute + 35 - 60;
+                            minute = minute + 31 - 60;
                           } else {
-                            minute = minute + 35;
+                            minute = minute + 31;
                           }
                           const batchId = retailer.productId.toNumber();
                           checkListVal = 1;

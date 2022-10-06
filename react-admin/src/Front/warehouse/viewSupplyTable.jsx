@@ -51,11 +51,11 @@ const ViewSupplyTable = () => {
               } else {
                 hour += 5;
               }
-              if (minute + 35 > 60) {
+              if (minute + 31 > 60) {
                 hour++;
-                minute = ((minute + 35) - 60);
+                minute = ((minute + 31) - 60);
               } else {
-                minute = minute + 35;
+                minute = minute + 31;
               }
               const createdday = await dateContract.getDay(warehouseItem.timeStamp0.toNumber())
               const createmonth = await dateContract.getMonth(warehouseItem.timeStamp0.toNumber())
@@ -110,7 +110,7 @@ const ViewSupplyTable = () => {
                     <td>{factoryRawMaterialsOriginal.rawMaterial5.toNumber()}</td>
                     <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
                     <td>
-                      <Button variant="outline-info" onClick={() => navigate('/productDetail', { state: { i } })}>View</Button>
+                      <Button variant="outline-info" onClick={() => navigate('/warehouseBatchDetail', { state: { batchId : i } })}>View</Button>
                     </td>
                   </tr></>
                 )
@@ -128,7 +128,7 @@ const ViewSupplyTable = () => {
                     <td>{factoryRawMaterialsOriginal.rawMaterial4.toNumber()}</td>
                     <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
                     <td>
-                      <Button variant="outline-info" onClick={() => navigate('/productDetail', { state: { i } })}>View</Button>
+                      <Button variant="outline-info" onClick={() => navigate('/warehouseBatchDetail', { state: {batchId : i } })}>View</Button>
                     </td>
                   </tr></>
                 )
@@ -136,7 +136,7 @@ const ViewSupplyTable = () => {
               if (rawMaterialsDetail.rawMaterialType.toNumber() == 3) {
                 checkWoolvalue = 1;
                 allWoollist.push(
-                  <><tr>
+                  <><tr> 
                     <td>{i}</td>
                     <td>{userdatarec && userdatarec}</td>
                     <td>{factoryuserdatarec && factoryuserdatarec}</td>
@@ -146,7 +146,7 @@ const ViewSupplyTable = () => {
                     <td>{factoryRawMaterialsOriginal.rawMaterial4.toNumber()}</td>
                     <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
                     <td>
-                      <Button variant="outline-info" onClick={() => navigate('/productDetail', { state: { i } })}>View</Button>
+                      <Button variant="outline-info" onClick={() => navigate('/warehouseBatchDetail', { state: { batchId : i} })}>View</Button>
                     </td>
                   </tr></>
                 )
