@@ -78,7 +78,7 @@ const SellItemFormData = () => {
     },[])
 
     function getDistributorList(){
-      fetch("http://192.168.1.101:5150/distributer")
+      fetch("http://162.215.222.118:5151/distributer")
            .then(result=>result.json())
            .then(data => {
             if(data){

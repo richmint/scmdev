@@ -38,7 +38,7 @@ const SellItemTable = () => {
                   "hashAddress": productData.factory,
                 })
               };
-              await fetch("http://192.168.1.101:5150/location", rawMaterialRecord)
+              await fetch("http://162.215.222.118:5151/location", rawMaterialRecord)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {
@@ -54,7 +54,7 @@ const SellItemTable = () => {
                   "hashAddress": productData.factory,
                 })
               };
-              await fetch("http://192.168.1.101:5150/location", warehouseRecord)
+              await fetch("http://162.215.222.118:5151/location", warehouseRecord)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {
@@ -70,7 +70,7 @@ const SellItemTable = () => {
                   "hashAddress": productData.factory,
                 })
               };
-              await fetch("http://192.168.1.101:5150/location", factoryRecord)
+              await fetch("http://162.215.222.118:5151/location", factoryRecord)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {

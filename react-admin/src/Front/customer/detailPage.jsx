@@ -9,13 +9,15 @@ const DetailPage = () => {
   const navigate = useNavigate();
   const [materiallist, setMateriallist] = useState(null);
   const { dispatch, metaMask, supplyChainContract, ownSupplyChainAddress, dateContract } = useContext(DarkModeContext);
-  const allsupplymateriallist = [];
+  const allsupplymateriallist = []; 
 
   const [productBatch, setproductBatch] = useState();
   const [productDescription, setproductDescription] = useState();
   const [productTotalUnits, setproductTotalUnits] = useState();
   const [producttotalUnitsAfterQC, setproducttotalUnitsAfterQC] = useState();
   const [productLeftUnits, setproductLeftUnits] = useState();
+  const [supplierName, setsupplierName] = useState();
+  const [supplierlocation, setsupplierlocation] = useState();
   const [factoryName, setfactoryName] = useState();
   const [factorylocation, setfactorylocation] = useState();
   const [distributerName, setdistributerName] = useState();
@@ -23,21 +25,119 @@ const DetailPage = () => {
   const [retailerName, setretailerName] = useState();
   const [retailerlocation, setretailerlocation] = useState();
 
+  const [factoryhour, setfactoryhour] = useState();
+  const [factoryminute, setfactoryminute] = useState();
+  const [factorysecond, setfactorysecond] = useState();
+  const [factoryday, setfactoryday] = useState();
+  const [factorymonth, setfactorymonth] = useState();
+  const [factoryyear, setfactoryyear] = useState();
+
+  const [distributerhour, setdistributerhour] = useState();
+  const [distributerminute, setdistributerminute] = useState();
+  const [distributersecond, setdistributersecond] = useState();
+  const [distributerday, setdistributerday] = useState();
+  const [distributermonth, setdistributermonth] = useState();
+  const [distributeryear, setdistributeryear] = useState();
+
+  
+
+
+
   const [customerProductBuyUnits, setcustomerProductBuyUnits] = useState();
 
-
-
   const getOrderHistoryHandler = async (event) => {
-
 
     const totalBatches = await supplyChainContract.totalProductBatchs();
     for (let i = 0; i < totalBatches; i++) {
       const data = await supplyChainContract.Product(i);
       if (data.productState == 1) {
-        //console.log("This data is about i th product",data);
+        console.log("This data is about i th product",data);
         // This data is about i th product
 
+        let factoryhourrec = await dateContract.getHour(
+          data.timeStamp6.toNumber()
+        );
+        let factoryminuterec = await dateContract.getMinute(
+          data.timeStamp6.toNumber()
+        );
+      
+        let factorysecondrec = await dateContract.getSecond(
+          data.timeStamp6.toNumber()
+        );
+        setfactorysecond(factorysecondrec);
 
+        let factorydayrec = await dateContract.getDay(
+          data.timeStamp6.toNumber()
+        );
+        setfactoryday(factorydayrec);
+
+        let factorymonthrec = await dateContract.getMonth(
+          data.timeStamp6.toNumber()
+        );
+        setfactorymonth(factorymonthrec);
+
+        let factoryyearrec = await dateContract.getYear(
+          data.timeStamp6.toNumber()
+        );
+        setfactoryyear(factoryyearrec);
+
+        if (factoryhourrec + 5 > 24) {
+          factoryhourrec = factoryhourrec + 5 - 24;
+        } else { 
+          factoryhourrec += 5; 
+        }
+        if (factoryminuterec + 31 > 60) {
+          factoryhourrec++;
+          factoryminuterec = factoryminuterec + 31 - 60;
+        } else {
+          factoryminuterec = factoryminuterec + 31;
+        } 
+
+         setfactoryhour(factoryhourrec);
+         setfactoryminute(factoryminuterec);
+
+
+         let distributerhourrec = await dateContract.getHour(
+          data.timeStamp7.toNumber()
+        );
+        let distributerminuterec = await dateContract.getMinute(
+          data.timeStamp7.toNumber()
+        );
+      
+        let distributersecondrec = await dateContract.getSecond(
+          data.timeStamp7.toNumber()
+        );
+        setdistributersecond(distributersecondrec);
+
+        let distributerdayrec = await dateContract.getDay(
+          data.timeStamp7.toNumber()
+        );
+        setdistributerday(distributerdayrec);
+
+        let distributermonthrec = await dateContract.getMonth(
+          data.timeStamp7.toNumber()
+        );
+        setdistributermonth(distributermonthrec);
+
+        let distributeryearrec = await dateContract.getYear(
+          data.timeStamp7.toNumber()
+        );
+        setdistributeryear(distributeryearrec);
+
+        if (distributerhourrec + 5 > 24) {
+          distributerhourrec = distributerhourrec + 5 - 24;
+        } else { 
+          distributerhourrec += 5; 
+        }
+        if (distributerminuterec + 31 > 60) {
+          distributerhourrec++;
+          distributerminuterec = distributerminuterec + 31 - 60;
+        } else {
+          distributerminuterec = distributerminuterec + 31;
+        } 
+
+         setdistributerhour(distributerhourrec);
+         setdistributerminute(distributerminuterec); 
 
         let j = 1;
         while (j) {
@@ -46,7 +146,7 @@ const DetailPage = () => {
             const data2 = await supplyChainContract.ProductIdToCustomer(i, j - 1);
             if (data2.customer.toLowerCase() == ownSupplyChainAddress.toLowerCase()) {
               // Details of this product
-              // console.log("Details of this product",data); 
+              //console.log("Details of this product", data2);
 
               // Details related to product and customer
               //console.log("Details related to product and customer",data);  
@@ -67,7 +167,7 @@ const DetailPage = () => {
                 })
               };
 
-              await fetch("http://192.168.1.101:5150/location", factoryRecord)
+              await fetch("http://162.215.222.118:5151/location", factoryRecord)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {
@@ -88,7 +188,7 @@ const DetailPage = () => {
                 })
               };
 
-              await fetch("http://192.168.1.101:5150/location", distributerRecord)
+              await fetch("http://162.215.222.118:5151/location", distributerRecord)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {
@@ -108,7 +208,7 @@ const DetailPage = () => {
                 })
               };
 
-              await fetch("http://192.168.1.101:5150/location", retailerRecord)
+              await fetch("http://162.215.222.118:5151/location", retailerRecord)
                 .then(res => res.json())
                 .then(data => {
                   if (data) {
@@ -122,19 +222,37 @@ const DetailPage = () => {
 
               // This loop is for the batches this product is made up of. batch -0 and batch -1 details
               let k = 1;
+              let suppiername = '';
+              let suppierLocation = '';
               while (k) {
                 try {
                   const supplychianId = await supplyChainContract.ProductIds(i, k - 1);
                   // console.log(supplychianId);
                   const itemData = (await supplyChainContract.items(supplychianId));
-                 // console.log("Raw materal details for this batch original", itemData);
                   // Raw materal details for this batch original
                   //console.log(await supplyChainContract.RawMaterialDetails(supplychianId));
+                  const supplierRecord = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      "hashAddress": itemData.RawMaterialSupplierID,
+                    })
+                  };
+
+                  await fetch("http://162.215.222.118:5151/location", supplierRecord)
+                    .then(res => res.json())
+                    .then(data => {
+                      if (data) {
+                        suppiername = data.username
+                        suppierLocation = data.location
+
+                      }
+                    })
+                    .catch((error) => {
+                      console.error('Error:', error);
+                    });
 
                   let OGObject = await supplyChainContract.RawMaterialSupplierRawMaterial(supplychianId);
-
-
-
                   // This loop is for the factory details (only run once)
                   let j = 1;
                   while (j) {
@@ -146,13 +264,49 @@ const DetailPage = () => {
                         const yarndata = await supplyChainContract.FactoryRawMaterialsAferQC(supplychianId, data.factory);
                         //console.log("yarndata", yarndata) 
 
-                        console.log("supplychianId aasasa", supplychianId.toNumber())
+                        //console.log("supplychianId aasasa", supplychianId.toNumber())
+
+                        let hour = await dateContract.getHour(
+                          itemData.timeStamp0.toNumber()
+                        );
+                        let minute = await dateContract.getMinute(
+                          itemData.timeStamp0.toNumber()
+                        );
+                        let second = await dateContract.getSecond(
+                          itemData.timeStamp0.toNumber()
+                        );
+                        let day = await dateContract.getDay(
+                          itemData.timeStamp0.toNumber()
+                        );
+                        let month = await dateContract.getMonth(
+                          itemData.timeStamp0.toNumber()
+                        );
+                        let year = await dateContract.getYear(
+                          itemData.timeStamp0.toNumber()
+                        );
+                        if (hour + 5 > 24) {
+                          hour = hour + 5 - 24;
+                        } else {
+                          hour += 5;
+                        }
+                        if (minute + 31 > 60) {
+                          hour++;
+                          minute = minute + 31 - 60;
+                        } else {
+                          minute = minute + 31;
+                        }
+
+
+
                         if (OGObject.rawMaterialType.toNumber() == 1) {
                           allsupplymateriallist.push(
                             <>
                               <table>
                                 <tr>
-                                  <th>Product Batch ID</th>
+                                  <th>Batch ID</th>
+                                  <th>Supplier</th>
+                                  <th>Supplier Location</th>
+                                  <th>Supplier Listing Date</th>
                                   <th>Yarn Quantity</th>
                                   <th>Yarn Color</th>
                                   <th>Yarn Type</th>
@@ -164,6 +318,9 @@ const DetailPage = () => {
                                 </tr>
                                 <tr>
                                   <td>{supplychianId.toNumber()}</td>
+                                  <td>{suppiername && suppiername}</td>
+                                  <td>{suppierLocation && suppierLocation}</td>
+                                  <td>{day}-{month}-{year} {hour}:{minute}:{second}</td>
                                   <td>{yarndata.YarnAmount.toNumber()}</td>
                                   <td>{yarndata.YarnColor}</td>
                                   <td>{yarndata.YarnType}</td>
@@ -171,7 +328,7 @@ const DetailPage = () => {
                                   <td>{yarndata.rawMaterial2.toNumber()}</td>
                                   <td>{yarndata.rawMaterial3.toNumber()}</td>
                                   <td>{yarndata.rawMaterial4.toNumber()}</td>
-                                  <td>{yarndata.rawMaterial5.toNumber()}</td> 
+                                  <td>{yarndata.rawMaterial5.toNumber()}</td>
                                 </tr>
                               </table>
                             </>
@@ -182,7 +339,10 @@ const DetailPage = () => {
                             <>
                               <table>
                                 <tr>
-                                  <th>Product Batch ID</th>
+                                  <th>Batch ID</th>
+                                  <th>Supplier</th>
+                                  <th>Supplier Location</th>
+                                  <th>Supplier Listing Date</th>
                                   <th>Yarn Quantity</th>
                                   <th>Yarn Color</th>
                                   <th>Yarn Type</th>
@@ -193,6 +353,9 @@ const DetailPage = () => {
                                 </tr>
                                 <tr>
                                   <td>{supplychianId.toNumber()}</td>
+                                  <td>{suppiername && suppiername}</td>
+                                  <td>{suppierLocation && suppierLocation}</td>
+                                  <td>{day}-{month}-{year} {hour}:{minute}:{second}</td>
                                   <td>{yarndata.YarnAmount.toNumber()}</td>
                                   <td>{yarndata.YarnColor}</td>
                                   <td>{yarndata.YarnType}</td>
@@ -210,7 +373,10 @@ const DetailPage = () => {
                             <>
                               <table>
                                 <tr>
-                                  <th>Product Batch ID</th>
+                                  <th>Batch ID</th>
+                                  <th>Supplier</th>
+                                  <th>Supplier Location</th>
+                                  <th>Supplier Listing Date</th>
                                   <th>Yarn Quantity</th>
                                   <th>Yarn Color</th>
                                   <th>Yarn Type</th>
@@ -220,7 +386,10 @@ const DetailPage = () => {
                                   <th>Crimpiness (cm)</th>
                                 </tr>
                                 <tr>
-                                  <td>{0}</td>
+                                  <td>{supplychianId.toNumber()}</td>
+                                  <td>{suppiername && suppiername}</td>
+                                  <td>{suppierLocation && suppierLocation}</td>
+                                  <td>{day}-{month}-{year} {hour}:{minute}:{second}</td>
                                   <td>{yarndata.YarnAmount.toNumber()}</td>
                                   <td>{yarndata.YarnColor}</td>
                                   <td>{yarndata.YarnType}</td>
@@ -262,6 +431,8 @@ const DetailPage = () => {
 
   }
 
+  console.log("factoryhour factoryhour",factoryhour)
+
   useEffect(() => {
     getOrderHistoryHandler();
   }, []);
@@ -285,23 +456,20 @@ const DetailPage = () => {
                       <p><b>Total Product Left : </b>{productLeftUnits}</p>
                       <p><b>You Purchase : </b>{customerProductBuyUnits}</p>
                       <p><b>Product Description : </b>{productDescription}</p>
-                      <p><b>Supplier Name : </b>Babulal Saini</p>
-                      <p><b>Supplier Location : </b>Mumbai</p>
-                      <p><b>Supplier Listing Date : </b>11/01/2000</p>
                       <p><b>Factory Name : </b>{factoryName}</p>
                       <p><b>Factory Location : </b>{factorylocation}</p>
                     </>
                   </Card.Text>
-                  <Card.Text style={{ width: '50%', float: 'left' }}>
+                  <Card.Text style={{ width: '50%', float: 'left' }}> 
                     <>
-                      <p><b>Factory Listing Date : </b>15/01/2000</p>
+                      <p><b>Factory Listing Date : </b>{factoryday}-{factorymonth}-{factoryyear} {factoryhour}:{factoryminute}:{factorysecond}</p>
                       <p><b>WareHouse Name : </b>Vipin</p>
                       <p><b>Distributor Name : </b>{distributerName}</p>
                       <p><b>Distributor Location : </b>{distributerlocation}</p>
-                      <p><b>Distributor Listing Date : </b>25/01/2000</p>
+                      <p><b>Distributor Listing Date : </b>{distributerday}-{distributermonth}-{distributeryear} {distributerhour}:{distributerminute}:{distributersecond}</p>
                       <p><b>Retailer Name : </b>{retailerName}</p>
                       <p><b>Retailer Location : </b>{retailerlocation}</p>
-                      <p><b>Retailer Listing Date : </b>15/02/2000</p>
+                      <p><b>Retailer Listing Date : </b>{distributerday}-{distributermonth}-{distributeryear} {distributerhour}:{distributerminute}:{distributersecond}</p>
                     </>
                   </Card.Text>
                 </Card.Body>

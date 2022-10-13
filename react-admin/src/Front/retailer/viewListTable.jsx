@@ -45,7 +45,7 @@ const ViewListTable = () =>{
                               })  
                           };
                           
-                          await fetch("http://192.168.1.101:5150/location",distributorRecord)    
+                          await fetch("http://162.215.222.118:5151/location",distributorRecord)    
                           .then(res => res.json())
                           .then(data => {
                             if(data){
@@ -56,7 +56,7 @@ const ViewListTable = () =>{
                             console.error('Error:', error);
                           });
             
-                          await fetch("http://192.168.1.101:5150/location",customerRecord)    
+                          await fetch("http://162.215.222.118:5151/location",customerRecord)    
                           .then(res => res.json())
                           .then(data => {
                             if(data){

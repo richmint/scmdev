@@ -12,8 +12,8 @@ const ProductDetail = () =>{
             <Sidebar txt={"orderhistory"} />
             <div className="listContainer">
                 <Navbar />
-                <DetailPage />
-            </div>
+                <DetailPage /> 
+            </div> 
         </div>
     )
 }

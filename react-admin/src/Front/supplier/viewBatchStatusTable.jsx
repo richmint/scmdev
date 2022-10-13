@@ -274,7 +274,7 @@ const ViewBatchStatusTable = () => {
             "hashAddress": data.factory,
           })
         };
-        await fetch("http://192.168.1.101:5150/location", factoryLocation)
+        await fetch("http://162.215.222.118:5151/location", factoryLocation)
           .then(res => res.json())
           .then(data => {
             if (data) {
@@ -327,7 +327,7 @@ const ViewBatchStatusTable = () => {
       })
     };
 
-    await fetch("http://192.168.1.101:5150/location", rawmaterialLocation)
+    await fetch("http://162.215.222.118:5151/location", rawmaterialLocation)
       .then(res => res.json())
       .then(data => {
         if (data) {

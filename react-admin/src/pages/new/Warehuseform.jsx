@@ -33,10 +33,10 @@ const Warehouseform = ({ inputs, title, value }) => {
     // event.preventDefault();
     // console.log("SC Contract", SCContract);
     console.log("Hash add",event.hashAddress)
-    const waretxn = await SCContract.addWarehouse(event.hashAddress);
-    if(waretxn){
-      navigate("/warehouse")
-    }
+    // const waretxn = await SCContract.addWarehouse(event.hashAddress);
+    // if(waretxn){
+    //   navigate("/warehouse")
+    // }
       const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -49,13 +49,13 @@ const Warehouseform = ({ inputs, title, value }) => {
             "role":'Warehouse'
             })
       };
-      fetch('http://192.168.1.101:5150/register', requestOptions)
+      fetch('http://162.215.222.118:5151/register', requestOptions)
           .then(response => response.json());
   }
 
 
   return (
-    <div className="new">
+    <div className="new"> 
       <Sidebar />
       <div className="newContainer">
         <Navbar />

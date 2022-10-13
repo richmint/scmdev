@@ -24,7 +24,7 @@ const Factoryform = ({ inputs, title, value }) => {
 
   const addFactoryHandler = (event) => {
     console.log(event);
-    SCContract.addFactory(event.hashAddress);
+    //SCContract.addFactory(event.hashAddress);
 
     const requestOptions = {
       method: 'POST',
@@ -38,7 +38,7 @@ const Factoryform = ({ inputs, title, value }) => {
         "role":'Factory'
         })
   };
-  fetch('http://192.168.1.101:5150/register', requestOptions)
+  fetch('http://162.215.222.118:5151/register', requestOptions)
       .then(response => response.json());
 
   }

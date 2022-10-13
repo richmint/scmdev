@@ -25,8 +25,8 @@ const RawMaterialSupplier = ({ inputs, title, value }) => {
 
   const addrawmaterialsupplierHandler = (event) => {
     event.preventDefault();
-    console.log(SCContract);
-    SCContract.addRawMaterialSupplier(event.hashAddress);
+    // console.log(SCContract);
+    // SCContract.addRawMaterialSupplier(event.hashAddress);
 
     const requestOptions = {
       method: 'POST',
@@ -39,7 +39,7 @@ const RawMaterialSupplier = ({ inputs, title, value }) => {
         "role":'Supplier'
         })
   };
-  fetch('http://192.168.1.101:5150/register', requestOptions)
+  fetch('http://162.215.222.118:5151/register', requestOptions)
       .then(response => response.json());
   }
   return (
