@@ -69,6 +69,14 @@ const Sidebar = (props) => {
                       <span>Available for WareHouse</span>
                     </li>
                   </Link>
+
+                  <Link to="/viewRecordOnQrCode" style={{ textDecoration: "none" }}>
+                    <li style={{ backgroundColor: props.txt == "qrcode" ? "orange" : "" }}>
+                      <StoreIcon className="icon" />
+                      <span>view Record On QrCode</span>
+                    </li> 
+                  </Link>
+
                   {/* <Link to="/approveFactorySupplier" style={{ textDecoration: "none" }}>
                   <li style={{backgroundColor: props.txt == "ApproveFacSupp"?"orange":""}}>
                     <StoreIcon className="icon" />

@@ -15,7 +15,7 @@ import ProfileAdmin from './pages/login/profile';
 //Front 
 import Userlogin from "./Front/login/Login";
 import Profile from "./Front/user/Profile";
-import Materialsupplier from "./Front/supplier/Dashboard";
+import Materialsupplier from "./Front/supplier/Dashboard"; 
 import Addbatch from "./Front/supplier/AddMaterialForm";
 import Approvesupplier from "./Front/supplier/ApproveSupply";
 import ViewSupplyToken from "./Front/supplier/viewSupplyToken";
@@ -50,6 +50,9 @@ import Spinningbatchcompleteform from './Front/factory/spinningbatchcompleteform
 import GarmentBatchCompleteForm from './Front/factory/garmentBatchCompleteForm';
 import QualityCheckRawMaterail from './Front/factory/qualityCheckRawMaterial';
 import ProductQualityCheck from './Front/factory/productQualtityCheck';
+import ViewRecordOnQrCode from './Front/factory/viewRecordOnQrCode';
+
+
 
 //Retailer Routes
 import AvailabeProductforRetailer from './Front/retailer/availabeProduct';
@@ -222,6 +225,11 @@ function App() {
               <Route path="/rawMaterialQualityCheck" element={frontToken ? <QualityCheckRawMaterail /> : <Navigate to={"/userlogin"} />} />
               <Route path="/productQualityCheck" element={frontToken ? <ProductQualityCheck /> : <Navigate to={"/userlogin"} />} />
               
+              <Route path="/viewRecordOnQrCode" element={frontToken ? <ViewRecordOnQrCode /> : <Navigate to={"/userlogin"} />} />
+
+
+
+
               {/* {/ Front Distributer Routes /} */}
               <Route path="/storedItemsInWarehouse" element={frontToken ? <StoredItemsInWarehouse /> : <Navigate to={"/userlogin"} />} />
               <Route path="/warehouseBatchDetail" element={frontToken ? <WarehouseBatchDetail /> : <Navigate to={"/userlogin"} />} />

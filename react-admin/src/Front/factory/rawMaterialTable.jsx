@@ -96,14 +96,14 @@ const RawMaterialTable = () => {
                     <td>{OGObject.rawMaterial2.toNumber()}</td>
                     <td>{OGObject.rawMaterial3.toNumber()}</td>
                     <td>{OGObject.rawMaterial4.toNumber()}</td>
-                    <td>{OGObject.rawMaterial5.toNumber()}</td>
+                    <td>{OGObject.rawMaterial5.toNumber()}</td>      
                     <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
-
+ 
                     {/* <td>{object.itemState === 1 ? <Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id:i,materialType:1,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber(),rawMaterial5:OGObject.rawMaterial5.toNumber() } })}>Buy</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i} })}>Quality Check</Button>}</td> */}
                     <td><Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id: i, materialType: 1, rawMaterial1: OGObject.rawMaterial1.toNumber(), rawMaterial2: OGObject.rawMaterial2.toNumber(), rawMaterial3: OGObject.rawMaterial3.toNumber(), rawMaterial4: OGObject.rawMaterial4.toNumber(), rawMaterial5: OGObject.rawMaterial5.toNumber() } })}>Buy</Button></td>
 
                   </tr>
-                </>
+                </> 
               )
             }
             if (OGObject.rawMaterialType.toNumber() == 2) {
@@ -120,7 +120,6 @@ const RawMaterialTable = () => {
                     <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
                     {/* <td>{object.itemState === 1 ? <Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id:i,materialType:2,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber() } })}>Buy</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i} })}>Quality Check</Button>}</td> */}
                     <td><Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id: i, materialType: 2, rawMaterial1: OGObject.rawMaterial1.toNumber(), rawMaterial2: OGObject.rawMaterial2.toNumber(), rawMaterial3: OGObject.rawMaterial3.toNumber(), rawMaterial4: OGObject.rawMaterial4.toNumber(), rawMaterial5: OGObject.rawMaterial5.toNumber() } })}>Buy</Button></td>
-
                   </tr>
                 </>
               )
@@ -139,7 +138,6 @@ const RawMaterialTable = () => {
                     <td>{createdday}-{createmonth}-{createdyear} {hour}:{minute}:{second}</td>
                     {/* <td>{object.itemState === 1 ? <Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id:i,materialType:3,rawMaterial1:OGObject.rawMaterial1.toNumber(),rawMaterial2:OGObject.rawMaterial2.toNumber(),rawMaterial3:OGObject.rawMaterial3.toNumber(),rawMaterial4:OGObject.rawMaterial4.toNumber() } })}>Buy</Button> : <Button variant="outline-info" onClick={() => navigate('/rawMaterialQualityCheck', { state: { id: i} })}>Quality Check</Button>}</td> */}
                     <td><Button variant="outline-success" onClick={() => navigate('/BuyRawMaterial', { state: { id: i, materialType: 3, rawMaterial1: OGObject.rawMaterial1.toNumber(), rawMaterial2: OGObject.rawMaterial2.toNumber(), rawMaterial3: OGObject.rawMaterial3.toNumber(), rawMaterial4: OGObject.rawMaterial4.toNumber(), rawMaterial5: OGObject.rawMaterial5.toNumber() } })}>Buy</Button></td>
-
                   </tr>
                 </>
               )
@@ -260,7 +258,6 @@ const RawMaterialTable = () => {
       </div>
     </>
   );
-
 };
 
 export default RawMaterialTable;
