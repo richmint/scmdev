@@ -70,12 +70,12 @@ const Sidebar = (props) => {
                     </li>
                   </Link>
 
-                  <Link to="/viewRecordOnQrCode" style={{ textDecoration: "none" }}>
+                  {/* <Link to="/viewRecordOnQrCode" style={{ textDecoration: "none" }}>
                     <li style={{ backgroundColor: props.txt == "qrcode" ? "orange" : "" }}>
                       <StoreIcon className="icon" />
                       <span>view Record On QrCode</span>
                     </li> 
-                  </Link>
+                  </Link> */}
 
                   {/* <Link to="/approveFactorySupplier" style={{ textDecoration: "none" }}>
                   <li style={{backgroundColor: props.txt == "ApproveFacSupp"?"orange":""}}>
